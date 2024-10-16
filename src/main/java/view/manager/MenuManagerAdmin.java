@@ -53,8 +53,9 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
-        menuSwitch(tabUnit, TabMenu.TAB_UNIT, menuUnit);
-        currentTab = TabMenu.TAB_UNIT;
+//        menuSwitch(tabUnit, TabMenu.TAB_UNIT, menuUnit);
+//        currentTab = TabMenu.TAB_UNIT;
+        mainContent.add(new TABEmployee());
     }
 
     private void setTitleMenu() {         

@@ -65,6 +65,9 @@ public class Employee {
     }
 
     public void setName(String name) {
+        if (!(name.matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+)+$"))) {
+            throw new RuntimeException("Họ và tên phải có ít nhất 2 từ trở lên, mỗi từ phải bắt đầu bằng chữ HOA!");
+        }
         this.name = name;
     }
 
@@ -73,6 +76,9 @@ public class Employee {
     }
 
     public void setPhone(String phone) {
+        if (!(phone.matches("^(03|05|07|08|09)\\d{8}$"))) {
+            throw new RuntimeException("Số điện thoại phải đủ 10 số và bắt đầu bằng 03, 05, 07, 08 hoặc 09!");
+        }
         this.phone = phone;
     }
 
@@ -81,6 +87,9 @@ public class Employee {
     }
 
     public void setAddress(String address) {
+        if(address.equals("")) {
+            throw new RuntimeException("Địa chỉ không được rỗng");
+        }
         this.address = address;
     }
 
@@ -89,6 +98,9 @@ public class Employee {
     }
 
     public void setEmail(String email) {
+        if (!(email.matches("^[a-zA-Z0-9]+@[a-zA-Z]+\\.com$"))) {
+            throw new RuntimeException("Email không đúng định dạng!");
+        }
         this.email = email;
     }
 

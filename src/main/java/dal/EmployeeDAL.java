@@ -6,6 +6,7 @@ package dal;
 import entity.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
@@ -44,5 +45,31 @@ public class EmployeeDAL implements BaseDAL<Employee, String>{
         return entityManager.createQuery("select e from Employee e", Employee.class).getResultList();
     }
 
+    public List<Employee> findByMultipleField(String name, String phone, String email) {
+        StringBuilder queryBuilder = new StringBuilder("select e from Employee e where 1=1");
+
+        if (!name.isEmpty()) {
+            queryBuilder.append(" and e.name like :name");
+        }
+        if (!phone.isEmpty()) {
+            queryBuilder.append(" and e.phone like :phone");
+        }
+        if (!email.isEmpty()) {
+            queryBuilder.append(" and e.email like :email");
+        }
+
+        TypedQuery<Employee> query = entityManager.createQuery(queryBuilder.toString(), Employee.class);
+
+        if (!name.isEmpty()) {
+            query.setParameter("name", "%" + name + "%");
+        }
+        if (!phone.isEmpty()) {
+            query.setParameter("phone", "%" + phone + "%");
+        }
+        if (!email.isEmpty()) {
+            query.setParameter("email", "%" + email + "%");
+        }
+        return query.getResultList();
+    }
     
 }
