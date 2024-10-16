@@ -45,10 +45,10 @@ public class Employee {
 
     public Employee(String employeeId, String name, String phone, String address, String email, String role) {
         this.employeeId = employeeId;
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-        this.email = email;
+        setName(name);
+        setPhone(phone);
+        setAddress(address);
+        setEmail(email);
         this.role = role;
     }
 
