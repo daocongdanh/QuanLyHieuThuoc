@@ -6,26 +6,20 @@ package view.manager;
 
 import bus.EmployeeBUS;
 import bus.AccountBUS;
-import bus.UnitBUS;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import entity.Account;
 import entity.Employee;
-import entity.Unit;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import util.MessageDialog;
 import util.ResizeImage;
-import view.common.TableActionCellEditorOnlyDelete;
-import view.common.TableActionCellRenderOnlyDelete;
 import view.common.TableDesign;
-import view.common.TableActionEventOnlyDelete;
 
 /**
  *
@@ -82,8 +76,6 @@ public class TABEmployee extends javax.swing.JPanel {
         btnAdd.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/addBtn.svg")), 35, 35));
         btnUpdate.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/editBtn.svg")), 35, 35));
         btnDelete.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/deleteBtn.svg")), 35, 35));
-        btnImport.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/import.svg")), 35, 35));
-        btnExport.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/export.svg")), 35, 35));
     }
 
     private void fillContent(List<Employee> employees) {
@@ -154,17 +146,13 @@ public class TABEmployee extends javax.swing.JPanel {
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        btnImport = new javax.swing.JButton();
-        btnExport = new javax.swing.JButton();
         panelMain = new javax.swing.JPanel();
         scrollEmployee = new javax.swing.JScrollPane();
 
         modalAddEmployee.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         modalAddEmployee.setTitle("Thêm nhân viên");
-        modalAddEmployee.setMaximumSize(new java.awt.Dimension(810, 470));
         modalAddEmployee.setMinimumSize(new java.awt.Dimension(810, 470));
         modalAddEmployee.setModal(true);
-        modalAddEmployee.setPreferredSize(new java.awt.Dimension(810, 470));
         modalAddEmployee.setResizable(false);
 
         panelAddEmployee.setBackground(new java.awt.Color(255, 255, 255));
@@ -593,8 +581,10 @@ public class TABEmployee extends javax.swing.JPanel {
             }
         });
         panelActionSearch.add(btnSearchEmployee);
-        JLabel space = new JLabel("                                                     ");
-        panelActionSearch.add(space);
+        for (int i=1; i<=57; i++) {
+            JLabel space = new JLabel("\t");
+            panelActionSearch.add(space);
+        }
 
         btnResetPassword.setBackground(new java.awt.Color(115, 165, 71));
         btnResetPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -615,7 +605,8 @@ public class TABEmployee extends javax.swing.JPanel {
         headerPanel.add(panelSearch, java.awt.BorderLayout.CENTER);
 
         actionPanel.setBackground(new java.awt.Color(255, 255, 255));
-        actionPanel.setPreferredSize(new java.awt.Dimension(600, 100));
+        actionPanel.setMinimumSize(new java.awt.Dimension(470, 100));
+        actionPanel.setPreferredSize(new java.awt.Dimension(470, 100));
         actionPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 6, 5));
 
         btnAdd.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -661,33 +652,6 @@ public class TABEmployee extends javax.swing.JPanel {
         btnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         actionPanel.add(btnDelete);
 
-        btnImport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnImport.setText("IMPORT");
-        btnImport.setBorder(null);
-        btnImport.setBorderPainted(false);
-        btnImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnImport.setFocusPainted(false);
-        btnImport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnImport.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnImport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnImport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportActionPerformed(evt);
-            }
-        });
-        actionPanel.add(btnImport);
-
-        btnExport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnExport.setText("EXPORT");
-        btnExport.setBorder(null);
-        btnExport.setBorderPainted(false);
-        btnExport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnExport.setFocusPainted(false);
-        btnExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExport.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionPanel.add(btnExport);
-
         headerPanel.add(actionPanel, java.awt.BorderLayout.WEST);
 
         pnAll.add(headerPanel, java.awt.BorderLayout.NORTH);
@@ -698,9 +662,9 @@ public class TABEmployee extends javax.swing.JPanel {
         panelMain.setLayout(panelMainLayout);
         panelMainLayout.setHorizontalGroup(
             panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1602, Short.MAX_VALUE)
+            .addGap(0, 1470, Short.MAX_VALUE)
             .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(scrollEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, 1602, Short.MAX_VALUE))
+                .addComponent(scrollEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, 1470, Short.MAX_VALUE))
         );
         panelMainLayout.setVerticalGroup(
             panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -736,14 +700,6 @@ public class TABEmployee extends javax.swing.JPanel {
             fillContent(employees);
         }   
     }//GEN-LAST:event_btnSearchEmployeeActionPerformed
-
-    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-//        if (unitBUS.importExcel()) {
-//            MessageDialog.info(null, "Import file thành công");
-//            List<Unit> units = unitBUS.getAllUnits();
-//            fillContent(units);
-//        };
-    }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         int selectedRow = tableDesign.getTable().getSelectedRow();
@@ -935,8 +891,6 @@ public class TABEmployee extends javax.swing.JPanel {
     private javax.swing.JButton btnCancelUpdateEmployee;
     private javax.swing.JButton btnCofirmResetPassword;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnExport;
-    private javax.swing.JButton btnImport;
     private javax.swing.JButton btnResetPassword;
     private javax.swing.JButton btnSearchEmployee;
     private javax.swing.JButton btnUpdate;

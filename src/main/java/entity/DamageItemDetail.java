@@ -48,10 +48,10 @@ public class DamageItemDetail {
     }
 
     public DamageItemDetail(int quantity, double price, Batch batch, UnitDetail unitDetail) {
-        this.quantity = quantity;
-        this.price = price;
-        this.batch = batch;
-        this.unitDetail = unitDetail;
+        setQuantity(quantity);
+        setPrice(price);
+        setBatch(batch);
+        setUnitDetail(unitDetail);
         setLineTotal();
     }
 
@@ -60,6 +60,9 @@ public class DamageItemDetail {
     }
 
     public void setQuantity(int quantity) {
+        if (quantity <= 0) {
+            throw new RuntimeException("Số lượng sản phẩm phải > 0!");
+        }
         this.quantity = quantity;
     }
 
@@ -68,6 +71,9 @@ public class DamageItemDetail {
     }
 
     public void setPrice(double price) {
+        if (price <= 0) {
+            throw new RuntimeException("Giá sản phẩm phải > 0!");
+        }
         this.price = price;
     }
 
@@ -84,6 +90,9 @@ public class DamageItemDetail {
     }
 
     public void setBatch(Batch batch) {
+        if (batch == null) {
+            throw new RuntimeException("Lô hàng không được rỗng!");
+        }
         this.batch = batch;
     }
 
@@ -92,6 +101,9 @@ public class DamageItemDetail {
     }
 
     public void setUnitDetail(UnitDetail unitDetail) {
+        if (unitDetail == null) {
+            throw new RuntimeException("Chi tiết đơn vị tính không được rỗng!");
+        }
         this.unitDetail = unitDetail;
     }
 
@@ -100,6 +112,9 @@ public class DamageItemDetail {
     }
 
     public void setDamageItem(DamageItem damageItem) {
+        if (damageItem == null) {
+            throw new RuntimeException("Đơn xuất hủy không được rỗng!");
+        }
         this.damageItem = damageItem;
     }
 

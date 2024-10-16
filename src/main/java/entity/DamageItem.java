@@ -49,9 +49,9 @@ public class DamageItem {
     public DamageItem(String damageItemId, LocalDate orderDate, Employee employee, 
             List<DamageItemDetail> damageItemDetails) {
         this.damageItemId = damageItemId;
-        this.orderDate = orderDate;
-        this.employee = employee;
-        this.damageItemDetails = damageItemDetails;
+        setOrderDate(orderDate);
+        setEmployee(employee);
+        setDamageItemDetails(damageItemDetails);
         for(DamageItemDetail damageItemDetail : damageItemDetails){
             damageItemDetail.setDamageItem(this);
         }
@@ -71,6 +71,9 @@ public class DamageItem {
     }
 
     public void setOrderDate(LocalDate orderDate) {
+        if (!(orderDate.isEqual(LocalDate.now()))) {
+            throw new RuntimeException("Ngày lập đơn phải là ngày hiện tại!");
+        }
         this.orderDate = orderDate;
     }
 
@@ -89,6 +92,9 @@ public class DamageItem {
     }
 
     public void setEmployee(Employee employee) {
+        if (employee == null) {
+            throw new RuntimeException("Nhân viên lập đơn không được rỗng!");
+        }
         this.employee = employee;
     }
 
@@ -97,6 +103,9 @@ public class DamageItem {
     }
 
     public void setDamageItemDetails(List<DamageItemDetail> damageItemDetails) {
+        if (damageItemDetails.size() < 1) {
+            throw new RuntimeException("Các chi tiết đơn xuất hủy không được rỗng!");
+        }
         this.damageItemDetails = damageItemDetails;
     }
 

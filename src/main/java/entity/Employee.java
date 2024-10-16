@@ -49,7 +49,7 @@ public class Employee {
         setPhone(phone);
         setAddress(address);
         setEmail(email);
-        this.role = role;
+        setRole(role);
     }
 
     public String getEmployeeId() {
@@ -65,8 +65,8 @@ public class Employee {
     }
 
     public void setName(String name) {
-        if (!(name.matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+)+$"))) {
-            throw new RuntimeException("Họ và tên phải có ít nhất 2 từ trở lên, mỗi từ phải bắt đầu bằng chữ HOA!");
+        if (name.equals("")) {
+            throw new RuntimeException("Tên nhân viên không được rỗng!");
         }
         this.name = name;
     }
@@ -76,8 +76,8 @@ public class Employee {
     }
 
     public void setPhone(String phone) {
-        if (!(phone.matches("^(03|05|07|08|09)\\d{8}$"))) {
-            throw new RuntimeException("Số điện thoại phải đủ 10 số và bắt đầu bằng 03, 05, 07, 08 hoặc 09!");
+        if (!(phone.matches("^\\d{10}$"))) {
+            throw new RuntimeException("Số điện thoại phải đủ 10 số!");
         }
         this.phone = phone;
     }
@@ -109,6 +109,9 @@ public class Employee {
     }
 
     public void setRole(String role) {
+        if (!(role.equalsIgnoreCase("Nhân viên")) && !(role.equalsIgnoreCase("Quản lý"))) {
+            throw new RuntimeException("Chức vụ chỉ bao gồm Nhân viên và Quản Lý!");
+        }
         this.role = role;
     }
 
