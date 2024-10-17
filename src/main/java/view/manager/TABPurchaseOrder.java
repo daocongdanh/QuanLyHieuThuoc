@@ -5,6 +5,7 @@
 package view.manager;
 
 import bus.OrderBUS;
+import bus.PurchaseOrderBUS;
 import com.formdev.flatlaf.FlatClientProperties;
 import connectDB.ConnectDB;
 import java.util.Arrays;
@@ -23,14 +24,14 @@ import util.*;
  *
  * @author daoducdanh
  */
-public class TABOrder extends javax.swing.JPanel {
+public class TABPurchaseOrder extends javax.swing.JPanel {
 
-    private OrderBUS orderBUS;
+    private PurchaseOrderBUS purchaseOrderBUS;
     private TableDesign tableDesign;
     
 
-    public TABOrder() {
-        orderBUS = new OrderBUS(ConnectDB.getEntityManager());
+    public TABPurchaseOrder() {
+        purchaseOrderBUS = new PurchaseOrderBUS(ConnectDB.getEntityManager());
         initComponents();
         setUIManager();
         fillTable();
@@ -38,32 +39,28 @@ public class TABOrder extends javax.swing.JPanel {
 
     private void setUIManager() {
         txtEmp.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhân viên");
-        txtCus.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Khách hàng");
         UIManager.put("Button.arc", 10);
         jDateFrom.setDate(Date.valueOf(LocalDate.now()));
         jDateTo.setDate(Date.valueOf(LocalDate.now()));
     }
     private void fillTable() {
-        String[] headers = {"Mã hóa đơn", "Ngày tạo", "Tổng tiền", "Thanh toán", "Khách hàng", "Nhân viên"};
-        List<Integer> tableWidths = Arrays.asList(200, 200, 200, 200, 200, 200);
+        String[] headers = {"Mã đơn nhập hàng", "Ngày tạo", "Tổng tiền", "Nhà cung cấp", "Nhân viên"};
+        List<Integer> tableWidths = Arrays.asList(300, 200, 200, 300, 200);
         tableDesign = new TableDesign(headers, tableWidths);
         scrollTable.setViewportView(tableDesign.getTable());
         scrollTable.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
-        List<Order> orders = orderBUS.getAllOrders();
-        fillContent(orders);
+        List<PurchaseOrder> purchaseOrders = purchaseOrderBUS.getAllPurchaseOrders();
+        fillContent(purchaseOrders);
     }
 
     
-    private void fillContent(List<Order> orders) {
+    private void fillContent(List<PurchaseOrder> purchaseOrders) {
         tableDesign.getModelTable().setRowCount(0);
-        for (Order order : orders) {
-            String cus = "Khách vãng lai";
-            if(order.getCustomer() != null){
-                cus = order.getCustomer().getName();
-            }
-            tableDesign.getModelTable().addRow(new Object[]{order.getOrderId(), FormatDate.formatDate(order.getOrderDate()), 
-                FormatNumber.formatToVND(order.getTotalPrice()),
-            order.getPaymentMethod() == PaymentMethod.BANK ? "Ngân hàng": "Tiền mặt", cus, order.getEmployee().getName()});
+        for (PurchaseOrder purchaseOrder : purchaseOrders) {
+            tableDesign.getModelTable().addRow(new Object[]{purchaseOrder.getPurchaseOrderId(), 
+                FormatDate.formatDate(purchaseOrder.getOrderDate()), 
+                FormatNumber.formatToVND(purchaseOrder.getTotalPrice()),
+            purchaseOrder.getSupplier().getName(), purchaseOrder.getEmployee().getName()});
         }
     }
     /**
@@ -78,7 +75,6 @@ public class TABOrder extends javax.swing.JPanel {
         pnAll = new javax.swing.JPanel();
         headerPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        txtCus = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         txtEmp = new javax.swing.JTextField();
         jDateTo = new com.toedter.calendar.JDateChooser();
@@ -104,10 +100,6 @@ public class TABOrder extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(590, 100));
-
-        txtCus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtCus.setMinimumSize(new java.awt.Dimension(300, 40));
-        txtCus.setPreferredSize(new java.awt.Dimension(300, 40));
 
         btnSearch.setBackground(new java.awt.Color(115, 165, 71));
         btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -168,10 +160,8 @@ public class TABOrder extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(txtEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtCus, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 351, Short.MAX_VALUE)
                 .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -182,7 +172,6 @@ public class TABOrder extends javax.swing.JPanel {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtCus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -218,10 +207,9 @@ public class TABOrder extends javax.swing.JPanel {
             MessageDialog.warring(null, "Ngày bắt đầu phải trước ngày kết thúc");
             return;
         }
-        String txtCustomer =txtCus.getText().trim();
         String txtEmployee = txtEmp.getText().trim();
-        List<Order> orders = orderBUS.search(start, end, txtCustomer, txtEmployee);
-        fillContent(orders);
+        List<PurchaseOrder> purchaseOrders = purchaseOrderBUS.search(start, end, txtEmployee); 
+        fillContent(purchaseOrders);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrderActionPerformed
@@ -240,7 +228,6 @@ public class TABOrder extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel pnAll;
     private javax.swing.JScrollPane scrollTable;
-    private javax.swing.JTextField txtCus;
     private javax.swing.JTextField txtEmp;
     private javax.swing.JButton txtOrder;
     // End of variables declaration//GEN-END:variables

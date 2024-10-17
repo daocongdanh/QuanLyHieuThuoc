@@ -115,4 +115,13 @@ public class PurchaseOrderBUS {
             return false;
         }
     }
+    
+    
+    public List<PurchaseOrder> getAllPurchaseOrders(){
+        return purchaseOrderDAL.findAll();
+    }
+
+    public List<PurchaseOrder> search(LocalDate start, LocalDate end, String txtEmployee) {
+        return purchaseOrderDAL.search(start, end, txtEmployee);
+    }
 }

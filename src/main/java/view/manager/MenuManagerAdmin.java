@@ -44,6 +44,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
     private TABUnit tabUnit;
     private TabMenu currentTab;
     private TABOrder tabOrder;
+    private TABPurchaseOrder tabPurChaseOrder;
 
     public MenuManagerAdmin() {
         ConnectDB.connect();
@@ -51,14 +52,16 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 //        tabCustomer = new TABCustomer();
         tabPrescription = new TABPrecription();
         tabOrder = new TABOrder();
+        tabPurChaseOrder = new TABPurchaseOrder();
         initComponents();
         UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
 //        menuSwitch(tabUnit, TabMenu.TAB_UNIT, menuUnit);
-        menuSwitch(tabOrder, TabMenu.TAB_ORDER, menuOrder);
+//        menuSwitch(tabOrder, TabMenu.TAB_ORDER, menuOrder);
 //        currentTab = TabMenu.TAB_UNIT;
-        currentTab = TabMenu.TAB_ORDER;
+//        currentTab = TabMenu.TAB_ORDER;
+        menuSwitch(tabPurChaseOrder, TabMenu.TAB_PURCHASE, menuPurchase);
     }
 
     private void setTitleMenu() {         
