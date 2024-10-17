@@ -11,9 +11,11 @@ import dal.ProductDAL;
 import dal.UnitDAL;
 import dal.UnitDetailDAL;
 import dto.DamageItemDTO;
+import entity.DamageItem;
 import entity.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -52,5 +54,13 @@ public class DamageItemBUS {
             transaction.rollback();
             return false;
         }
+    }
+    
+    public List<DamageItem> getAllDamageItems(){
+        return damageItemDAL.findAll();
+    }
+    
+    public List<DamageItem> search(LocalDate start, LocalDate end, String txtEmployee){
+        return damageItemDAL.search(start, end, txtEmployee);
     }
 }

@@ -1,4 +1,4 @@
-
+package util;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -92,6 +92,7 @@ public class JTableExporter {
         // Tạo CellStyle
         CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
         cellStyle.setFont(font);
+        cellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
         cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
         return cellStyle;

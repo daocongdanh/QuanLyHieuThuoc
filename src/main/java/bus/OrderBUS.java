@@ -130,6 +130,13 @@ public class OrderBUS {
         }
     }
     
+    public List<Order> getAllOrders(){
+        return orderDAL.findAll();
+    }
+
+    public List<Order> search(LocalDate start, LocalDate end, String txtCustomer, String txtEmployee) {
+        return orderDAL.search(start, end, txtCustomer, txtEmployee);
+    }
     public Order findById(String orderId){
         return orderDAL.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));

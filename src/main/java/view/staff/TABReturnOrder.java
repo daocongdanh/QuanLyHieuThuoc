@@ -370,7 +370,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                         int quantity = (int) pnSelectBatch.getSpinnerQuantity().getValue();
                         String batchName = pnSelectBatch.getBatchDTO().getName();
                         returnOrderDetailDTOs.add(new ReturnOrderDetailDTO(pnOrderDetailReturn.getProduct(), 
-                                pnOrderDetailReturn.getSelectedUnitDetail() , quantity));
+                                pnOrderDetailReturn.getSelectedUnitDetail() , quantity, batchName ));
                     }
                 }
             }
@@ -431,6 +431,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private void searchHoaDonTra() {
         String orderId = txtSearchOrder.getText().trim();
         try {
+            pnContent.removeAll();
             order = orderBUS.findByIdAndNotInPromotion(orderId);
             fillOneOrder(order);
         } catch (Exception e) {
