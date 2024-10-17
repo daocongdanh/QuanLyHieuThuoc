@@ -35,6 +35,9 @@ public class Promotion {
     @Column(name = "discount")
     private double discount;
     
+    @Column(name = "status")
+    private boolean status;
+    
     @Column(name = "promotion_type")
     @Enumerated(EnumType.STRING)
     private PromotionType promotionType;
@@ -43,11 +46,12 @@ public class Promotion {
         
     }
 
-    public Promotion(String promotionId, LocalDate startedDate, LocalDate endedDate, double discount, PromotionType promotionType) {
+    public Promotion(String promotionId, LocalDate startedDate, LocalDate endedDate, double discount, boolean status, PromotionType promotionType) {
         this.promotionId = promotionId;
         this.startedDate = startedDate;
         this.endedDate = endedDate;
         this.discount = discount;
+        this.status = status;
         this.promotionType = promotionType;
     }
 
@@ -83,6 +87,15 @@ public class Promotion {
         this.discount = discount;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
     public PromotionType getPromotionType() {
         return promotionType;
     }
@@ -93,8 +106,10 @@ public class Promotion {
 
     @Override
     public String toString() {
-        return "Promotion{" + "promotionId=" + promotionId + ", startedDate=" + startedDate + ", endedDate=" + endedDate + ", discount=" + discount + ", promotionType=" + promotionType + '}';
+        return "Promotion{" + "promotionId=" + promotionId + ", startedDate=" + startedDate + ", endedDate=" + endedDate + ", discount=" + discount + ", status=" + status + ", promotionType=" + promotionType + '}';
     }
+
+    
     
     
 }

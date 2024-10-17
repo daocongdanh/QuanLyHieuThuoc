@@ -57,6 +57,34 @@ public class PrescriptionBUS {
 
     }
 
+    public boolean editPrescription(Prescription prescription, List<PrescriptionDTO> prescriptionDTOs,
+            List<PrescriptionDetail> prescriptionDetails) {
+        try {
+            transaction.begin();
+            prescriptionDAL.update(prescription);
+            for (PrescriptionDetail preDetailOld : prescriptionDetails) {
+                prescriptionDetailDAL.remove(preDetailOld);
+            }
+
+            for (PrescriptionDTO prescriptionDTO : prescriptionDTOs) {
+                Unit unit = unitDAL.findByName(prescriptionDTO.getUnitName());
+                UnitDetail unitDetail
+                        = unitDetailDAL.findByProductAndUnit(prescriptionDTO.getProductId(), unit.getUnitId());
+
+                PrescriptionDetail prescriptionDetail
+                        = new PrescriptionDetail(unitDetail, prescription, prescriptionDTO.getQuantity(), prescriptionDTO.getDescription());
+                prescriptionDetailDAL.insert(prescriptionDetail);
+            }
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            transaction.rollback();
+            return false;
+        }
+
+    }
     public Prescription getPrescriptionById(String id) {
         return prescriptionDAL.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn thuốc mẫu với id = " + id));

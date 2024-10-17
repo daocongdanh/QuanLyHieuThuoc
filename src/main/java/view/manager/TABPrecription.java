@@ -11,11 +11,13 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import dto.PrescriptionDTO;
 import entity.Prescription;
+import entity.PrescriptionDetail;
 import entity.Product;
 import entity.UnitDetail;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
@@ -24,6 +26,7 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import util.MessageDialog;
 import util.ResizeImage;
@@ -51,6 +54,7 @@ public class TABPrecription extends javax.swing.JPanel {
     private PrescriptionBUS prescriptionBUS;
     private List<Product> listProductAdd;
     private List<Product> listProductEdit;
+    private List<PrescriptionDetail> listPrescriptionDetailsEdit;
 
     public TABPrecription() {
         productBUS = new ProductBUS(ConnectDB.getEntityManager());
@@ -122,32 +126,115 @@ public class TABPrecription extends javax.swing.JPanel {
         scrollPanelEdit.setViewportView(tableDesignEdit.getTable());
     }
 
-    private void fillProductModal(List<Product> products, TableDesign tableDesign) {
+    private void fillProductModalAddAndEdit(List<Product> products, TableDesign tableDesign) {
+        DefaultTableModel tableModel = tableDesign.getModelTable();
+        JTable table = tableDesign.getTable();
+
+        Map<String, String> selectedUnitMap = new HashMap<>();
+        Map<String, String> selectedQuantityMap = new HashMap<>();
+        Map<String, String> descriptionMap = new HashMap<>();
+
+        for (int row = 0; row < tableModel.getRowCount(); row++) {
+            String productId = tableModel.getValueAt(row, 0).toString();
+            Object selectedUnit = tableModel.getValueAt(row, 2);
+            Object selectedQuantity = tableModel.getValueAt(row, 3);
+            Object desValue = tableModel.getValueAt(row, 4);
+
+            if (selectedUnit != null) {
+                selectedUnitMap.put(productId, selectedUnit.toString());
+            }
+            if (selectedQuantity != null) {
+                selectedQuantityMap.put(productId, selectedQuantity.toString());
+            }
+            if (desValue != null) {
+                descriptionMap.put(productId, desValue.toString());
+            }
+        }
+
+        tableModel.setRowCount(0);
+
+        EachRowEditor rowEditorDvt = new EachRowEditor(table);
+        EachRowEditor rowEditorSoLuong = new EachRowEditor(table);
+        EachRowEditor rowEditorDes = new EachRowEditor(table);
+
+        for (Product product : products) {
+            tableModel.addRow(new Object[]{
+                product.getProductId(), product.getName(), null, null, null, null
+            });
+
+            int rowIndex = tableModel.getRowCount() - 1;
+
+            JComboBox<String> comboOnly = new JComboBox<>();
+            List<UnitDetail> unitDetails = unitDetailBUS.getListUnitProduct(product);
+            for (UnitDetail unitDetail : unitDetails) {
+                comboOnly.addItem(unitDetail.getUnit().getName());
+            }
+
+            String selectedUnit = selectedUnitMap.get(product.getProductId());
+            if (selectedUnit != null) {
+                comboOnly.setSelectedItem(selectedUnit);
+            } else {
+                comboOnly.setSelectedIndex(0);
+            }
+            tableModel.setValueAt(comboOnly.getSelectedItem(), rowIndex, 2);
+
+            JSpinner spinnerOnly = new JSpinner();
+            String selectedQuantity = selectedQuantityMap.get(product.getProductId());
+            if (selectedQuantity != null) {
+                spinnerOnly.setValue(Integer.valueOf(selectedQuantity));
+            } else {
+                spinnerOnly.setValue(1);
+            }
+            tableModel.setValueAt(spinnerOnly.getValue(), rowIndex, 3);
+
+            JTextField desText = new JTextField();
+            String des = descriptionMap.get(product.getProductId());
+            if (des != null) {
+                desText.setText(des);
+                tableModel.setValueAt(des, rowIndex, 4);
+            } else {
+                desText.setText("");
+            }
+
+            rowEditorDvt.setEditorAt(rowIndex, new DefaultCellEditor(comboOnly));
+            rowEditorSoLuong.setEditorAt(rowIndex, new SpinnerEditor(spinnerOnly));
+            rowEditorDes.setEditorAt(rowIndex, new DefaultCellEditor(desText));
+        }
+
+        table.getColumn("Đơn vị tính").setCellEditor(rowEditorDvt);
+        table.getColumn("Số lượng").setCellEditor(rowEditorSoLuong);
+        table.getColumn("Ghi chú").setCellEditor(rowEditorDes);
+    }
+
+    private void fillProductModalEditFirstTime(List<PrescriptionDetail> prescriptionDetails, TableDesign tableDesign) {
         DefaultTableModel tableModel = tableDesign.getModelTable();
         JTable table = tableDesign.getTable();
 
         Map<String, String> selectedUnitMap = new HashMap<>();
         Map<String, String> selectedQuantityMap = new HashMap<>();
 
-        for (int row = 0; row < tableModel.getRowCount(); row++) {
-            String productId = tableModel.getValueAt(row, 0).toString();
-            Object selectedUnit = tableModel.getValueAt(row, 2);
-            Object selectedQuantity = tableModel.getValueAt(row, 3);
-            if (selectedUnit != null) {
-                selectedUnitMap.put(productId, selectedUnit.toString());
-                selectedQuantityMap.put(productId, selectedQuantity.toString());
-            }
+        for (PrescriptionDetail prescriptionDetail : prescriptionDetails) {
+            String productId = prescriptionDetail.getUnitDetail().getProduct().getProductId();
+            String unitSelected = prescriptionDetail.getUnitDetail().getUnit().getName();
+            Integer selectedQuantity = prescriptionDetail.getQuantity();
+
+            selectedUnitMap.put(productId, unitSelected);
+            selectedQuantityMap.put(productId, selectedQuantity.toString());
         }
 
-        // Xóa tất cả hàng hiện tại
+        if (table.getCellEditor() != null) {
+            table.getCellEditor().stopCellEditing();
+        }
         tableModel.setRowCount(0);
 
         EachRowEditor rowEditorDvt = new EachRowEditor(table);
         EachRowEditor rowEditorSoLuong = new EachRowEditor(table);
 
-        for (Product product : products) {
+        for (PrescriptionDetail prescriptionDetail : prescriptionDetails) {
+            Product product = prescriptionDetail.getUnitDetail().getProduct();
+
             tableModel.addRow(new Object[]{
-                product.getProductId(), product.getName(), null, null, null, null
+                product.getProductId(), product.getName(), null, null, prescriptionDetail.getDescription(), null
             });
 
             int rowIndex = tableModel.getRowCount() - 1;
@@ -275,6 +362,11 @@ public class TABPrecription extends javax.swing.JPanel {
         btnAddCustomer1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAddCustomer1.setForeground(new java.awt.Color(255, 255, 255));
         btnAddCustomer1.setText("Tìm kiếm");
+        btnAddCustomer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddCustomer1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -327,6 +419,11 @@ public class TABPrecription extends javax.swing.JPanel {
         btnExitModalAdd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnExitModalAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnExitModalAdd.setText("Hủy bỏ");
+        btnExitModalAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitModalAddActionPerformed(evt);
+            }
+        });
 
         btnAddPrecription.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAddPrecription.setText("Xác nhận");
@@ -381,7 +478,7 @@ public class TABPrecription extends javax.swing.JPanel {
         );
 
         modalEditPrecription.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        modalEditPrecription.setTitle("Thêm đơn thuốc mẫu");
+        modalEditPrecription.setTitle("Sửa đơn thuốc mẫu");
         modalEditPrecription.setMinimumSize(new java.awt.Dimension(1199, 630));
         modalEditPrecription.setModal(true);
         modalEditPrecription.setResizable(false);
@@ -466,6 +563,11 @@ public class TABPrecription extends javax.swing.JPanel {
         btnExitModalEdit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnExitModalEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnExitModalEdit.setText("Hủy bỏ");
+        btnExitModalEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitModalEditActionPerformed(evt);
+            }
+        });
 
         btnEditPrescription.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEditPrescription.setText("Xác nhận");
@@ -677,7 +779,7 @@ public class TABPrecription extends javax.swing.JPanel {
         modalAddPrecription.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void txtSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchProductActionPerformed
+    private void searchAddPre() {
         String textTim = txtSearchProduct.getText();
         Product product = productBUS.searchProductBySDKOrId(textTim);
         if (product != null) {
@@ -686,11 +788,14 @@ public class TABPrecription extends javax.swing.JPanel {
                 return;
             }
             listProductAdd.add(product);
-            fillProductModal(listProductAdd, tableDesignAdd);
+            fillProductModalAddAndEdit(listProductAdd, tableDesignAdd);
 
         } else {
             MessageDialog.info(null, "Sản phẩm không tồn tại !!!");
         }
+    }
+    private void txtSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchProductActionPerformed
+        searchAddPre();
     }//GEN-LAST:event_txtSearchProductActionPerformed
 
     private List<PrescriptionDTO> getPrescriptionDTOsFromTableModal(TableDesign tableDesign) {
@@ -737,19 +842,39 @@ public class TABPrecription extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddPrecriptionActionPerformed
 
     private void deleteDataModalAdd() {
+        if (tableDesignAdd.getTable().getCellEditor() != null) {
+            tableDesignAdd.getTable().getCellEditor().stopCellEditing();
+        }
         txtNamePrescription.setText("");
         txtSearchProduct.setText("");
         tableDesignAdd.getModelTable().setRowCount(0);
     }
 
+    private void deleteDataModalEdit() {
+        if (tableDesignEdit.getTable().getCellEditor() != null) {
+            tableDesignEdit.getTable().getCellEditor().stopCellEditing();
+        }
+        txtNamePrescriptionEdit.setText("");
+        txtSearchProductEdit.setText("");
+        tableDesignEdit.getModelTable().setRowCount(0);
+    }
+
     private void fillModalEdit(String prescriptionId) {
-        Prescription prescription = prescriptionBUS.getPrescriptionById(prescriptionIdEdit);
+        List<PrescriptionDetail> listPreDetail = prescriptionBUS.getAllPrescripDetailsByPrescription(prescriptionId);
+        listPrescriptionDetailsEdit = new ArrayList<>();
+        for (PrescriptionDetail preDetail : listPreDetail) {
+            listProductEdit.add(preDetail.getUnitDetail().getProduct());
+            listPrescriptionDetailsEdit.add(preDetail);
+        }
+        fillProductModalEditFirstTime(listPrescriptionDetailsEdit, tableDesignEdit);
     }
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         int rowSelected = tableDesign.getTable().getSelectedRow();
         if (rowSelected != -1) {
             listProductEdit = new ArrayList<>();
+            txtNamePrescriptionEdit.setText(tableDesign.getModelTable().getValueAt(rowSelected, 1).toString());
+
             addEventBtnDeleteInTable(tableDesignEdit, listProductEdit);
 
             prescriptionIdEdit = (String) tableDesign.getTable().getValueAt(rowSelected, 0);
@@ -760,17 +885,71 @@ public class TABPrecription extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
+    private void searchEditPre() {
+        String textTim = txtSearchProductEdit.getText();
+        Product product = productBUS.searchProductBySDKOrId(textTim);
+        if (product != null) {
+            if (listProductEdit.contains(product)) {
+                MessageDialog.info(null, "Sản phẩm đã được chọn!!!");
+                return;
+            }
+            listProductEdit.add(product);
+            fillProductModalAddAndEdit(listProductEdit, tableDesignEdit);
+
+        } else {
+            MessageDialog.info(null, "Sản phẩm không tồn tại !!!");
+        }
+    }
+
     private void txtSearchProductEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchProductEditActionPerformed
         // TODO add your handling code here:
+        searchEditPre();
     }//GEN-LAST:event_txtSearchProductEditActionPerformed
 
     private void btnEditPrescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPrescriptionActionPerformed
         // TODO add your handling code here:
+        List<PrescriptionDTO> listPrecription = getPrescriptionDTOsFromTableModal(tableDesignEdit);
+        String namePre = txtNamePrescriptionEdit.getText().trim();
+
+        if (namePre.equals("")) {
+            MessageDialog.warring(null, "Tên đơn thuốc mẫu không được để trống !!!");
+            return;
+        }
+        if (listPrecription.isEmpty()) {
+            MessageDialog.warring(null, "Chưa chọn sản phẩm !!!");
+            return;
+        }
+
+        Prescription prescription = prescriptionBUS.getPrescriptionById(prescriptionIdEdit);
+        prescription.setName(namePre);
+
+        if (prescriptionBUS.editPrescription(prescription, listPrecription, listPrescriptionDetailsEdit)) {
+            MessageDialog.info(null, "Sửa đơn thuốc mẫu thành công");
+            deleteDataModalEdit();
+            modalEditPrecription.dispose();
+            fillAllPre();
+        } else {
+            MessageDialog.error(null, "Có lỗi xảy ra trong quá trình thêm");
+        }
     }//GEN-LAST:event_btnEditPrescriptionActionPerformed
 
     private void btnSearchProductModalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchProductModalActionPerformed
-        // TODO add your handling code here:
+        searchEditPre();
     }//GEN-LAST:event_btnSearchProductModalActionPerformed
+
+    private void btnAddCustomer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomer1ActionPerformed
+        searchAddPre();
+    }//GEN-LAST:event_btnAddCustomer1ActionPerformed
+
+    private void btnExitModalAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitModalAddActionPerformed
+        deleteDataModalAdd();
+        modalAddPrecription.dispose();
+    }//GEN-LAST:event_btnExitModalAddActionPerformed
+
+    private void btnExitModalEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitModalEditActionPerformed
+        deleteDataModalEdit();
+        modalEditPrecription.dispose();
+    }//GEN-LAST:event_btnExitModalEditActionPerformed
 
     private String prescriptionIdEdit;
     // Variables declaration - do not modify//GEN-BEGIN:variables

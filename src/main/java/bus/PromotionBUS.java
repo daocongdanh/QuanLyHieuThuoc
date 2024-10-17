@@ -72,4 +72,8 @@ public class PromotionBUS {
         }
         return null;
     }
+
+    public List<Promotion> getAllPromotions() {
+        return promotionDAL.findAll();
+    }
 }
