@@ -33,10 +33,6 @@ public class ReturnOrder {
     @Column(name = "order_date")
     private LocalDate orderDate;
     
-    @Column(name = "reason")
-    @Nationalized
-    private String reason;
-    
     @Column(name = "total_price")
     private double totalPrice;
     
@@ -58,11 +54,10 @@ public class ReturnOrder {
         
     }
 
-    public ReturnOrder(String returnOrderId, LocalDate orderDate, String reason, Employee employee, Order order
+    public ReturnOrder(String returnOrderId, LocalDate orderDate, Employee employee, Order order
     , List<ReturnOrderDetail> returnOrderDetails, boolean status) {
         this.returnOrderId = returnOrderId;
         this.orderDate = orderDate;
-        this.reason = reason;
         this.employee = employee;
         this.order = order;
         this.returnOrderDetails = returnOrderDetails;
@@ -87,14 +82,6 @@ public class ReturnOrder {
 
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 
     public double getTotalPrice() {
@@ -141,7 +128,9 @@ public class ReturnOrder {
 
     @Override
     public String toString() {
-        return "ReturnOrder{" + "returnOrderId=" + returnOrderId + ", orderDate=" + orderDate + ", reason=" + reason + ", totalPrice=" + totalPrice + ", status=" + status + ", employee=" + employee + ", order=" + order + ", returnOrderDetails=" + returnOrderDetails + '}';
+        return "ReturnOrder{" + "returnOrderId=" + returnOrderId + ", orderDate=" + orderDate + ", totalPrice=" + totalPrice + ", status=" + status + ", employee=" + employee + ", order=" + order + ", returnOrderDetails=" + returnOrderDetails + '}';
     }
+
+    
     
 }
