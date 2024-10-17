@@ -5,6 +5,8 @@
 package dal;
 import entity.Order;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
@@ -41,6 +43,30 @@ public class OrderDAL implements BaseDAL<Order, String>{
     @Override
     public List<Order> findAll() {
         return entityManager.createQuery("select o from Order o", Order.class).getResultList();
+    }
+
+    public List<Order> search(LocalDate start, LocalDate end, String txtCustomer, String txtEmployee) {
+        StringBuilder jpql = new StringBuilder("select o from Order o where (o.orderDate between ?1 and ?2) ");
+        
+        int paramIndex = 3;
+        
+        if(!txtCustomer.equals("")){
+            jpql.append(" and o.customer is not null and o.customer.name like ?3 ");
+            paramIndex++;
+        }
+        if(!txtEmployee.equals("")){
+            jpql.append(" and o.employee.name like ?").append(paramIndex).append(" ");
+        }
+        TypedQuery<Order> query = entityManager.createQuery(jpql.toString(), Order.class);
+        query.setParameter(1, start);
+        query.setParameter(2, end);
+        if(!txtCustomer.equals("")){
+            query.setParameter(3, '%' + txtCustomer + '%');
+        }
+        if(!txtEmployee.equals("")){
+            query.setParameter(paramIndex, '%' + txtEmployee + '%');
+        }
+        return query.getResultList();
     }
 
     

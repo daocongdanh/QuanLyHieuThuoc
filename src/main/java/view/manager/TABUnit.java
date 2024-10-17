@@ -488,12 +488,6 @@ public class TABUnit extends javax.swing.JPanel {
         fillContent(units);
     }//GEN-LAST:event_btnOpenModalAddUnitActionPerformed
 
-    private void txtSearchUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchUnitActionPerformed
-        String name = txtSearchUnit.getText().trim();
-        List<Unit> units = unitBUS.getUnitByNameSearch(name);
-        fillContent(units);
-    }//GEN-LAST:event_txtSearchUnitActionPerformed
-
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         if (unitBUS.importExcel()) {
             MessageDialog.info(null, "Import file thành công");
@@ -521,6 +515,12 @@ public class TABUnit extends javax.swing.JPanel {
         modalAddUnit.setLocationRelativeTo(null);
         modalAddUnit.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void txtSearchUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchUnitActionPerformed
+        String name = txtSearchUnit.getText().trim();
+        List<Unit> units = unitBUS.getUnitByNameSearch(name);
+        fillContent(units);
+    }//GEN-LAST:event_txtSearchUnitActionPerformed
 
     private String unitIdEdit;
     // Variables declaration - do not modify//GEN-BEGIN:variables

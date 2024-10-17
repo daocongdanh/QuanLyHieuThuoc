@@ -47,7 +47,6 @@ public class TABEmployee extends javax.swing.JPanel {
         txtAddEmployeeAddress.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập địa chỉ");
         txtAddEmployeeEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập email");
         txtAddEmployeePhone.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập số điện thoại");
-        txtAddUsername.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập tài khoản");
         txtAddPassword.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập mật khẩu");
 
         txtEmployeeAddress.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập địa chỉ mới");
@@ -105,8 +104,6 @@ public class TABEmployee extends javax.swing.JPanel {
         btnAddNewEmployee = new javax.swing.JButton();
         btnCancelAddEmployee = new javax.swing.JButton();
         lblAddPassword = new javax.swing.JLabel();
-        lblAddUsername = new javax.swing.JLabel();
-        txtAddUsername = new javax.swing.JTextField();
         txtAddPassword = new javax.swing.JPasswordField();
         modalUpdateEmployee = new javax.swing.JDialog();
         panelUpdateEmployee = new javax.swing.JPanel();
@@ -208,37 +205,34 @@ public class TABEmployee extends javax.swing.JPanel {
         lblAddPassword.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lblAddPassword.setText("Mật khẩu");
 
-        lblAddUsername.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        lblAddUsername.setText("Tài khoản:");
-
         javax.swing.GroupLayout panelAddEmployeeLayout = new javax.swing.GroupLayout(panelAddEmployee);
         panelAddEmployee.setLayout(panelAddEmployeeLayout);
         panelAddEmployeeLayout.setHorizontalGroup(
             panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAddEmployeeLayout.createSequentialGroup()
                 .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelAddEmployeeLayout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtAddUsername)
-                            .addComponent(lblAddEmployeeAddress)
-                            .addComponent(lblAddEmployeeName)
-                            .addComponent(txtAddEmployeeName, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                            .addComponent(txtAddEmployeeAddress)
-                            .addComponent(lblAddUsername))
-                        .addGap(83, 83, 83)
-                        .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblAddPassword)
-                            .addComponent(txtAddEmployeeEmail)
-                            .addComponent(lblAddEmployeeEmail)
-                            .addComponent(lblAddEmployeePhone)
-                            .addComponent(txtAddEmployeePhone)
-                            .addComponent(txtAddPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelAddEmployeeLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAddNewEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCancelAddEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCancelAddEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelAddEmployeeLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtAddPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelAddEmployeeLayout.createSequentialGroup()
+                                .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblAddEmployeeAddress)
+                                    .addComponent(lblAddEmployeeName)
+                                    .addComponent(txtAddEmployeeName, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                    .addComponent(txtAddEmployeeAddress))
+                                .addGap(83, 83, 83)
+                                .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtAddEmployeeEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                    .addComponent(lblAddEmployeeEmail)
+                                    .addComponent(lblAddEmployeePhone)
+                                    .addComponent(txtAddEmployeePhone)))
+                            .addComponent(lblAddPassword))))
                 .addGap(55, 55, 55))
         );
         panelAddEmployeeLayout.setVerticalGroup(
@@ -261,13 +255,9 @@ public class TABEmployee extends javax.swing.JPanel {
                     .addComponent(txtAddEmployeePhone, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAddEmployeeAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAddUsername)
-                    .addComponent(lblAddPassword))
+                .addComponent(lblAddPassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtAddUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAddPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtAddPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelAddEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -430,6 +420,11 @@ public class TABEmployee extends javax.swing.JPanel {
         btnCofirmResetPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCofirmResetPassword.setForeground(new java.awt.Color(255, 255, 255));
         btnCofirmResetPassword.setText("Xác nhận");
+        btnCofirmResetPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCofirmResetPasswordActionPerformed(evt);
+            }
+        });
 
         btnCancelResetPassword.setBackground(new java.awt.Color(236, 82, 113));
         btnCancelResetPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -703,12 +698,11 @@ public class TABEmployee extends javax.swing.JPanel {
         String address = txtAddEmployeeAddress.getText().trim();
         String email = txtAddEmployeeEmail.getText().trim();
         String phone = txtAddEmployeePhone.getText().trim();
-        String username = txtAddUsername.getText().trim();
         String password = new String(txtAddPassword.getPassword());
 
         try {
             Employee emp = new Employee(null, name, phone, address, email, "Nhân viên");
-            Account acc = new Account(null, username, password, emp); 
+            Account acc = new Account(null, password, emp); 
             employeeBUS.createEmployee(emp);
             accountBUS.createAccount(acc);
             
@@ -717,7 +711,6 @@ public class TABEmployee extends javax.swing.JPanel {
             txtAddEmployeeEmail.setText("");
             txtAddEmployeeName.setText("");
             txtAddEmployeePhone.setText("");
-            txtAddUsername.setText("");
             txtAddPassword.setText("");
             txtSearchEmployee.setText("");
             modalAddEmployee.dispose();
@@ -803,6 +796,27 @@ public class TABEmployee extends javax.swing.JPanel {
         }  
     }//GEN-LAST:event_btnResetPasswordActionPerformed
 
+    private void btnCofirmResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCofirmResetPasswordActionPerformed
+        String newPass = new String(txtResetPassword.getPassword());
+        
+        if(newPass.equals("")) {
+            MessageDialog.warring(null, "Mật khẩu mới không được rỗng.");
+            txtResetPassword.requestFocus();
+            return;
+        }
+                
+        employeeIdUpdate = txtEmployeeIDRsPass.getText().trim();
+        Account acc = accountBUS.getByEmployeeID(employeeIdUpdate);
+        acc.setPassword(newPass);
+        accountBUS.updateAccount(acc);
+        
+        MessageDialog.info(null, "Đặt lại mật khẩu thành công.");
+        txtResetPassword.setText("");
+        txtSearchEmployee.setText("");
+        modalResetPassword.dispose();
+        fillContent(employeeBUS.getAllEmployee());
+    }//GEN-LAST:event_btnCofirmResetPasswordActionPerformed
+
     private String employeeIdUpdate;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionPanel;
@@ -822,7 +836,6 @@ public class TABEmployee extends javax.swing.JPanel {
     private javax.swing.JLabel lblAddEmployeeName;
     private javax.swing.JLabel lblAddEmployeePhone;
     private javax.swing.JLabel lblAddPassword;
-    private javax.swing.JLabel lblAddUsername;
     private javax.swing.JLabel lblEmpIDResetPassword;
     private javax.swing.JLabel lblEmpNameResetPassword;
     private javax.swing.JLabel lblEmployeeAddress;
@@ -846,7 +859,6 @@ public class TABEmployee extends javax.swing.JPanel {
     private javax.swing.JTextField txtAddEmployeeName;
     private javax.swing.JTextField txtAddEmployeePhone;
     private javax.swing.JPasswordField txtAddPassword;
-    private javax.swing.JTextField txtAddUsername;
     private javax.swing.JTextField txtEmployeeAddress;
     private javax.swing.JTextField txtEmployeeEmail;
     private javax.swing.JTextField txtEmployeeIDRsPass;

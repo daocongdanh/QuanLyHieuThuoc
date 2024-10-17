@@ -6,6 +6,7 @@ package dal;
 import entity.ReturnOrder;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
@@ -43,6 +44,10 @@ public class ReturnOrderDAL implements BaseDAL<ReturnOrder, String>{
     @Override
     public List<ReturnOrder> findAll() {
         return entityManager.createQuery("select ro from ReturnOrder ro", ReturnOrder.class).getResultList();
+    }
+
+    public List<ReturnOrder> search(LocalDate start, LocalDate end, String txtEmployee) {
+        return null;
     }
 
 
