@@ -129,4 +129,12 @@ public class OrderBUS {
             return false;
         }
     }
+    
+    public List<Order> getAllOrders(){
+        return orderDAL.findAll();
+    }
+
+    public List<Order> search(LocalDate start, LocalDate end, String txtCustomer, String txtEmployee) {
+        return orderDAL.search(start, end, txtCustomer, txtEmployee);
+    }
 }

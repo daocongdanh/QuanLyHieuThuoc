@@ -43,18 +43,22 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 //    private TAB_SUPPLIER tabSupplier;
     private TABUnit tabUnit;
     private TabMenu currentTab;
+    private TABOrder tabOrder;
 
     public MenuManagerAdmin() {
         ConnectDB.connect();
         tabUnit = new TABUnit();
 //        tabCustomer = new TABCustomer();
         tabPrescription = new TABPrecription();
+        tabOrder = new TABOrder();
         initComponents();
         UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
-        menuSwitch(tabUnit, TabMenu.TAB_UNIT, menuUnit);
-        currentTab = TabMenu.TAB_UNIT;
+//        menuSwitch(tabUnit, TabMenu.TAB_UNIT, menuUnit);
+        menuSwitch(tabOrder, TabMenu.TAB_ORDER, menuOrder);
+//        currentTab = TabMenu.TAB_UNIT;
+        currentTab = TabMenu.TAB_ORDER;
     }
 
     private void setTitleMenu() {         
