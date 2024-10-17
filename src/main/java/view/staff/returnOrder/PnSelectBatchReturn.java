@@ -22,7 +22,7 @@ import javax.swing.SpinnerNumberModel;
 
 /**
  *
- * @author daoducdanh
+ * @author Hoang
  */
 public class PnSelectBatchReturn extends javax.swing.JPanel {
 
@@ -280,6 +280,8 @@ public class PnSelectBatchReturn extends javax.swing.JPanel {
         parent.repaint();
     }//GEN-LAST:event_btnConfirmModalActionPerformed
 
+    
+    
     private void spinnerQuantityStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerQuantityStateChanged
         // TODO add your handling code here:
 

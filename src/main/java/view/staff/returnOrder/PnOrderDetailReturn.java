@@ -5,9 +5,7 @@
 package view.staff.returnOrder;
 
 import view.staff.sell.PnSelectBatch;
-import view.staff.sell.PnChonLo;
 import bus.OrderDetailBUS;
-import com.formdev.flatlaf.FlatClientProperties;
 import connectDB.ConnectDB;
 import dto.BatchDTO;
 import dto.OrderDetailSelected;
@@ -15,20 +13,9 @@ import entity.Product;
 import java.awt.Component;
 import java.util.List;
 import entity.*;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.event.ItemEvent;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import util.ResizeImage;
 import util.FormatNumber;
-import util.MessageDialog;
 import view.staff.TABReturnOrder;
 
 /**

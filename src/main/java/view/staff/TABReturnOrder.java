@@ -10,6 +10,7 @@ import connectDB.ConnectDB;
 import dto.BatchDTO;
 import dto.OrderDTO;
 import dto.OrderDetailSelected;
+import dto.ReturnOrderDetailDTO;
 import entity.Customer;
 import entity.Product;
 import java.awt.Component;
@@ -28,6 +29,8 @@ import javax.swing.JSpinner;
 import util.CurrentEmployee;
 import view.common.SuggestPriceButton;
 import view.staff.returnOrder.PnOrderDetailReturn;
+import view.staff.returnOrder.PnSelectBatchReturn;
+import util.CurrentEmployee;
 
 /**
  *
@@ -44,6 +47,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private BatchBUS batchBUS;
     private PromotionBUS promotionBUS;
     private OrderDetailBUS orderDetailBUS;
+    private ReturnOrderBUS returnOrderBUS;
 
     public TABReturnOrder() {
         this.orderBUS = new OrderBUS(ConnectDB.getEntityManager());
@@ -52,6 +56,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         this.batchBUS = new BatchBUS(ConnectDB.getEntityManager());
         this.promotionBUS = new PromotionBUS(ConnectDB.getEntityManager());
         this.orderDetailBUS = new OrderDetailBUS(ConnectDB.getEntityManager());
+        this.returnOrderBUS = new ReturnOrderBUS(ConnectDB.getEntityManager());
         initComponents();
 //        txtTienKhachDua.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "0 đ");
 //        txtTimKhachHang.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại khách hàng");
@@ -67,6 +72,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
         pnLeft = new javax.swing.JPanel();
         btnTaoPhieu = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txtSoDienThoaiKhach = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txtTongHoaDon = new javax.swing.JLabel();
@@ -118,15 +125,26 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel3.setText("Số điện thoại khách");
+
+        txtSoDienThoaiKhach.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtSoDienThoaiKhach.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        txtSoDienThoaiKhach.setText("Vãng Lai");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 385, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtSoDienThoaiKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 57, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+            .addComponent(txtSoDienThoaiKhach, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -214,7 +232,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 69, Short.MAX_VALUE)
                 .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -332,9 +350,33 @@ public class TABReturnOrder extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTaoPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoPhieuActionPerformed
+        List<ReturnOrderDetailDTO> listReturnOrderDetailDTOs = createListReturnOrderDetail();
 
+        returnOrderBUS.createReturnOrderBUS(CurrentEmployee.getEmployee(), customer, order, listReturnOrderDetailDTOs);
 
     }//GEN-LAST:event_btnTaoPhieuActionPerformed
+
+    private List<ReturnOrderDetailDTO> createListReturnOrderDetail() {
+        List<ReturnOrderDetailDTO> returnOrderDetailDTOs = new ArrayList<>();
+        List<PnOrderDetailReturn> listPnOrderDetailReturn = getAllPnOrderDetailThuoc();
+        if (listPnOrderDetailReturn == null) {
+            MessageDialog.warring(null, "Không có sản phẩm !!!");
+        } else {
+            for (PnOrderDetailReturn pnOrderDetailReturn : listPnOrderDetailReturn) {
+                JPanel pnListBatch = pnOrderDetailReturn.getPnListBatch();
+                for (Component component : pnListBatch.getComponents()) {
+                    if (component instanceof PnSelectBatchReturn) {
+                        PnSelectBatchReturn pnSelectBatch = (PnSelectBatchReturn) component;
+                        int quantity = (int) pnSelectBatch.getSpinnerQuantity().getValue();
+                        String batchName = pnSelectBatch.getBatchDTO().getName();
+                        returnOrderDetailDTOs.add(new ReturnOrderDetailDTO(pnOrderDetailReturn.getProduct(), 
+                                pnOrderDetailReturn.getSelectedUnitDetail() , quantity));
+                    }
+                }
+            }
+        }
+        return returnOrderDetailDTOs;
+    }
 
 
     private void jLabel2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel2AncestorAdded
@@ -342,6 +384,12 @@ public class TABReturnOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel2AncestorAdded
 
     private void fillOneOrder(Order order) {
+        if (order.getCustomer() != null) {
+            txtTenKhachHang.setText(order.getCustomer().getName());
+            txtSoDienThoaiKhach.setText(order.getCustomer().getPhone());
+            customer = order.getCustomer();
+        }
+
         List<OrderDetail> listOrderDetail = orderDetailBUS.getListOrderDetailByOrder(order);
         List<BatchDTO> batchDTOs = new ArrayList<>();
         for (OrderDetail orderDetail : listOrderDetail) {
@@ -358,7 +406,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         changeTongTienHoaDon();
 
     }
-    
+
     private List<PnOrderDetailReturn> getAllPnOrderDetailThuoc() {
         List<PnOrderDetailReturn> orderDetails = new ArrayList<>();
         Component[] components = pnContent.getComponents();
@@ -377,25 +425,29 @@ public class TABReturnOrder extends javax.swing.JPanel {
         for (PnOrderDetailReturn x : listPanel) {
             tongTienHang += x.getLineTotal();
         }
-        txtTongHoaDon.setText(FormatNumber.formatToVND(tongTienHang));  
+        txtTongHoaDon.setText(FormatNumber.formatToVND(tongTienHang));
     }
-    
 
-    private void txtSearchOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchOrderActionPerformed
+    private void searchHoaDonTra() {
         String orderId = txtSearchOrder.getText().trim();
         try {
-            Order order = orderBUS.findByIdAndNotInPromotion(orderId);
+            order = orderBUS.findByIdAndNotInPromotion(orderId);
             fillOneOrder(order);
         } catch (Exception e) {
             MessageDialog.warring(null, "Hóa đơn không tồn tại.");
         }
+    }
 
+    private void txtSearchOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchOrderActionPerformed
+        searchHoaDonTra();
     }//GEN-LAST:event_txtSearchOrderActionPerformed
 
     private void btnOpenModalAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenModalAddUnitActionPerformed
-
+        searchHoaDonTra();
     }//GEN-LAST:event_btnOpenModalAddUnitActionPerformed
     private double tongTienHang;
+    private Customer customer;
+    private Order order;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionPanel;
     private javax.swing.JButton btnAdd;
@@ -405,6 +457,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -417,6 +470,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private javax.swing.JPanel pnLeft;
     private javax.swing.JPanel pnMid;
     private javax.swing.JTextField txtSearchOrder;
+    private javax.swing.JLabel txtSoDienThoaiKhach;
     private javax.swing.JLabel txtTenKhachHang;
     private javax.swing.JLabel txtTienTraKhach;
     private javax.swing.JLabel txtTongHoaDon;
