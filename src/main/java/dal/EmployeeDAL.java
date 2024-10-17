@@ -45,31 +45,10 @@ public class EmployeeDAL implements BaseDAL<Employee, String>{
         return entityManager.createQuery("select e from Employee e", Employee.class).getResultList();
     }
 
-    public List<Employee> findByMultipleField(String name, String phone, String email) {
-        StringBuilder queryBuilder = new StringBuilder("select e from Employee e where 1=1");
-
-        if (!name.isEmpty()) {
-            queryBuilder.append(" and e.name like :name");
-        }
-        if (!phone.isEmpty()) {
-            queryBuilder.append(" and e.phone like :phone");
-        }
-        if (!email.isEmpty()) {
-            queryBuilder.append(" and e.email like :email");
-        }
-
-        TypedQuery<Employee> query = entityManager.createQuery(queryBuilder.toString(), Employee.class);
-
-        if (!name.isEmpty()) {
-            query.setParameter("name", "%" + name + "%");
-        }
-        if (!phone.isEmpty()) {
-            query.setParameter("phone", "%" + phone + "%");
-        }
-        if (!email.isEmpty()) {
-            query.setParameter("email", "%" + email + "%");
-        }
+    public List<Employee> findByKeyword(String keyword) {
+        TypedQuery<Employee> query = entityManager.createQuery("select e from Employee e where e.name like ?1 or e.phone like ?1 or e.email like ?1", Employee.class);
+        query.setParameter(1, "%" + keyword + "%");
         return query.getResultList();
-    }
-    
+    }   
+   
 }

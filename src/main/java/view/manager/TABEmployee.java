@@ -41,9 +41,7 @@ public class TABEmployee extends javax.swing.JPanel {
     }
 
     private void setUIManager() {
-        txtSearchEmpName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên nhân viên");
-        txtSearchEmpEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Email");
-        txtSearchEmpPhone.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại");
+        txtSearchEmployee.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm theo tên, số điện thoại, email");
         
         txtAddEmployeeName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập tên nhân viên");
         txtAddEmployeeAddress.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập địa chỉ");
@@ -75,7 +73,6 @@ public class TABEmployee extends javax.swing.JPanel {
     private void addIconFeature() {
         btnAdd.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/addBtn.svg")), 35, 35));
         btnUpdate.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/editBtn.svg")), 35, 35));
-        btnDelete.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/deleteBtn.svg")), 35, 35));
     }
 
     private void fillContent(List<Employee> employees) {
@@ -137,15 +134,12 @@ public class TABEmployee extends javax.swing.JPanel {
         headerPanel = new javax.swing.JPanel();
         panelSearch = new javax.swing.JPanel();
         panelActionSearch = new javax.swing.JPanel();
-        txtSearchEmpName = new javax.swing.JTextField();
-        txtSearchEmpEmail = new javax.swing.JTextField();
-        txtSearchEmpPhone = new javax.swing.JTextField();
+        txtSearchEmployee = new javax.swing.JTextField();
         btnSearchEmployee = new javax.swing.JButton();
         btnResetPassword = new javax.swing.JButton();
         actionPanel = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
         panelMain = new javax.swing.JPanel();
         scrollEmployee = new javax.swing.JScrollPane();
 
@@ -216,12 +210,6 @@ public class TABEmployee extends javax.swing.JPanel {
 
         lblAddUsername.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lblAddUsername.setText("Tài khoản:");
-
-        txtAddUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAddUsernameActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelAddEmployeeLayout = new javax.swing.GroupLayout(panelAddEmployee);
         panelAddEmployee.setLayout(panelAddEmployeeLayout);
@@ -442,11 +430,6 @@ public class TABEmployee extends javax.swing.JPanel {
         btnCofirmResetPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCofirmResetPassword.setForeground(new java.awt.Color(255, 255, 255));
         btnCofirmResetPassword.setText("Xác nhận");
-        btnCofirmResetPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCofirmResetPasswordActionPerformed(evt);
-            }
-        });
 
         btnCancelResetPassword.setBackground(new java.awt.Color(236, 82, 113));
         btnCancelResetPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -465,11 +448,6 @@ public class TABEmployee extends javax.swing.JPanel {
         lblEmpNameResetPassword.setText("Tên nhân viên:");
 
         txtEmployeeNameRsPass.setEditable(false);
-        txtEmployeeNameRsPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmployeeNameRsPassActionPerformed(evt);
-            }
-        });
 
         txtEmployeeIDRsPass.setEditable(false);
         txtEmployeeIDRsPass.addActionListener(new java.awt.event.ActionListener() {
@@ -553,28 +531,18 @@ public class TABEmployee extends javax.swing.JPanel {
         panelActionSearch.setPreferredSize(new java.awt.Dimension(1000, 50));
         panelActionSearch.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));
 
-        txtSearchEmpName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtSearchEmpName.setMinimumSize(new java.awt.Dimension(150, 40));
-        txtSearchEmpName.setPreferredSize(new java.awt.Dimension(150, 40));
-        panelActionSearch.add(txtSearchEmpName);
-
-        txtSearchEmpEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtSearchEmpEmail.setMinimumSize(new java.awt.Dimension(150, 40));
-        txtSearchEmpEmail.setPreferredSize(new java.awt.Dimension(150, 40));
-        panelActionSearch.add(txtSearchEmpEmail);
-
-        txtSearchEmpPhone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtSearchEmpPhone.setMinimumSize(new java.awt.Dimension(150, 40));
-        txtSearchEmpPhone.setPreferredSize(new java.awt.Dimension(150, 40));
-        panelActionSearch.add(txtSearchEmpPhone);
+        txtSearchEmployee.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSearchEmployee.setMinimumSize(new java.awt.Dimension(300, 40));
+        txtSearchEmployee.setPreferredSize(new java.awt.Dimension(300, 40));
+        panelActionSearch.add(txtSearchEmployee);
 
         btnSearchEmployee.setBackground(new java.awt.Color(115, 165, 71));
         btnSearchEmployee.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSearchEmployee.setForeground(new java.awt.Color(255, 255, 255));
         btnSearchEmployee.setText("Tìm kiếm");
-        btnSearchEmployee.setMaximumSize(new java.awt.Dimension(100, 40));
-        btnSearchEmployee.setMinimumSize(new java.awt.Dimension(100, 40));
-        btnSearchEmployee.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnSearchEmployee.setMaximumSize(new java.awt.Dimension(150, 40));
+        btnSearchEmployee.setMinimumSize(new java.awt.Dimension(150, 40));
+        btnSearchEmployee.setPreferredSize(new java.awt.Dimension(150, 40));
         btnSearchEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchEmployeeActionPerformed(evt);
@@ -590,9 +558,9 @@ public class TABEmployee extends javax.swing.JPanel {
         btnResetPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnResetPassword.setForeground(new java.awt.Color(255, 255, 255));
         btnResetPassword.setText("Đặt lại mật khẩu");
-        btnResetPassword.setMaximumSize(new java.awt.Dimension(140, 40));
-        btnResetPassword.setMinimumSize(new java.awt.Dimension(140, 40));
-        btnResetPassword.setPreferredSize(new java.awt.Dimension(140, 40));
+        btnResetPassword.setMaximumSize(new java.awt.Dimension(200, 40));
+        btnResetPassword.setMinimumSize(new java.awt.Dimension(200, 40));
+        btnResetPassword.setPreferredSize(new java.awt.Dimension(200, 40));
         btnResetPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnResetPasswordActionPerformed(evt);
@@ -641,17 +609,6 @@ public class TABEmployee extends javax.swing.JPanel {
         });
         actionPanel.add(btnUpdate);
 
-        btnDelete.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnDelete.setText("XÓA");
-        btnDelete.setBorder(null);
-        btnDelete.setBorderPainted(false);
-        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDelete.setFocusPainted(false);
-        btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnDelete.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionPanel.add(btnDelete);
-
         headerPanel.add(actionPanel, java.awt.BorderLayout.WEST);
 
         pnAll.add(headerPanel, java.awt.BorderLayout.NORTH);
@@ -688,11 +645,9 @@ public class TABEmployee extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSearchEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchEmployeeActionPerformed
-        String name = txtSearchEmpName.getText().trim();
-        String phone = txtSearchEmpPhone.getText().trim();
-        String email = txtSearchEmpEmail.getText().trim();
+        String keyword = txtSearchEmployee.getText().trim();
         
-        List<Employee> employees = employeeBUS.getEmployeeByMultipleField(name, phone, email);
+        List<Employee> employees = employeeBUS.getEmployeeByKeyword(keyword);
         if(employees.size() < 1) {
             MessageDialog.warring(null, "Không tìm thấy nhân viên phù hợp");
         }
@@ -764,9 +719,7 @@ public class TABEmployee extends javax.swing.JPanel {
             txtAddEmployeePhone.setText("");
             txtAddUsername.setText("");
             txtAddPassword.setText("");
-            txtSearchEmpName.setText("");
-            txtSearchEmpPhone.setText("");
-            txtSearchEmpEmail.setText("");
+            txtSearchEmployee.setText("");
             modalAddEmployee.dispose();
             fillContent(employeeBUS.getAllEmployee());
         }
@@ -778,10 +731,6 @@ public class TABEmployee extends javax.swing.JPanel {
     private void btnCancelAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelAddEmployeeActionPerformed
         modalAddEmployee.dispose();
     }//GEN-LAST:event_btnCancelAddEmployeeActionPerformed
-
-    private void txtAddUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAddUsernameActionPerformed
 
     private void txtEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmployeeNameActionPerformed
         // TODO add your handling code here:
@@ -817,9 +766,7 @@ public class TABEmployee extends javax.swing.JPanel {
             txtEmployeeEmail.setText("");
             txtEmployeeAddress.setText("");
             txtEmployeePhone.setText("");
-            txtSearchEmpName.setText("");
-            txtSearchEmpPhone.setText("");
-            txtSearchEmpEmail.setText("");
+            txtSearchEmployee.setText("");
             modalUpdateEmployee.dispose();
             fillContent(employeeBUS.getAllEmployee());
         }
@@ -832,34 +779,9 @@ public class TABEmployee extends javax.swing.JPanel {
         modalUpdateEmployee.dispose();
     }//GEN-LAST:event_btnCancelUpdateEmployeeActionPerformed
 
-    private void btnCofirmResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCofirmResetPasswordActionPerformed
-        String newPass = new String(txtResetPassword.getPassword());
-        
-        try {
-            Account acc = accountBUS.getByEmployeeID(employeeIdUpdate);
-            acc.setPassword(newPass);
-            accountBUS.updateAccount(acc);
-
-            MessageDialog.info(null, "Đặt lại mật khẩu thành công.");
-            txtResetPassword.setText("");
-            txtSearchEmpName.setText("");
-            txtSearchEmpPhone.setText("");
-            txtSearchEmpEmail.setText("");
-            modalResetPassword.dispose();
-            fillContent(employeeBUS.getAllEmployee());
-        }
-        catch (Exception e) {
-            MessageDialog.error(null, e.getMessage());
-        }
-    }//GEN-LAST:event_btnCofirmResetPasswordActionPerformed
-
     private void btnCancelResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelResetPasswordActionPerformed
         modalResetPassword.dispose();
     }//GEN-LAST:event_btnCancelResetPasswordActionPerformed
-
-    private void txtEmployeeNameRsPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmployeeNameRsPassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmployeeNameRsPassActionPerformed
 
     private void txtEmployeeIDRsPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmployeeIDRsPassActionPerformed
         // TODO add your handling code here:
@@ -890,7 +812,6 @@ public class TABEmployee extends javax.swing.JPanel {
     private javax.swing.JButton btnCancelResetPassword;
     private javax.swing.JButton btnCancelUpdateEmployee;
     private javax.swing.JButton btnCofirmResetPassword;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnResetPassword;
     private javax.swing.JButton btnSearchEmployee;
     private javax.swing.JButton btnUpdate;
@@ -933,8 +854,6 @@ public class TABEmployee extends javax.swing.JPanel {
     private javax.swing.JTextField txtEmployeeNameRsPass;
     private javax.swing.JTextField txtEmployeePhone;
     private javax.swing.JPasswordField txtResetPassword;
-    private javax.swing.JTextField txtSearchEmpEmail;
-    private javax.swing.JTextField txtSearchEmpName;
-    private javax.swing.JTextField txtSearchEmpPhone;
+    private javax.swing.JTextField txtSearchEmployee;
     // End of variables declaration//GEN-END:variables
 }

@@ -59,8 +59,8 @@ public class EmployeeBUS {
         return employeeDAL.findAll();
     }
     
-    public List<Employee> getEmployeeByMultipleField(String name, String phone, String email) {
-        return employeeDAL.findByMultipleField(name, phone, email);
+    public List<Employee> getEmployeeByKeyword(String keyword) {
+        return employeeDAL.findByKeyword(keyword);
     }
     
 }
