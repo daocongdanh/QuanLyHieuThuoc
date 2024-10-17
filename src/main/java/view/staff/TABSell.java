@@ -4,6 +4,7 @@
  */
 package view.staff;
 
+import view.staff.sell.PnTabOrder;
 import bus.PrescriptionBUS;
 import bus.ProductBUS;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -38,7 +39,7 @@ import view.common.TableActionEventOnlyEdit;
  *
  * @author Hoang
  */
-public class LapHoaDonForm extends javax.swing.JPanel {
+public class TABSell extends javax.swing.JPanel {
 
     static int transactionNumber = 1;
     private ProductBUS productBUS;
@@ -50,7 +51,7 @@ public class LapHoaDonForm extends javax.swing.JPanel {
     /**
      * Creates new form LapHoaDonForm
      */
-    public LapHoaDonForm() {
+    public TABSell() {
         productBUS = new ProductBUS(ConnectDB.getEntityManager());
         prescriptionBUS = new PrescriptionBUS(ConnectDB.getEntityManager());
         lookAndFeelSet();
@@ -428,7 +429,7 @@ public class LapHoaDonForm extends javax.swing.JPanel {
         if (prescriptionDetails.isEmpty()) {
             MessageDialog.warring(null, "Không có sản phẩm nào trong đơn thuốc mẫu !!!");
         } else {
-            TabOrder tabHoaDon = (TabOrder) tabbedPane.getSelectedComponent();
+            PnTabOrder tabHoaDon = (PnTabOrder) tabbedPane.getSelectedComponent();
             int quantityPre = (int) spinnerQuantity.getValue();
             if (tabHoaDon.addDonThuocMau(prescriptionDetails, quantityPre)) {
                 modalSelectPrescription.dispose();
@@ -437,14 +438,14 @@ public class LapHoaDonForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnApplyActionPerformed
 
     private void addTabHoaDon() {
-        TabOrder banHang = new TabOrder(this);
+        PnTabOrder banHang = new PnTabOrder(this);
         tabbedPane.add("Tab", banHang);
         int index = tabbedPane.indexOfComponent(banHang);
         tabbedPane.setTabComponentAt(index, createTabTitle(tabbedPane, "Giao dịch " + transactionNumber++, banHang));
         tabbedPane.setSelectedIndex(index);
     }
 
-    public void removeAndAddNewTab(TabOrder tabHoaDon) {
+    public void removeAndAddNewTab(PnTabOrder tabHoaDon) {
         tabbedPane.remove(tabHoaDon);
         addTabHoaDon();
     }
@@ -482,7 +483,7 @@ public class LapHoaDonForm extends javax.swing.JPanel {
     private void searchProduct(String textTim) {
         Product product = productBUS.searchProductBySDKOrId(textTim);
         if (product != null) {
-            TabOrder tabHoaDon = (TabOrder) tabbedPane.getSelectedComponent();
+            PnTabOrder tabHoaDon = (PnTabOrder) tabbedPane.getSelectedComponent();
             tabHoaDon.addSanPham(product);
             txtTimSanPham.setText("");
         } else {

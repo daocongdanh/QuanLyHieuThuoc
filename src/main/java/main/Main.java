@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package main;
+
 import bus.CustomerBUS;
 import bus.EmployeeBUS;
 import bus.OrderBUS;
@@ -30,11 +31,13 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
+
 /**
  *
  * @author daoducdanh
  */
 public class Main {
+
     public static void main(String[] args) {
         ConnectDB.connect();
         UnitBUS unitBUS = new UnitBUS(ConnectDB.getEntityManager());
@@ -66,9 +69,8 @@ public class Main {
 //                new PrescriptionDTO("SP001", "Hộp", 10, "Ngày dùng 2 lần")
 //        );
 //        prescriptionBUS.createPrescription(prescription, prescriptionDTOs);
-    
-//        Batch batch = batchDAL.findByNameAndProduct("oo", "SP001");
 
+//        Batch batch = batchDAL.findByNameAndProduct("oo", "SP001");
 //            List<PurchaseOrderDTO> purchaseOrderDTOs = List.of(
 //                    new PurchaseOrderDTO("SP001", "Viên", 10000, 20, "LO003", LocalDate.now())
 //            );
@@ -87,7 +89,6 @@ public class Main {
 //            Order order = new Order(null, LocalDate.now(), 0, 0, PaymentMethod.CASH, employee, null, null);
 //            orderDAL.insert(order);
 //        }
-
 //        List<ReturnPurchaseDTO> returnPurchaseDTOs = List.of(
 //                new ReturnPurchaseDTO("SP001", "Viên", 10, "LO003")
 //        );
@@ -100,7 +101,6 @@ public class Main {
 //        for(Promotion promotion : promotions){
 //            System.out.println(promotion);
 //        }
-
 //        List<OrderDTO> orderDTOs = List.of(
 //                new OrderDTO("SP001", "Vĩ", 15, "LO002"),
 //                new OrderDTO("SP001", "Viên", 50, "LO003"),
@@ -111,12 +111,10 @@ public class Main {
 //            employeeBUS.createEmployee(new Employee(null, "Nhân viên thứ "+i, 
 //                    "0392401233", "Kon Tum", "nhanvien@gmail.com" , "Nhân viên"));
 //        }
-        
 //        for(int i = 1 ; i <= 5 ; i++){
 //            customerBUS.createCustomer(new Customer(null, "Khách hàng thứ " + i,
 //                    "039240123123", "Gò Vấp", "khachhang@gmail.com"));
 //        }
-        
 //        for(int i = 1 ; i <= 5 ; i++){
 ////            customerBUS.createCustomer(new Customer(null, "Khách hàng thứ " + i,
 ////                    "039240123123", "Gò Vấp", "khachhang@gmail.com"));
@@ -146,22 +144,19 @@ public class Main {
 //                new UnitDTO("Lọ", 1, true)
 //        );
 //        productBUS.createProduct(product, unitDTOs);
-
 //        List<PurchaseOrderDTO> purchaseOrderDTOs = List.of(
 //                    new PurchaseOrderDTO("SP00001", "Gói", 100, "SP0001-Lo002", LocalDate.now())
 //        );
 //        purchaseOrderBUS.createPurchaseOrder("NV00001", "NCC00001", purchaseOrderDTOs);
-
 //            List<OrderDTO> orderDTOs = List.of(
 //                new OrderDTO("SP00001", "Gói", 15, "SP0001-Lo001"),
 //                new OrderDTO("SP00002", "Viên", 50, "SP0002-Lo001")
 //        );
 //        orderBUS.createOrder("NV00001", "KH00001", null, orderDTOs);
-//        try{
-//           Account account = new Account("!23", "@", "Asd", null);
-//        }
-//        catch(Exception e){
-//            System.out.println("hehe :"  + e.getMessage());
+//        try {
+//            Account account = new Account("123", "@", "Asd", null);
+//        } catch (Exception e) {
+//            System.out.println("hehe :" + e.getMessage());
 //        }
     }
 }

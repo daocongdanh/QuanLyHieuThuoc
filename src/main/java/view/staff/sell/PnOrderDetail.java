@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package view.staff;
+package view.staff.sell;
 
+import bus.OrderDetailBUS;
 import com.formdev.flatlaf.FlatClientProperties;
 import dto.BatchDTO;
 import dto.OrderDetailSelected;
@@ -36,7 +37,7 @@ public class PnOrderDetail extends javax.swing.JPanel {
     private List<UnitDetail> unitDetails;
     private List<Batch> batchs;
     private Promotion promotion;
-    private TabOrder tabHoaDon;
+    private PnTabOrder tabHoaDon;
     private OrderDetailSelected orderDetailSelected;
 
     public PnOrderDetail() {
@@ -44,7 +45,7 @@ public class PnOrderDetail extends javax.swing.JPanel {
     }
 
     public PnOrderDetail(Product product, List<UnitDetail> unitDetails, List<Batch> batchs, Promotion promotion,
-            TabOrder tabHoaDon, OrderDetailSelected orderDetailSelected) {
+            PnTabOrder tabHoaDon, OrderDetailSelected orderDetailSelected) {
         this.unitDetails = unitDetails;
         this.batchs = batchs;
         this.product = product;
@@ -80,7 +81,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
     }
 
     private void fillFirst() {
-        // fill unit
         comboChonDvt.removeAllItems();
 
         for (UnitDetail unitDetail : unitDetails) {

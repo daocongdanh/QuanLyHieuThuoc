@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package view.staff;
+package view.staff.sell;
 
 import bus.BatchBUS;
 import bus.CustomerBUS;
@@ -30,12 +30,13 @@ import java.util.Map;
 import javax.swing.JSpinner;
 import util.CurrentEmployee;
 import view.common.SuggestPriceButton;
+import view.staff.TABSell;
 
 /**
  *
  * @author Hoang
  */
-public class TabOrder extends javax.swing.JPanel {
+public class PnTabOrder extends javax.swing.JPanel {
 
     /**
      * Creates new form TabHoaDon
@@ -45,9 +46,9 @@ public class TabOrder extends javax.swing.JPanel {
     private UnitDetailBUS unitDetailBUS;
     private BatchBUS batchBUS;
     private PromotionBUS promotionBUS;
-    private LapHoaDonForm lapHoaDonForm;
+    private TABSell lapHoaDonForm;
 
-    public TabOrder(LapHoaDonForm lapHoaDonForm) {
+    public PnTabOrder(TABSell lapHoaDonForm) {
         this.lapHoaDonForm = lapHoaDonForm;
         this.orderBUS = new OrderBUS(ConnectDB.getEntityManager());
         this.customerBUS = new CustomerBUS(ConnectDB.getEntityManager());
@@ -589,8 +590,6 @@ public class TabOrder extends javax.swing.JPanel {
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel14.setText("Tổng giảm giá sản phẩm:");
-        jLabel14.setMinimumSize(new java.awt.Dimension(174, 22));
-        jLabel14.setPreferredSize(new java.awt.Dimension(174, 22));
 
         txtDiscountProduct.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtDiscountProduct.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -601,7 +600,7 @@ public class TabOrder extends javax.swing.JPanel {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(txtDiscountProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))

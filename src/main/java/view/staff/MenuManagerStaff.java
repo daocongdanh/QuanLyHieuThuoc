@@ -30,7 +30,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
-        menuSwitch(new LapHoaDonForm(), TabMenu.TAB_SELL, menuSell);
+        menuSwitch(new TABReturnOrder(), TabMenu.TAB_RETURN, menuReturn);
 
     }
 
@@ -58,6 +58,8 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         if (currentTab == tabMoi) {
             return;
         }
+        
+        menuSell.setDefault();
         menuReport.setDefault();       // Báo Cáo Thu Chi
         menuCustomer.setDefault();     // Quản Lý Khách Hàng
         menuDamaged.setDefault();      // Quản Lý Xuất Hủy

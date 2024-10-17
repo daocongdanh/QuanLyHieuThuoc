@@ -129,4 +129,15 @@ public class OrderBUS {
             return false;
         }
     }
+    
+    public Order findById(String orderId){
+        return orderDAL.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));
+    }
+    
+    public Order findByIdAndNotInPromotion( String orderId ){
+        return orderDAL.findByIdAndNotInPromotion(orderId)
+                .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));
+    }
+    
 }

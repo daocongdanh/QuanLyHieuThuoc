@@ -3,18 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dal;
+
 import entity.Order;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
+
 /**
  *
  * @author daoducdanh
  */
-public class OrderDAL implements BaseDAL<Order, String>{
+public class OrderDAL implements BaseDAL<Order, String> {
+
     private EntityManager entityManager;
-    
+
     public OrderDAL(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -43,5 +47,13 @@ public class OrderDAL implements BaseDAL<Order, String>{
         return entityManager.createQuery("select o from Order o", Order.class).getResultList();
     }
 
-    
+    public Optional<Order> findByIdAndNotInPromotion(String id) {
+        TypedQuery<Order> query = entityManager.createQuery(
+                "SELECT o FROM Order o WHERE o.orderId = ?1 AND o.promotion IS NULL", Order.class);
+        query.setParameter(1, id);
+
+        List<Order> results = query.getResultList();
+        return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
+    }
+
 }

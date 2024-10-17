@@ -54,7 +54,7 @@ public class Order {
     @JoinColumn(name = "promotion_id")
     private Promotion promotion;
     
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<OrderDetail> orderDetails;
     
     public Order(){

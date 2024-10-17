@@ -6,6 +6,7 @@ package bus;
 
 import dal.BatchDAL;
 import entity.Batch;
+import entity.Order;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
@@ -37,5 +38,5 @@ public class BatchBUS {
     public Batch getBatchByNameAndProduct(String batchName, String productId){
         return batchDAL.findByNameAndProduct(batchName, productId);
     }
-    
+      
 }

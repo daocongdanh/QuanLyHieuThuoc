@@ -24,6 +24,11 @@ public class PrescriptionDetailDAL{
         return true;
     }
     
+    public boolean remove( PrescriptionDetail prescriptionDetail ){
+        entityManager.remove(prescriptionDetail);
+        return true;
+    }
+    
     public List<PrescriptionDetail> findAllByPrescription(String prescriptionId){
         String jpql = "select pd from PrescriptionDetail pd where pd.prescription.prescriptionId = ?1";
         TypedQuery<PrescriptionDetail> query = entityManager.createQuery(jpql, PrescriptionDetail.class);

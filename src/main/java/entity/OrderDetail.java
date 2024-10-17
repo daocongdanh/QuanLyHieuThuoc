@@ -116,14 +116,7 @@ public class OrderDetail {
 
     public void setDiscount(double discount) {
         this.discount = discount;
-    }
-
-    
-    @Override
-    public String toString() {
-        return "OrderDetail{" + "quantity=" + quantity + ", price=" + price + ", lineTotal=" + lineTotal + ", batch=" + batch + ", unitDetail=" + unitDetail + ", order=" + order + '}';
-    }
-    
+    }  
     
 }
 
