@@ -64,8 +64,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 //        currentTab = TabMenu.TAB_UNIT;
 //        currentTab = TabMenu.TAB_ORDER;
 //        menuSwitch(tabPurChaseOrder, TabMenu.TAB_PURCHASE, menuPurchase);
-//        menuSwitch(tabDamageItem, TabMenu.TAB_DAMAGED, menuDamaged);
-          mainContent.add(new TABEmployee());
+        menuSwitch(tabDamageItem, TabMenu.TAB_DAMAGED, menuDamaged);
     }
 
     private void setTitleMenu() {         
