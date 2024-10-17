@@ -22,7 +22,40 @@ public class AccountBUS {
         this.transaction = entityManager.getTransaction();
     }
     
+    public boolean createAccount(Account account){
+        try{
+            transaction.begin();
+            accountDAL.insert(account);
+            transaction.commit();
+            return true;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            transaction.rollback();
+            return false;
+        }
+    }
+    
+    public boolean updateAccount(Account account) {
+        try {
+            transaction.begin();
+            accountDAL.update(account);
+            transaction.commit();
+            return true;
+        } 
+        catch(Exception e) {
+            System.out.println(e.getMessage());
+            transaction.rollback();
+            return false;
+        }
+    }
+    
     public Account login(String username, String password){
         return accountDAL.login(username, password);
+    }
+    
+    public Account getByEmployeeID(String employeeId) {
+        return accountDAL.findByEmployeeId(employeeId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy tài khoản"));
     }
 }

@@ -6,6 +6,7 @@ package dal;
 import entity.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
@@ -44,5 +45,10 @@ public class EmployeeDAL implements BaseDAL<Employee, String>{
         return entityManager.createQuery("select e from Employee e", Employee.class).getResultList();
     }
 
-    
+    public List<Employee> findByKeyword(String keyword) {
+        TypedQuery<Employee> query = entityManager.createQuery("select e from Employee e where e.name like ?1 or e.phone like ?1 or e.email like ?1", Employee.class);
+        query.setParameter(1, "%" + keyword + "%");
+        return query.getResultList();
+    }   
+   
 }

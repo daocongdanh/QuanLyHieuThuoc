@@ -42,10 +42,10 @@ public class PrescriptionDetail {
     }
 
     public PrescriptionDetail(UnitDetail unitDetail, Prescription prescription, int quantity, String description) {
-        this.unitDetail = unitDetail;
-        this.prescription = prescription;
-        this.quantity = quantity;
-        this.description = description;
+        setUnitDetail(unitDetail);
+        setPrescription(prescription);
+        setQuantity(quantity);
+        setDescription(description);
     }
 
     public UnitDetail getUnitDetail() {
@@ -53,6 +53,9 @@ public class PrescriptionDetail {
     }
 
     public void setUnitDetail(UnitDetail unitDetail) {
+        if (unitDetail == null) {
+            throw new RuntimeException("Chi tiết đơn vị tính không được rỗng!");
+        }
         this.unitDetail = unitDetail;
     }
 
@@ -61,6 +64,9 @@ public class PrescriptionDetail {
     }
 
     public void setPrescription(Prescription prescription) {
+        if (prescription == null) {
+            throw new RuntimeException("Đơn thuốc mẫu không được rỗng!");
+        }
         this.prescription = prescription;
     }
 
@@ -69,6 +75,9 @@ public class PrescriptionDetail {
     }
 
     public void setQuantity(int quantity) {
+        if (quantity <= 0) {
+            throw new RuntimeException("số lượng sản phẩm phải > 0!");
+        }
         this.quantity = quantity;
     }
 
@@ -77,6 +86,9 @@ public class PrescriptionDetail {
     }
 
     public void setDescription(String description) {
+        if (description.equals("")) {
+            throw new RuntimeException("Mô tả không được rỗng!");
+        }
         this.description = description;
     }
 

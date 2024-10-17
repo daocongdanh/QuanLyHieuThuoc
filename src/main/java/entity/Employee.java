@@ -45,11 +45,11 @@ public class Employee {
 
     public Employee(String employeeId, String name, String phone, String address, String email, String role) {
         this.employeeId = employeeId;
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-        this.email = email;
-        this.role = role;
+        setName(name);
+        setPhone(phone);
+        setAddress(address);
+        setEmail(email);
+        setRole(role);
     }
 
     public String getEmployeeId() {
@@ -65,6 +65,9 @@ public class Employee {
     }
 
     public void setName(String name) {
+        if (name.equals("")) {
+            throw new RuntimeException("Tên nhân viên không được rỗng!");
+        }
         this.name = name;
     }
 
@@ -73,6 +76,9 @@ public class Employee {
     }
 
     public void setPhone(String phone) {
+        if (!(phone.matches("^\\d{10}$"))) {
+            throw new RuntimeException("Số điện thoại phải đủ 10 số!");
+        }
         this.phone = phone;
     }
 
@@ -81,6 +87,9 @@ public class Employee {
     }
 
     public void setAddress(String address) {
+        if(address.equals("")) {
+            throw new RuntimeException("Địa chỉ không được rỗng");
+        }
         this.address = address;
     }
 
@@ -89,6 +98,9 @@ public class Employee {
     }
 
     public void setEmail(String email) {
+        if (!(email.matches("^[a-zA-Z0-9]+@[a-zA-Z]+\\.com$"))) {
+            throw new RuntimeException("Email không đúng định dạng!");
+        }
         this.email = email;
     }
 
@@ -97,6 +109,9 @@ public class Employee {
     }
 
     public void setRole(String role) {
+        if (!(role.equalsIgnoreCase("Nhân viên")) && !(role.equalsIgnoreCase("Quản lý"))) {
+            throw new RuntimeException("Chức vụ chỉ bao gồm Nhân viên và Quản Lý!");
+        }
         this.role = role;
     }
 
