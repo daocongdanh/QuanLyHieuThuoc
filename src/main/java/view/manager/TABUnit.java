@@ -114,6 +114,11 @@ public class TABUnit extends javax.swing.JPanel {
         modalAddUnit.setMinimumSize(new java.awt.Dimension(738, 260));
         modalAddUnit.setModal(true);
         modalAddUnit.setResizable(false);
+        modalAddUnit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modalAddUnitMouseClicked(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setMaximumSize(new java.awt.Dimension(738, 248));
@@ -364,6 +369,11 @@ public class TABUnit extends javax.swing.JPanel {
         btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDelete.setPreferredSize(new java.awt.Dimension(100, 90));
         btnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         actionPanel.add(btnDelete);
 
         btnImport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -521,6 +531,14 @@ public class TABUnit extends javax.swing.JPanel {
         modalAddUnit.setLocationRelativeTo(null);
         modalAddUnit.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void modalAddUnitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modalAddUnitMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modalAddUnitMouseClicked
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private String unitIdEdit;
     // Variables declaration - do not modify//GEN-BEGIN:variables

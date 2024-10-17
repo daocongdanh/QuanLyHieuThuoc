@@ -61,11 +61,11 @@ public class ReturnOrder {
     public ReturnOrder(String returnOrderId, LocalDate orderDate, String reason, Employee employee, Order order
     , List<ReturnOrderDetail> returnOrderDetails, boolean status) {
         this.returnOrderId = returnOrderId;
-        this.orderDate = orderDate;
-        this.reason = reason;
-        this.employee = employee;
-        this.order = order;
-        this.returnOrderDetails = returnOrderDetails;
+        setOrderDate(orderDate);
+        setReason(reason);
+        setEmployee(employee);
+        setOrder(order);
+        setReturnOrderDetails(returnOrderDetails);
         this.status = status;
         for(ReturnOrderDetail returnOrderDetail : returnOrderDetails){
             returnOrderDetail.setReturnOrder(this);
@@ -86,6 +86,10 @@ public class ReturnOrder {
     }
 
     public void setOrderDate(LocalDate orderDate) {
+        LocalDate currentDate = LocalDate.now();
+        if(!orderDate.isEqual(currentDate)){
+            throw new RuntimeException("Ngày lập đơn nhập hàng không hợp lệ");
+        }
         this.orderDate = orderDate;
     }
 
@@ -94,6 +98,8 @@ public class ReturnOrder {
     }
 
     public void setReason(String reason) {
+        if(reason == null)
+            throw new RuntimeException("Lí do trả hàng không được rỗng");
         this.reason = reason;
     }
 
@@ -112,6 +118,8 @@ public class ReturnOrder {
     }
 
     public void setEmployee(Employee employee) {
+        if(employee == null)
+            throw  new RuntimeException("Nhân viên không được rỗng");
         this.employee = employee;
     }
 
@@ -120,6 +128,9 @@ public class ReturnOrder {
     }
 
     public void setOrder(Order order) {
+        if(order == null){
+            throw new RuntimeException("Hóa đơn không được rỗng");
+        }
         this.order = order;
     }
 
@@ -136,6 +147,8 @@ public class ReturnOrder {
     }
 
     public void setReturnOrderDetails(List<ReturnOrderDetail> returnOrderDetails) {
+        if(returnOrderDetails == null)
+            throw new RuntimeException("Danh sách chi tiết hóa đơn trả khách hàng không được rỗng");
         this.returnOrderDetails = returnOrderDetails;
     }
 
