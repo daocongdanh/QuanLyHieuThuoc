@@ -33,10 +33,6 @@ public class ReturnOrder {
     @Column(name = "order_date")
     private LocalDate orderDate;
     
-    @Column(name = "reason")
-    @Nationalized
-    private String reason;
-    
     @Column(name = "total_price")
     private double totalPrice;
     
@@ -58,14 +54,21 @@ public class ReturnOrder {
         
     }
 
-    public ReturnOrder(String returnOrderId, LocalDate orderDate, String reason, Employee employee, Order order
+    public ReturnOrder(String returnOrderId, LocalDate orderDate, Employee employee, Order order
     , List<ReturnOrderDetail> returnOrderDetails, boolean status) {
         this.returnOrderId = returnOrderId;
+<<<<<<< HEAD
         setOrderDate(orderDate);
         setReason(reason);
         setEmployee(employee);
         setOrder(order);
         setReturnOrderDetails(returnOrderDetails);
+=======
+        this.orderDate = orderDate;
+        this.employee = employee;
+        this.order = order;
+        this.returnOrderDetails = returnOrderDetails;
+>>>>>>> dd4613967900d6b96bee59bfa7cb6b3502322f56
         this.status = status;
         for(ReturnOrderDetail returnOrderDetail : returnOrderDetails){
             returnOrderDetail.setReturnOrder(this);
@@ -93,6 +96,7 @@ public class ReturnOrder {
         this.orderDate = orderDate;
     }
 
+<<<<<<< HEAD
     public String getReason() {
         return reason;
     }
@@ -103,6 +107,8 @@ public class ReturnOrder {
         this.reason = reason;
     }
 
+=======
+>>>>>>> dd4613967900d6b96bee59bfa7cb6b3502322f56
     public double getTotalPrice() {
         return totalPrice;
     }
@@ -154,7 +160,9 @@ public class ReturnOrder {
 
     @Override
     public String toString() {
-        return "ReturnOrder{" + "returnOrderId=" + returnOrderId + ", orderDate=" + orderDate + ", reason=" + reason + ", totalPrice=" + totalPrice + ", status=" + status + ", employee=" + employee + ", order=" + order + ", returnOrderDetails=" + returnOrderDetails + '}';
+        return "ReturnOrder{" + "returnOrderId=" + returnOrderId + ", orderDate=" + orderDate + ", totalPrice=" + totalPrice + ", status=" + status + ", employee=" + employee + ", order=" + order + ", returnOrderDetails=" + returnOrderDetails + '}';
     }
+
+    
     
 }

@@ -43,7 +43,13 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 //    private TAB_SUPPLIER tabSupplier;
     private TABUnit tabUnit;
     private TabMenu currentTab;
+<<<<<<< HEAD
     private TABSupplier tabSupplier;
+=======
+    private TABOrder tabOrder;
+    private TABPurchaseOrder tabPurChaseOrder;
+    private TABDamageItem tabDamageItem;
+>>>>>>> dd4613967900d6b96bee59bfa7cb6b3502322f56
 
     public MenuManagerAdmin() {
         ConnectDB.connect();
@@ -51,14 +57,26 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         tabSupplier = new TABSupplier();
 //        tabCustomer = new TABCustomer();
         tabPrescription = new TABPrecription();
+        tabOrder = new TABOrder();
+        tabPurChaseOrder = new TABPurchaseOrder();
+        tabDamageItem = new TABDamageItem();
         initComponents();
         UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
+<<<<<<< HEAD
         //menuSwitch(tabUnit, TabMenu.TAB_UNIT, menuUnit);
         //currentTab = TabMenu.TAB_UNIT;
         menuSwitch(tabSupplier , TabMenu.TAB_SUPPLIER, menuSupplier);
         currentTab = TabMenu.TAB_SUPPLIER;
+=======
+//        menuSwitch(tabUnit, TabMenu.TAB_UNIT, menuUnit);
+//        menuSwitch(tabOrder, TabMenu.TAB_ORDER, menuOrder);
+//        currentTab = TabMenu.TAB_UNIT;
+//        currentTab = TabMenu.TAB_ORDER;
+//        menuSwitch(tabPurChaseOrder, TabMenu.TAB_PURCHASE, menuPurchase);
+        menuSwitch(tabDamageItem, TabMenu.TAB_DAMAGED, menuDamaged);
+>>>>>>> dd4613967900d6b96bee59bfa7cb6b3502322f56
     }
 
     private void setTitleMenu() {         

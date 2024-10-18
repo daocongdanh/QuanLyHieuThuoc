@@ -48,7 +48,7 @@ public class AccountDAL implements BaseDAL<Account, String>{
 
 
     public Account login(String username, String password){
-        String jpql = "select a from Account a where a.username = ?1 and a.password = ?2";
+        String jpql = "select a from Account a where a.employee.employeeId = ?1 and a.password = ?2";
         TypedQuery<Account> query = entityManager.createQuery(jpql, Account.class);
         query.setParameter(1, username);
         query.setParameter(2, password);
@@ -58,4 +58,17 @@ public class AccountDAL implements BaseDAL<Account, String>{
             return null;
         }
     }
+    
+    public Optional<Account> findByEmployeeId(String employeeId) {
+        try {
+            Account account = entityManager.createQuery(
+                "select a from Account a where a.employee.employeeId = ?1", Account.class)
+                .setParameter(1, employeeId)
+                .getSingleResult();
+            return Optional.ofNullable(account);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    } 
+        
 }

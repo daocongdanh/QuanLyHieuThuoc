@@ -24,9 +24,6 @@ public class Account {
     @Column(name = "account_id")
     private String accountId;
     
-    @Column(name = "username")
-    private String username;
-    
     @Column(name = "password")
     private String password;
     
@@ -38,9 +35,8 @@ public class Account {
         
     }
     
-    public Account(String accountId, String username, String password, Employee employee) {
+    public Account(String accountId, String password, Employee employee) {
         this.accountId = accountId;
-        setUsername(username);
         setPassword(password);
         setEmployee(employee);
     }
@@ -51,16 +47,6 @@ public class Account {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        if(username.length() < 8)
-            throw new RuntimeException("Tên đăng nhập không hợp lệ");
-        this.username = username;
     }
 
     public String getPassword() {
@@ -86,8 +72,9 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "accountId=" + accountId + ", username=" + username + ", password=" + password + ", employee=" + employee + '}';
+        return "Account{" + "accountId=" + accountId + ", password=" + password + ", employee=" + employee + '}';
     }
+
     
     
     

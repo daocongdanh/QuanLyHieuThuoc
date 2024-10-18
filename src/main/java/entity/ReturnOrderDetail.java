@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Nationalized;
 /**
  *
  * @author daoducdanh
@@ -23,6 +24,10 @@ public class ReturnOrderDetail {
     
     @Column(name = "price")
     private double price;
+    
+    @Column(name = "reason")
+    @Nationalized
+    private String reason;
     
     @Column(name = "line_total")
     private double lineTotal;
@@ -79,6 +84,16 @@ public class ReturnOrderDetail {
         this.price = price;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    
+    
     public double getLineTotal() {
         return lineTotal;
     }
@@ -128,10 +143,8 @@ public class ReturnOrderDetail {
 
     @Override
     public String toString() {
-        return "ReturnOrderDetail{" + "quantity=" + quantity + ", price=" + price + ", lineTotal=" + lineTotal + ", returnOrderDetailStatus=" + returnOrderDetailStatus + ", batch=" + batch + ", unitDetail=" + unitDetail + ", returnOrder=" + returnOrder + '}';
+        return "ReturnOrderDetail{" + "quantity=" + quantity + ", price=" + price + ", reason=" + reason + ", lineTotal=" + lineTotal + ", returnOrderDetailStatus=" + returnOrderDetailStatus + ", batch=" + batch + ", unitDetail=" + unitDetail + ", returnOrder=" + returnOrder + '}';
     }
 
-   
-    
     
 }

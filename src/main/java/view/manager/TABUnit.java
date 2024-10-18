@@ -498,12 +498,6 @@ public class TABUnit extends javax.swing.JPanel {
         fillContent(units);
     }//GEN-LAST:event_btnOpenModalAddUnitActionPerformed
 
-    private void txtSearchUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchUnitActionPerformed
-        String name = txtSearchUnit.getText().trim();
-        List<Unit> units = unitBUS.getUnitByNameSearch(name);
-        fillContent(units);
-    }//GEN-LAST:event_txtSearchUnitActionPerformed
-
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         if (unitBUS.importExcel()) {
             MessageDialog.info(null, "Import file thành công");
@@ -532,6 +526,7 @@ public class TABUnit extends javax.swing.JPanel {
         modalAddUnit.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
+<<<<<<< HEAD
     private void modalAddUnitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modalAddUnitMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_modalAddUnitMouseClicked
@@ -539,6 +534,13 @@ public class TABUnit extends javax.swing.JPanel {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteActionPerformed
+=======
+    private void txtSearchUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchUnitActionPerformed
+        String name = txtSearchUnit.getText().trim();
+        List<Unit> units = unitBUS.getUnitByNameSearch(name);
+        fillContent(units);
+    }//GEN-LAST:event_txtSearchUnitActionPerformed
+>>>>>>> dd4613967900d6b96bee59bfa7cb6b3502322f56
 
     private String unitIdEdit;
     // Variables declaration - do not modify//GEN-BEGIN:variables
