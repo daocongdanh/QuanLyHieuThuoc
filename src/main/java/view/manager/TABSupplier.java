@@ -134,7 +134,6 @@ public class TABSupplier extends javax.swing.JPanel {
         txtSupEmailAdd = new javax.swing.JTextField();
         btnSupplierAdd = new javax.swing.JButton();
         btnSupplierExit = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         modelSupplierEdit = new javax.swing.JDialog();
         jPanel8 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
@@ -149,7 +148,6 @@ public class TABSupplier extends javax.swing.JPanel {
         txtSupEmailEdit = new javax.swing.JTextField();
         btnSupplierEdit = new javax.swing.JButton();
         btnSupplierExit2 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         pnAll = new javax.swing.JPanel();
         headerPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -172,46 +170,50 @@ public class TABSupplier extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel12.setText("Tên nhà cung cấp :");
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel13.setText("SDT :");
 
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel14.setText("Địa chỉ :");
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel15.setText("Mã số Thuế :");
 
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel16.setText("Email :");
 
+        txtSupPhoneAdd.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupPhoneAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupPhoneAddActionPerformed(evt);
             }
         });
 
-        txtSupNameAdd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSupNameAdd.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupNameAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupNameAddActionPerformed(evt);
             }
         });
 
+        txtSupAddressAdd.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupAddressAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupAddressAddActionPerformed(evt);
             }
         });
 
+        txtSupTaxCodeAdd.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupTaxCodeAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupTaxCodeAddActionPerformed(evt);
             }
         });
 
+        txtSupEmailAdd.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupEmailAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupEmailAddActionPerformed(evt);
@@ -219,7 +221,7 @@ public class TABSupplier extends javax.swing.JPanel {
         });
 
         btnSupplierAdd.setBackground(new java.awt.Color(0, 51, 255));
-        btnSupplierAdd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSupplierAdd.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnSupplierAdd.setText("Thêm");
         btnSupplierAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,7 +230,7 @@ public class TABSupplier extends javax.swing.JPanel {
         });
 
         btnSupplierExit.setBackground(new java.awt.Color(255, 0, 0));
-        btnSupplierExit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSupplierExit.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnSupplierExit.setText("Thoát");
         btnSupplierExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,81 +238,77 @@ public class TABSupplier extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Thêm nhà cung cấp");
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(124, Short.MAX_VALUE)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSupEmailAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSupTaxCodeAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSupAddressAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSupPhoneAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSupNameAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnSupplierAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSupplierAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
                 .addComponent(btnSupplierExit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+                .addGap(70, 70, 70))
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(90, 90, 90)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSupAddressAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                            .addComponent(txtSupNameAdd))
+                        .addGap(84, 84, 84)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtSupPhoneAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSupEmailAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtSupTaxCodeAdd))
+                .addGap(59, 96, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(80, 80, 80)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSupNameAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSupAddressAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSupPhoneAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSupEmailAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                    .addComponent(txtSupNameAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSupPhoneAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSupTaxCodeAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSupplierAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSupplierExit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                    .addComponent(txtSupAddressAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSupEmailAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSupTaxCodeAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSupplierExit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSupplierAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout modelSupplierAddLayout = new javax.swing.GroupLayout(modelSupplierAdd.getContentPane());
         modelSupplierAdd.getContentPane().setLayout(modelSupplierAddLayout);
         modelSupplierAddLayout.setHorizontalGroup(
             modelSupplierAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, modelSupplierAddLayout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         modelSupplierAddLayout.setVerticalGroup(
             modelSupplierAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         modelSupplierEdit.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -323,46 +321,50 @@ public class TABSupplier extends javax.swing.JPanel {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel17.setText("Tên nhà cung cấp :");
 
-        jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel18.setText("SDT :");
 
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel19.setText("Địa chỉ :");
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel20.setText("Mã số Thuế :");
 
-        jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel21.setText("Email :");
 
+        txtSupPhoneEdit.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupPhoneEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupPhoneEditActionPerformed(evt);
             }
         });
 
-        txtSupNameEdit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSupNameEdit.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupNameEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupNameEditActionPerformed(evt);
             }
         });
 
+        txtSupAddressEdit.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupAddressEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupAddressEditActionPerformed(evt);
             }
         });
 
+        txtSupTaxCodeEdit.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupTaxCodeEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupTaxCodeEditActionPerformed(evt);
             }
         });
 
+        txtSupEmailEdit.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSupEmailEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupEmailEditActionPerformed(evt);
@@ -387,72 +389,70 @@ public class TABSupplier extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel2.setText("Sửa Thông Tin Nhà Cung Cấp");
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(124, Short.MAX_VALUE)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(116, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSupplierEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(btnSupplierExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSupTaxCodeEdit)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSupEmailEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSupTaxCodeEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSupAddressEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSupPhoneEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSupNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnSupplierEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(btnSupplierExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(318, 318, 318))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtSupAddressEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSupNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(78, 78, 78)))
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSupEmailEdit)
+                            .addComponent(txtSupPhoneEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(77, 77, 77))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(txtSupNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(txtSupAddressEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(txtSupPhoneEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(txtSupEmailEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(txtSupTaxCodeEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(44, 44, 44)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSupplierEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSupplierExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSupNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSupPhoneEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSupAddressEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSupEmailEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtSupTaxCodeEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSupplierEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSupplierExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(71, 71, 71))))
         );
 
         javax.swing.GroupLayout modelSupplierEditLayout = new javax.swing.GroupLayout(modelSupplierEdit.getContentPane());
@@ -463,7 +463,7 @@ public class TABSupplier extends javax.swing.JPanel {
         );
         modelSupplierEditLayout.setVerticalGroup(
             modelSupplierEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setBackground(new java.awt.Color(204, 204, 0));
@@ -483,7 +483,7 @@ public class TABSupplier extends javax.swing.JPanel {
         jPanel6.setPreferredSize(new java.awt.Dimension(584, 50));
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));
 
-        txtSearchSupplier.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSearchSupplier.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSearchSupplier.setMinimumSize(new java.awt.Dimension(300, 40));
         txtSearchSupplier.setPreferredSize(new java.awt.Dimension(300, 40));
         txtSearchSupplier.addActionListener(new java.awt.event.ActionListener() {
@@ -609,7 +609,8 @@ public class TABSupplier extends javax.swing.JPanel {
             table.getCellEditor().stopCellEditing();
         }
         
-        modelSupplierEdit.setSize(800, 600);
+        modelSupplierEdit.setSize(1050, 580);
+        modelSupplierEdit.setTitle("Sửa thông tin nhà cung cấp");
         modelSupplierEdit.setLocationRelativeTo(null);
         modelSupplierEdit.pack(); 
         modelSupplierEdit.setVisible(true);
@@ -618,55 +619,11 @@ public class TABSupplier extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        modelSupplierAdd.setSize(800, 600);
+        modelSupplierAdd.setSize(1050, 580);
+        modelSupplierAdd.setTitle("Thêm nhà cung cấp");
         modelSupplierAdd.setLocationRelativeTo(null);
         modelSupplierAdd.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
-
-    private void txtSupPhoneAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupPhoneAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSupPhoneAddActionPerformed
-
-    private void txtSupNameAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupNameAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSupNameAddActionPerformed
-
-    private void txtSupAddressAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupAddressAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSupAddressAddActionPerformed
-
-    private void txtSupTaxCodeAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupTaxCodeAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSupTaxCodeAddActionPerformed
-
-    private void txtSupEmailAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupEmailAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSupEmailAddActionPerformed
-
-    private void btnSupplierAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierAddActionPerformed
-        
-        String name = txtSupNameAdd.getText().trim();
-        String address = txtSupAddressAdd.getText().trim();
-        String phone = txtSupPhoneAdd.getText().trim();
-        String email = txtSupEmailAdd.getText().trim();
-        String taxCode = txtSupTaxCodeAdd.getText().trim(); 
-
-        try {
-            Supplier sup = new Supplier(null, name, address, phone,email, taxCode);
-            supplierBUS.createrSupplier(sup); 
-            MessageDialog.info(null, "Thêm nhà cung cấp mới thành công.");
-            txtSupNameAdd.setText("");
-            txtSupAddressAdd.setText("");
-            txtSupPhoneAdd.setText("");
-            txtSupEmailAdd.setText("");
-            txtSupTaxCodeAdd.setText("");
-            txtSearchSupplier.setText("");
-            modelSupplierAdd.dispose();
-            fillContent(supplierBUS.getAllSuppliers());
-        } catch (Exception e) {
-            MessageDialog.error(null, e.getMessage());
-        }
-    }//GEN-LAST:event_btnSupplierAddActionPerformed
 
     private void modelSupplierAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modelSupplierAddMouseClicked
         // TODO add your handling code here:
@@ -733,13 +690,58 @@ public class TABSupplier extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_modelSupplierEditKeyReleased
 
+    private void btnSupplierExit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierExit2ActionPerformed
+        modelSupplierEdit.dispose();
+    }//GEN-LAST:event_btnSupplierExit2ActionPerformed
+
     private void btnSupplierExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierExitActionPerformed
         modelSupplierAdd.dispose();
     }//GEN-LAST:event_btnSupplierExitActionPerformed
 
-    private void btnSupplierExit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierExit2ActionPerformed
-        modelSupplierEdit.dispose();
-    }//GEN-LAST:event_btnSupplierExit2ActionPerformed
+    private void btnSupplierAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierAddActionPerformed
+
+        String name = txtSupNameAdd.getText().trim();
+        String address = txtSupAddressAdd.getText().trim();
+        String phone = txtSupPhoneAdd.getText().trim();
+        String email = txtSupEmailAdd.getText().trim();
+        String taxCode = txtSupTaxCodeAdd.getText().trim();
+
+        try {
+            Supplier sup = new Supplier(null, name, address, phone,email, taxCode);
+            supplierBUS.createrSupplier(sup);
+            MessageDialog.info(null, "Thêm nhà cung cấp mới thành công.");
+            txtSupNameAdd.setText("");
+            txtSupAddressAdd.setText("");
+            txtSupPhoneAdd.setText("");
+            txtSupEmailAdd.setText("");
+            txtSupTaxCodeAdd.setText("");
+            txtSearchSupplier.setText("");
+            modelSupplierAdd.dispose();
+            fillContent(supplierBUS.getAllSuppliers());
+        } catch (Exception e) {
+            MessageDialog.error(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnSupplierAddActionPerformed
+
+    private void txtSupEmailAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupEmailAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSupEmailAddActionPerformed
+
+    private void txtSupTaxCodeAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupTaxCodeAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSupTaxCodeAddActionPerformed
+
+    private void txtSupAddressAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupAddressAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSupAddressAddActionPerformed
+
+    private void txtSupNameAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupNameAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSupNameAddActionPerformed
+
+    private void txtSupPhoneAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupPhoneAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSupPhoneAddActionPerformed
 
     //private String unitIdEdit;
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -753,7 +755,6 @@ public class TABSupplier extends javax.swing.JPanel {
     private javax.swing.JButton btnSupplierExit2;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JPanel headerPanel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -762,7 +763,6 @@ public class TABSupplier extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanel4;
