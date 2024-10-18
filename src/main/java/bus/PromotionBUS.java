@@ -11,6 +11,7 @@ import jakarta.persistence.EntityManager;
 import entity.*;
 import enums.PromotionType;
 import jakarta.persistence.EntityTransaction;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -75,5 +76,9 @@ public class PromotionBUS {
 
     public List<Promotion> getAllPromotions() {
         return promotionDAL.findAll();
+    }
+
+    public List<Promotion> search(LocalDate date, String promotionType) {
+        return promotionDAL.search(date, promotionType);
     }
 }

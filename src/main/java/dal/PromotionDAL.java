@@ -11,6 +11,7 @@ import util.GenerateId;
 import entity.Product;
 import enums.PromotionType;
 import jakarta.persistence.TypedQuery;
+import java.time.LocalDate;
 /**
  *
  * @author daoducdanh
@@ -51,6 +52,21 @@ public class PromotionDAL implements BaseDAL<Promotion, String>{
                 entityManager.createQuery("select p from Promotion p where (current_date between "
                         + "p.startedDate and p.endedDate) and p.promotionType = ?1", Promotion.class);
         query.setParameter(1, promotionType);
+        return query.getResultList();
+    }
+
+    public List<Promotion> search(LocalDate date, String promotionType) {
+        StringBuilder jpql = new StringBuilder("select p from Promotion p where (?1 between p.startedDate and p.endedDate) ");
+       
+        if(!promotionType.equals("Tất cả")){
+            jpql.append(" and p.promotionType = ?2");
+        }
+        TypedQuery<Promotion> query = entityManager.createQuery(jpql.toString(), Promotion.class);
+        
+        query.setParameter(1, date);
+        if(!promotionType.equals("Tất cả")){
+            query.setParameter(2, promotionType.equals("Hóa đơn") ? PromotionType.ORDER : PromotionType.PRODUCT);
+        }
         return query.getResultList();
     }
     
