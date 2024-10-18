@@ -88,55 +88,12 @@ public class TABSupplier extends javax.swing.JPanel {
     private void addIconFeature() {
         btnAdd.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/addBtn.svg")), 35, 35));
         btnUpdate.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/editBtn.svg")), 35, 35));
-        btnDelete.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/deleteBtn.svg")), 35, 35));
-        btnImport.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/import.svg")), 35, 35));
-        btnExport.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/export.svg")), 35, 35));
     }
     
     public void clearData(JTextField... fields) {
         for (JTextField field : fields) {
             field.setText("");
         }
-    }
-    
-    public boolean checkValidData (JTextField txtName, JTextField txtAddress, JTextField txtPhone, JTextField txtEmail, JTextField txtTaxCode){
-        
-        String name = txtName.getText();
-        String address = txtAddress.getText();
-        String phone = txtPhone.getText();
-        String email = txtEmail.getText();
-        String taxcode = txtTaxCode.getText();
-        
-        modelSupplierEdit.setPreferredSize(new Dimension(800, 600));
-        modelSupplierEdit.pack();
-        
-        if(name.trim().isEmpty()){
-            MessageDialog.warring(null, "Tên nhà cung cấp không được trống.");
-            txtName.requestFocus();
-            return false;
-        }
-        if(address.trim().isEmpty()){
-            MessageDialog.warring(null, "Địa chỉ không được trống.");
-            txtAddress.requestFocus();
-            return false;
-        }
-        if(!phone.matches("^(0[1-9]{1}[0-9]{8}|0[1-9]{1}[0-9]{9})$")){
-            MessageDialog.warring(null, "Số điện thoại 10-11 số.");
-            txtPhone.requestFocus();
-            return false;
-        }
-        if(!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
-            MessageDialog.warring(null, "Email không được trống.");
-            txtPhone.requestFocus();
-            return false;
-        }
-        if(taxcode.trim().isEmpty()){
-            MessageDialog.warring(null, "TaxCode không được trống.");
-            txtPhone.requestFocus();
-            return false;
-        }
-        
-        return true;
     }
     
     private void searchSuppliers() {
@@ -202,9 +159,6 @@ public class TABSupplier extends javax.swing.JPanel {
         actionPanel = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnImport = new javax.swing.JButton();
-        btnExport = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         SupplierScroll = new javax.swing.JScrollPane();
 
@@ -593,54 +547,6 @@ public class TABSupplier extends javax.swing.JPanel {
         });
         actionPanel.add(btnUpdate);
 
-        btnDelete.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnDelete.setText("XÓA");
-        btnDelete.setBorder(null);
-        btnDelete.setBorderPainted(false);
-        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDelete.setFocusPainted(false);
-        btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnDelete.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-        actionPanel.add(btnDelete);
-
-        btnImport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnImport.setText("IMPORT");
-        btnImport.setBorder(null);
-        btnImport.setBorderPainted(false);
-        btnImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnImport.setFocusPainted(false);
-        btnImport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnImport.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnImport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnImport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportActionPerformed(evt);
-            }
-        });
-        actionPanel.add(btnImport);
-
-        btnExport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnExport.setText("EXPORT");
-        btnExport.setBorder(null);
-        btnExport.setBorderPainted(false);
-        btnExport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnExport.setFocusPainted(false);
-        btnExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExport.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnExport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportActionPerformed(evt);
-            }
-        });
-        actionPanel.add(btnExport);
-
         headerPanel.add(actionPanel, java.awt.BorderLayout.WEST);
 
         pnAll.add(headerPanel, java.awt.BorderLayout.NORTH);
@@ -684,14 +590,6 @@ public class TABSupplier extends javax.swing.JPanel {
         searchSuppliers();
     }//GEN-LAST:event_txtSearchSupplierActionPerformed
 
-    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-//        if (unitBUS.importExcel()) {
-//            MessageDialog.info(null, "Import file thành công");
-//            List<Unit> units = unitBUS.getAllUnits();
-//            fillContent(units);
-//        };
-    }//GEN-LAST:event_btnImportActionPerformed
-
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         JTable table = tableDesign.getTable();
@@ -725,10 +623,6 @@ public class TABSupplier extends javax.swing.JPanel {
         modelSupplierAdd.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
     private void txtSupPhoneAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupPhoneAddActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupPhoneAddActionPerformed
@@ -750,22 +644,28 @@ public class TABSupplier extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSupEmailAddActionPerformed
 
     private void btnSupplierAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierAddActionPerformed
-        // TODO add your handling code here:
-        if(checkValidData(txtSupNameAdd, txtSupAddressAdd, txtSupPhoneAdd, txtSupEmailAdd, txtSupTaxCodeAdd)){
-            String name = txtSupNameAdd.getText().trim();
-            String address = txtSupAddressAdd.getText().trim();
-            String phone = txtSupPhoneAdd.getText().trim();
-            String email = txtSupEmailAdd.getText().trim();
-            String taxcode = txtSupTaxCodeAdd.getText().trim();
+        
+        String name = txtSupNameAdd.getText().trim();
+        String address = txtSupAddressAdd.getText().trim();
+        String phone = txtSupPhoneAdd.getText().trim();
+        String email = txtSupEmailAdd.getText().trim();
+        String taxCode = txtSupTaxCodeAdd.getText().trim(); 
 
-            Supplier sup = new Supplier(null, name, address, phone, email, taxcode);
-            supplierBUS.createrSupplier(sup);
-            MessageDialog.info(null, "Thêm nhà cung cấp thành công");
-            clearData(txtSupNameAdd,txtSupAddressAdd,txtSupPhoneAdd,txtSupEmailAdd,txtSupTaxCodeAdd);
+        try {
+            Supplier sup = new Supplier(null, name, address, phone,email, taxCode);
+            supplierBUS.createrSupplier(sup); 
+            MessageDialog.info(null, "Thêm nhà cung cấp mới thành công.");
+            txtSupNameAdd.setText("");
+            txtSupAddressAdd.setText("");
+            txtSupPhoneAdd.setText("");
+            txtSupEmailAdd.setText("");
+            txtSupTaxCodeAdd.setText("");
+            txtSearchSupplier.setText("");
             modelSupplierAdd.dispose();
             fillContent(supplierBUS.getAllSuppliers());
+        } catch (Exception e) {
+            MessageDialog.error(null, e.getMessage());
         }
-
     }//GEN-LAST:event_btnSupplierAddActionPerformed
 
     private void modelSupplierAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modelSupplierAddMouseClicked
@@ -833,26 +733,6 @@ public class TABSupplier extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_modelSupplierEditKeyReleased
 
-    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
-       JFileChooser fileChooser = new JFileChooser();
-       fileChooser.setDialogTitle("Chọn vị trí để lưu file Excel");
-
-       // Hiện hộp thoại lưu file
-       int userSelection = fileChooser.showSaveDialog(this);
-       if (userSelection == JFileChooser.APPROVE_OPTION) {
-           File fileToSave = fileChooser.getSelectedFile();
-           String filePath = fileToSave.getAbsolutePath();
-
-           // Kiểm tra định dạng file và thêm đuôi .xlsx nếu cần
-           if (!filePath.endsWith(".xlsx")) {
-               filePath += ".xlsx";
-           }
-
-           // Gọi phương thức exportToExcel từ đối tượng supplierBUS
-           supplierBUS.exportToExcel(filePath);
-       }
-    }//GEN-LAST:event_btnExportActionPerformed
-
     private void btnSupplierExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierExitActionPerformed
         modelSupplierAdd.dispose();
     }//GEN-LAST:event_btnSupplierExitActionPerformed
@@ -866,9 +746,6 @@ public class TABSupplier extends javax.swing.JPanel {
     private javax.swing.JScrollPane SupplierScroll;
     private javax.swing.JPanel actionPanel;
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnExport;
-    private javax.swing.JButton btnImport;
     private javax.swing.JButton btnOpenModalAddSup;
     private javax.swing.JButton btnSupplierAdd;
     private javax.swing.JButton btnSupplierEdit;

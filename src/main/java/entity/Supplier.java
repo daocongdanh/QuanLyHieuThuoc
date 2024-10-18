@@ -54,6 +54,7 @@ public class Supplier {
         setTaxCode(taxCode);
     }
 
+ 
     public String getSupplierId() {
         return supplierId;
     }
@@ -97,8 +98,8 @@ public class Supplier {
     }
 
     public void setEmail(String email) {
-        if (email == null || !email.matches("^[^@]+@[^@]+\\.[a-zA-Z]{2,}$")) {
-            throw new RuntimeException("Email không hợp lệ. Phải chứa ký tự '@', có ít nhất một dấu '.' sau '@', và phần mở rộng phải có ít nhất 2 ký tự.");
+        if (email == null || !email.matches("^[a-zA-Z0-9]+@[a-zA-Z]+\\.com$")) {
+            throw new RuntimeException("Email không hợp lệ");
         }
 
         this.email = email;
