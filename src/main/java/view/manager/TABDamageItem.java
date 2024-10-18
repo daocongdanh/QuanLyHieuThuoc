@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import javax.swing.UIManager;
 import util.*;
+import view.login.LoadApplication;
 
 /**
  *
@@ -32,7 +33,7 @@ public class TABDamageItem extends javax.swing.JPanel {
     private TableDesign tableDesign;
 
     public TABDamageItem() {
-        damageItemBUS = new DamageItemBUS(ConnectDB.getEntityManager());
+        damageItemBUS = LoadApplication.damageItemBUS;
         initComponents();
         setUIManager();
         fillTable();

@@ -33,7 +33,7 @@ public class Prescription {
 
     public Prescription(String prescriptionId, String name) {
         this.prescriptionId = prescriptionId;
-        this.name = name;
+        setName(name);
     }
 
     public String getPrescriptionId() {
@@ -49,6 +49,9 @@ public class Prescription {
     }
 
     public void setName(String name) {
+        if (name.equals("")) {
+            throw new RuntimeException("Tên đơn thuốc mẫu không được rỗng!");
+        }
         this.name = name;
     }
 

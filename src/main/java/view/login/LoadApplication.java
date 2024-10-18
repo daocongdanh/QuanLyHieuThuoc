@@ -7,13 +7,20 @@ package view.login;
 import bus.AccountBUS;
 import bus.BatchBUS;
 import bus.CustomerBUS;
+import bus.DamageItemBUS;
+import bus.EmployeeBUS;
 import bus.OrderBUS;
 import bus.OrderDetailBUS;
+import bus.PrescriptionBUS;
+import bus.ProductBUS;
 import bus.PromotionBUS;
+import bus.PurchaseOrderBUS;
 import bus.ReturnOrderBUS;
+import bus.UnitBUS;
 import bus.UnitDetailBUS;
 import com.formdev.flatlaf.FlatLightLaf;
 import connectDB.ConnectDB;
+import jakarta.persistence.EntityManager;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +44,12 @@ public class LoadApplication extends javax.swing.JFrame {
     public static OrderDetailBUS orderDetailBUS;
     public static ReturnOrderBUS returnOrderBUS;
     public static AccountBUS accountBUS;
+    public static DamageItemBUS damageItemBUS;
+    public static EmployeeBUS employeeBUS;
+    public static ProductBUS productBUS;
+    public static PrescriptionBUS prescriptionBUS;
+    public static PurchaseOrderBUS purchaseOrderBUS;
+    public static UnitBUS unitBUS;
 
     public LoadApplication() {
         initComponents();
@@ -116,14 +129,21 @@ public class LoadApplication extends javax.swing.JFrame {
                 load.progressLoading.setValue(i);
                 if (i == 60) {
                     ConnectDB.connect();
-                    orderBUS = new OrderBUS(ConnectDB.getEntityManager());
-                    customerBUS = new CustomerBUS(ConnectDB.getEntityManager());
-                    unitDetailBUS = new UnitDetailBUS(ConnectDB.getEntityManager());
-                    batchBUS = new BatchBUS(ConnectDB.getEntityManager());
-                    promotionBUS = new PromotionBUS(ConnectDB.getEntityManager());
-                    orderDetailBUS = new OrderDetailBUS(ConnectDB.getEntityManager());
-                    returnOrderBUS = new ReturnOrderBUS(ConnectDB.getEntityManager());
-                    accountBUS = new AccountBUS(ConnectDB.getEntityManager());
+                    EntityManager em = ConnectDB.getEntityManager();
+                    orderBUS = new OrderBUS(em);
+                    customerBUS = new CustomerBUS(em);
+                    unitDetailBUS = new UnitDetailBUS(em);
+                    batchBUS = new BatchBUS(em);
+                    promotionBUS = new PromotionBUS(em);
+                    orderDetailBUS = new OrderDetailBUS(em);
+                    returnOrderBUS = new ReturnOrderBUS(em);
+                    accountBUS = new AccountBUS(em);
+                    damageItemBUS = new DamageItemBUS(em);
+                    employeeBUS = new EmployeeBUS(em);
+                    productBUS = new ProductBUS(em);
+                    prescriptionBUS = new PrescriptionBUS(em);
+                    purchaseOrderBUS = new PurchaseOrderBUS(em);
+                    unitBUS = new UnitBUS(em);
                 }
 //                load.progressLoading.setForeground(Color.orange);
             }

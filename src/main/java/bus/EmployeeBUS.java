@@ -8,6 +8,7 @@ import dal.EmployeeDAL;
 import jakarta.persistence.EntityManager;
 import entity.Employee;
 import jakarta.persistence.EntityTransaction;
+import java.util.List;
 /**
  *
  * @author daoducdanh
@@ -35,8 +36,31 @@ public class EmployeeBUS {
         }
     }
     
+        public boolean updateEmployee(Employee employee) {
+        try {
+            transaction.begin();
+            employeeDAL.update(employee);
+            transaction.commit();
+            return true;
+        } 
+        catch(Exception e) {
+            System.out.println(e.getMessage());
+            transaction.rollback();
+            return false;
+        }
+    }
+    
     public Employee getEmployeeId(String id){
         return employeeDAL.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên"));
     }
+    
+    public List<Employee> getAllEmployee(){
+        return employeeDAL.findAll();
+    }
+    
+    public List<Employee> getEmployeeByKeyword(String keyword) {
+        return employeeDAL.findByKeyword(keyword);
+    }
+    
 }

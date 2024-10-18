@@ -34,6 +34,7 @@ import util.MessageDialog;
 import view.common.TableActionCellEditorOnlyEdit;
 import view.common.TableActionCellRenderOnlyEdit;
 import view.common.TableActionEventOnlyEdit;
+import view.login.LoadApplication;
 
 /**
  *
@@ -42,18 +43,18 @@ import view.common.TableActionEventOnlyEdit;
 public class TABSell extends javax.swing.JPanel {
 
     static int transactionNumber = 1;
-    private ProductBUS productBUS;
+    private final ProductBUS productBUS;
     private TableDesign tablePrescription;
     private TableDesign tablePrescriptionDetail;
-    private PrescriptionBUS prescriptionBUS;
+    private final PrescriptionBUS prescriptionBUS;
     private List<PrescriptionDetail> prescriptionDetails = new ArrayList<>();
 
     /**
      * Creates new form LapHoaDonForm
      */
     public TABSell() {
-        productBUS = new ProductBUS(ConnectDB.getEntityManager());
-        prescriptionBUS = new PrescriptionBUS(ConnectDB.getEntityManager());
+        productBUS = LoadApplication.productBUS;
+        prescriptionBUS = LoadApplication.prescriptionBUS;
         lookAndFeelSet();
         initComponents();
         customUI();

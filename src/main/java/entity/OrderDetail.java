@@ -52,11 +52,11 @@ public class OrderDetail {
     }
 
     public OrderDetail(int quantity, double price, double discount, Batch batch, UnitDetail unitDetail) {
-        this.quantity = quantity;
-        this.price = price;
-        this.batch = batch;
-        this.unitDetail = unitDetail;
-        this.discount = discount;
+        setQuantity(quantity);
+        setPrice(price);
+        setBatch(batch);
+        setUnitDetail(unitDetail);
+        setDiscount(discount);
         setLineTotal();
         
     }
@@ -66,6 +66,9 @@ public class OrderDetail {
     }
 
     public void setQuantity(int quantity) {
+        if (quantity <= 0) {
+            throw new RuntimeException("Số lượng phải > 0!");
+        }
         this.quantity = quantity;
     }
 
@@ -74,6 +77,9 @@ public class OrderDetail {
     }
 
     public void setPrice(double price) {
+        if (price <= 0) {
+            throw new RuntimeException("Giá sản phẩm phải > 0!");
+        }
         this.price = price;
     }
 
@@ -91,6 +97,9 @@ public class OrderDetail {
     }
 
     public void setBatch(Batch batch) {
+        if (batch == null) {
+            throw new RuntimeException("Lô hàng không được rỗng!");
+        }
         this.batch = batch;
     }
 
@@ -99,6 +108,9 @@ public class OrderDetail {
     }
 
     public void setUnitDetail(UnitDetail unitDetail) {
+        if (unitDetail == null) {
+            throw new RuntimeException("Chi tiết đơn vị tính không được rỗng!");
+        }
         this.unitDetail = unitDetail;
     }
 
@@ -107,6 +119,9 @@ public class OrderDetail {
     }
 
     public void setOrder(Order order) {
+        if (order == null) {
+            throw new RuntimeException("Hóa đơn không được rỗng!");
+        }
         this.order = order;
     }
 
@@ -115,6 +130,9 @@ public class OrderDetail {
     }
 
     public void setDiscount(double discount) {
+        if (discount < 0) {
+            throw new RuntimeException("Số tiền khuyến mãi phải >= 0!");
+        }
         this.discount = discount;
     }  
     

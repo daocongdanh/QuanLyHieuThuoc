@@ -64,12 +64,12 @@ public class Order {
     public Order(String orderId, LocalDateTime orderDate, PaymentMethod paymentMethod, 
             Employee employee, Customer customer, Promotion promotion, List<OrderDetail> orderDetails) {
         this.orderId = orderId;
-        this.orderDate = orderDate;
+        setOrderDate(orderDate);
         this.paymentMethod = paymentMethod;
-        this.employee = employee;
+        setEmployee(employee);
         this.customer = customer;
         this.promotion = promotion;
-        this.orderDetails = orderDetails;
+        setOrderDetails(orderDetails);
         for(OrderDetail orderDetail: orderDetails ){
             orderDetail.setOrder(this);
         }
@@ -89,6 +89,9 @@ public class Order {
     }
 
     public void setOrderDate(LocalDateTime orderDate) {
+        if (!(orderDate.isEqual(LocalDateTime.now()))) {
+            throw new RuntimeException("Ngày lập hóa đơn phải là ngày hiện tại!");
+        }
         this.orderDate = orderDate;
     }
 
@@ -117,6 +120,9 @@ public class Order {
     }
 
     public void setEmployee(Employee employee) {
+        if (employee == null) {
+            throw new RuntimeException("Nhân viên lập hóa đơn không được rỗng!");
+        }
         this.employee = employee;
     }
 
@@ -141,6 +147,9 @@ public class Order {
     }
 
     public void setOrderDetails(List<OrderDetail> orderDetails) {
+        if (orderDetails.size() < 1) {
+            throw new RuntimeException("Các chi tiết hóa đơn không được rỗng!");
+        }
         this.orderDetails = orderDetails;
     }
 

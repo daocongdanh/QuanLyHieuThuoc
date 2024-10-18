@@ -86,18 +86,18 @@ public class Product {
             String packaging, String countryOfOrigin, String manufacturer, double purchasePrice, 
             double sellingPrice, boolean active, ProductType productType, List<Batch> listBatch) {
         this.productId = productId;
-        this.name = name;
+        setName(name);
         this.registrationNumber = registrationNumber;
         this.activeIngredient = activeIngredient;
         this.dosage = dosage;
         this.packaging = packaging;
         this.countryOfOrigin = countryOfOrigin;
         this.manufacturer = manufacturer;
-        this.purchasePrice = purchasePrice;
-        this.sellingPrice = sellingPrice;
+        setPurchasePrice(purchasePrice);
+        setSellingPrice(sellingPrice);
         this.active = active;
         this.productType = productType;
-        this.listBatch = listBatch;
+        setListBatch(listBatch);
     }
 
     public List<Batch> getListBatch() {
@@ -105,11 +105,12 @@ public class Product {
     }
 
     public void setListBatch(List<Batch> listBatch) {
+        if (listBatch.size() < 1) {
+            throw new RuntimeException("Danh sách lô hàng không được rỗng!");
+        }
         this.listBatch = listBatch;
     }
     
-    
-
     public String getProductId() {
         return productId;
     }
@@ -119,6 +120,9 @@ public class Product {
     }
 
     public void setImage(String image) {
+        if (image.equals("")) {
+            throw new RuntimeException("Hình ảnh sản phẩm không được rỗng!");
+        }
         this.image = image;
     }
 
@@ -131,6 +135,9 @@ public class Product {
     }
 
     public void setName(String name) {
+        if (name.equals("")) {
+            throw new RuntimeException("Tên sản phẩm không được rỗng!");
+        }
         this.name = name;
     }
 
@@ -187,6 +194,9 @@ public class Product {
     }
 
     public void setPurchasePrice(double purchasePrice) {
+        if (purchasePrice <= 0) {
+            throw new RuntimeException("Giá nhập phải > 0!");
+        }
         this.purchasePrice = purchasePrice;
     }
 
@@ -195,6 +205,9 @@ public class Product {
     }
 
     public void setSellingPrice(double sellingPrice) {
+        if (sellingPrice <= 0) {
+            throw new RuntimeException("Giá bán phải > 0!");
+        }
         this.sellingPrice = sellingPrice;
     }
 

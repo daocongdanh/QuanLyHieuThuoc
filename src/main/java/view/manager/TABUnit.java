@@ -21,6 +21,7 @@ import view.common.TableActionCellEditorOnlyDelete;
 import view.common.TableActionCellRenderOnlyDelete;
 import view.common.TableDesign;
 import view.common.TableActionEventOnlyDelete;
+import view.login.LoadApplication;
 
 /**
  *
@@ -32,7 +33,7 @@ public class TABUnit extends javax.swing.JPanel {
     private TableDesign tableDesign;
 
     public TABUnit() {
-        unitBUS = new UnitBUS(ConnectDB.getEntityManager());
+        unitBUS = LoadApplication.unitBUS;
         initComponents();
         setUIManager();
         fillTable();

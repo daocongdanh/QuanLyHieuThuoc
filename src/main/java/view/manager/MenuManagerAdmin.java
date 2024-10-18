@@ -40,6 +40,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
     private TABReturnOrder tabReturnOrder;
 //    private TAB_STAFF tabStaff;
 //    private TAB_SUPPLIER tabSupplier;
+    private TABEmployee tabEmployee;
     private TABUnit tabUnit;
     private TABOrder tabOrder;
     private TABPurchaseOrder tabPurChaseOrder;
@@ -47,7 +48,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
     private JPanel currentPanel;
 
     public MenuManagerAdmin() {
-        ConnectDB.connect();
         tabUnit = new TABUnit();
         tabCustomer = new TABCustomer();
         tabPrescription = new TABPrecription();
@@ -55,6 +55,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         tabPurChaseOrder = new TABPurchaseOrder();
         tabDamageItem = new TABDamageItem();
         tabReturnOrder = new TABReturnOrder();
+        tabEmployee = new TABEmployee();
         initComponents();
         UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -80,16 +81,18 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 //        menuPanelMap.put(menuPromotion, TABPromotion);
         menuPanelMap.put(menuPurchase, tabPurChaseOrder);
         menuPanelMap.put(menuReturn, tabReturnOrder);
-//        menuPanelMap.put(menuStaff, TABStaff);
+        menuPanelMap.put(menuStaff, tabEmployee);
 //        menuPanelMap.put(menuSupplier, TABSupplier);
         menuPanelMap.put(menuUnit, tabUnit);
-        menuSwitch(new TABReturnOrder(), menuReturn, mainContent, menuList, currentPanel);
+        menuSwitch(tabReturnOrder, menuReturn, mainContent, menuList, currentPanel);
 
         for (MenuChoice menu : menuList) {
             menu.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     JPanel panelMoi = menuPanelMap.get(menu);
-                    menuSwitch(panelMoi, menu, mainContent, menuList, currentPanel);
+                    if (panelMoi != null) {
+                        menuSwitch(panelMoi, menu, mainContent, menuList, currentPanel);
+                    }
                 }
             });
         }

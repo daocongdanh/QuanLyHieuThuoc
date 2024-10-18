@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import javax.swing.UIManager;
 import util.*;
+import view.login.LoadApplication;
 
 /**
  *
@@ -31,7 +32,7 @@ public class TABOrder extends javax.swing.JPanel {
     
 
     public TABOrder() {
-        orderBUS = new OrderBUS(ConnectDB.getEntityManager());
+        orderBUS = LoadApplication.orderBUS;
         initComponents();
         setUIManager();
         fillTable();

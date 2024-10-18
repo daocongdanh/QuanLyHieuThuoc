@@ -134,6 +134,7 @@ public class MenuChoice extends javax.swing.JPanel {
 
     public static void menuSwitch(JPanel panelMoi, MenuChoice menuChoice, JPanel mainContent,
             List<MenuChoice> menuList, JPanel currentPanel) {
+
         if ( panelMoi.equals(currentPanel)){
             return;
         }

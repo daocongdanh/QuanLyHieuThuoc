@@ -45,10 +45,10 @@ public class Batch {
 
     public Batch(String batchId, String name, LocalDateTime expirationDate, int stock, Product product) {
         this.batchId = batchId;
-        this.name = name;
-        this.expirationDate = expirationDate;
-        this.stock = stock;
-        this.product = product;
+        setName(name);
+        setExpirationDate(expirationDate);
+        setStock(stock);
+        setProduct(product);
     }
 
     public String getBatchId() {
@@ -64,6 +64,9 @@ public class Batch {
     }
 
     public void setName(String name) {
+        if (name.equals("")) {
+            throw new RuntimeException("Tên lô hàng không được rỗng!");
+        }
         this.name = name;
     }
 
@@ -72,6 +75,9 @@ public class Batch {
     }
 
     public void setExpirationDate(LocalDateTime expirationDate) {
+        if (expirationDate.isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Ngày hết hạn phải sau ngày hiện tại hoặc là ngày hiện tại!");
+        }
         this.expirationDate = expirationDate;
     }
 
@@ -80,6 +86,9 @@ public class Batch {
     }
 
     public void setStock(int stock) {
+        if (stock < 0) {
+            throw new RuntimeException("Số lượng tồn phải >= 0!");
+        }
         this.stock = stock;
     }
 
@@ -88,6 +97,9 @@ public class Batch {
     }
 
     public void setProduct(Product product) {
+        if (product == null) {
+            throw new RuntimeException("Sản phẩm không được rỗng!");
+        }
         this.product = product;
     }
 

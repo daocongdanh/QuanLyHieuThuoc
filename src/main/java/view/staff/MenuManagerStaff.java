@@ -7,14 +7,15 @@ package view.staff;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
+import view.common.MenuChoice;
+import static view.common.MenuChoice.menuSwitch;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import util.ResizeImage;
-import view.common.MenuChoice;
+import javax.swing.*;
 
 /**
  *
@@ -22,12 +23,17 @@ import view.common.MenuChoice;
  */
 public class MenuManagerStaff extends javax.swing.JFrame {
 
+    private JPanel currentPanel;
+    private TABSell tabSell;
+    private TABReturnOrder tabReturnOrder;
+
     public MenuManagerStaff() {
-        ConnectDB.connect();
+        tabSell = new TABSell();
+        tabReturnOrder = new TABReturnOrder();
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
-//        menuSwitch(new TABReturnOrder(), TabMenu.TAB_RETURN, menuReturn);
+        addMenuClick();
 
     }
 
@@ -50,6 +56,36 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         menuSell.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/sellIcon.svg"))));
 
     }
+
+    private void addMenuClick() {
+        List<MenuChoice> menuList = Arrays.asList(
+                menuReport, menuCustomer, menuDamaged, menuProduct, menuPurchase,
+                menuReturn, menuSupplier, menuSell
+        );
+
+        Map<MenuChoice, JPanel> menuPanelMap = new HashMap<>();
+//        menuPanelMap.put(menuReport, tabReport);
+//        menuPanelMap.put(menuCustomer, tabCustomer);
+//        menuPanelMap.put(menuDamaged, tabDamageItem);
+//        menuPanelMap.put(menuProduct, tabProduct);
+//        menuPanelMap.put(menuPurchase, tabPurchaseOrder);
+        menuPanelMap.put(menuReturn, tabReturnOrder);
+//        menuPanelMap.put(menuSupplier, tabSupplier);
+        menuPanelMap.put(menuSell, tabSell);
+        menuSwitch(tabSell, menuSell, mainContent, menuList, currentPanel);
+
+        for (MenuChoice menu : menuList) {
+            menu.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    JPanel panelMoi = menuPanelMap.get(menu);
+                    if (panelMoi != null) {
+                        menuSwitch(panelMoi, menu, mainContent, menuList, currentPanel);
+                    }
+                }
+            });
+        }
+    }
+
 
 
     /**

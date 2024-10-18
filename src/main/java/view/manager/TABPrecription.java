@@ -34,6 +34,7 @@ import view.common.TableActionCellEditorOnlyDelete;
 import view.common.TableActionCellRenderOnlyDelete;
 import view.common.TableActionEventOnlyDelete;
 import view.common.TableDesign;
+import view.login.LoadApplication;
 
 /**
  *
@@ -55,9 +56,9 @@ public class TABPrecription extends javax.swing.JPanel {
     private List<PrescriptionDetail> listPrescriptionDetailsEdit;
 
     public TABPrecription() {
-        productBUS = new ProductBUS(ConnectDB.getEntityManager());
-        unitDetailBUS = new UnitDetailBUS(ConnectDB.getEntityManager());
-        prescriptionBUS = new PrescriptionBUS(ConnectDB.getEntityManager());
+        productBUS = LoadApplication.productBUS;
+        unitDetailBUS = LoadApplication.unitDetailBUS;
+        prescriptionBUS = LoadApplication.prescriptionBUS;
         initComponents();
         setUIManager();
         addIconFeature();
@@ -619,11 +620,13 @@ public class TABPrecription extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
+
         pnAll.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 0, 2, 0, new java.awt.Color(232, 232, 232)));
         pnAll.setLayout(new java.awt.BorderLayout());
 
         headerPanel.setBackground(new java.awt.Color(255, 255, 255));
-        headerPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(232, 232, 232), 2, true));
+        headerPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 0, 2, 0, new java.awt.Color(232, 232, 232)));
         headerPanel.setLayout(new java.awt.BorderLayout());
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -749,16 +752,7 @@ public class TABPrecription extends javax.swing.JPanel {
 
         pnAll.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnAll, javax.swing.GroupLayout.DEFAULT_SIZE, 1167, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        add(pnAll);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSearchCusKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchCusKeyReleased

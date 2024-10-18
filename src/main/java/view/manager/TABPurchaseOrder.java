@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import javax.swing.UIManager;
 import util.*;
+import view.login.LoadApplication;
 
 /**
  *
@@ -27,11 +28,11 @@ import util.*;
  */
 public class TABPurchaseOrder extends javax.swing.JPanel {
 
-    private PurchaseOrderBUS purchaseOrderBUS;
+    private final PurchaseOrderBUS purchaseOrderBUS;
     private TableDesign tableDesign;
 
     public TABPurchaseOrder() {
-        purchaseOrderBUS = new PurchaseOrderBUS(ConnectDB.getEntityManager());
+        purchaseOrderBUS = LoadApplication.purchaseOrderBUS;
         initComponents();
         setUIManager();
         fillTable();

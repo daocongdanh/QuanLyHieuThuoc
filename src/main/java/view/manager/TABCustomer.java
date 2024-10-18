@@ -23,6 +23,7 @@ import view.common.TableActionCellEditorOnlyDelete;
 import view.common.TableActionCellRenderOnlyDelete;
 import view.common.TableDesign;
 import view.common.TableActionEventOnlyDelete;
+import view.login.LoadApplication;
 
 /**
  *
@@ -34,7 +35,7 @@ public class TABCustomer extends javax.swing.JPanel {
     private TableDesign tableDesign;
 
     public TABCustomer() {
-        customerBUS = new CustomerBUS(ConnectDB.getEntityManager());
+        customerBUS = LoadApplication.customerBUS;
         initComponents();
         setUIManager();
         addIconFeature();
