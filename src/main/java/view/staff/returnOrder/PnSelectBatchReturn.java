@@ -53,6 +53,7 @@ public class PnSelectBatchReturn extends javax.swing.JPanel {
 
         maxQuantity = batchDTO.getQuantity();
         ((SpinnerNumberModel) spinnerQuantity.getModel()).setMaximum(maxQuantity);
+        ((SpinnerNumberModel) spinnerQuantity.getModel()).setMinimum(0);
         setName();
     }
 
@@ -136,7 +137,7 @@ public class PnSelectBatchReturn extends javax.swing.JPanel {
         lblQuantity.setText("Số lượng");
 
         spinnerQuantity.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        spinnerQuantity.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+        spinnerQuantity.setModel(new javax.swing.SpinnerNumberModel(1, 0, 100, 1));
         spinnerQuantity.setFocusable(false);
         spinnerQuantity.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -187,14 +188,12 @@ public class PnSelectBatchReturn extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblName)
                         .addGap(30, 30, 30)
-                        .addComponent(lblExpirationDate)
-                        .addGap(17, 17, 17))
+                        .addComponent(lblExpirationDate))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtExpirationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)))
-                .addGap(0, 0, 0)
+                        .addComponent(txtExpirationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(17, 17, 17)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblQuantity)

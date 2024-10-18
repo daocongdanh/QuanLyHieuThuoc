@@ -19,9 +19,10 @@ import entity.UnitDetail;
 import enums.ReturnOrderDetailStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -41,7 +42,8 @@ public class ReturnOrderBUS {
         this.transaction = entityManager.getTransaction();
     }
 
-    public boolean createReturnOrderBUS(Employee employee, Customer customer, Order order, List<ReturnOrderDetailDTO> returnOrderDetailDTOs) {
+    public boolean createReturnOrderBUS(Employee employee, Customer customer, Order order,
+            List<ReturnOrderDetailDTO> returnOrderDetailDTOs) {
         try {
             transaction.begin();
 
@@ -51,21 +53,30 @@ public class ReturnOrderBUS {
             if (order == null) {
                 throw new RuntimeException("Hóa đơn không được rỗng");
             }
+
             List<ReturnOrderDetail> returnOrderDetails = new ArrayList<>();
             for (ReturnOrderDetailDTO detailDTO : returnOrderDetailDTOs) {
-                ReturnOrderDetail returnOrderDetail = new ReturnOrderDetail();
+                if (detailDTO.getQuantityReturn() != 0) {
+                    ReturnOrderDetail returnOrderDetail = new ReturnOrderDetail();
+                    Batch batch = batchDAL.findByNameAndProduct(detailDTO.getBatchName(), detailDTO.getProduct().getProductId());
+                    UnitDetail unitDetail = detailDTO.getUnitDetail();
+                    returnOrderDetail.setBatch(batch);
+                    returnOrderDetail.setQuantity(detailDTO.getQuantityReturn());
+                    returnOrderDetail.setUnitDetail(unitDetail);
+                    returnOrderDetail.setPrice(detailDTO.getProduct().getPrice());
+                    returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.PENDING);
+                    returnOrderDetail.setLineTotal();
+                    returnOrderDetail.setReason(detailDTO.getReason());
 
-                Batch batch = batchDAL.findByNameAndProduct(detailDTO.getBatchName(), detailDTO.getProduct().getProductId());
-                UnitDetail unitDetail = detailDTO.getUnitDetail();
-                returnOrderDetail.setBatch(batch);
-                returnOrderDetail.setQuantity(detailDTO.getQuantityReturn());
-                returnOrderDetail.setUnitDetail(unitDetail);
-                returnOrderDetail.setPrice(detailDTO.getProduct().getPrice());
-                returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.PENDING);
-                returnOrderDetail.setLineTotal();
+                    returnOrderDetails.add(returnOrderDetail);
+                }
             }
-            
-            ReturnOrder returnOrder = new ReturnOrder(null, LocalDate.now(), null, employee, order, returnOrderDetails, false);
+
+            if (returnOrderDetails.isEmpty()) {
+                return false;
+            }
+
+            ReturnOrder returnOrder = new ReturnOrder(null, LocalDateTime.now(), employee, order, returnOrderDetails, false);
             returnOrderDAL.insert(returnOrder);
             transaction.commit();
             return true;
@@ -80,7 +91,20 @@ public class ReturnOrderBUS {
         return returnOrderDAL.findAll();
     }
 
-//    public List<ReturnOrder> search(LocalDate start, LocalDate end, String txtEmployee) {
-//        return returnOrderDAL.search(start, end, txtEmployee);
-//    }
+    public List<ReturnOrder> search(LocalDateTime start, LocalDateTime end, String txtEmployee, String orderId, Boolean status) {
+        return returnOrderDAL.search(start, end, txtEmployee, orderId, status);
+    }
+
+    public ReturnOrder findById(String id) {
+        return returnOrderDAL.findById(id)
+                .orElseThrow(()-> new RuntimeException("Khong tim thay don tra hang"));
+    }
+    
+    public boolean checkOrderIsReturned(String orderId) {
+        return returnOrderDAL.checkOrderIsReturned(orderId);
+    }
+
+    public List<ReturnOrder> getListReturnOrdersByStatus(boolean status) {
+        return returnOrderDAL.getListReturnOrdersByStatus(status);
+    }
 }

@@ -15,6 +15,7 @@ import entity.*;
 import enums.PaymentMethod;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import javax.swing.UIManager;
 import util.*;
@@ -212,14 +213,20 @@ public class TABOrder extends javax.swing.JPanel {
         // TODO add your handling code here:
         java.util.Date date1 = jDateFrom.getDate();
         java.util.Date date2 = jDateTo.getDate();
-        LocalDate start = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate end = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDate localDateStart = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDateEnd = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDateTime start = localDateStart.atStartOfDay(); // 00:00:00
+        LocalDateTime end = localDateEnd.atTime(23, 59, 59, 999999999); // 23:59:59.999999999
+
         if (start.isAfter(end)) {
             MessageDialog.warring(null, "Ngày bắt đầu phải trước ngày kết thúc");
             return;
         }
         String txtCustomer =txtCus.getText().trim();
         String txtEmployee = txtEmp.getText().trim();
+
         List<Order> orders = orderBUS.search(start, end, txtCustomer, txtEmployee);
         fillContent(orders);
     }//GEN-LAST:event_btnSearchActionPerformed

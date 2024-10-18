@@ -17,13 +17,11 @@ import entity.UnitDetail;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -44,14 +42,14 @@ import view.common.TableDesign;
 public class TABPrecription extends javax.swing.JPanel {
 
     /**
-     * Creates new form TAB_Precription
+     * Creates new form TABPrecription
      */
     private TableDesign tableDesign;
     private TableDesign tableDesignAdd;
     private TableDesign tableDesignEdit;
-    private ProductBUS productBUS;
-    private UnitDetailBUS unitDetailBUS;
-    private PrescriptionBUS prescriptionBUS;
+    private final ProductBUS productBUS;
+    private final UnitDetailBUS unitDetailBUS;
+    private final PrescriptionBUS prescriptionBUS;
     private List<Product> listProductAdd;
     private List<Product> listProductEdit;
     private List<PrescriptionDetail> listPrescriptionDetailsEdit;
@@ -842,12 +840,18 @@ public class TABPrecription extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddPrecriptionActionPerformed
 
     private void deleteDataModalAdd() {
+        if (tableDesignAdd.getTable().getCellEditor() != null) {
+            tableDesignAdd.getTable().getCellEditor().stopCellEditing();
+        }
         txtNamePrescription.setText("");
         txtSearchProduct.setText("");
         tableDesignAdd.getModelTable().setRowCount(0);
     }
 
     private void deleteDataModalEdit() {
+        if (tableDesignEdit.getTable().getCellEditor() != null) {
+            tableDesignEdit.getTable().getCellEditor().stopCellEditing();
+        }
         txtNamePrescriptionEdit.setText("");
         txtSearchProductEdit.setText("");
         tableDesignEdit.getModelTable().setRowCount(0);

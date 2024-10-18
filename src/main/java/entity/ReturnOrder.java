@@ -13,9 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -29,9 +28,9 @@ public class ReturnOrder {
     @Id
     @Column(name = "return_order_id")
     private String returnOrderId;
-    
+
     @Column(name = "order_date")
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
     
     @Column(name = "total_price")
     private double totalPrice;
@@ -54,7 +53,7 @@ public class ReturnOrder {
         
     }
 
-    public ReturnOrder(String returnOrderId, LocalDate orderDate, Employee employee, Order order
+    public ReturnOrder(String returnOrderId, LocalDateTime orderDate, Employee employee, Order order
     , List<ReturnOrderDetail> returnOrderDetails, boolean status) {
         this.returnOrderId = returnOrderId;
         this.orderDate = orderDate;
@@ -76,11 +75,11 @@ public class ReturnOrder {
         this.returnOrderId = returnOrderId;
     }
 
-    public LocalDate getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -126,11 +125,5 @@ public class ReturnOrder {
         this.returnOrderDetails = returnOrderDetails;
     }
 
-    @Override
-    public String toString() {
-        return "ReturnOrder{" + "returnOrderId=" + returnOrderId + ", orderDate=" + orderDate + ", totalPrice=" + totalPrice + ", status=" + status + ", employee=" + employee + ", order=" + order + ", returnOrderDetails=" + returnOrderDetails + '}';
-    }
-
-    
     
 }

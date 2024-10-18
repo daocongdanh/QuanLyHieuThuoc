@@ -9,9 +9,11 @@ import entity.Order;
 import entity.PurchaseOrder;
 import entity.ReturnOrder;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -58,13 +60,20 @@ public class GenerateId {
     }
 
     private int getNextAutoIncrement(Class<?> clazz) {
-        String sql = "select count(obj) from " + clazz.getSimpleName() + " obj where obj.orderDate = ?1";
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay(); // Bắt đầu ngày
+        LocalDateTime endOfDay = today.plusDays(1).atStartOfDay(); // Bắt đầu ngày tiếp theo
+
+        String sql = "SELECT COUNT(obj) FROM " + clazz.getSimpleName() + " obj WHERE obj.orderDate >= :startOfDay AND obj.orderDate < :endOfDay";
         TypedQuery<Long> query = entityManager.createQuery(sql, Long.class);
-        query.setParameter(1, LocalDate.now());
-        
+        query.setParameter("startOfDay", startOfDay);
+        query.setParameter("endOfDay", endOfDay);
+
+        // Trả về số bản ghi cộng thêm 1
         return query.getSingleResult().intValue() + 1;
     }
-    
+
+
     public String generateOrtherId(Class<?> clazz, String prefix){
         String id = "";
         String className = clazz.getSimpleName();

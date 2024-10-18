@@ -17,6 +17,7 @@ import entity.*;
 import enums.PaymentMethod;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import javax.swing.UIManager;
 import util.*;
@@ -29,7 +30,6 @@ public class TABDamageItem extends javax.swing.JPanel {
 
     private DamageItemBUS damageItemBUS;
     private TableDesign tableDesign;
-    
 
     public TABDamageItem() {
         damageItemBUS = new DamageItemBUS(ConnectDB.getEntityManager());
@@ -44,6 +44,7 @@ public class TABDamageItem extends javax.swing.JPanel {
         jDateFrom.setDate(Date.valueOf(LocalDate.now()));
         jDateTo.setDate(Date.valueOf(LocalDate.now()));
     }
+
     private void fillTable() {
         String[] headers = {"Mã đơn xuất hủy", "Ngày tạo", "Tổng tiền", "Nhân viên"};
         List<Integer> tableWidths = Arrays.asList(300, 300, 300, 300);
@@ -54,16 +55,16 @@ public class TABDamageItem extends javax.swing.JPanel {
         fillContent(damageItems);
     }
 
-    
     private void fillContent(List<DamageItem> damageItems) {
         tableDesign.getModelTable().setRowCount(0);
         for (DamageItem damageItem : damageItems) {
-            tableDesign.getModelTable().addRow(new Object[]{damageItem.getDamageItemId(), 
-                FormatDate.formatDate(damageItem.getOrderDate()), 
+            tableDesign.getModelTable().addRow(new Object[]{damageItem.getDamageItemId(),
+                FormatDate.formatDate(damageItem.getOrderDate()),
                 FormatNumber.formatToVND(damageItem.getTotalPrice()),
-             damageItem.getEmployee().getName()});
+                damageItem.getEmployee().getName()});
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -202,14 +203,19 @@ public class TABDamageItem extends javax.swing.JPanel {
         // TODO add your handling code here:
         java.util.Date date1 = jDateFrom.getDate();
         java.util.Date date2 = jDateTo.getDate();
-        LocalDate start = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate end = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDate localDateStart = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDateEnd = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDateTime start = localDateStart.atStartOfDay(); // 00:00:00
+        LocalDateTime end = localDateEnd.atTime(23, 59, 59, 999999999); // 23:59:59.999999999
+
         if (start.isAfter(end)) {
             MessageDialog.warring(null, "Ngày bắt đầu phải trước ngày kết thúc");
             return;
         }
         String txtEmployee = txtEmp.getText().trim();
-        List<DamageItem> damageItems = damageItemBUS.search(start, end, txtEmployee); 
+        List<DamageItem> damageItems = damageItemBUS.search(start, end, txtEmployee);
         fillContent(damageItems);
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -232,7 +238,5 @@ public class TABDamageItem extends javax.swing.JPanel {
     private javax.swing.JTextField txtEmp;
     private javax.swing.JButton txtOrder;
     // End of variables declaration//GEN-END:variables
-
-    
 
 }

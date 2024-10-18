@@ -15,7 +15,7 @@ import entity.DamageItem;
 import entity.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -60,7 +60,7 @@ public class DamageItemBUS {
         return damageItemDAL.findAll();
     }
     
-    public List<DamageItem> search(LocalDate start, LocalDate end, String txtEmployee){
+    public List<DamageItem> search(LocalDateTime start, LocalDateTime end, String txtEmployee){
         return damageItemDAL.search(start, end, txtEmployee);
     }
 }

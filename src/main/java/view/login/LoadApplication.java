@@ -4,7 +4,16 @@
  */
 package view.login;
 
+import bus.AccountBUS;
+import bus.BatchBUS;
+import bus.CustomerBUS;
+import bus.OrderBUS;
+import bus.OrderDetailBUS;
+import bus.PromotionBUS;
+import bus.ReturnOrderBUS;
+import bus.UnitDetailBUS;
 import com.formdev.flatlaf.FlatLightLaf;
+import connectDB.ConnectDB;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +29,15 @@ public class LoadApplication extends javax.swing.JFrame {
     /**
      * Creates new form LoadApplication
      */
+    public static OrderBUS orderBUS;
+    public static CustomerBUS customerBUS;
+    public static UnitDetailBUS unitDetailBUS;
+    public static BatchBUS batchBUS;
+    public static PromotionBUS promotionBUS;
+    public static OrderDetailBUS orderDetailBUS;
+    public static ReturnOrderBUS returnOrderBUS;
+    public static AccountBUS accountBUS;
+
     public LoadApplication() {
         initComponents();
         setLocationRelativeTo(null);
@@ -93,11 +111,25 @@ public class LoadApplication extends javax.swing.JFrame {
         load.setVisible(true);
         try {
             for (int i = 0; i <= 100; i++) {
-                Thread.sleep(10);
+                Thread.sleep(9);
                 load.loadingValue.setText(i + " %");
                 load.progressLoading.setValue(i);
+                if (i == 60) {
+                    ConnectDB.connect();
+                    orderBUS = new OrderBUS(ConnectDB.getEntityManager());
+                    customerBUS = new CustomerBUS(ConnectDB.getEntityManager());
+                    unitDetailBUS = new UnitDetailBUS(ConnectDB.getEntityManager());
+                    batchBUS = new BatchBUS(ConnectDB.getEntityManager());
+                    promotionBUS = new PromotionBUS(ConnectDB.getEntityManager());
+                    orderDetailBUS = new OrderDetailBUS(ConnectDB.getEntityManager());
+                    returnOrderBUS = new ReturnOrderBUS(ConnectDB.getEntityManager());
+                    accountBUS = new AccountBUS(ConnectDB.getEntityManager());
+                }
 //                load.progressLoading.setForeground(Color.orange);
             }
+            load.setVisible(false);
+            LoginForm loginForm = new LoginForm();
+            loginForm.setVisible(true);
         } catch (Exception ex) {
             throw new RuntimeException("Chạy bị lỗi");
         }

@@ -7,7 +7,6 @@ package view.staff;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
-import enums.TabMenu;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -23,14 +22,12 @@ import view.common.MenuChoice;
  */
 public class MenuManagerStaff extends javax.swing.JFrame {
 
-    private TabMenu currentTab;
-
     public MenuManagerStaff() {
         ConnectDB.connect();
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
-        menuSwitch(new TABReturnOrder(), TabMenu.TAB_RETURN, menuReturn);
+//        menuSwitch(new TABReturnOrder(), TabMenu.TAB_RETURN, menuReturn);
 
     }
 
@@ -54,28 +51,6 @@ public class MenuManagerStaff extends javax.swing.JFrame {
 
     }
 
-    public void menuSwitch(JPanel panelChuyen, TabMenu tabMoi, MenuChoice panelTab) {
-        if (currentTab == tabMoi) {
-            return;
-        }
-        
-        menuSell.setDefault();
-        menuReport.setDefault();       // Báo Cáo Thu Chi
-        menuCustomer.setDefault();     // Quản Lý Khách Hàng
-        menuDamaged.setDefault();      // Quản Lý Xuất Hủy
-        menuProduct.setDefault();      // Quản Lý Sản Phẩm
-        menuPurchase.setDefault();     // Quản Lý Nhập Hàng
-        menuReturn.setDefault();       // Quản Lý Phiếu Trả Hàng
-        menuSupplier.setDefault();     // Quản Lý Nhà Cung Cấp
-
-        panelTab.setActive();
-        currentTab = tabMoi;
-
-        mainContent.removeAll();
-        mainContent.add(panelChuyen).setVisible(true);
-        mainContent.repaint();
-        mainContent.validate();
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.

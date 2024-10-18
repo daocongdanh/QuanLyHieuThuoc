@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 /**
  *
@@ -27,9 +28,9 @@ public class PurchaseOrder {
     @Id
     @Column(name = "purchase_order_id")
     private String purchaseOrderId;
-    
+
     @Column(name = "order_date")
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
     
     @Column(name = "total_price")
     private double totalPrice;
@@ -49,7 +50,7 @@ public class PurchaseOrder {
         
     }
 
-    public PurchaseOrder(String purchaseOrderId, LocalDate orderDate, Employee employee, Supplier supplier, List<PurchaseOrderDetail> purchaseOrderDetails) {
+    public PurchaseOrder(String purchaseOrderId, LocalDateTime orderDate, Employee employee, Supplier supplier, List<PurchaseOrderDetail> purchaseOrderDetails) {
         this.purchaseOrderId = purchaseOrderId;
         this.orderDate = orderDate;
         this.employee = employee;
@@ -71,11 +72,11 @@ public class PurchaseOrder {
         this.purchaseOrderId = purchaseOrderId;
     }
 
-    public LocalDate getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 

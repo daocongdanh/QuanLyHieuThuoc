@@ -4,7 +4,7 @@
  */
 package dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -15,13 +15,13 @@ public class PurchaseOrderDTO {
     private String unitName;
     private int quantity;
     private String batchName;
-    private LocalDate expirationDate;
+    private LocalDateTime expirationDate;
     
     public PurchaseOrderDTO(){
         
     }
 
-    public PurchaseOrderDTO(String productId, String unitName, int quantity, String batchName, LocalDate expirationDate) {
+    public PurchaseOrderDTO(String productId, String unitName, int quantity, String batchName, LocalDateTime expirationDate) {
         this.productId = productId;
         this.unitName = unitName;
         this.quantity = quantity;
@@ -63,11 +63,11 @@ public class PurchaseOrderDTO {
         this.batchName = batchName;
     }
 
-    public LocalDate getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(LocalDate expirationDate) {
+    public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
     }
 

@@ -216,9 +216,7 @@ public class TABUnit extends javax.swing.JPanel {
             }
         });
 
-        btnExitModalEdit.setBackground(new java.awt.Color(236, 82, 113));
         btnExitModalEdit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnExitModalEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnExitModalEdit.setText("Thoát");
         btnExitModalEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -429,6 +427,7 @@ public class TABUnit extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExitModalAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitModalAddActionPerformed
+        txtNameUnitAdd.setText("");
         modalAddUnit.dispose();
     }//GEN-LAST:event_btnExitModalAddActionPerformed
 
@@ -441,6 +440,7 @@ public class TABUnit extends javax.swing.JPanel {
             }
             unitBUS.createUnit(new Unit(null, name));
             MessageDialog.info(null, "Thêm đơn vị tính thành công");
+            txtNameUnitAdd.setText("");
             modalAddUnit.dispose();
             fillContent(unitBUS.getAllUnits());
         } else {
@@ -479,6 +479,7 @@ public class TABUnit extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditUnitActionPerformed
 
     private void btnExitModalEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitModalEditActionPerformed
+        txtNameUnitEdit.setText("");
         modalEditUnit.dispose();
     }//GEN-LAST:event_btnExitModalEditActionPerformed
 

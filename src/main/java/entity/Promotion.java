@@ -11,7 +11,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -27,10 +27,10 @@ public class Promotion {
     private String promotionId;
     
     @Column(name = "started_date")
-    private LocalDate startedDate;
+    private LocalDateTime startedDate;
     
     @Column(name = "ended_date")
-    private LocalDate endedDate;
+    private LocalDateTime endedDate;
     
     @Column(name = "discount")
     private double discount;
@@ -43,7 +43,7 @@ public class Promotion {
         
     }
 
-    public Promotion(String promotionId, LocalDate startedDate, LocalDate endedDate, double discount, PromotionType promotionType) {
+    public Promotion(String promotionId, LocalDateTime startedDate, LocalDateTime endedDate, double discount, PromotionType promotionType) {
         this.promotionId = promotionId;
         this.startedDate = startedDate;
         this.endedDate = endedDate;
@@ -59,19 +59,19 @@ public class Promotion {
         this.promotionId = promotionId;
     }
 
-    public LocalDate getStartedDate() {
+    public LocalDateTime getStartedDate() {
         return startedDate;
     }
 
-    public void setStartedDate(LocalDate startedDate) {
+    public void setStartedDate(LocalDateTime startedDate) {
         this.startedDate = startedDate;
     }
 
-    public LocalDate getEndedDate() {
+    public LocalDateTime getEndedDate() {
         return endedDate;
     }
 
-    public void setEndedDate(LocalDate endedDate) {
+    public void setEndedDate(LocalDateTime endedDate) {
         this.endedDate = endedDate;
     }
 

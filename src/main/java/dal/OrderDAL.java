@@ -7,7 +7,7 @@ package dal;
 import entity.Order;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
@@ -57,7 +57,7 @@ public class OrderDAL implements BaseDAL<Order, String> {
         return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
     }
 
-    public List<Order> search(LocalDate start, LocalDate end, String txtCustomer, String txtEmployee) {
+    public List<Order> search(LocalDateTime start, LocalDateTime end, String txtCustomer, String txtEmployee) {
         StringBuilder jpql = new StringBuilder("select o from Order o where (o.orderDate between ?1 and ?2) ");
 
         int paramIndex = 3;

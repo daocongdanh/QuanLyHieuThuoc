@@ -37,6 +37,7 @@ public class Employee {
     private String email;
     
     @Column(name = "role")
+    @Nationalized
     private String role;
 
     public Employee(){

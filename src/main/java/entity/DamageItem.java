@@ -10,10 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -28,9 +28,9 @@ public class DamageItem {
     @Id
     @Column(name = "damage_item_id")
     private String damageItemId;
-    
+
     @Column(name = "order_date")
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
     
     @Column(name = "total_price")
     private double totalPrice;
@@ -46,7 +46,7 @@ public class DamageItem {
         
     }
 
-    public DamageItem(String damageItemId, LocalDate orderDate, Employee employee, 
+    public DamageItem(String damageItemId, LocalDateTime orderDate, Employee employee, 
             List<DamageItemDetail> damageItemDetails) {
         this.damageItemId = damageItemId;
         this.orderDate = orderDate;
@@ -66,11 +66,11 @@ public class DamageItem {
         this.damageItemId = damageItemId;
     }
 
-    public LocalDate getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 

@@ -5,29 +5,20 @@
 package view.staff;
 
 import bus.*;
-import com.formdev.flatlaf.FlatClientProperties;
-import connectDB.ConnectDB;
 import dto.BatchDTO;
-import dto.OrderDTO;
 import dto.OrderDetailSelected;
 import dto.ReturnOrderDetailDTO;
 import entity.Customer;
 import entity.Product;
 import java.awt.Component;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 import util.FormatNumber;
 import util.MessageDialog;
 import entity.*;
-import java.time.LocalDate;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import javax.swing.JSpinner;
-import util.CurrentEmployee;
-import view.common.SuggestPriceButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import view.login.LoadApplication;
 import view.staff.returnOrder.PnOrderDetailReturn;
 import view.staff.returnOrder.PnSelectBatchReturn;
 import util.CurrentEmployee;
@@ -41,23 +32,24 @@ public class TABReturnOrder extends javax.swing.JPanel {
     /**
      * Creates new form TabHoaDon
      */
-    private OrderBUS orderBUS;
-    private CustomerBUS customerBUS;
-    private UnitDetailBUS unitDetailBUS;
-    private BatchBUS batchBUS;
-    private PromotionBUS promotionBUS;
-    private OrderDetailBUS orderDetailBUS;
-    private ReturnOrderBUS returnOrderBUS;
+    private final OrderBUS orderBUS;
+    private final CustomerBUS customerBUS;
+    private final UnitDetailBUS unitDetailBUS;
+    private final BatchBUS batchBUS;
+    private final PromotionBUS promotionBUS;
+    private final OrderDetailBUS orderDetailBUS;
+    private final ReturnOrderBUS returnOrderBUS;
 
     public TABReturnOrder() {
-        this.orderBUS = new OrderBUS(ConnectDB.getEntityManager());
-        this.customerBUS = new CustomerBUS(ConnectDB.getEntityManager());
-        this.unitDetailBUS = new UnitDetailBUS(ConnectDB.getEntityManager());
-        this.batchBUS = new BatchBUS(ConnectDB.getEntityManager());
-        this.promotionBUS = new PromotionBUS(ConnectDB.getEntityManager());
-        this.orderDetailBUS = new OrderDetailBUS(ConnectDB.getEntityManager());
-        this.returnOrderBUS = new ReturnOrderBUS(ConnectDB.getEntityManager());
         initComponents();
+        orderBUS = LoadApplication.orderBUS;
+        customerBUS = LoadApplication.customerBUS;
+        unitDetailBUS = LoadApplication.unitDetailBUS;
+        batchBUS = LoadApplication.batchBUS;
+        promotionBUS = LoadApplication.promotionBUS;
+        orderDetailBUS = LoadApplication.orderDetailBUS;
+        returnOrderBUS = LoadApplication.returnOrderBUS;
+
 //        txtTienKhachDua.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "0 đ");
 //        txtTimKhachHang.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại khách hàng");
     }
@@ -73,16 +65,22 @@ public class TABReturnOrder extends javax.swing.JPanel {
         btnTaoPhieu = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtSoDienThoaiKhach = new javax.swing.JLabel();
+        txtCusPhone = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        txtTongHoaDon = new javax.swing.JLabel();
+        txtReturnTotal = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         txtTienTraKhach = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtTenKhachHang = new javax.swing.JLabel();
+        txtCusName = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        txtOrderId = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtEmpName = new javax.swing.JLabel();
         headerPanel = new javax.swing.JPanel();
         actionPanel = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
@@ -104,7 +102,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         pnMid.setLayout(pnMidLayout);
         pnMidLayout.setHorizontalGroup(
             pnMidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
         );
         pnMidLayout.setVerticalGroup(
             pnMidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,6 +112,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         add(pnMid, java.awt.BorderLayout.CENTER);
 
         pnLeft.setBackground(new java.awt.Color(255, 255, 255));
+        pnLeft.setPreferredSize(new java.awt.Dimension(485, 650));
 
         btnTaoPhieu.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnTaoPhieu.setText("Tạo phiếu ( F8 )");
@@ -126,11 +125,10 @@ public class TABReturnOrder extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setText("Số điện thoại khách");
+        jLabel3.setText("Số điện thoại khách:");
 
-        txtSoDienThoaiKhach.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtSoDienThoaiKhach.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        txtSoDienThoaiKhach.setText("Vãng Lai");
+        txtCusPhone.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtCusPhone.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -139,22 +137,21 @@ public class TABReturnOrder extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtSoDienThoaiKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtCusPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-            .addComponent(txtSoDienThoaiKhach, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txtCusPhone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel9.setText("Cần trả khách");
+        jLabel9.setText("Cần trả khách:");
 
-        txtTongHoaDon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtTongHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        txtTongHoaDon.setText("0 đ");
+        txtReturnTotal.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtReturnTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -164,7 +161,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtTongHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtReturnTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         jPanel5Layout.setVerticalGroup(
@@ -172,7 +169,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTongHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                    .addComponent(txtReturnTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -184,7 +181,6 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         txtTienTraKhach.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtTienTraKhach.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        txtTienTraKhach.setText("0 đ");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -221,9 +217,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
             }
         });
 
-        txtTenKhachHang.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtTenKhachHang.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        txtTenKhachHang.setText("Vãng Lai");
+        txtCusName.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtCusName.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -232,8 +227,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 69, Short.MAX_VALUE)
-                .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 75, Short.MAX_VALUE)
+                .addComponent(txtCusName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
@@ -241,8 +236,84 @@ public class TABReturnOrder extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtTenKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCusName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel4.setText("Mã hóa đơn:");
+        jLabel4.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jLabel4AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        txtOrderId.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtOrderId.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtOrderId, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtOrderId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
+        );
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel5.setText("Tên nhân viên lập:");
+        jLabel5.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jLabel5AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        txtEmpName.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtEmpName.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 75, Short.MAX_VALUE)
+                .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtEmpName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
 
@@ -251,29 +322,35 @@ public class TABReturnOrder extends javax.swing.JPanel {
         pnLeftLayout.setHorizontalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+                .addContainerGap(49, Short.MAX_VALUE)
                 .addGroup(pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnTaoPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         pnLeftLayout.setVerticalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(68, 68, 68)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(201, 201, 201)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addComponent(btnTaoPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(39, 39, 39))
         );
 
         add(pnLeft, java.awt.BorderLayout.EAST);
@@ -351,10 +428,38 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
     private void btnTaoPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoPhieuActionPerformed
         List<ReturnOrderDetailDTO> listReturnOrderDetailDTOs = createListReturnOrderDetail();
+        try {
+            boolean checkNotZero = listReturnOrderDetailDTOs.stream()
+                    .anyMatch(returnOrderDetailDTO -> returnOrderDetailDTO.getQuantityReturn() != 0);
 
-        returnOrderBUS.createReturnOrderBUS(CurrentEmployee.getEmployee(), customer, order, listReturnOrderDetailDTOs);
-
+            if (!checkNotZero) {
+                MessageDialog.info(null, "Số lượng trả hàng không hợp lệ");
+                return;
+            }
+            
+            if (returnOrderBUS.createReturnOrderBUS(CurrentEmployee.getEmployee(), customer, order, listReturnOrderDetailDTOs)) {
+                MessageDialog.info(null, "Tạo phiếu trả hàng thành công.");
+                clearPnOrderDetail();
+            } else {
+                MessageDialog.info(null, "Tạo phiếu trả hàng thất bại.");
+            };
+        } catch (Exception e) {
+            MessageDialog.error(null, "Lỗi hệ thống !!!");
+        }
     }//GEN-LAST:event_btnTaoPhieuActionPerformed
+
+    private void setTxtEmpty(JLabel... labels) {
+        for (JLabel x : labels) {
+            x.setText("");
+        }
+    }
+
+    private void clearPnOrderDetail() {
+        setTxtEmpty(txtCusName, txtCusPhone, txtEmpName, txtOrderId, txtReturnTotal);
+        pnContent.removeAll();
+        pnContent.revalidate();
+        pnContent.repaint();
+    }
 
     private List<ReturnOrderDetailDTO> createListReturnOrderDetail() {
         List<ReturnOrderDetailDTO> returnOrderDetailDTOs = new ArrayList<>();
@@ -369,8 +474,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
                         PnSelectBatchReturn pnSelectBatch = (PnSelectBatchReturn) component;
                         int quantity = (int) pnSelectBatch.getSpinnerQuantity().getValue();
                         String batchName = pnSelectBatch.getBatchDTO().getName();
-                        returnOrderDetailDTOs.add(new ReturnOrderDetailDTO(pnOrderDetailReturn.getProduct(), 
-                                pnOrderDetailReturn.getSelectedUnitDetail() , quantity, batchName ));
+                        returnOrderDetailDTOs.add(new ReturnOrderDetailDTO(pnOrderDetailReturn.getProduct(),
+                                pnOrderDetailReturn.getSelectedUnitDetail(), quantity, batchName, pnOrderDetailReturn.getReason()));
                     }
                 }
             }
@@ -385,21 +490,41 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
     private void fillOneOrder(Order order) {
         if (order.getCustomer() != null) {
-            txtTenKhachHang.setText(order.getCustomer().getName());
-            txtSoDienThoaiKhach.setText(order.getCustomer().getPhone());
+            txtCusName.setText(order.getCustomer().getName());
+            txtCusPhone.setText(order.getCustomer().getPhone());
             customer = order.getCustomer();
+        } else {
+            txtCusName.setText("Vãng lai");
+            txtCusPhone.setText("Vãng lai");
         }
+        txtEmpName.setText(order.getEmployee().getName());
+        txtOrderId.setText(order.getOrderId());
 
         List<OrderDetail> listOrderDetail = orderDetailBUS.getListOrderDetailByOrder(order);
-        List<BatchDTO> batchDTOs = new ArrayList<>();
-        for (OrderDetail orderDetail : listOrderDetail) {
-            batchDTOs.add(new BatchDTO(orderDetail.getBatch().getName(), orderDetail.getBatch().getStock(),
-                    orderDetail.getBatch().getExpirationDate(), orderDetail.getQuantity()));
-            OrderDetailSelected odSelected = new OrderDetailSelected(orderDetail.getUnitDetail(), batchDTOs);
 
-//            List<Batch> batchs = new ArrayList<>();
-            PnOrderDetailReturn pnOd = new PnOrderDetailReturn(orderDetail, orderDetail.getUnitDetail(), odSelected, this);
-            pnContent.add(pnOd);
+        Map<Product, List<BatchDTO>> productBatchMap = new LinkedHashMap<>();
+
+        for (OrderDetail orderDetail : listOrderDetail) {
+            Product product = orderDetail.getUnitDetail().getProduct();
+            BatchDTO batchDTO = new BatchDTO(orderDetail.getBatch().getName(), orderDetail.getBatch().getStock(),
+                    orderDetail.getBatch().getExpirationDate(), orderDetail.getQuantity());
+
+            productBatchMap.computeIfAbsent(product, k -> new ArrayList<>()).add(batchDTO);
+        }
+
+        Set<Product> processedProducts = new HashSet<>();
+
+        for (OrderDetail orderDetail : listOrderDetail) {
+            Product product = orderDetail.getUnitDetail().getProduct();
+            if (!processedProducts.contains(product)) {
+                List<BatchDTO> batchDTOs = productBatchMap.get(product);
+
+                OrderDetailSelected odSelected = new OrderDetailSelected(orderDetail.getUnitDetail(), batchDTOs);
+
+                PnOrderDetailReturn pnOd = new PnOrderDetailReturn(orderDetail, orderDetail.getUnitDetail(), odSelected, this);
+                pnContent.add(pnOd);
+                processedProducts.add(product);
+            }
         }
         pnContent.revalidate();
         pnContent.repaint();
@@ -425,7 +550,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         for (PnOrderDetailReturn x : listPanel) {
             tongTienHang += x.getLineTotal();
         }
-        txtTongHoaDon.setText(FormatNumber.formatToVND(tongTienHang));
+        txtReturnTotal.setText(FormatNumber.formatToVND(tongTienHang));
     }
 
     private void searchHoaDonTra() {
@@ -433,7 +558,12 @@ public class TABReturnOrder extends javax.swing.JPanel {
         try {
             pnContent.removeAll();
             order = orderBUS.findByIdAndNotInPromotion(orderId);
-            fillOneOrder(order);
+            if (!returnOrderBUS.checkOrderIsReturned(orderId)) {
+                txtSearchOrder.setText("");
+                fillOneOrder(order);
+            } else {
+                MessageDialog.info(null, "Hóa đơn này đã từng được tạo phiếu trả.");
+            }
         } catch (Exception e) {
             MessageDialog.warring(null, "Hóa đơn không tồn tại.");
         }
@@ -446,6 +576,14 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private void btnOpenModalAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenModalAddUnitActionPerformed
         searchHoaDonTra();
     }//GEN-LAST:event_btnOpenModalAddUnitActionPerformed
+
+    private void jLabel4AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel4AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel4AncestorAdded
+
+    private void jLabel5AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel5AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel5AncestorAdded
     private double tongTienHang;
     private Customer customer;
     private Order order;
@@ -459,22 +597,28 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnContent;
     private javax.swing.JPanel pnLeft;
     private javax.swing.JPanel pnMid;
+    private javax.swing.JLabel txtCusName;
+    private javax.swing.JLabel txtCusPhone;
+    private javax.swing.JLabel txtEmpName;
+    private javax.swing.JLabel txtOrderId;
+    private javax.swing.JLabel txtReturnTotal;
     private javax.swing.JTextField txtSearchOrder;
-    private javax.swing.JLabel txtSoDienThoaiKhach;
-    private javax.swing.JLabel txtTenKhachHang;
     private javax.swing.JLabel txtTienTraKhach;
-    private javax.swing.JLabel txtTongHoaDon;
     // End of variables declaration//GEN-END:variables
 
 }

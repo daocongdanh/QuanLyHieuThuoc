@@ -15,7 +15,7 @@ import jakarta.persistence.EntityTransaction;
 import entity.*;
 import enums.PaymentMethod;
 import enums.PromotionType;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -82,15 +82,15 @@ public class OrderBUS {
                 if (!promotion.getPromotionType().equals(PromotionType.ORDER)) {
                     throw new RuntimeException("Không phải khuyến mãi trên hóa đơn");
                 }
-                if (promotion.getStartedDate().isAfter(LocalDate.now())) {
+                if (promotion.getStartedDate().isAfter(LocalDateTime.now())) {
                     throw new RuntimeException("Chưa đến đợt khuyến mãi");
                 }
-                if (promotion.getEndedDate().isBefore(LocalDate.now())) {
+                if (promotion.getEndedDate().isBefore(LocalDateTime.now())) {
                     throw new RuntimeException("Khuyến mãi đã hết hạn");
                 }
-                order = new Order(null, LocalDate.now(), PaymentMethod.CASH, employee, customer, promotion, orderDetails);
+                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, promotion, orderDetails);
             } else {
-                order = new Order(null, LocalDate.now(), PaymentMethod.CASH, employee, customer, null, orderDetails);
+                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, null, orderDetails);
             }
 
             orderDAL.insert(order);
@@ -134,7 +134,7 @@ public class OrderBUS {
         return orderDAL.findAll();
     }
 
-    public List<Order> search(LocalDate start, LocalDate end, String txtCustomer, String txtEmployee) {
+    public List<Order> search(LocalDateTime start, LocalDateTime end, String txtCustomer, String txtEmployee) {
         return orderDAL.search(start, end, txtCustomer, txtEmployee);
     }
     public Order findById(String orderId){
@@ -146,5 +146,5 @@ public class OrderBUS {
         return orderDAL.findByIdAndNotInPromotion(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));
     }
-    
+        
 }

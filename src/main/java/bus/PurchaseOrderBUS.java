@@ -16,12 +16,9 @@ import dto.PurchaseOrderDTO;
 import jakarta.persistence.EntityManager;
 import entity.*;
 import jakarta.persistence.EntityTransaction;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -89,7 +86,7 @@ public class PurchaseOrderBUS {
                 }
                 purchaseOrderDetails.add(purchaseOrderDetail);
             }
-            PurchaseOrder purchaseOrder = new PurchaseOrder(null, LocalDate.now(), employee, supplier, purchaseOrderDetails);
+            PurchaseOrder purchaseOrder = new PurchaseOrder(null, LocalDateTime.now(), employee, supplier, purchaseOrderDetails);
             purchaseOrderDAL.insert(purchaseOrder);
             
             for (PurchaseOrderDetail purchaseOrderDetail : purchaseOrderDetails) {
@@ -121,7 +118,7 @@ public class PurchaseOrderBUS {
         return purchaseOrderDAL.findAll();
     }
 
-    public List<PurchaseOrder> search(LocalDate start, LocalDate end, String txtEmployee) {
+    public List<PurchaseOrder> search(LocalDateTime start, LocalDateTime end, String txtEmployee) {
         return purchaseOrderDAL.search(start, end, txtEmployee);
     }
 }

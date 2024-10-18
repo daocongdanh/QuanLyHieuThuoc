@@ -4,21 +4,20 @@
  */
 package view.manager;
 
-import view.staff.*;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
-import enums.TabMenu;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import util.ResizeImage;
 import view.common.MenuChoice;
+
+import static view.common.MenuChoice.menuSwitch;
 
 /**
  *
@@ -38,33 +37,66 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 //    private TAB_PRODUCT tabProduct;
 //    private TAB_PROMOTION tabPromotion;
 //    private TAB_PURCHASE tabPurchase;
-//    private TAB_RETURN tabReturn;
+    private TABReturnOrder tabReturnOrder;
 //    private TAB_STAFF tabStaff;
 //    private TAB_SUPPLIER tabSupplier;
     private TABUnit tabUnit;
-    private TabMenu currentTab;
     private TABOrder tabOrder;
     private TABPurchaseOrder tabPurChaseOrder;
     private TABDamageItem tabDamageItem;
+    private JPanel currentPanel;
 
     public MenuManagerAdmin() {
         ConnectDB.connect();
         tabUnit = new TABUnit();
-//        tabCustomer = new TABCustomer();
+        tabCustomer = new TABCustomer();
         tabPrescription = new TABPrecription();
         tabOrder = new TABOrder();
         tabPurChaseOrder = new TABPurchaseOrder();
         tabDamageItem = new TABDamageItem();
+        tabReturnOrder = new TABReturnOrder();
         initComponents();
         UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
-        menuSwitch(tabPrescription, TabMenu.TAB_PRESCRIPTION, menuPrescription);
-        currentTab = TabMenu.TAB_PRESCRIPTION;
+        addMenuClick();
+
     }
 
-    private void setTitleMenu() {         
-        menuStatistical.setIconMenu(new FlatSVGIcon(getClass().getResource("/img/thongKeIcon.svg"))); 
+    private void addMenuClick() {
+        List<MenuChoice> menuList = Arrays.asList(
+                menuStatistical, menuReport, menuCustomer, menuDamaged, menuOrder,
+                menuPrescription, menuProduct, menuPromotion, menuPurchase,
+                menuReturn, menuStaff, menuSupplier, menuUnit
+        );
+        Map<MenuChoice, JPanel> menuPanelMap = new HashMap<>();
+//        menuPanelMap.put(menuStatistical, TABStatistical);
+//        menuPanelMap.put(menuReport, TABReport);
+        menuPanelMap.put(menuCustomer, tabCustomer);
+        menuPanelMap.put(menuDamaged, tabDamageItem);
+        menuPanelMap.put(menuOrder, tabOrder);
+        menuPanelMap.put(menuPrescription, tabPrescription);
+//        menuPanelMap.put(menuProduct, TABProduct);
+//        menuPanelMap.put(menuPromotion, TABPromotion);
+        menuPanelMap.put(menuPurchase, tabPurChaseOrder);
+        menuPanelMap.put(menuReturn, tabReturnOrder);
+//        menuPanelMap.put(menuStaff, TABStaff);
+//        menuPanelMap.put(menuSupplier, TABSupplier);
+        menuPanelMap.put(menuUnit, tabUnit);
+        menuSwitch(new TABReturnOrder(), menuReturn, mainContent, menuList, currentPanel);
+
+        for (MenuChoice menu : menuList) {
+            menu.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    JPanel panelMoi = menuPanelMap.get(menu);
+                    menuSwitch(panelMoi, menu, mainContent, menuList, currentPanel);
+                }
+            });
+        }
+    }
+
+    private void setTitleMenu() {
+        menuStatistical.setIconMenu(new FlatSVGIcon(getClass().getResource("/img/thongKeIcon.svg")));
         menuStatistical.setTitleMenu("Thống Kê");
         menuReport.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/baoCaoIcon.svg"))));
         menuReport.setTitleMenu("Báo Cáo Thu Chi");
@@ -90,33 +122,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuSupplier.setTitleMenu("Quản Lý Nhà Cung Cấp");
         menuUnit.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/unitIcon.svg"))));
         menuUnit.setTitleMenu("Quản Lý Đơn Vị Tính");
-    }
-
-    public void menuSwitch(JPanel panelChuyen, TabMenu tabMoi, MenuChoice panelTab) {
-        if (currentTab == tabMoi) {
-            return;
-        }
-        menuStatistical.setDefault();  // Thống Kê
-        menuReport.setDefault();       // Báo Cáo Thu Chi
-        menuCustomer.setDefault();     // Quản Lý Khách Hàng
-        menuDamaged.setDefault();      // Quản Lý Xuất Hủy
-        menuOrder.setDefault();        // Quản Lý Đơn Hàng
-        menuPrescription.setDefault(); // Quản Lý Đơn Thuốc Mẫu
-        menuProduct.setDefault();      // Quản Lý Sản Phẩm
-        menuPromotion.setDefault();    // Quản Lý Khuyến Mãi
-        menuPurchase.setDefault();     // Quản Lý Nhập Hàng
-        menuReturn.setDefault();       // Quản Lý Phiếu Trả Hàng
-        menuStaff.setDefault();        // Quản Lý Nhân Viên
-        menuSupplier.setDefault();     // Quản Lý Nhà Cung Cấp
-        menuUnit.setDefault();
-        
-        panelTab.setActive();
-        currentTab = tabMoi;
-
-        mainContent.removeAll();
-        mainContent.add(panelChuyen).setVisible(true);
-        mainContent.repaint();
-        mainContent.validate();
     }
 
     private void UIManagerSet() {

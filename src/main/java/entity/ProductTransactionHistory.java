@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.hibernate.annotations.Nationalized;
 
 /**
@@ -30,7 +30,7 @@ public class ProductTransactionHistory {
     private Product product;
     
     @Column(name = "transaction_date")
-    private LocalDate transactionDate;
+    private LocalDateTime transactionDate;
     
     @Column(name = "transaction_type")
     @Nationalized
@@ -58,7 +58,8 @@ public class ProductTransactionHistory {
         
     }
 
-    public ProductTransactionHistory(String transactionId, LocalDate transactionDate, String transactionType, String partner, double transactionPrice, double costPrice, int quantity, int finalStock, Product product) {
+    public ProductTransactionHistory(String transactionId, LocalDateTime transactionDate, String transactionType, 
+            String partner, double transactionPrice, double costPrice, int quantity, int finalStock, Product product) {
         this.transactionId = transactionId;
         this.transactionDate = transactionDate;
         this.transactionType = transactionType;
@@ -78,11 +79,11 @@ public class ProductTransactionHistory {
         this.transactionId = transactionId;
     }
 
-    public LocalDate getTransactionDate() {
+    public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(LocalDate transactionDate) {
+    public void setTransactionDate(LocalDateTime transactionDate) {
         this.transactionDate = transactionDate;
     }
 

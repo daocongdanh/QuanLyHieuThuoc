@@ -6,11 +6,10 @@ package bus;
 
 import dal.BatchDAL;
 import entity.Batch;
-import entity.Order;
 import jakarta.persistence.EntityManager;
-import java.time.LocalDate;
 import java.util.List;
 import entity.Product;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -27,7 +26,7 @@ public class BatchBUS {
     public List<Batch> getListBatchEnable(Product product){
         return batchDAL.findByProduct(product)
                 .stream()
-                .filter(batch -> batch.getExpirationDate().isAfter(LocalDate.now()))
+                .filter(batch -> batch.getExpirationDate().isAfter(LocalDateTime.now()))
                 .toList();
     }
     

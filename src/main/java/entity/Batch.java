@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.hibernate.annotations.Nationalized;
 
 /**
@@ -30,7 +30,7 @@ public class Batch {
     private String name;
     
     @Column(name = "expiration_date")
-    private LocalDate expirationDate;
+    private LocalDateTime expirationDate;
     
     @Column(name = "stock")
     private int stock;
@@ -43,7 +43,7 @@ public class Batch {
         
     }
 
-    public Batch(String batchId, String name, LocalDate expirationDate, int stock, Product product) {
+    public Batch(String batchId, String name, LocalDateTime expirationDate, int stock, Product product) {
         this.batchId = batchId;
         this.name = name;
         this.expirationDate = expirationDate;
@@ -67,11 +67,11 @@ public class Batch {
         this.name = name;
     }
 
-    public LocalDate getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(LocalDate expirationDate) {
+    public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
     }
 

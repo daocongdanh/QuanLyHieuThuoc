@@ -16,7 +16,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -33,7 +33,7 @@ public class Order {
     private String orderId;
     
     @Column(name = "order_date")
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
     
     @Column(name = "total_price")
     private double totalPrice;
@@ -61,7 +61,7 @@ public class Order {
         
     }
 
-    public Order(String orderId, LocalDate orderDate, PaymentMethod paymentMethod, 
+    public Order(String orderId, LocalDateTime orderDate, PaymentMethod paymentMethod, 
             Employee employee, Customer customer, Promotion promotion, List<OrderDetail> orderDetails) {
         this.orderId = orderId;
         this.orderDate = orderDate;
@@ -84,11 +84,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public LocalDate getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 

@@ -59,7 +59,7 @@ public class Main {
 //                new UnitDTO("Vĩ", 10, false),
 //                new UnitDTO("Viên", 100, false)
 //        );
-//        
+        
 //        productBUS.createProduct(product, unitDTOs);
 //        for(Product p : productBUS.searchProductByKeyword("B", "Số đăng ký", "Tất cả", true)){
 //            System.out.println(p);
@@ -116,10 +116,10 @@ public class Main {
 //                    "039240123123", "Gò Vấp", "khachhang@gmail.com"));
 //        }
 //        for(int i = 1 ; i <= 5 ; i++){
-////            customerBUS.createCustomer(new Customer(null, "Khách hàng thứ " + i,
-////                    "039240123123", "Gò Vấp", "khachhang@gmail.com"));
-////            supplierBUS.createrSupplier(new Supplier(null, "Công ty TNHH thứ " + i, 
-////                    "Hồ Chí Minh", "19001221", "NCC@gmail.com", "0123123"));
+//            customerBUS.createCustomer(new Customer(null, "Khách hàng thứ " + i,
+//                    "039240123123", "Gò Vấp", "khachhang@gmail.com", true));
+//            supplierBUS.createrSupplier(new Supplier(null, "Công ty TNHH thứ " + i, 
+//                    "Hồ Chí Minh", "19001221", "NCC@gmail.com", "0123123"));
 //        }
 //            Product product = new Product(null, name, registrationNumber, 
 //                    activeIngredient, dosage, packaging, countryOfOrigin, 
@@ -131,7 +131,7 @@ public class Main {
 //        });
 //        Product product = new Product(null, "Maxidom", "VD-9957-10", "Domperidon maleat 10mg", 
 //                null, "hộp 10 gói x 4,220g", "Vương quốc Anh", "Glaxo Operations UK Limited", 20000, 25000, 
-//                true, ProductType.MEDICINE);
+//                true, ProductType.MEDICINE, null);
 //        List<UnitDTO> unitDTOs = List.of(
 //                new UnitDTO("Gói", 1, true),
 //                new UnitDTO("Hộp", 10, false)
@@ -139,7 +139,7 @@ public class Main {
 //        productBUS.createProduct(product, unitDTOs);
 //        Product product = new Product(null, "Septax", "VN-20467-17", "Ceftazidim (dưới dạng bột hỗn hợp vô khuẩn Ceftazidim pentahydrat và natri carbonat) 1g", 
 //                "1g", "hộp 1 lọ", "Hy Lạp", null, 20000, 22000, 
-//                true, ProductType.MEDICINE);
+//                true, ProductType.MEDICINE, null);
 //        List<UnitDTO> unitDTOs = List.of(
 //                new UnitDTO("Lọ", 1, true)
 //        );

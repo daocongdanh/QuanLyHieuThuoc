@@ -7,7 +7,9 @@ package view.common;
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import java.awt.Color;
 import java.awt.Insets;
+import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 import util.ResizeImage;
 
 /**
@@ -127,9 +129,25 @@ public class MenuChoice extends javax.swing.JPanel {
         if (isActive != true) {
             Box.setBackground(new Color(211, 237, 187));
             titleMenu.setForeground(new Color(46, 46, 46));
-        }    
+        }
     }//GEN-LAST:event_formMouseExited
 
+    public static void menuSwitch(JPanel panelMoi, MenuChoice menuChoice, JPanel mainContent,
+            List<MenuChoice> menuList, JPanel currentPanel) {
+        if ( panelMoi.equals(currentPanel)){
+            return;
+        }
+        
+        for (MenuChoice menu : menuList) {
+            menu.setDefault();
+        }
+        menuChoice.setActive();
+
+        mainContent.removeAll();
+        mainContent.add(panelMoi).setVisible(true);
+        mainContent.repaint();
+        mainContent.validate();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Box;

@@ -5,9 +5,8 @@
 package dal;
 import entity.DamageItem;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
@@ -46,7 +45,7 @@ public class DamageItemDAL implements BaseDAL<DamageItem, String>{
         return entityManager.createQuery("select d from DamageItem d", DamageItem.class).getResultList();
     }
 
-    public List<DamageItem> search(LocalDate start, LocalDate end, String txtEmployee) {
+    public List<DamageItem> search(LocalDateTime start, LocalDateTime end, String txtEmployee) {
         StringBuilder jpql = new StringBuilder("select d from DamageItem d where (d.orderDate between ?1 and ?2) ");
         
         if(!txtEmployee.equals("")){
