@@ -50,6 +50,8 @@ public class Unit {
     }
 
     public void setName(String name) {
+        if(name == null)
+            throw new RuntimeException("Tên đơn vị tính không hợp lệ");
         this.name = name;
     }
 

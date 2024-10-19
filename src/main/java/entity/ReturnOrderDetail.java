@@ -56,10 +56,10 @@ public class ReturnOrderDetail {
 
     public ReturnOrderDetail(int quantity, double price, Batch batch, UnitDetail unitDetail, ReturnOrderDetailStatus
              returnOrderDetailStatus) {
-        this.quantity = quantity;
-        this.price = price;
-        this.batch = batch;
-        this.unitDetail = unitDetail;
+        setQuantity(quantity);
+        setPrice(price);
+        setBatch(batch);
+        setUnitDetail(unitDetail);
         this.returnOrderDetailStatus = returnOrderDetailStatus;
         setLineTotal();
     }
@@ -69,6 +69,8 @@ public class ReturnOrderDetail {
     }
 
     public void setQuantity(int quantity) {
+        if(quantity < 0)
+            throw new RuntimeException("Số lượng sản phẩm không hợp lệ");
         this.quantity = quantity;
     }
 
@@ -77,6 +79,8 @@ public class ReturnOrderDetail {
     }
 
     public void setPrice(double price) {
+        if (price < 0)
+            throw new RuntimeException("Giá sản phẩm không hợp lệ");
         this.price = price;
     }
 
@@ -103,6 +107,9 @@ public class ReturnOrderDetail {
     }
 
     public void setBatch(Batch batch) {
+        if(batch == null){
+            throw new RuntimeException("Lô hàng không được rỗng");
+        }
         this.batch = batch;
     }
 
@@ -111,6 +118,8 @@ public class ReturnOrderDetail {
     }
 
     public void setUnitDetail(UnitDetail unitDetail) {
+        if(unitDetail == null)
+            throw new RuntimeException("Chi tiết đơn vị tính không được rỗng");
         this.unitDetail = unitDetail;
     }
 
@@ -119,6 +128,8 @@ public class ReturnOrderDetail {
     }
 
     public void setReturnOrder(ReturnOrder returnOrder) {
+        if(returnOrder == null)
+            throw new RuntimeException("Hóa đơn trả khách hàng không được rỗng");
         this.returnOrder = returnOrder;
     }
 

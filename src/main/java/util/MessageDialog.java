@@ -33,6 +33,14 @@ public class MessageDialog {
     public static String prompt(Component parent, String message, String title) {
         return JOptionPane.showInputDialog(parent, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
+
+    public static void info(Object object, String nhập_khẩu_thành_công, String thông_báo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public static void error(Object object, String có_lỗi_xảy_ra_trong_quá_trình_nhập_khẩu, String thông_báo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
 

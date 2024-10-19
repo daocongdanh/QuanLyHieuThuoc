@@ -33,8 +33,8 @@ public class ProductPromotionDetail {
     }
 
     public ProductPromotionDetail(Product product, Promotion promotion) {
-        this.product = product;
-        this.promotion = promotion;
+        setProduct(product);
+        setPromotion(promotion);
     }
 
     public Product getProduct() {
@@ -42,6 +42,9 @@ public class ProductPromotionDetail {
     }
 
     public void setProduct(Product product) {
+        if(product == null ){
+            throw new RuntimeException("Sản phẩm không được rỗng");
+        }   
         this.product = product;
     }
 
@@ -50,6 +53,9 @@ public class ProductPromotionDetail {
     }
 
     public void setPromotion(Promotion promotion) {
+        if(promotion == null){
+            throw new RuntimeException("Khuyến mãi không được rỗng");
+        }
         this.promotion = promotion;
     }
 

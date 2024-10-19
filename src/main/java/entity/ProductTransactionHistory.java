@@ -59,15 +59,15 @@ public class ProductTransactionHistory {
     }
 
     public ProductTransactionHistory(String transactionId, LocalDate transactionDate, String transactionType, String partner, double transactionPrice, double costPrice, int quantity, int finalStock, Product product) {
-        this.transactionId = transactionId;
-        this.transactionDate = transactionDate;
-        this.transactionType = transactionType;
+        setTransactionId(transactionId);
+        setTransactionDate(transactionDate);
+        setTransactionType(transactionType);
         this.partner = partner;
-        this.transactionPrice = transactionPrice;
-        this.costPrice = costPrice;
-        this.quantity = quantity;
-        this.finalStock = finalStock;
-        this.product = product;
+        setTransactionPrice(transactionPrice);
+        setCostPrice(costPrice);
+        setQuantity(quantity);
+        setFinalStock(finalStock);
+        setProduct(product);
     }
 
     public String getTransactionId() {
@@ -75,6 +75,9 @@ public class ProductTransactionHistory {
     }
 
     public void setTransactionId(String transactionId) {
+        if(transactionId == null){
+            throw new RuntimeException("Mã giao dịch không hợp lệ");
+        }
         this.transactionId = transactionId;
     }
 
@@ -83,6 +86,10 @@ public class ProductTransactionHistory {
     }
 
     public void setTransactionDate(LocalDate transactionDate) {
+        LocalDate curentDate = LocalDate.now();
+        if(transactionDate == null || !transactionDate.isEqual(curentDate) ){
+            throw  new RuntimeException("NGày giao dịch không hợp lệ");
+        }
         this.transactionDate = transactionDate;
     }
 
@@ -91,6 +98,9 @@ public class ProductTransactionHistory {
     }
 
     public void setTransactionType(String transactionType) {
+        if(transactionType == null){
+            throw new RuntimeException("Loaị giao dịch không được rỗng");
+        }
         this.transactionType = transactionType;
     }
 
@@ -107,6 +117,9 @@ public class ProductTransactionHistory {
     }
 
     public void setTransactionPrice(double transactionPrice) {
+        if(transactionPrice <0){
+            throw new RuntimeException("Giá giao dịch không hợp lệ");
+        }
         this.transactionPrice = transactionPrice;
     }
 
@@ -115,6 +128,9 @@ public class ProductTransactionHistory {
     }
 
     public void setCostPrice(double costPrice) {
+        if(costPrice <0){
+            throw new RuntimeException("Giá gốc không hợp lệ");
+        }
         this.costPrice = costPrice;
     }
 
@@ -123,6 +139,9 @@ public class ProductTransactionHistory {
     }
 
     public void setQuantity(int quantity) {
+        if(quantity <0){
+            throw new RuntimeException("Số lượng sản phẩm không hợp lệ");
+        }
         this.quantity = quantity;
     }
 
@@ -131,6 +150,9 @@ public class ProductTransactionHistory {
     }
 
     public void setFinalStock(int finalStock) {
+        if(finalStock <0){
+            throw new RuntimeException("Số lượng tồn cuối không hợp lệ");
+        }
         this.finalStock = finalStock;
     }
 
@@ -139,6 +161,9 @@ public class ProductTransactionHistory {
     }
 
     public void setProduct(Product product) {
+        if(product == null){
+            throw new RuntimeException("Sản phẩm không được rỗng");
+        }
         this.product = product;
     }
 

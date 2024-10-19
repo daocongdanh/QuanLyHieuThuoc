@@ -48,11 +48,10 @@ public class Promotion {
 
     public Promotion(String promotionId, LocalDate startedDate, LocalDate endedDate, double discount, boolean status, PromotionType promotionType) {
         this.promotionId = promotionId;
-        this.startedDate = startedDate;
-        this.endedDate = endedDate;
-        this.discount = discount;
-        this.status = status;
-        this.promotionType = promotionType;
+        setStartedDate(startedDate);
+        setEndedDate(endedDate);
+        setDiscount(discount);
+        setPromotionType(promotionType);
     }
 
     public String getPromotionId() {
@@ -68,6 +67,10 @@ public class Promotion {
     }
 
     public void setStartedDate(LocalDate startedDate) {
+        LocalDate currentDate = LocalDate.now();
+        if(startedDate.isBefore(currentDate)){
+            throw new RuntimeException("Ngày bắt đầu không hợp lệ");
+        }
         this.startedDate = startedDate;
     }
 
@@ -76,6 +79,9 @@ public class Promotion {
     }
 
     public void setEndedDate(LocalDate endedDate) {
+        if(endedDate.isBefore(startedDate)){
+            throw new RuntimeException("NGày kết thúc không hợp lệ");
+        }
         this.endedDate = endedDate;
     }
 
@@ -84,6 +90,9 @@ public class Promotion {
     }
 
     public void setDiscount(double discount) {
+        if(discount < 0){
+            throw new RuntimeException("Giảm giá không hợp lệ");
+        }
         this.discount = discount;
     }
 
@@ -101,6 +110,9 @@ public class Promotion {
     }
 
     public void setPromotionType(PromotionType promotionType) {
+        if (promotionType != PromotionType.PRODUCT && promotionType != PromotionType.ORDER) {
+            throw new RuntimeException("Loại khuyến mãi không hợp lệ!");
+        }
         this.promotionType = promotionType;
     }
 
