@@ -27,7 +27,7 @@ import view.login.LoadApplication;
  */
 public class TABOrder extends javax.swing.JPanel {
 
-    private OrderBUS orderBUS;
+    private final OrderBUS orderBUS;
     private TableDesign tableDesign;
     
 

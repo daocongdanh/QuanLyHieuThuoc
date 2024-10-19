@@ -31,7 +31,7 @@ import view.login.LoadApplication;
  */
 public class TABCustomer extends javax.swing.JPanel {
 
-    private CustomerBUS customerBUS;
+    private final CustomerBUS customerBUS;
     private TableDesign tableDesign;
 
     public TABCustomer() {

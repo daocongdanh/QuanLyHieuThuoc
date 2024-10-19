@@ -29,7 +29,7 @@ import view.login.LoadApplication;
  */
 public class TABUnit extends javax.swing.JPanel {
 
-    private UnitBUS unitBUS;
+    private final UnitBUS unitBUS;
     private TableDesign tableDesign;
 
     public TABUnit() {

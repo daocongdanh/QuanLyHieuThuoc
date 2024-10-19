@@ -28,8 +28,8 @@ import view.login.LoadApplication;
  */
 public class TABEmployee extends javax.swing.JPanel {
 
-    private EmployeeBUS employeeBUS;
-    private AccountBUS accountBUS;
+    private final EmployeeBUS employeeBUS;
+    private final AccountBUS accountBUS;
     private TableDesign tableDesign;
 
     public TABEmployee() {

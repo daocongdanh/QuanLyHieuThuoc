@@ -29,7 +29,7 @@ import view.login.LoadApplication;
  */
 public class TABDamageItem extends javax.swing.JPanel {
 
-    private DamageItemBUS damageItemBUS;
+    private final DamageItemBUS damageItemBUS;
     private TableDesign tableDesign;
 
     public TABDamageItem() {
