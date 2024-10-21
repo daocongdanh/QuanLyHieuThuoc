@@ -5,28 +5,20 @@
 package view.manager;
 
 import bus.SupplierBUS;
-import bus.UnitBUS;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import entity.Supplier;
-import entity.Unit;
-import java.awt.Dimension;
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import javax.swing.BorderFactory;
-import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import util.MessageDialog;
 import util.ResizeImage;
-import view.common.TableActionCellEditorOnlyDelete;
-import view.common.TableActionCellRenderOnlyDelete;
 import view.common.TableDesign;
-import view.common.TableActionEventOnlyDelete;
+import view.login.LoadApplication;
 
 /**
  *
@@ -34,12 +26,12 @@ import view.common.TableActionEventOnlyDelete;
  */
 public class TABSupplier extends javax.swing.JPanel {
 
-    private SupplierBUS supplierBUS;
+    private final SupplierBUS supplierBUS;
     private TableDesign tableDesign;
     private String supplierEdit;
 
     public TABSupplier() {
-        supplierBUS = new SupplierBUS(ConnectDB.getEntityManager());
+        supplierBUS = LoadApplication.supplierBUS;
         initComponents();
         setUIManager();
         fillTable();

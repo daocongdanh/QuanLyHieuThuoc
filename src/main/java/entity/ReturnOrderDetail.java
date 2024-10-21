@@ -65,6 +65,7 @@ public class ReturnOrderDetail {
         setUnitDetail(unitDetail);
         this.returnOrderDetailStatus = returnOrderDetailStatus;
         setLineTotal();
+        this.reason = reason;
     }
 
     public int getQuantity() {

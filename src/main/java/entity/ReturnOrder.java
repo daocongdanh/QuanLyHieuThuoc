@@ -48,7 +48,7 @@ public class ReturnOrder {
     
     @OneToMany(mappedBy = "returnOrder", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<ReturnOrderDetail> returnOrderDetails;
-    private String reason;
+
     
     public ReturnOrder(){
         
@@ -58,7 +58,6 @@ public class ReturnOrder {
     , List<ReturnOrderDetail> returnOrderDetails, boolean status) {
         this.returnOrderId = returnOrderId;
         setOrderDate(orderDate);
-        setReason(reason);
         setEmployee(employee);
         setOrder(order);
         setReturnOrderDetails(returnOrderDetails);
@@ -96,17 +95,6 @@ public class ReturnOrder {
     }
 
 
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        if(reason == null)
-            throw new RuntimeException("Lí do trả hàng không được rỗng");
-        this.reason = reason;
-    }
-
-//>>>>>>> dd4613967900d6b96bee59bfa7cb6b3502322f56
     public double getTotalPrice() {
         return totalPrice;
     }
