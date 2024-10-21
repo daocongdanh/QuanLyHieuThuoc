@@ -13,6 +13,7 @@ import enums.PromotionType;
 import jakarta.persistence.EntityTransaction;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -80,5 +81,39 @@ public class PromotionBUS {
 
     public List<Promotion> search(LocalDate date, String promotionType) {
         return promotionDAL.search(date, promotionType);
+    }
+    
+    public Optional<Promotion> getPromotionById(String promotionId){
+        return promotionDAL.findById(promotionId);
+    }
+    
+    public boolean updatePromotion(Promotion promotion, List<String> productIds){
+        try {
+            transaction.begin();
+
+            promotionDAL.update(promotion);
+            if(promotion.getPromotionType().equals(PromotionType.PRODUCT)){
+                List<ProductPromotionDetail> details = productPromotionDetailDAL.findAllByPromotion(promotion);
+                productPromotionDetailDAL.removeAll(details);
+                List<ProductPromotionDetail> insertDetails = productIds.stream()
+                        .map(pid -> new ProductPromotionDetail(productDAL.findById(pid).get(), promotion))
+                        .toList();
+                productPromotionDetailDAL.insertAll(insertDetails);
+            }
+            
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            transaction.rollback();
+            return false;
+        }
+    }
+    
+    public List<Product> getAllByPromotion(Promotion promotion){
+        return productPromotionDetailDAL.findAllByPromotion(promotion)
+                .stream()
+                .map(ProductPromotionDetail::getProduct)
+                .toList();
     }
 }
