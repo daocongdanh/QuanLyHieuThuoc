@@ -19,10 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import util.MessageDialog;
 import util.ResizeImage;
-import view.common.TableActionCellEditorOnlyDelete;
-import view.common.TableActionCellRenderOnlyDelete;
 import view.common.TableDesign;
-import view.common.TableActionEventOnlyDelete;
 import view.login.LoadApplication;
 
 /**

@@ -63,7 +63,12 @@ public class PrescriptionBUS {
             transaction.begin();
             prescriptionDAL.update(prescription);
             for (PrescriptionDetail preDetailOld : prescriptionDetails) {
-                prescriptionDetailDAL.remove(preDetailOld);
+                PrescriptionDetail managedDetail = prescriptionDetailDAL.findByPrescriptionAndUnitDetail(preDetailOld.getPrescription().getPrescriptionId(),
+                        preDetailOld.getUnitDetail().getUnitDetailId())
+                        .orElseThrow(() -> new RuntimeException("Khong ton tai PreDetail nay"));
+                if (managedDetail != null) {
+                    prescriptionDetailDAL.remove(managedDetail);
+                }
             }
 
             for (PrescriptionDTO prescriptionDTO : prescriptionDTOs) {

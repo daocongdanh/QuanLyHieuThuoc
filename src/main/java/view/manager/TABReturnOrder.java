@@ -5,11 +5,16 @@
 package view.manager;
 
 import bus.ReturnOrderBUS;
+import bus.ReturnOrderDetailBUS;
+import bus.UnitBUS;
+import bus.UnitDetailBUS;
 import com.formdev.flatlaf.FlatClientProperties;
 import java.util.Arrays;
+import java.util.EventObject;
 import java.util.List;
 import javax.swing.*;
 
+import enums.ReturnOrderDetailStatus;
 import view.common.TableDesign;
 import entity.*;
 import java.sql.Date;
@@ -17,13 +22,19 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import util.*;
-import view.common.TableActionCellEditorOnlyEdit;
-import view.common.TableActionCellRenderOnlyEdit;
-import view.common.TableActionEventOnlyEdit;
+import view.common.TableActionCellEditorOneAction;
+import view.common.TableActionCellEditorReturnManage;
+import view.common.TableActionCellRenderOneAction;
+import view.common.TableActionCellRenderReturnManage;
 import view.login.LoadApplication;
-import static view.login.LoadApplication.orderBUS;
+
+import view.common.TableActionEventOneAction;
+import view.common.TableActionEventReturnManage;
+
+import static view.login.LoadApplication.*;
 
 /**
  *
@@ -32,12 +43,18 @@ import static view.login.LoadApplication.orderBUS;
 public class TABReturnOrder extends javax.swing.JPanel {
 
     private final ReturnOrderBUS returnOrderBUS;
+    private final ReturnOrderDetailBUS returnOrderDetailBUS;
+    private final UnitBUS unitBUS;
+    private final UnitDetailBUS unitDetailBUS;
     private TableDesign tableDesign;
     private TableDesign tableDesignView;
     private TableDesign tableDesignEdit;
 
     public TABReturnOrder() {
         returnOrderBUS = LoadApplication.returnOrderBUS;
+        returnOrderDetailBUS = LoadApplication.returnOrderDetailBUS;
+        unitBUS = LoadApplication.unitBUS;
+        unitDetailBUS = LoadApplication.unitDetailBUS;
         initComponents();
         setUIManager();
         fillTable();
@@ -58,47 +75,128 @@ public class TABReturnOrder extends javax.swing.JPanel {
         tableDesign = new TableDesign(headers, tableWidths, List.of(false, false, false, false, false, true));
         scrollTable.setViewportView(tableDesign.getTable());
         scrollTable.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
-        addEventBtnDeleteInTable(tableDesign);
-        List<ReturnOrder> returnOrders = returnOrderBUS.getAllReturnOrders();
+        addEventBtnViewInTable(tableDesign);
+        List<ReturnOrder> returnOrders = returnOrderBUS.getListReturnOrdersByStatus(false);
         fillContent(returnOrders);
     }
 
     private void fillTableModal() {
-        String[] headers = {"Mã hàng", "Tên hàng", "Số lô", "Số lượng", "Giá trả hàng", "Thao tác"};
-        List<Integer> tableWidths = Arrays.asList(150, 200, 150, 100, 200, 100);
-        tableDesignView = new TableDesign(headers, tableWidths, List.of(false, false, false, false, false, true));
+        String[] headers = {"Mã hàng", "Tên hàng", "Đơn vị tính" ,"Số lô", "Số lượng", "Giá trả hàng", "Thao tác"};
+        List<Integer> tableWidths = Arrays.asList(150, 200, 100 , 150, 100, 140, 130);
+        tableDesignView = new TableDesign(headers, tableWidths, List.of(false, false, false, false, false, false, true));
         scrollTableView.setViewportView(tableDesignView.getTable());
         scrollTableView.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
         tableDesignView.setTableHeaderFontSize(14);
     }
 
-    private void fillDataModalView(List<ReturnOrderDetail> returnOrderDetails) {
+    private void fillDataTableModalView(List<ReturnOrderDetail> returnOrderDetails) {
+        if ( tableDesignView.getTable().getCellEditor() != null){
+            tableDesignView.getTable().getCellEditor().stopCellEditing();
+        }
         tableDesignView.getModelTable().setRowCount(0);
         for (ReturnOrderDetail returnOrderDetail : returnOrderDetails) {
-            tableDesignView.getModelTable().addRow(new Object[]{returnOrderDetail.getBatch().getProduct().getProductId(),
-                returnOrderDetail.getBatch().getProduct().getName(), returnOrderDetail.getBatch().getName(),
-                returnOrderDetail.getQuantity(),FormatNumber.formatToVND(returnOrderDetail.getLineTotal()) , null});
+            if (returnOrderDetail.getReturnOrderDetailStatus().equals(ReturnOrderDetailStatus.PENDING)) {
+                tableDesignView.getModelTable().addRow(new Object[]{
+                        returnOrderDetail.getBatch().getProduct().getProductId(),
+                        returnOrderDetail.getBatch().getProduct().getName(),
+                        returnOrderDetail.getUnitDetail().getUnit().getName(),
+                        returnOrderDetail.getBatch().getName(),
+                        returnOrderDetail.getQuantity(),
+                        FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
+                        null
+                });
+            } else if ( returnOrderDetail.getReturnOrderDetailStatus().equals(ReturnOrderDetailStatus.RETURN)){
+                tableDesignView.getModelTable().addRow(new Object[]{
+                        returnOrderDetail.getBatch().getProduct().getProductId(),
+                        returnOrderDetail.getBatch().getProduct().getName(),
+                        returnOrderDetail.getUnitDetail().getUnit().getName(),
+                        returnOrderDetail.getBatch().getName(),
+                        returnOrderDetail.getQuantity(),
+                        FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
+                        "Đã Thêm Lại"
+                });
+            }
+            else {
+                tableDesignView.getModelTable().addRow(new Object[]{
+                        returnOrderDetail.getBatch().getProduct().getProductId(),
+                        returnOrderDetail.getBatch().getProduct().getName(),
+                        returnOrderDetail.getUnitDetail().getUnit().getName(),
+                        returnOrderDetail.getBatch().getName(),
+                        returnOrderDetail.getQuantity(),
+                        FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
+                        "Đã Xuất Hủy"
+                });
+            }
         }
+        addButtonOnTableInModal();
     }
 
-    private void addEventBtnDeleteInTable(TableDesign tableDesign) {
+    private void addButtonOnTableInModal( ) {
+        JTable table = tableDesignView.getTable();
+        TableActionEventReturnManage event = new TableActionEventReturnManage() {
+            @Override
+            public void onReturned(int row) {
+                String returnOrderId = txtReturnOrderId.getText();
+                String productId = (String) table.getValueAt(row,0);
+                String productName = (String) table.getValueAt(row,1);
+                String unitName = (String) table.getValueAt(row,2);
+                String batchName = (String) table.getValueAt(row,3);
+                if ( MessageDialog.confirm(null, "Bạn muốn thêm lại sản phẩm " + productName +  " với số lô "
+                        + batchName + " vào hệ thống", "Xác nhận") ){
+                    UnitDetail unitDetail = unitDetailBUS.findByProductAndUnit(productId, unitBUS.getUnitByName(unitName).getUnitId());
+                    Batch batch = batchBUS.getBatchByNameAndProduct(batchName,productId);
+
+                    ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderId,
+                            unitDetail.getUnitDetailId(), batch.getBatchId());
+                    returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.RETURN);
+                    if ( returnOrderDetailBUS.updateReturnOrderDetail(returnOrderDetail) ){
+                        MessageDialog.info(null, "Sản phẩm đã thêm lại hệ thống.");
+                        fillModal(returnOrderBUS.findById(txtReturnOrderId.getText().trim()));
+                        searchByOption();
+                    }
+                    else {
+                        MessageDialog.info(null, "Lỗi hệ thống.");
+                    }
+                }
+
+            }
+
+            @Override
+            public void onDamaged(int row) {
+                MessageDialog.info(null, "damage");
+            }
+        };
+        for (int row = 0; row < table.getRowCount(); row++) {
+//            Object value = table.getValueAt(row, table.getColumnCount() - 1);
+                table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderReturnManage());
+                table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorReturnManage(event));
+
+        }
+        table.revalidate();
+        table.repaint();
+    }
+
+    private void fillModal(ReturnOrder returnOrder) {
+        txtReturnOrderId.setText(returnOrder.getReturnOrderId());
+        txtTimeReturnOrder.setText(FormatDate.formatDate(returnOrder.getOrderDate()));
+        txtOrderId.setText(returnOrder.getOrder().getOrderId());
+        txtEmp.setText(returnOrder.getEmployee().getName());
+        txtStatus.setText(returnOrder.isStatus() ? "Đã xử lý" : "Chờ xử lý");
+        fillDataTableModalView(returnOrder.getReturnOrderDetails());
+    }
+
+    private void addEventBtnViewInTable(TableDesign tableDesign) {
         JTable table = tableDesign.getTable();
-        TableActionEventOnlyEdit event = (int row) -> {
+        TableActionEventOneAction event = (int row) -> {
             int selectedRow = table.getSelectedRow();
             String returnOrderId = (String) table.getValueAt(selectedRow, 0);
             ReturnOrder returnOrder = returnOrderBUS.findById(returnOrderId);
-            txtReturnOrderId.setText(returnOrder.getReturnOrderId());
-            txtTimeReturnOrder.setText(FormatDate.formatDate(returnOrder.getOrderDate()));
-            txtOrderId.setText(returnOrder.getOrder().getOrderId());
-            txtEmp.setText(returnOrder.getEmployee().getName());
-            txtStatus.setText(returnOrder.isStatus() ? "Đã xử lý" : "Chờ xử lý");
-            fillDataModalView(returnOrder.getReturnOrderDetails());
+            fillModal(returnOrder);
             modalReturnOrderView.setLocationRelativeTo(null);
             modalReturnOrderView.setVisible(true);
-
         };
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOnlyEdit());
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOnlyEdit(event));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOneAction(1));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOneAction(event, 1));
     }
 
     private void fillContent(List<ReturnOrder> returnOrders) {
@@ -159,14 +257,12 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         modalReturnOrderView.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         modalReturnOrderView.setTitle("Xem đơn trả");
-        modalReturnOrderView.setMinimumSize(new java.awt.Dimension(1205, 700));
+        modalReturnOrderView.setMinimumSize(new java.awt.Dimension(1700, 900));
         modalReturnOrderView.setModal(true);
-        modalReturnOrderView.setPreferredSize(new java.awt.Dimension(1205, 700));
         modalReturnOrderView.getContentPane().setLayout(new javax.swing.BoxLayout(modalReturnOrderView.getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(1205, 700));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1205, 700));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -308,7 +404,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollTableView, javax.swing.GroupLayout.DEFAULT_SIZE, 1067, Short.MAX_VALUE)
+            .addComponent(scrollTableView, javax.swing.GroupLayout.DEFAULT_SIZE, 1217, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +426,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
+                .addGap(63, 63, 63)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -339,19 +435,22 @@ public class TABReturnOrder extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                 .addGap(141, 141, 141)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(260, 260, 260))
-                    .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(73, Short.MAX_VALUE))
+                        .addGap(260, 260, 260)))
+                .addContainerGap(220, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(73, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -363,7 +462,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addGap(88, 88, 88)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
@@ -503,8 +602,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         add(pnAll);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
+    private void searchByOption(){
         java.util.Date date1 = jDateFrom.getDate();
         java.util.Date date2 = jDateTo.getDate();
 
@@ -523,14 +621,20 @@ public class TABReturnOrder extends javax.swing.JPanel {
         List<ReturnOrder> returnOrders;
         returnOrders = switch (optionStatus.getSelectedIndex()) {
             case 0 ->
-                returnOrderBUS.search(start, end, nameEmp, orderIdSearch, null);
+                    returnOrderBUS.search(start, end, nameEmp, orderIdSearch, null);
             case 1 ->
-                returnOrderBUS.search(start, end, nameEmp, orderIdSearch, false);
+                    returnOrderBUS.search(start, end, nameEmp, orderIdSearch, false);
             default ->
-                returnOrderBUS.search(start, end, nameEmp, orderIdSearch, true);
+                    returnOrderBUS.search(start, end, nameEmp, orderIdSearch, true);
         };
-        
+
         fillContent(returnOrders);
+    }
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        searchByOption();
+
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrderActionPerformed

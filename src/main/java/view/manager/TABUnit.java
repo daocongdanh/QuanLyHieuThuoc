@@ -7,20 +7,14 @@ package view.manager;
 import bus.UnitBUS;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import connectDB.ConnectDB;
 import entity.Unit;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import javax.swing.BorderFactory;
-import javax.swing.JTable;
 import javax.swing.UIManager;
 import util.MessageDialog;
 import util.ResizeImage;
-import view.common.TableActionCellEditorOnlyDelete;
-import view.common.TableActionCellRenderOnlyDelete;
 import view.common.TableDesign;
-import view.common.TableActionEventOnlyDelete;
 import view.login.LoadApplication;
 
 /**

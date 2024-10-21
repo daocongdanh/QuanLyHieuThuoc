@@ -4,20 +4,7 @@
  */
 package view.login;
 
-import bus.AccountBUS;
-import bus.BatchBUS;
-import bus.CustomerBUS;
-import bus.DamageItemBUS;
-import bus.EmployeeBUS;
-import bus.OrderBUS;
-import bus.OrderDetailBUS;
-import bus.PrescriptionBUS;
-import bus.ProductBUS;
-import bus.PromotionBUS;
-import bus.PurchaseOrderBUS;
-import bus.ReturnOrderBUS;
-import bus.UnitBUS;
-import bus.UnitDetailBUS;
+import bus.*;
 import com.formdev.flatlaf.FlatLightLaf;
 import connectDB.ConnectDB;
 import jakarta.persistence.EntityManager;
@@ -50,6 +37,7 @@ public class LoadApplication extends javax.swing.JFrame {
     public static PrescriptionBUS prescriptionBUS;
     public static PurchaseOrderBUS purchaseOrderBUS;
     public static UnitBUS unitBUS;
+    public static ReturnOrderDetailBUS returnOrderDetailBUS;
 
     public LoadApplication() {
         initComponents();
@@ -144,6 +132,7 @@ public class LoadApplication extends javax.swing.JFrame {
                     prescriptionBUS = new PrescriptionBUS(em);
                     purchaseOrderBUS = new PurchaseOrderBUS(em);
                     unitBUS = new UnitBUS(em);
+                    returnOrderDetailBUS = new ReturnOrderDetailBUS(em);
                 }
 //                load.progressLoading.setForeground(Color.orange);
             }

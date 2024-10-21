@@ -8,6 +8,6 @@ package view.common;
  *
  * @author Hoang
  */
-public interface TableActionEventOnlyEdit {
-    public void onEdit( int row);
+public interface TableActionEventOneAction {
+    public void onAction( int row);
 }

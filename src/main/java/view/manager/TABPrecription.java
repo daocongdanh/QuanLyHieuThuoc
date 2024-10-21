@@ -8,7 +8,6 @@ import bus.PrescriptionBUS;
 import bus.ProductBUS;
 import bus.UnitDetailBUS;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import connectDB.ConnectDB;
 import dto.PrescriptionDTO;
 import entity.Prescription;
 import entity.PrescriptionDetail;
@@ -30,9 +29,9 @@ import util.MessageDialog;
 import util.ResizeImage;
 import view.common.EachRowEditor;
 import view.common.SpinnerEditor;
-import view.common.TableActionCellEditorOnlyDelete;
-import view.common.TableActionCellRenderOnlyDelete;
-import view.common.TableActionEventOnlyDelete;
+import view.common.TableActionCellEditorOneAction;
+import view.common.TableActionCellRenderOneAction;
+import view.common.TableActionEventOneAction;
 import view.common.TableDesign;
 import view.login.LoadApplication;
 
@@ -272,7 +271,7 @@ public class TABPrecription extends javax.swing.JPanel {
 
     private void addEventBtnDeleteInTable(TableDesign tableDesign, List<Product> listProductOnTable) {
         JTable table = tableDesign.getTable();
-        TableActionEventOnlyDelete event = (int row) -> {
+        TableActionEventOneAction event = (int row) -> {
             int selectedRow = table.getSelectedRow();
             if (MessageDialog.confirm(null, "Bạn có chắc chắn xóa", "Xác nhận")) {
                 if (table.getCellEditor() != null) {
@@ -285,8 +284,8 @@ public class TABPrecription extends javax.swing.JPanel {
                 table.repaint();
             }
         };
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOnlyDelete());
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOnlyDelete(event));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOneAction(2));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOneAction(event, 2));
     }
 
     @SuppressWarnings("unchecked")

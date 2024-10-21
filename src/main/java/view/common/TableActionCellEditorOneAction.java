@@ -13,19 +13,23 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 
-public class TableActionCellEditorOnlyEdit extends DefaultCellEditor {
+public class TableActionCellEditorOneAction extends DefaultCellEditor {
 
-    private TableActionEventOnlyEdit event;
+    private TableActionEventOneAction event;
+    private int check = 1;
 
-    public TableActionCellEditorOnlyEdit(TableActionEventOnlyEdit event) {
+    public TableActionCellEditorOneAction(TableActionEventOneAction event, int check) {
         super(new JCheckBox());
         this.event = event;
+        this.check = check;
     }
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object o, boolean bln, int row, int column) {
-        PanelActionOnlyEdit action = new PanelActionOnlyEdit();
+        PanelActionOneAction action = new PanelActionOneAction();
         action.initEvent(event, row);
+        if ( check == 1 ) action.editVer();
+        else if ( check == 2 ) action.deleteVer();
         return action;
     }
 }

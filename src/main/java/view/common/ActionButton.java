@@ -30,7 +30,6 @@ public class ActionButton extends JButton {
             public void mouseReleased(MouseEvent me) {
                 mousePress = false;
             }
-        });
-        
+        });   
     }
 }

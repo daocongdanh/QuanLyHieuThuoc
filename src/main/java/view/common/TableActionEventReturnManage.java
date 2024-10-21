@@ -8,6 +8,9 @@ package view.common;
  *
  * @author Hoang
  */
-public interface TableActionEventOnlyDelete {
-    public void onDelete( int row);
+public interface TableActionEventReturnManage {
+
+    public void onReturned(int row);
+
+    public void onDamaged(int row);
 }

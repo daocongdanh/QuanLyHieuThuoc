@@ -33,4 +33,8 @@ public class UnitDetailBUS {
         }
         return unitDetails;
     }
+
+    public UnitDetail findByProductAndUnit(String productId, String unitId) {
+        return unitDetailDAL.findByProductAndUnit(productId, unitId);
+    }
 }

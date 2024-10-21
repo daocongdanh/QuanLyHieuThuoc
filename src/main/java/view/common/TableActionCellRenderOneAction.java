@@ -18,10 +18,15 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Hoang
  */
-public class TableActionCellRenderOnlyDelete extends DefaultTableCellRenderer {
+public class TableActionCellRenderOneAction extends DefaultTableCellRenderer {
 
-    TableActionEventOnlyDelete event;
+    TableActionEventOneAction event;
     private final Color hoverColor = new Color(0xF5F5F5); // Màu xám #F5F5F5
+    private int check = 1;
+
+    public TableActionCellRenderOneAction(int check) {
+        this.check = check;
+    }
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -29,9 +34,13 @@ public class TableActionCellRenderOnlyDelete extends DefaultTableCellRenderer {
 
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        PanelActionOnlyDelete action = new PanelActionOnlyDelete();
+        PanelActionOneAction action = new PanelActionOneAction();
         action.initEvent(event, row); // Giữ nguyên sự kiện ban đầu
-
+        if (check == 1) {
+            action.editVer();
+        } else if (check == 2) {
+            action.deleteVer();
+        }
         // Xác định màu nền dựa trên trạng thái
         if (isSelected) {
             action.setBackground(hoverColor); // Màu nền khi chọn

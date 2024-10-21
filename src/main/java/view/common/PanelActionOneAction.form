@@ -18,25 +18,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="edit" min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="action" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="edit" alignment="0" pref="30" max="32767" attributes="0"/>
+          <Component id="action" alignment="0" pref="30" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="view.common.ActionButton" name="edit">
+    <Component class="view.common.ActionButton" name="action">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="ff" red="99" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/img/delete.png"/>
+          <Image iconType="3" name="/img/edit.png"/>
         </Property>
       </Properties>
     </Component>

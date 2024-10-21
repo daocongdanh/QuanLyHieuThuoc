@@ -31,10 +31,10 @@ import entity.*;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import util.MessageDialog;
-import view.common.TableActionCellEditorOnlyEdit;
-import view.common.TableActionCellRenderOnlyEdit;
-import view.common.TableActionEventOnlyEdit;
+import view.common.TableActionCellEditorOneAction;
+import view.common.TableActionCellRenderOneAction;
 import view.login.LoadApplication;
+import view.common.TableActionEventOneAction;
 
 /**
  *
@@ -93,7 +93,7 @@ public class TABSell extends javax.swing.JPanel {
 
     private void addEventBtnEditInTable() {
         JTable table = tablePrescription.getTable();
-        TableActionEventOnlyEdit event = (int row) -> {
+        TableActionEventOneAction event = (int row) -> {
             int selectedRow = table.getSelectedRow();
             String prescriptionId = (String) table.getValueAt(selectedRow, 0);
             List<PrescriptionDetail> details = prescriptionBUS.getAllPrescripDetailsByPrescription(prescriptionId);
@@ -106,8 +106,8 @@ public class TABSell extends javax.swing.JPanel {
             }
             table.getCellEditor().stopCellEditing();
         };
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOnlyEdit());
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOnlyEdit(event));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOneAction(1));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOneAction(event,1));
     }
 
     private void fillContentPrescriptionDetail(List<PrescriptionDetail> prescriptionDetails) {

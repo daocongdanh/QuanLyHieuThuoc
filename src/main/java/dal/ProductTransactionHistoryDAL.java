@@ -4,8 +4,14 @@
  */
 package dal;
 
+import entity.Batch;
 import jakarta.persistence.EntityManager;
 import entity.ProductTransactionHistory;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
+
+import java.util.Optional;
+
 /**
  *
  * @author daoducdanh
@@ -20,5 +26,23 @@ public class ProductTransactionHistoryDAL {
     public boolean insert(ProductTransactionHistory productTransactionHistory) {
         entityManager.persist(productTransactionHistory);
         return true;
+    }
+
+    public boolean update( ProductTransactionHistory productTransactionHistory) {
+        entityManager.merge(productTransactionHistory);
+        return true;
+    }
+
+    public Optional<ProductTransactionHistory> findByTransactionIdAndProductId( String transactionId, String productId) {
+        try {
+            TypedQuery<ProductTransactionHistory> query =
+                    entityManager.createQuery("select pth from ProductTransactionHistory pth where pth.transactionId = ?1 "
+                            + "and pth.product.productId = ?2", ProductTransactionHistory.class);
+            query.setParameter(1, transactionId);
+            query.setParameter(2, productId);
+            return query.getResultList().isEmpty() ? Optional.empty() : Optional.of(query.getResultList().get(0));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }

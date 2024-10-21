@@ -11,24 +11,32 @@ import java.awt.event.ActionListener;
  *
  * @author Hoang
  */
-public class PanelActionOnlyEdit extends javax.swing.JPanel {
+public class PanelActionOneAction extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelAction
      */
-    public PanelActionOnlyEdit() {
+    public PanelActionOneAction() {
         initComponents();
     }
     
-     public void initEvent(TableActionEventOnlyEdit event, int row) {
-        edit.addActionListener(new ActionListener() {
+     public void initEvent(TableActionEventOneAction event, int row) {
+        action.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                event.onEdit(row);
+                event.onAction(row);
             }
         });
         
 
+    }
+     
+    public void deleteVer(){
+        action.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); 
+    }
+    
+    public void editVer(){
+        action.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/edit.png")));
     }
 
     /**
@@ -40,10 +48,10 @@ public class PanelActionOnlyEdit extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        edit = new view.common.ActionButton();
+        action = new view.common.ActionButton();
 
-        edit.setBackground(new java.awt.Color(153, 255, 51));
-        edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/edit.png"))); // NOI18N
+        action.setBackground(new java.awt.Color(153, 255, 51));
+        action.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/edit.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -51,17 +59,17 @@ public class PanelActionOnlyEdit extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(action, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(edit, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(action, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private view.common.ActionButton edit;
+    private view.common.ActionButton action;
     // End of variables declaration//GEN-END:variables
 }
