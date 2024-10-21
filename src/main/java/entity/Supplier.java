@@ -47,13 +47,14 @@ public class Supplier {
 
     public Supplier(String supplierId, String name, String address, String phone, String email, String taxCode) {
         this.supplierId = supplierId;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.taxCode = taxCode;
+        setName(name);
+        setAddress(address);
+        setPhone(phone);
+        setEmail(email);
+        setTaxCode(taxCode);
     }
 
+ 
     public String getSupplierId() {
         return supplierId;
     }
@@ -67,6 +68,8 @@ public class Supplier {
     }
 
     public void setName(String name) {
+        if(name == null)
+            throw new RuntimeException("Tên nhà cung cấp không được rỗng");         
         this.name = name;
     }
 
@@ -75,6 +78,8 @@ public class Supplier {
     }
 
     public void setAddress(String address) {
+        if(address == null)
+            throw new RuntimeException("Địa chỉ không được rỗng ");
         this.address = address;
     }
 
@@ -83,6 +88,8 @@ public class Supplier {
     }
 
     public void setPhone(String phone) {
+        if (!phone.matches("\\d{10}"))
+            throw new RuntimeException("Số điện thoại không hợp lệ. Phải là dãy số gồm 10 chữ số.");
         this.phone = phone;
     }
 
@@ -91,6 +98,10 @@ public class Supplier {
     }
 
     public void setEmail(String email) {
+        if (email == null || !email.matches("^[a-zA-Z0-9]+@[a-zA-Z]+\\.com$")) {
+            throw new RuntimeException("Email không hợp lệ");
+        }
+
         this.email = email;
     }
 
@@ -99,6 +110,8 @@ public class Supplier {
     }
 
     public void setTaxCode(String taxCode) {
+        if(taxCode == null)
+            throw new RuntimeException("Mã số thuế không được rỗng");
         this.taxCode = taxCode;
     }
 

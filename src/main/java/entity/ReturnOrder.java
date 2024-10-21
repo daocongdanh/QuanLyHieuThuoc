@@ -48,6 +48,7 @@ public class ReturnOrder {
     
     @OneToMany(mappedBy = "returnOrder", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<ReturnOrderDetail> returnOrderDetails;
+    private String reason;
     
     public ReturnOrder(){
         
@@ -56,10 +57,17 @@ public class ReturnOrder {
     public ReturnOrder(String returnOrderId, LocalDateTime orderDate, Employee employee, Order order
     , List<ReturnOrderDetail> returnOrderDetails, boolean status) {
         this.returnOrderId = returnOrderId;
+        setOrderDate(orderDate);
+        setReason(reason);
+        setEmployee(employee);
+        setOrder(order);
+        setReturnOrderDetails(returnOrderDetails);
+
         this.orderDate = orderDate;
         this.employee = employee;
         this.order = order;
         this.returnOrderDetails = returnOrderDetails;
+
         this.status = status;
         for(ReturnOrderDetail returnOrderDetail : returnOrderDetails){
             returnOrderDetail.setReturnOrder(this);
@@ -80,9 +88,25 @@ public class ReturnOrder {
     }
 
     public void setOrderDate(LocalDateTime orderDate) {
+        LocalDateTime currentDate = LocalDateTime.now();
+        if(!orderDate.isEqual(currentDate)){
+            throw new RuntimeException("Ngày lập đơn nhập hàng không hợp lệ");
+        }
         this.orderDate = orderDate;
     }
 
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        if(reason == null)
+            throw new RuntimeException("Lí do trả hàng không được rỗng");
+        this.reason = reason;
+    }
+
+//>>>>>>> dd4613967900d6b96bee59bfa7cb6b3502322f56
     public double getTotalPrice() {
         return totalPrice;
     }
@@ -98,6 +122,8 @@ public class ReturnOrder {
     }
 
     public void setEmployee(Employee employee) {
+        if(employee == null)
+            throw  new RuntimeException("Nhân viên không được rỗng");
         this.employee = employee;
     }
 
@@ -106,6 +132,9 @@ public class ReturnOrder {
     }
 
     public void setOrder(Order order) {
+        if(order == null){
+            throw new RuntimeException("Hóa đơn không được rỗng");
+        }
         this.order = order;
     }
 
@@ -122,6 +151,8 @@ public class ReturnOrder {
     }
 
     public void setReturnOrderDetails(List<ReturnOrderDetail> returnOrderDetails) {
+        if(returnOrderDetails == null)
+            throw new RuntimeException("Danh sách chi tiết hóa đơn trả khách hàng không được rỗng");
         this.returnOrderDetails = returnOrderDetails;
     }
 

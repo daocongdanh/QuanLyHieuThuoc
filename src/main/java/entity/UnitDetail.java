@@ -45,10 +45,10 @@ public class UnitDetail {
     }
 
     public UnitDetail( int conversionRate, boolean isDefault, Product product, Unit unit) {
-        this.conversionRate = conversionRate;
+        setConversionRate(conversionRate);
         this.isDefault = isDefault;
-        this.product = product;
-        this.unit = unit;
+        setProduct(product);
+        setUnit(unit);
     }
 
     public int getUnitDetailId() {
@@ -64,6 +64,8 @@ public class UnitDetail {
     }
 
     public void setConversionRate(int conversionRate) {
+        if(conversionRate <0)
+            throw new RuntimeException("Giá trị quy đổi không hợp lệ");
         this.conversionRate = conversionRate;
     }
 
@@ -80,6 +82,8 @@ public class UnitDetail {
     }
 
     public void setProduct(Product product) {
+        if(product ==  null)
+            throw new RuntimeException("Sản phẩm không được rỗng");
         this.product = product;
     }
 
@@ -88,6 +92,8 @@ public class UnitDetail {
     }
 
     public void setUnit(Unit unit) {
+        if(unit ==  null)
+            throw new RuntimeException("Đơn vị tính không được rỗng");
         this.unit = unit;
     }
 
