@@ -68,14 +68,13 @@ public class ReturnOrderDAL implements BaseDAL<ReturnOrder, String> {
             query.setParameter("status", status);
         }
         if (txtEmployee != null && !txtEmployee.trim().isEmpty()) {
-            query.setParameter("txtEmployee", "%" + txtEmployee.trim() + "%"); 
+            query.setParameter("txtEmployee", "%" + txtEmployee.trim() + "%");
         }
         if (orderId != null && !orderId.trim().isEmpty()) {
             query.setParameter("orderId", orderId.trim());
         }
         return query.getResultList();
     }
-
 
     public boolean checkOrderIsReturned(String orderId) {
         TypedQuery<ReturnOrder> query = entityManager.createQuery(
@@ -89,6 +88,14 @@ public class ReturnOrderDAL implements BaseDAL<ReturnOrder, String> {
         TypedQuery<ReturnOrder> query = entityManager.createQuery(
                 "select ro from ReturnOrder ro where ro.status = ?1", ReturnOrder.class);
         query.setParameter(1, status);
+        return query.getResultList();
+    }
+
+    public  List<ReturnOrder> searchByDate(LocalDateTime start, LocalDateTime end) {
+        String jpql = "select ro from ReturnOrder ro where (ro.orderDate between ?1 and ?2) ";
+        TypedQuery<ReturnOrder> query = entityManager.createQuery(jpql, ReturnOrder.class);
+        query.setParameter(1, start);
+        query.setParameter(2, end);
         return query.getResultList();
     }
 

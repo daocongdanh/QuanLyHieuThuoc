@@ -9,6 +9,7 @@ import dal.BatchDAL;
 import dal.ReturnOrderDAL;
 import dal.UnitDetailDAL;
 import dto.ReturnOrderDetailDTO;
+import dto.StatsDTO;
 import entity.Batch;
 import entity.Customer;
 import entity.Employee;
@@ -19,10 +20,10 @@ import entity.UnitDetail;
 import enums.ReturnOrderDetailStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -42,7 +43,7 @@ public class ReturnOrderBUS {
         this.transaction = entityManager.getTransaction();
     }
 
-    public boolean createReturnOrderBUS(Employee employee, Customer customer, Order order,
+    public boolean createReturnOrder(Employee employee, Customer customer, Order order,
             List<ReturnOrderDetailDTO> returnOrderDetailDTOs) {
         try {
             transaction.begin();
@@ -97,9 +98,9 @@ public class ReturnOrderBUS {
 
     public ReturnOrder findById(String id) {
         return returnOrderDAL.findById(id)
-                .orElseThrow(()-> new RuntimeException("Khong tim thay don tra hang"));
+                .orElseThrow(() -> new RuntimeException("Khong tim thay don tra hang"));
     }
-    
+
     public boolean checkOrderIsReturned(String orderId) {
         return returnOrderDAL.checkOrderIsReturned(orderId);
     }
@@ -107,4 +108,15 @@ public class ReturnOrderBUS {
     public List<ReturnOrder> getListReturnOrdersByStatus(boolean status) {
         return returnOrderDAL.getListReturnOrdersByStatus(status);
     }
+
+    public StatsDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
+        List<ReturnOrder> returnOrders = returnOrderDAL.searchByDate(start, end);
+        Integer quantity = returnOrders.size();
+        double sumPrice = 0.0;
+        for (ReturnOrder order : returnOrders) {
+            sumPrice += order.getTotalPrice();
+        }
+        return new StatsDTO(quantity, sumPrice);
+    }
+
 }

@@ -29,7 +29,7 @@ public class ReturnOrderDetailBUS {
 
     }
 
-    public boolean updateReturnOrderDetail(ReturnOrderDetail returnOrderDetail) {
+    public boolean updateReturnOrderDetailToReturn(ReturnOrderDetail returnOrderDetail) {
         try{
             transaction.begin();
             ReturnOrderDetail reOld = returnOrderDetailDAL.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderDetail.getReturnOrder().getReturnOrderId(),
@@ -84,8 +84,35 @@ public class ReturnOrderDetailBUS {
         }
     }
 
+
     public ReturnOrderDetail findByReturnOrderIdAndUnitDetailIdAndBatchId( String returnOrderId, int unitDetailId, String batchId){
         return  returnOrderDetailDAL.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderId, unitDetailId, batchId);
     }
 
+    public boolean updateReturnOrderDetailToDamage(ReturnOrderDetail returnOrderDetail) {
+        try{
+            transaction.begin();
+            ReturnOrderDetail reOld = returnOrderDetailDAL.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderDetail.getReturnOrder().getReturnOrderId(),
+                    returnOrderDetail.getUnitDetail().getUnitDetailId(), returnOrderDetail.getBatch().getBatchId());
+
+            reOld.setReturnOrderDetailStatus(returnOrderDetail.getReturnOrderDetailStatus());
+            returnOrderDetailDAL.update(reOld);
+
+            ReturnOrder returnOrder = returnOrderDetail.getReturnOrder();
+            List<ReturnOrderDetail> detailList  = returnOrder.getReturnOrderDetails();
+            if (detailList.stream()
+                    .allMatch( x-> x.getReturnOrderDetailStatus() != ReturnOrderDetailStatus.PENDING)) {
+
+                returnOrder.setStatus(true);
+                returnOrderDAL.update(returnOrder);
+            }
+
+            transaction.commit();
+            return true;
+        }catch (Exception e) {
+            transaction.rollback();
+            return false;
+        }
+
+    }
 }

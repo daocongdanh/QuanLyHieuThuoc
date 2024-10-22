@@ -13,6 +13,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdk.jshell.spi.ExecutionControl;
 import util.ResizeImage;
+import view.manager.TABCustomer;
+import view.manager.TABDamageItem;
+import view.manager.TABEmployee;
+import view.manager.TABOrder;
+import view.manager.TABPrecription;
+import view.manager.TABPurchaseOrder;
+import view.manager.TABReturnOrder;
+import view.manager.TABStats;
+import view.manager.TABUnit;
 
 /**
  *
@@ -38,7 +47,17 @@ public class LoadApplication extends javax.swing.JFrame {
     public static PurchaseOrderBUS purchaseOrderBUS;
     public static UnitBUS unitBUS;
     public static ReturnOrderDetailBUS returnOrderDetailBUS;
-     public static SupplierBUS supplierBUS;
+    public static SupplierBUS supplierBUS;
+
+    public static TABStats tabStatistical;
+    public static TABCustomer tabCustomer;
+    public static TABPrecription tabPrescription;
+    public static TABReturnOrder tabReturnOrder;
+    public static TABEmployee tabEmployee;
+    public static TABUnit tabUnit;
+    public static TABOrder tabOrder;
+    public static TABPurchaseOrder tabPurChaseOrder;
+    public static TABDamageItem tabDamageItem;
 
     public LoadApplication() {
         initComponents();
@@ -135,6 +154,17 @@ public class LoadApplication extends javax.swing.JFrame {
                     unitBUS = new UnitBUS(em);
                     returnOrderDetailBUS = new ReturnOrderDetailBUS(em);
                     supplierBUS = new SupplierBUS(em);
+                }
+                if (i == 70) {
+                    tabStatistical = new TABStats();
+                    tabCustomer = new TABCustomer();
+                    tabPrescription = new TABPrecription();
+                    tabReturnOrder = new TABReturnOrder();
+                    tabEmployee = new TABEmployee();
+                    tabUnit = new TABUnit();
+                    tabOrder = new TABOrder();
+                    tabPurChaseOrder = new TABPurchaseOrder();
+                    tabDamageItem = new TABDamageItem();
                 }
 //                load.progressLoading.setForeground(Color.orange);
             }

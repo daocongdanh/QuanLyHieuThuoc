@@ -17,7 +17,7 @@ import util.FormatNumber;
 import util.MessageDialog;
 import entity.*;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+
 import view.login.LoadApplication;
 import view.staff.returnOrder.PnOrderDetailReturn;
 import view.staff.returnOrder.PnSelectBatchReturn;
@@ -437,7 +437,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 return;
             }
             
-            if (returnOrderBUS.createReturnOrderBUS(CurrentEmployee.getEmployee(), customer, order, listReturnOrderDetailDTOs)) {
+            if (returnOrderBUS.createReturnOrder(CurrentEmployee.getEmployee(), customer, order, listReturnOrderDetailDTOs)) {
                 MessageDialog.info(null, "Tạo phiếu trả hàng thành công.");
                 clearPnOrderDetail();
             } else {

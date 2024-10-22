@@ -18,6 +18,7 @@ import javax.swing.UIManager;
 import view.common.MenuChoice;
 
 import static view.common.MenuChoice.menuSwitch;
+import view.login.LoadApplication;
 
 /**
  *
@@ -28,34 +29,27 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
     /**
      * Creates new form MenuManagerStaff
      */
-//    private TAB_STATISTICAL tabStatistical;
-//    private TAB_REPORT tabReport;
-    private TABCustomer tabCustomer;
-//    private TAB_DAMAGED tabDamaged;
-//    private TAB_ORDER tabOrder;
-    private TABPrecription tabPrescription;
-//    private TAB_PRODUCT tabProduct;
-//    private TAB_PROMOTION tabPromotion;
-//    private TAB_PURCHASE tabPurchase;
-    private TABReturnOrder tabReturnOrder;
-//    private TAB_STAFF tabStaff;
-//    private TAB_SUPPLIER tabSupplier;
-    private TABEmployee tabEmployee;
-    private TABUnit tabUnit;
-    private TABOrder tabOrder;
-    private TABPurchaseOrder tabPurChaseOrder;
-    private TABDamageItem tabDamageItem;
+    private final TABStats tabStatistical;
+    private final TABCustomer tabCustomer;
+    private final TABPrecription tabPrescription;
+    private final TABReturnOrder tabReturnOrder;
+    private final TABEmployee tabEmployee;
+    private final TABUnit tabUnit;
+    private final TABOrder tabOrder;
+    private final TABPurchaseOrder tabPurChaseOrder;
+    private final TABDamageItem tabDamageItem;
     private JPanel currentPanel;
 
     public MenuManagerAdmin() {
-        tabUnit = new TABUnit();
-        tabCustomer = new TABCustomer();
-        tabPrescription = new TABPrecription();
-        tabOrder = new TABOrder();
-        tabPurChaseOrder = new TABPurchaseOrder();
-        tabDamageItem = new TABDamageItem();
-        tabReturnOrder = new TABReturnOrder();
-        tabEmployee = new TABEmployee();
+        tabUnit = LoadApplication.tabUnit;
+        tabCustomer = LoadApplication.tabCustomer;
+        tabPrescription = LoadApplication.tabPrescription;
+        tabOrder = LoadApplication.tabOrder;
+        tabPurChaseOrder = LoadApplication.tabPurChaseOrder;
+        tabDamageItem = LoadApplication.tabDamageItem;
+        tabReturnOrder = LoadApplication.tabReturnOrder;
+        tabEmployee = LoadApplication.tabEmployee;
+        tabStatistical = LoadApplication.tabStatistical;
         initComponents();
         UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -71,7 +65,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
                 menuReturn, menuStaff, menuSupplier, menuUnit
         );
         Map<MenuChoice, JPanel> menuPanelMap = new HashMap<>();
-//        menuPanelMap.put(menuStatistical, TABStatistical);
+        menuPanelMap.put(menuStatistical, tabStatistical);
 //        menuPanelMap.put(menuReport, TABReport);
         menuPanelMap.put(menuCustomer, tabCustomer);
         menuPanelMap.put(menuDamaged, tabDamageItem);
@@ -84,7 +78,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuPanelMap.put(menuStaff, tabEmployee);
 //        menuPanelMap.put(menuSupplier, TABSupplier);
         menuPanelMap.put(menuUnit, tabUnit);
-        menuSwitch(tabReturnOrder, menuReturn, mainContent, menuList, currentPanel);
+        menuSwitch(tabStatistical, menuStatistical, mainContent, menuList, currentPanel);
 
         for (MenuChoice menu : menuList) {
             menu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -255,7 +249,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 
         Box.add(pnLeft, java.awt.BorderLayout.WEST);
 
-        mainContent.setBackground(new java.awt.Color(204, 204, 0));
+        mainContent.setBackground(new java.awt.Color(255, 255, 255));
         mainContent.setLayout(new javax.swing.BoxLayout(mainContent, javax.swing.BoxLayout.LINE_AXIS));
         Box.add(mainContent, java.awt.BorderLayout.CENTER);
 

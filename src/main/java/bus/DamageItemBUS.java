@@ -4,18 +4,16 @@
  */
 package bus;
 
-import dal.BatchDAL;
-import dal.DamageItemDAL;
-import dal.EmployeeDAL;
-import dal.ProductDAL;
-import dal.UnitDAL;
-import dal.UnitDetailDAL;
+import dal.*;
 import dto.DamageItemDTO;
-import entity.DamageItem;
-import entity.Employee;
+import dto.ReturnOrderDetailDTO;
+import entity.*;
+import enums.ReturnOrderDetailStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,7 +24,7 @@ public class DamageItemBUS {
     private DamageItemDAL damageItemDAL;
     private EntityTransaction transaction;
     private BatchDAL batchDAL;
-    private UnitDAL unitDAL;
+    private DamageItemDetailDAL damageItemDetailDAL;
     private UnitDetailDAL unitDetailDAL;
     private ProductDAL productDAL;
     private EmployeeDAL employeeDAL;
@@ -35,7 +33,7 @@ public class DamageItemBUS {
         this.damageItemDAL = new DamageItemDAL(entityManager);
         this.transaction = entityManager.getTransaction();
         this.batchDAL = new BatchDAL(entityManager);
-        this.unitDAL = new UnitDAL(entityManager);
+        this.damageItemDetailDAL = new DamageItemDetailDAL(entityManager);
         this.unitDetailDAL = new UnitDetailDAL(entityManager);
         this.productDAL = new ProductDAL(entityManager);
         this.employeeDAL = new EmployeeDAL(entityManager);
@@ -55,6 +53,38 @@ public class DamageItemBUS {
             return false;
         }
     }
+//
+//    public boolean createDamageItemReturn(Employee employee, Customer customer
+//            , DamageItemDTO damageItemDTO) {
+//        try {
+//            transaction.begin();
+//            if (employee == null) {
+//                throw new RuntimeException("Nhân viên không được rỗng");
+//            }
+//            Product product = productDAL.findById(damageItemDTO.getProductId())
+//                    .orElseThrow(() -> new RuntimeException("San pham xuat huy bi rong"));
+//
+//            Batch batch = batchDAL.findByNameAndProduct(damageItemDTO.getBatchName(), product.getProductId());
+//            UnitDetail unitDetail = unitDetailDAL.findByProductAndUnit(damageItemDTO.getProductId(), damageItemDTO.getBatchName());
+//            DamageItemDetail damageItemDetail = new DamageItemDetail();
+//            damageItemDetail.setBatch(batch);
+//            damageItemDetail.setUnitDetail(unitDetail);
+//            damageItemDetail.setPrice(damageItemDTO.getQuantity() * product.getPrice());
+//            damageItemDetail.setQuantity(damageItemDTO.getQuantity());
+//            damageItemDetail.setLineTotal();
+//            damageItemDetailDAL.insert(damageItemDetail);
+//
+//            DamageItem damageItem = new DamageItem( null, LocalDateTime.now(), employee , List.of(damageItemDetail));
+//            damageItemDAL.insert(damageItem);
+//
+//            transaction.commit();
+//            return true;
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            transaction.rollback();
+//            return false;
+//        }
+//    }
     
     public List<DamageItem> getAllDamageItems(){
         return damageItemDAL.findAll();

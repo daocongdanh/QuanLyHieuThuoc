@@ -4,10 +4,16 @@
  */
 package dal;
 
+import dto.StatsOrderDTO;
 import entity.Order;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
@@ -80,4 +86,27 @@ public class OrderDAL implements BaseDAL<Order, String> {
         }
         return query.getResultList();
     }
+
+    public List<Order> searchByDate(LocalDateTime start, LocalDateTime end) {
+        String jpql = "select o from Order o where (o.orderDate between ?1 and ?2) ";
+        TypedQuery<Order> query = entityManager.createQuery(jpql, Order.class);
+        query.setParameter(1, start);
+        query.setParameter(2, end);
+        return query.getResultList();
+    }
+
+    public List<Object[]> statisByDate(LocalDateTime start, LocalDateTime end) {
+        String sql = "SELECT CAST(order_date AS DATE), SUM(total_price) " +
+                "FROM orders " +
+                "WHERE order_date BETWEEN ?1 AND ?2 " +
+                "GROUP BY CAST(order_date AS DATE)";
+
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter(1, Timestamp.valueOf(start));
+        query.setParameter(2, Timestamp.valueOf(end));
+
+       return query.getResultList();
+    }
+
+
 }

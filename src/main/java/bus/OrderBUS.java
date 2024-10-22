@@ -10,16 +10,17 @@ import dal.ProductDAL;
 import dal.ProductTransactionHistoryDAL;
 import dal.UnitDetailDAL;
 import dto.OrderDTO;
+import dto.StatsDTO;
+import dto.StatsOrderDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import entity.*;
 import enums.PaymentMethod;
 import enums.PromotionType;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import util.GeneratePDF;
 
@@ -29,14 +30,14 @@ import util.GeneratePDF;
  */
 public class OrderBUS {
 
-    private OrderDAL orderDAL;
-    private BatchDAL batchDAL;
-    private UnitDetailDAL unitDetailDAL;
-    private ProductDAL productDAL;
-    private PromotionBUS promotionBUS;
-    private ProductTransactionHistoryDAL productTransactionHistoryDAL;
-    private EntityTransaction transaction;
-    private GeneratePDF generatePDF = new GeneratePDF();
+    private final OrderDAL orderDAL;
+    private final BatchDAL batchDAL;
+    private final UnitDetailDAL unitDetailDAL;
+    private final ProductDAL productDAL;
+    private final PromotionBUS promotionBUS;
+    private final ProductTransactionHistoryDAL productTransactionHistoryDAL;
+    private final EntityTransaction transaction;
+    private final GeneratePDF generatePDF = new GeneratePDF();
 
     public OrderBUS(EntityManager entityManager) {
         this.orderDAL = new OrderDAL(entityManager);
@@ -146,5 +147,42 @@ public class OrderBUS {
         return orderDAL.findByIdAndNotInPromotion(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));
     }
-        
+
+    public StatsDTO getQuantityAndSumPriceByDate( LocalDateTime start, LocalDateTime end ) {
+        List<Order> orders = orderDAL.searchByDate(start,end);
+        Integer quantity = orders.size();
+        double sumPrice = 0.0;
+        for (Order order : orders) {
+            sumPrice += order.getTotalPrice();
+        }
+        return new StatsDTO(quantity, sumPrice);
+    }
+
+    public List<StatsOrderDTO> getStatisticByDate(LocalDateTime start, LocalDateTime end){
+        List<LocalDate> allDates = new ArrayList<>();
+        LocalDate startDate = start.toLocalDate();
+        LocalDate endDate = end.toLocalDate();
+
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            allDates.add(date);
+        }
+
+        Map<LocalDate, Double> resultMap = new HashMap<>();
+        List<Object[]> results = orderDAL.statisByDate(start,end);
+        for (Object[] row : results) {
+            LocalDate orderDate = ((java.sql.Date) row[0]).toLocalDate();
+            Double totalPrice = ((Number) row[1]).doubleValue();
+            resultMap.put(orderDate, totalPrice);
+        }
+        List<StatsOrderDTO> statsList = new ArrayList<>();
+        for (LocalDate date : allDates) {
+            // Nếu ngày không có trong resultMap, gán sumPrice là 0
+            Double sumPrice = resultMap.getOrDefault(date, 0.0);
+            StatsOrderDTO statsOrderDTO = new StatsOrderDTO(date, sumPrice);
+            statsList.add(statsOrderDTO);
+        }
+
+        return statsList;
+    }
+
 }

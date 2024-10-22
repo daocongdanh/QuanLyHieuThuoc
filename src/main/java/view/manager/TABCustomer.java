@@ -118,8 +118,8 @@ public class TABCustomer extends javax.swing.JPanel {
         headerPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        btnSearch = new javax.swing.JButton();
         txtSearchCus = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
         actionPanel = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
@@ -423,18 +423,8 @@ public class TABCustomer extends javax.swing.JPanel {
         jPanel6.setPreferredSize(new java.awt.Dimension(584, 50));
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));
 
-        btnSearch.setBackground(new java.awt.Color(115, 165, 71));
-        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
-        btnSearch.setText("Tìm kiếm");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
-            }
-        });
-        jPanel6.add(btnSearch);
-
         txtSearchCus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSearchCus.setPreferredSize(new java.awt.Dimension(300, 40));
         txtSearchCus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSearchCusActionPerformed(evt);
@@ -446,6 +436,18 @@ public class TABCustomer extends javax.swing.JPanel {
             }
         });
         jPanel6.add(txtSearchCus);
+
+        btnSearch.setBackground(new java.awt.Color(115, 165, 71));
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearch.setText("Tìm kiếm");
+        btnSearch.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnSearch);
 
         jPanel5.add(jPanel6);
 
@@ -586,6 +588,7 @@ public class TABCustomer extends javax.swing.JPanel {
             String phone = txtCusPhoneAdd.getText().trim();
             String email = txtCusEmailAdd.getText().trim();
             String address = txtCusAddressAdd.getText().trim();
+            boolean sex = comboSexAdd.getSelectedIndex() == 0;
 
             if (customerBUS.getCustomerByPhone(phone) != null) {
                 MessageDialog.warring(null, "Số điện thoại khách hàng đã tồn tại trong hệ thống.");
@@ -593,7 +596,7 @@ public class TABCustomer extends javax.swing.JPanel {
                 return;
             }
 
-            Customer cus = new Customer(null, name, phone, address, email, true);
+            Customer cus = new Customer(null, name, phone, address, email, sex);
             customerBUS.createCustomer(cus);
             MessageDialog.info(null, "Thêm khách hàng thành công.");
             clearData(txtCusNameAdd, txtCusPhoneAdd, txtCusEmailAdd, txtCusAddressAdd);
@@ -609,11 +612,13 @@ public class TABCustomer extends javax.swing.JPanel {
             String phone = txtCusPhoneEdit.getText().trim();
             String email = txtCusEmailEdit.getText().trim();
             String address = txtCusAddressEdit.getText().trim();
-
+            boolean sex = comboSexEdit.getSelectedIndex() == 0;
+            
             Customer customer = customerBUS.getCustomerById(customerIdEdit);
             customer.setName(name);
             customer.setEmail(email);
             customer.setAddress(address);
+            customer.setGender(sex);
 
             if (customerBUS.updateCustomer(customer)) {
                 MessageDialog.info(null, "Cập nhật thông tin khách hàng thành công.");

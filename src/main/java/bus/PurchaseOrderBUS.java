@@ -13,6 +13,7 @@ import dal.SupplierDAL;
 import dal.UnitDAL;
 import dal.UnitDetailDAL;
 import dto.PurchaseOrderDTO;
+import dto.StatsDTO;
 import jakarta.persistence.EntityManager;
 import entity.*;
 import jakarta.persistence.EntityTransaction;
@@ -65,7 +66,7 @@ public class PurchaseOrderBUS {
                 Batch batch = batchDAL.findByNameAndProduct(purchaseOrderDTO.getBatchName(), purchaseOrderDTO.getProductId());
                 Product product = productDAL.findById(purchaseOrderDTO.getProductId())
                         .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
-                
+
                 PurchaseOrderDetail purchaseOrderDetail;
                 if (batch == null) {
                     Batch newBatch = new Batch(null,
@@ -88,14 +89,14 @@ public class PurchaseOrderBUS {
             }
             PurchaseOrder purchaseOrder = new PurchaseOrder(null, LocalDateTime.now(), employee, supplier, purchaseOrderDetails);
             purchaseOrderDAL.insert(purchaseOrder);
-            
+
             for (PurchaseOrderDetail purchaseOrderDetail : purchaseOrderDetails) {
                 UnitDetail unitDetail = purchaseOrderDetail.getUnitDetail();
                 Product product = unitDetail.getProduct();
-                
+
                 double costPrice = product.getPurchasePrice() * purchaseOrderDetail.getQuantity();
                 int finalStock = batchDAL.getFinalStockByProduct(product.getProductId());
-                
+
                 ProductTransactionHistory productTransactionHistory
                         = new ProductTransactionHistory(purchaseOrder.getPurchaseOrderId(), purchaseOrder.getOrderDate(),
                                 "Nhập hàng", purchaseOrder.getSupplier().getName(),
@@ -112,13 +113,22 @@ public class PurchaseOrderBUS {
             return false;
         }
     }
-    
-    
-    public List<PurchaseOrder> getAllPurchaseOrders(){
+
+    public List<PurchaseOrder> getAllPurchaseOrders() {
         return purchaseOrderDAL.findAll();
     }
 
     public List<PurchaseOrder> search(LocalDateTime start, LocalDateTime end, String txtEmployee) {
         return purchaseOrderDAL.search(start, end, txtEmployee);
+    }
+
+    public StatsDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
+        List<PurchaseOrder> purchaseOrders = purchaseOrderDAL.searchByDate(start, end);
+        Integer quantity = purchaseOrders.size();
+        double sumPrice = 0.0;
+        for (PurchaseOrder order : purchaseOrders) {
+            sumPrice += order.getTotalPrice();
+        }
+        return new StatsDTO(quantity, sumPrice);
     }
 }
