@@ -6,6 +6,8 @@ package entity;
 import enums.ReturnOrderDetailStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -33,6 +35,7 @@ public class ReturnOrderDetail {
     private double lineTotal;
     
     @Column(name = "return_order_detail_status")
+    @Enumerated(EnumType.STRING)
     private ReturnOrderDetailStatus returnOrderDetailStatus;
     
     @ManyToOne

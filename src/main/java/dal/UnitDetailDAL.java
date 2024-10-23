@@ -49,4 +49,11 @@ public class UnitDetailDAL{
         query.setParameter(1, unitId);
         return query.getResultList();
     }
+    
+    public UnitDetail findUnitDefaultByProduct(Product product){
+        TypedQuery<UnitDetail> query = 
+                entityManager.createQuery("select ud from UnitDetail ud where ud.product= ?1 and ud.isDefault = true", UnitDetail.class);
+        query.setParameter(1, product);
+        return query.getSingleResult();
+    }
 }

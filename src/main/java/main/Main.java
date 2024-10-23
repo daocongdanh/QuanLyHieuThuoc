@@ -164,5 +164,9 @@ public class Main {
 //            System.out.println("hehe :"  + e.getMessage());
 //        }
 //        System.out.println(orderDAL.findById("HD2024092312330001").get());
+        List<Batch> batchs = batchDAL.getAllBatchExpiration();
+        for(Batch batch : batchs){
+            System.out.println(batch);
+        }
     }
 }

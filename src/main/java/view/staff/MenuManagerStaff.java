@@ -16,6 +16,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import util.ResizeImage;
 import view.common.MenuChoice;
+import view.staff.damageItem.TabDamageItem;
 
 /**
  *
@@ -30,7 +31,8 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
-        menuSwitch(new LapHoaDonForm(), TabMenu.TAB_SELL, menuSell);
+//        menuSwitch(new LapHoaDonForm(), TabMenu.TAB_SELL, menuSell);
+        menuSwitch(new TabDamageItem(), TabMenu.TAB_DAMAGED, menuDamaged);
 
     }
 

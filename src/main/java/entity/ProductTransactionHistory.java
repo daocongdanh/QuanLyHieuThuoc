@@ -139,9 +139,9 @@ public class ProductTransactionHistory {
     }
 
     public void setQuantity(int quantity) {
-        if(quantity <0){
-            throw new RuntimeException("Số lượng sản phẩm không hợp lệ");
-        }
+//        if(quantity <0){
+//            throw new RuntimeException("Số lượng sản phẩm không hợp lệ");
+//        }
         this.quantity = quantity;
     }
 
