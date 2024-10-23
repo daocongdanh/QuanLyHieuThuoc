@@ -226,6 +226,10 @@ public class Product {
     public double getPrice(){
         return this.getSellingPrice() * (1 + this.VAT);
     }
+    
+    public double getPurchasePriceVAT() {
+        return this.getPurchasePrice() * (1 + this.VAT);
+    }
 
     public ProductType getProductType() {
         return productType;

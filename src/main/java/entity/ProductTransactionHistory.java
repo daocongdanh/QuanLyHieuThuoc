@@ -58,7 +58,8 @@ public class ProductTransactionHistory {
         
     }
 
-    public ProductTransactionHistory(String transactionId, LocalDateTime transactionDate, String transactionType, String partner, double transactionPrice, double costPrice, int quantity, int finalStock, Product product) {
+    public ProductTransactionHistory(String transactionId, LocalDateTime transactionDate, String transactionType, String partner, 
+            double transactionPrice, double costPrice, int quantity, int finalStock, Product product) {
         setTransactionId(transactionId);
         setTransactionDate(transactionDate);
         setTransactionType(transactionType);

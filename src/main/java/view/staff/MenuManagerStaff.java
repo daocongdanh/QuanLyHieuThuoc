@@ -26,10 +26,12 @@ public class MenuManagerStaff extends javax.swing.JFrame {
     private JPanel currentPanel;
     private TABSell tabSell;
     private TABReturnOrder tabReturnOrder;
+    private TABPurchase tabPurchase;
 
     public MenuManagerStaff() {
         tabSell = new TABSell();
         tabReturnOrder = new TABReturnOrder();
+        tabPurchase = new TABPurchase();
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
@@ -68,7 +70,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
 //        menuPanelMap.put(menuCustomer, tabCustomer);
 //        menuPanelMap.put(menuDamaged, tabDamageItem);
 //        menuPanelMap.put(menuProduct, tabProduct);
-//        menuPanelMap.put(menuPurchase, tabPurchaseOrder);
+        menuPanelMap.put(menuPurchase, tabPurchase);
         menuPanelMap.put(menuReturn, tabReturnOrder);
 //        menuPanelMap.put(menuSupplier, tabSupplier);
         menuPanelMap.put(menuSell, tabSell);

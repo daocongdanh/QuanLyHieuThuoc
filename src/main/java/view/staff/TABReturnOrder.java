@@ -565,7 +565,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 MessageDialog.info(null, "Hóa đơn này đã từng được tạo phiếu trả.");
             }
         } catch (Exception e) {
-            MessageDialog.warring(null, "Hóa đơn không tồn tại.");
+            MessageDialog.warring(null, "Hóa đơn không tồn tại hoặc được tạo trong thời gian khuyến mãi.");
         }
     }
 
