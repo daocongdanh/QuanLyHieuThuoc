@@ -73,6 +73,12 @@ public class BatchDAL implements BaseDAL<Batch, String>{
                 + "where b.product.productId = ?1 and b.expirationDate > CURRENT_DATE group by b.product.productId", Long.class);
         query.setParameter(1, productId);
         return query.getSingleResult().intValue();
-    }    
+    }
+    
+    public List<Batch> getAllBatchExpiration(){
+        TypedQuery<Batch> query = entityManager.createQuery("select b from Batch b where b.expirationDate < CURRENT_DATE and "
+                + "b.status = true", Batch.class);
+        return query.getResultList();
+    }
     
 }

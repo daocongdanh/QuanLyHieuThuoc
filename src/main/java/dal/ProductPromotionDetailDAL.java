@@ -8,6 +8,7 @@ import entity.ProductPromotionDetail;
 import entity.*;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import java.util.List;
 /**
  *
  * @author daoducdanh
@@ -39,4 +40,24 @@ public class ProductPromotionDetailDAL {
         }
     }
     
+    public List<ProductPromotionDetail> findAllByPromotion(Promotion promotion){
+        TypedQuery<ProductPromotionDetail> query = entityManager.createQuery("select ppd from ProductPromotionDetail ppd where "
+                + "ppd.promotion = ?1", ProductPromotionDetail.class);
+        query.setParameter(1, promotion);
+        return query.getResultList();
+    }
+    
+    public boolean removeAll(List<ProductPromotionDetail> productPromotionDetail){
+        for(ProductPromotionDetail detail : productPromotionDetail){
+            entityManager.remove(detail);
+        }
+        return true;
+    }
+    
+    public boolean insertAll(List<ProductPromotionDetail> productPromotionDetail){
+        for(ProductPromotionDetail detail : productPromotionDetail){
+            entityManager.persist(detail);
+        }
+        return true;
+    }
 }

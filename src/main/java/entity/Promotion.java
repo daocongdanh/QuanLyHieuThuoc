@@ -11,7 +11,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  *
@@ -27,13 +27,16 @@ public class Promotion {
     private String promotionId;
     
     @Column(name = "started_date")
-    private LocalDateTime startedDate;
+    private LocalDate startedDate;
     
     @Column(name = "ended_date")
-    private LocalDateTime endedDate;
+    private LocalDate endedDate;
     
     @Column(name = "discount")
     private double discount;
+    
+    @Column(name = "status")
+    private boolean status;
     
     @Column(name = "promotion_type")
     @Enumerated(EnumType.STRING)
@@ -43,7 +46,7 @@ public class Promotion {
         
     }
 
-    public Promotion(String promotionId, LocalDateTime startedDate, LocalDateTime endedDate, double discount, PromotionType promotionType) {
+    public Promotion(String promotionId, LocalDate startedDate, LocalDate endedDate, double discount, boolean status, PromotionType promotionType) {
         this.promotionId = promotionId;
         setStartedDate(startedDate);
         setEndedDate(endedDate);
@@ -59,23 +62,23 @@ public class Promotion {
         this.promotionId = promotionId;
     }
 
-    public LocalDateTime getStartedDate() {
+    public LocalDate getStartedDate() {
         return startedDate;
     }
 
-    public void setStartedDate(LocalDateTime startedDate) {
-        LocalDateTime currentDate = LocalDateTime.now();
+    public void setStartedDate(LocalDate startedDate) {
+        LocalDate currentDate = LocalDate.now();
         if(startedDate.isBefore(currentDate)){
             throw new RuntimeException("Ngày bắt đầu không hợp lệ");
         }
         this.startedDate = startedDate;
     }
 
-    public LocalDateTime getEndedDate() {
+    public LocalDate getEndedDate() {
         return endedDate;
     }
 
-    public void setEndedDate(LocalDateTime endedDate) {
+    public void setEndedDate(LocalDate endedDate) {
         if(endedDate.isBefore(startedDate)){
             throw new RuntimeException("NGày kết thúc không hợp lệ");
         }
@@ -93,6 +96,15 @@ public class Promotion {
         this.discount = discount;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
     public PromotionType getPromotionType() {
         return promotionType;
     }
@@ -106,8 +118,10 @@ public class Promotion {
 
     @Override
     public String toString() {
-        return "Promotion{" + "promotionId=" + promotionId + ", startedDate=" + startedDate + ", endedDate=" + endedDate + ", discount=" + discount + ", promotionType=" + promotionType + '}';
+        return "Promotion{" + "promotionId=" + promotionId + ", startedDate=" + startedDate + ", endedDate=" + endedDate + ", discount=" + discount + ", status=" + status + ", promotionType=" + promotionType + '}';
     }
+
+    
     
     
 }

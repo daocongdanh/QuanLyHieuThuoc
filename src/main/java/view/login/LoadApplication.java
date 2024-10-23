@@ -49,16 +49,6 @@ public class LoadApplication extends javax.swing.JFrame {
     public static ReturnOrderDetailBUS returnOrderDetailBUS;
     public static SupplierBUS supplierBUS;
 
-    public static TABStats tabStatistical;
-    public static TABCustomer tabCustomer;
-    public static TABPrecription tabPrescription;
-    public static TABReturnOrder tabReturnOrder;
-    public static TABEmployee tabEmployee;
-    public static TABUnit tabUnit;
-    public static TABOrder tabOrder;
-    public static TABPurchaseOrder tabPurChaseOrder;
-    public static TABDamageItem tabDamageItem;
-
     public LoadApplication() {
         initComponents();
         setLocationRelativeTo(null);
@@ -154,17 +144,6 @@ public class LoadApplication extends javax.swing.JFrame {
                     unitBUS = new UnitBUS(em);
                     returnOrderDetailBUS = new ReturnOrderDetailBUS(em);
                     supplierBUS = new SupplierBUS(em);
-                }
-                if (i == 70) {
-                    tabStatistical = new TABStats();
-                    tabCustomer = new TABCustomer();
-                    tabPrescription = new TABPrecription();
-                    tabReturnOrder = new TABReturnOrder();
-                    tabEmployee = new TABEmployee();
-                    tabUnit = new TABUnit();
-                    tabOrder = new TABOrder();
-                    tabPurChaseOrder = new TABPurchaseOrder();
-                    tabDamageItem = new TABDamageItem();
                 }
 //                load.progressLoading.setForeground(Color.orange);
             }

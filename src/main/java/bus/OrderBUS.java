@@ -85,10 +85,10 @@ public class OrderBUS {
                 if (!promotion.getPromotionType().equals(PromotionType.ORDER)) {
                     throw new RuntimeException("Không phải khuyến mãi trên hóa đơn");
                 }
-                if (promotion.getStartedDate().isAfter(LocalDateTime.now())) {
+                if (promotion.getStartedDate().isAfter(LocalDate.now())) {
                     throw new RuntimeException("Chưa đến đợt khuyến mãi");
                 }
-                if (promotion.getEndedDate().isBefore(LocalDateTime.now())) {
+                if (promotion.getEndedDate().isBefore(LocalDate.now())) {
                     throw new RuntimeException("Khuyến mãi đã hết hạn");
                 }
                 order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, promotion, orderDetails);
@@ -205,7 +205,6 @@ public class OrderBUS {
         return statsList;
     }
 
-
     public List<StatsOrderByDayDTO> searchStats(LocalDateTime start, LocalDateTime end, String productType, String paymentType, String promotion) {
         List<Object[]> results = orderDAL.findStats(start, end, productType, paymentType, promotion);
 
@@ -230,7 +229,6 @@ public class OrderBUS {
             StatsOrderByDayDTO statsOrderDTO = new StatsOrderByDayDTO(date.atStartOfDay(), sumPrice, totalQuantity);
             statsList.add(statsOrderDTO);
         }
-
 
         return statsList;
     }
@@ -259,6 +257,5 @@ public class OrderBUS {
 
         return statsList;
     }
-
 
 }

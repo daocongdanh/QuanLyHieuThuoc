@@ -8,12 +8,18 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import view.common.MenuChoice;
 
@@ -29,27 +35,9 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
     /**
      * Creates new form MenuManagerStaff
      */
-    private final TABStats tabStatistical;
-    private final TABCustomer tabCustomer;
-    private final TABPrecription tabPrescription;
-    private final TABReturnOrder tabReturnOrder;
-    private final TABEmployee tabEmployee;
-    private final TABUnit tabUnit;
-    private final TABOrder tabOrder;
-    private final TABPurchaseOrder tabPurChaseOrder;
-    private final TABDamageItem tabDamageItem;
     private JPanel currentPanel;
 
     public MenuManagerAdmin() {
-        tabUnit = LoadApplication.tabUnit;
-        tabCustomer = LoadApplication.tabCustomer;
-        tabPrescription = LoadApplication.tabPrescription;
-        tabOrder = LoadApplication.tabOrder;
-        tabPurChaseOrder = LoadApplication.tabPurChaseOrder;
-        tabDamageItem = LoadApplication.tabDamageItem;
-        tabReturnOrder = LoadApplication.tabReturnOrder;
-        tabEmployee = LoadApplication.tabEmployee;
-        tabStatistical = LoadApplication.tabStatistical;
         initComponents();
         UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -64,29 +52,62 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
                 menuPrescription, menuProduct, menuPromotion, menuPurchase,
                 menuReturn, menuStaff, menuSupplier, menuUnit
         );
-        Map<MenuChoice, JPanel> menuPanelMap = new HashMap<>();
-        menuPanelMap.put(menuStatistical, tabStatistical);
-//        menuPanelMap.put(menuReport, TABReport);
-        menuPanelMap.put(menuCustomer, tabCustomer);
-        menuPanelMap.put(menuDamaged, tabDamageItem);
-        menuPanelMap.put(menuOrder, tabOrder);
-        menuPanelMap.put(menuPrescription, tabPrescription);
-//        menuPanelMap.put(menuProduct, TABProduct);
-//        menuPanelMap.put(menuPromotion, TABPromotion);
-        menuPanelMap.put(menuPurchase, tabPurChaseOrder);
-        menuPanelMap.put(menuReturn, tabReturnOrder);
-        menuPanelMap.put(menuStaff, tabEmployee);
-//        menuPanelMap.put(menuSupplier, TABSupplier);
-        menuPanelMap.put(menuUnit, tabUnit);
-        menuSwitch(tabStatistical, menuStatistical, mainContent, menuList, currentPanel);
+        Map<MenuChoice, Supplier<JPanel>> menuPanelMap = new HashMap<>();
+
+        // Tạo "Loading Panel"
+        JPanel loadingPanel = new JPanel();
+        loadingPanel.setLayout(new GridBagLayout()); 
+        JLabel loadingLabel = new JLabel("Đang tải...");
+        loadingLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+
+        loadingPanel.add(loadingLabel, gbc);
+        menuPanelMap.put(menuStatistical, () -> new TABStats());
+// menuPanelMap.put(menuReport, () -> new TABReportPanel());
+        menuPanelMap.put(menuCustomer, () -> new TABCustomer());
+        menuPanelMap.put(menuDamaged, () -> new TABDamageItem());
+        menuPanelMap.put(menuOrder, () -> new TABOrder());
+        menuPanelMap.put(menuPrescription, () -> new TABPrecription());
+// menuPanelMap.put(menuProduct, () -> new TABProductPanel());
+// menuPanelMap.put(menuPromotion, () -> new TABPromotionPanel());
+        menuPanelMap.put(menuPurchase, () -> new TABPurchaseOrder());
+        menuPanelMap.put(menuReturn, () -> new TABReturnOrder());
+        menuPanelMap.put(menuStaff, () -> new TABEmployee());
+// menuPanelMap.put(menuSupplier, () -> new TABSupplierPanel());
+        menuPanelMap.put(menuUnit, () -> new TABUnit());
+        menuPanelMap.put(menuPromotion, () -> new TABPromotion());
+        menuSwitch(new TABStats(), menuStatistical, mainContent, menuList, currentPanel);
 
         for (MenuChoice menu : menuList) {
             menu.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    JPanel panelMoi = menuPanelMap.get(menu);
-                    if (panelMoi != null) {
-                        menuSwitch(panelMoi, menu, mainContent, menuList, currentPanel);
-                    }
+                    // Hiển thị Loading Panel trước
+                    menuSwitch(loadingPanel, menu, mainContent, menuList, currentPanel);
+
+                    // Dùng SwingWorker để xử lý panel mới trong nền
+                    new SwingWorker<JPanel, Void>() {
+                        @Override
+                        protected JPanel doInBackground() {
+                            // Khởi tạo panel mới trong nền
+                            return menuPanelMap.get(menu).get();
+                        }
+
+                        @Override
+                        protected void done() {
+                            try {
+                                // Khi hoàn tất, lấy panel mới và hiển thị
+                                JPanel newPanel = get();
+                                if (newPanel != null) {
+                                    menuSwitch(newPanel, menu, mainContent, menuList, currentPanel);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.execute();
                 }
             });
         }

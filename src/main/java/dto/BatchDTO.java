@@ -4,6 +4,7 @@
  */
 package dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -14,13 +15,13 @@ public class BatchDTO {
     
     private String name;
     private int stock;
-    private LocalDateTime expirationDate;
+    private LocalDate expirationDate;
     private int quantity;
 
     public BatchDTO() {
     }
 
-    public BatchDTO(String name, int stock, LocalDateTime expirationDate, int quantity) {
+    public BatchDTO(String name, int stock, LocalDate expirationDate, int quantity) {
         this.name = name;
         this.stock = stock;
         this.expirationDate = expirationDate;
@@ -54,11 +55,11 @@ public class BatchDTO {
         this.stock = stock;
     }
 
-    public LocalDateTime getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(LocalDateTime expirationDate) {
+    public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }  
 

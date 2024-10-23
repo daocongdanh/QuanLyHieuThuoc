@@ -7,15 +7,21 @@ package view.staff;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import view.common.MenuChoice;
 import static view.common.MenuChoice.menuSwitch;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import view.manager.TABStats;
+import view.staff.damageItem.TabDamageItem;
 
 /**
  *
@@ -24,12 +30,8 @@ import javax.swing.*;
 public class MenuManagerStaff extends javax.swing.JFrame {
 
     private JPanel currentPanel;
-    private TABSell tabSell;
-    private TABReturnOrder tabReturnOrder;
 
     public MenuManagerStaff() {
-        tabSell = new TABSell();
-        tabReturnOrder = new TABReturnOrder();
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
@@ -58,35 +60,63 @@ public class MenuManagerStaff extends javax.swing.JFrame {
     }
 
     private void addMenuClick() {
+
+        JPanel loadingPanel = new JPanel();
+        loadingPanel.setLayout(new GridBagLayout());
+        JLabel loadingLabel = new JLabel("Đang tải...");
+        loadingLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        loadingPanel.add(loadingLabel, gbc);
+        
         List<MenuChoice> menuList = Arrays.asList(
                 menuReport, menuCustomer, menuDamaged, menuProduct, menuPurchase,
                 menuReturn, menuSupplier, menuSell
         );
-
-        Map<MenuChoice, JPanel> menuPanelMap = new HashMap<>();
+        Map<MenuChoice, Supplier<JPanel>> menuPanelMap = new HashMap<>();
 //        menuPanelMap.put(menuReport, tabReport);
 //        menuPanelMap.put(menuCustomer, tabCustomer);
-//        menuPanelMap.put(menuDamaged, tabDamageItem);
+        menuPanelMap.put(menuDamaged, () -> new TabDamageItem());
 //        menuPanelMap.put(menuProduct, tabProduct);
 //        menuPanelMap.put(menuPurchase, tabPurchaseOrder);
-        menuPanelMap.put(menuReturn, tabReturnOrder);
+        menuPanelMap.put(menuReturn, () -> new TABReturnOrder());
 //        menuPanelMap.put(menuSupplier, tabSupplier);
-        menuPanelMap.put(menuSell, tabSell);
-        menuSwitch(tabSell, menuSell, mainContent, menuList, currentPanel);
+        menuPanelMap.put(menuSell, () -> new TABSell());
+        menuSwitch(new TABSell(), menuSell, mainContent, menuList, currentPanel);
 
         for (MenuChoice menu : menuList) {
             menu.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    JPanel panelMoi = menuPanelMap.get(menu);
-                    if (panelMoi != null) {
-                        menuSwitch(panelMoi, menu, mainContent, menuList, currentPanel);
-                    }
+                    // Hiển thị Loading Panel trước
+                    menuSwitch(loadingPanel, menu, mainContent, menuList, currentPanel);
+
+                    // Dùng SwingWorker để xử lý panel mới trong nền
+                    new SwingWorker<JPanel, Void>() {
+                        @Override
+                        protected JPanel doInBackground() {
+                            // Khởi tạo panel mới trong nền
+                            return menuPanelMap.get(menu).get();
+                        }
+
+                        @Override
+                        protected void done() {
+                            try {
+                                // Khi hoàn tất, lấy panel mới và hiển thị
+                                JPanel newPanel = get();
+                                if (newPanel != null) {
+                                    menuSwitch(newPanel, menu, mainContent, menuList, currentPanel);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.execute();
                 }
             });
         }
     }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.

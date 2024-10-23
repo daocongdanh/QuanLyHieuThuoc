@@ -60,9 +60,9 @@ public class DamageItemDetail {
     }
 
     public void setQuantity(int quantity) {
-        if (quantity <= 0) {
-            throw new RuntimeException("Số lượng sản phẩm phải > 0!");
-        }
+//        if (quantity <= 0) {
+//            throw new RuntimeException("Số lượng sản phẩm phải > 0!");
+//        }
         this.quantity = quantity;
     }
 

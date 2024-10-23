@@ -12,6 +12,7 @@ import dto.UnitDTO;
 import jakarta.persistence.EntityManager;
 import entity.*;
 import jakarta.persistence.EntityTransaction;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class ProductBUS {
         List<Batch> listBatch = product.getListBatch();
         List<BatchDTO> batchDTOs = new ArrayList<>();
         for (Batch batch : listBatch) {
-            if (batch.getExpirationDate().isBefore(LocalDateTime.now())) {
+            if (batch.getExpirationDate().isBefore(LocalDate.now())) {
                 BatchDTO tmp = new BatchDTO();
                 tmp.setName(batch.getName());
                 tmp.setStock(batch.getStock());

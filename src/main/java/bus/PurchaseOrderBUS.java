@@ -70,8 +70,8 @@ public class PurchaseOrderBUS {
                 PurchaseOrderDetail purchaseOrderDetail;
                 if (batch == null) {
                     Batch newBatch = new Batch(null,
-                            purchaseOrderDTO.getBatchName(), purchaseOrderDTO.getExpirationDate(),
-                            purchaseOrderDTO.getQuantity() * unitDetail.getConversionRate(), product);
+                            purchaseOrderDTO.getBatchName(), purchaseOrderDTO.getExpirationDate().toLocalDate(),
+                            purchaseOrderDTO.getQuantity() * unitDetail.getConversionRate(), product, true);
                     batchDAL.insert(newBatch);
                     purchaseOrderDetail
                             = new PurchaseOrderDetail(purchaseOrderDTO.getQuantity(),

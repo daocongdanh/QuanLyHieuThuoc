@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.hibernate.annotations.Nationalized;
 
@@ -30,10 +31,13 @@ public class Batch {
     private String name;
     
     @Column(name = "expiration_date")
-    private LocalDateTime expirationDate;
+    private LocalDate expirationDate;
     
     @Column(name = "stock")
     private int stock;
+    
+    @Column(name = "status")
+    private boolean status;
     
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -43,12 +47,13 @@ public class Batch {
         
     }
 
-    public Batch(String batchId, String name, LocalDateTime expirationDate, int stock, Product product) {
+    public Batch(String batchId, String name, LocalDate expirationDate, int stock, Product product, boolean status) {
         this.batchId = batchId;
         setName(name);
         setExpirationDate(expirationDate);
         setStock(stock);
         setProduct(product);
+        this.status = status;
     }
 
     public String getBatchId() {
@@ -70,12 +75,12 @@ public class Batch {
         this.name = name;
     }
 
-    public LocalDateTime getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(LocalDateTime expirationDate) {
-        if (expirationDate.isBefore(LocalDateTime.now())) {
+    public void setExpirationDate(LocalDate expirationDate) {
+        if (expirationDate.isBefore(LocalDate.now())) {
             throw new RuntimeException("Ngày hết hạn phải sau ngày hiện tại hoặc là ngày hiện tại!");
         }
         this.expirationDate = expirationDate;
@@ -103,10 +108,20 @@ public class Batch {
         this.product = product;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Batch{" + "batchId=" + batchId + ", name=" + name + ", expirationDate=" + expirationDate + ", stock=" + stock + ", product=" + product + '}';
+        return "Batch{" + "batchId=" + batchId + ", name=" + name + ", expirationDate=" + expirationDate + ", stock=" + stock + ", status=" + status + ", product=" + product + '}';
     }
+
+    
     
     
 }
