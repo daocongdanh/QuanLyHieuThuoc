@@ -11,14 +11,16 @@ import java.time.LocalDateTime;
  *
  * @author Hoang
  */
-public class StatsOrderDTO {
+public class StatsOrderByDayDTO {
     
     private double sumPrice;
-    private LocalDate time;
+    private LocalDateTime time;
+    private Integer quantityOrder;
 
-    public StatsOrderDTO(LocalDate time,double sumPrice) {
+    public StatsOrderByDayDTO(LocalDateTime time,double sumPrice,Integer quantityOrder) {
         this.sumPrice = sumPrice;
         this.time = time;
+        this.quantityOrder = quantityOrder;
     }
 
     public double getSumPrice() {
@@ -29,13 +31,19 @@ public class StatsOrderDTO {
         this.sumPrice = sumPrice;
     }
 
-    public LocalDate getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(LocalDate time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
-    
-    
+
+    public Integer getQuantityOrder() {
+        return quantityOrder;
+    }
+
+    public void setQuantityOrder(Integer quantityOrder) {
+        this.quantityOrder = quantityOrder;
+    }
 }

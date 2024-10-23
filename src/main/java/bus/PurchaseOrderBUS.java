@@ -13,7 +13,7 @@ import dal.SupplierDAL;
 import dal.UnitDAL;
 import dal.UnitDetailDAL;
 import dto.PurchaseOrderDTO;
-import dto.StatsDTO;
+import dto.StatsPriceAndQuantityDTO;
 import jakarta.persistence.EntityManager;
 import entity.*;
 import jakarta.persistence.EntityTransaction;
@@ -122,13 +122,13 @@ public class PurchaseOrderBUS {
         return purchaseOrderDAL.search(start, end, txtEmployee);
     }
 
-    public StatsDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
+    public StatsPriceAndQuantityDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
         List<PurchaseOrder> purchaseOrders = purchaseOrderDAL.searchByDate(start, end);
         Integer quantity = purchaseOrders.size();
         double sumPrice = 0.0;
         for (PurchaseOrder order : purchaseOrders) {
             sumPrice += order.getTotalPrice();
         }
-        return new StatsDTO(quantity, sumPrice);
+        return new StatsPriceAndQuantityDTO(quantity, sumPrice);
     }
 }

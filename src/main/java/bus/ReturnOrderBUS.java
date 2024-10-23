@@ -9,7 +9,7 @@ import dal.BatchDAL;
 import dal.ReturnOrderDAL;
 import dal.UnitDetailDAL;
 import dto.ReturnOrderDetailDTO;
-import dto.StatsDTO;
+import dto.StatsPriceAndQuantityDTO;
 import entity.Batch;
 import entity.Customer;
 import entity.Employee;
@@ -109,14 +109,14 @@ public class ReturnOrderBUS {
         return returnOrderDAL.getListReturnOrdersByStatus(status);
     }
 
-    public StatsDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
+    public StatsPriceAndQuantityDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
         List<ReturnOrder> returnOrders = returnOrderDAL.searchByDate(start, end);
         Integer quantity = returnOrders.size();
         double sumPrice = 0.0;
         for (ReturnOrder order : returnOrders) {
             sumPrice += order.getTotalPrice();
         }
-        return new StatsDTO(quantity, sumPrice);
+        return new StatsPriceAndQuantityDTO(quantity, sumPrice);
     }
 
 }

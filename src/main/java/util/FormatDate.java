@@ -15,9 +15,14 @@ public class FormatDate {
         return dateTime.format(formatter);
     }
 
-    public static String formatDateNoHour(Object time) {
+    public static String formatDateNoHour(LocalDateTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dateTime = LocalDate.parse(time.toString());
+        return time.format(formatter);
+    }
+
+    public static String formatDateToDayAndMonth(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
         return dateTime.format(formatter);
     }
+
 }

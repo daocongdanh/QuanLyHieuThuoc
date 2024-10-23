@@ -10,8 +10,9 @@ import dal.ProductDAL;
 import dal.ProductTransactionHistoryDAL;
 import dal.UnitDetailDAL;
 import dto.OrderDTO;
-import dto.StatsDTO;
-import dto.StatsOrderDTO;
+import dto.StatsPriceAndQuantityDTO;
+import dto.StatsOrderByDayDTO;
+import dto.StatsOrderByYearDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import entity.*;
@@ -53,9 +54,10 @@ public class OrderBUS {
             List<OrderDTO> orderDTOs) {
         try {
             transaction.begin();
-            
-            if(employee == null)
+
+            if (employee == null) {
                 throw new RuntimeException("Nhân viên không được rỗng");
+            }
 
             List<OrderDetail> orderDetails = new ArrayList<>();
 
@@ -120,7 +122,7 @@ public class OrderBUS {
                 productTransactionHistoryDAL.insert(productTransactionHistory);
 
             });
-            
+
             generatePDF.GeneratePDF(order);
             transaction.commit();
             return true;
@@ -130,59 +132,133 @@ public class OrderBUS {
             return false;
         }
     }
-    
-    public List<Order> getAllOrders(){
+
+    public List<Order> getAllOrders() {
         return orderDAL.findAll();
     }
 
     public List<Order> search(LocalDateTime start, LocalDateTime end, String txtCustomer, String txtEmployee) {
         return orderDAL.search(start, end, txtCustomer, txtEmployee);
     }
-    public Order findById(String orderId){
+
+    public Order findById(String orderId) {
         return orderDAL.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));
     }
-    
-    public Order findByIdAndNotInPromotion( String orderId ){
+
+    public Order findByIdAndNotInPromotion(String orderId) {
         return orderDAL.findByIdAndNotInPromotion(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));
     }
 
-    public StatsDTO getQuantityAndSumPriceByDate( LocalDateTime start, LocalDateTime end ) {
-        List<Order> orders = orderDAL.searchByDate(start,end);
+    public StatsPriceAndQuantityDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
+        List<Order> orders = orderDAL.searchByDate(start, end);
         Integer quantity = orders.size();
         double sumPrice = 0.0;
         for (Order order : orders) {
             sumPrice += order.getTotalPrice();
         }
-        return new StatsDTO(quantity, sumPrice);
+        return new StatsPriceAndQuantityDTO(quantity, sumPrice);
     }
 
-    public List<StatsOrderDTO> getStatisticByDate(LocalDateTime start, LocalDateTime end){
-        List<LocalDate> allDates = new ArrayList<>();
-        LocalDate startDate = start.toLocalDate();
-        LocalDate endDate = end.toLocalDate();
-
-        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-            allDates.add(date);
+    public List<StatsOrderByDayDTO> getStatisticByDate(LocalDateTime start, LocalDateTime end) {
+        if (start.isAfter(end)) {
+            throw new IllegalArgumentException("Start date must be before or equal to end date.");
         }
+        List<Object[]> results = orderDAL.statisByDate(start, end);
+        return getStatsOrderDTOS(start, end, results);
+    }
 
-        Map<LocalDate, Double> resultMap = new HashMap<>();
-        List<Object[]> results = orderDAL.statisByDate(start,end);
+    public List<StatsOrderByDayDTO> getStatisticInDay(LocalDateTime now) {
+        // Đặt ngày bắt đầu và kết thúc cho ngày hiện tại
+        LocalDate startDate = now.toLocalDate();
+        LocalDateTime startOfDay = startDate.atStartOfDay();
+        LocalDateTime endOfDay = startDate.atTime(23, 59, 59); // Kết thúc vào 23:59:59
+
+        // Danh sách để lưu doanh thu theo giờ
+        List<StatsOrderByDayDTO> statsList = new ArrayList<>();
+        Map<Integer, Double> resultMap = new HashMap<>();
+        Map<Integer, Integer> quantityMap = new HashMap<>(); // Bản đồ lưu số lượng đơn hàng theo giờ
+
+        // Lấy kết quả từ cơ sở dữ liệu theo giờ
+        List<Object[]> results = orderDAL.statisByHour(startOfDay, endOfDay);
+
+        // Lưu kết quả vào resultMap và quantityMap
         for (Object[] row : results) {
-            LocalDate orderDate = ((java.sql.Date) row[0]).toLocalDate();
+            int hour = ((java.sql.Time) row[0]).toLocalTime().getHour();
             Double totalPrice = ((Number) row[1]).doubleValue();
-            resultMap.put(orderDate, totalPrice);
+            Integer quantityOrder = ((Number) row[2]).intValue(); // Lấy số lượng đơn hàng từ kết quả
+
+            // Lưu tổng giá trị và số lượng đơn hàng vào bản đồ
+            resultMap.put(hour, totalPrice);
+            quantityMap.put(hour, quantityOrder);
         }
-        List<StatsOrderDTO> statsList = new ArrayList<>();
-        for (LocalDate date : allDates) {
-            // Nếu ngày không có trong resultMap, gán sumPrice là 0
-            Double sumPrice = resultMap.getOrDefault(date, 0.0);
-            StatsOrderDTO statsOrderDTO = new StatsOrderDTO(date, sumPrice);
+
+        // Lặp qua các giờ trong ngày để tạo danh sách thống kê
+        for (int hour = 0; hour < 24; hour++) {
+            Double sumPrice = resultMap.getOrDefault(hour, 0.0);
+            Integer quantityOrder = quantityMap.getOrDefault(hour, 0); // Lấy số lượng đơn hàng
+            StatsOrderByDayDTO statsOrderDTO = new StatsOrderByDayDTO(now.withHour(hour), sumPrice, quantityOrder);
             statsList.add(statsOrderDTO);
         }
 
         return statsList;
     }
+
+
+    public List<StatsOrderByDayDTO> searchStats(LocalDateTime start, LocalDateTime end, String productType, String paymentType, String promotion) {
+        List<Object[]> results = orderDAL.findStats(start, end, productType, paymentType, promotion);
+
+        return getStatsOrderDTOS(start, end, results);
+    }
+
+    private List<StatsOrderByDayDTO> getStatsOrderDTOS(LocalDateTime start, LocalDateTime end, List<Object[]> results) {
+        List<StatsOrderByDayDTO> statsList = new ArrayList<>();
+        Map<LocalDate, Double> resultMap = new HashMap<>();
+        Map<LocalDate, Integer> quantityMap = new HashMap<>();
+        for (Object[] row : results) {
+            LocalDate orderDate = ((java.sql.Date) row[0]).toLocalDate();
+            Double totalPrice = ((Number) row[1]).doubleValue();
+            Integer quantityOrder = ((Number) row[2]).intValue();
+            resultMap.put(orderDate, totalPrice);
+            quantityMap.put(orderDate, quantityOrder);
+        }
+
+        for (LocalDate date = start.toLocalDate(); !date.isAfter(end.toLocalDate()); date = date.plusDays(1)) {
+            Double sumPrice = resultMap.getOrDefault(date, 0.0);
+            Integer totalQuantity = quantityMap.getOrDefault(date, 0);
+            StatsOrderByDayDTO statsOrderDTO = new StatsOrderByDayDTO(date.atStartOfDay(), sumPrice, totalQuantity);
+            statsList.add(statsOrderDTO);
+        }
+
+
+        return statsList;
+    }
+
+    public List<StatsOrderByYearDTO> searchStatsByYear(LocalDateTime start, LocalDateTime end, String productType, String paymentType, String promotion) {
+        List<Object[]> results = orderDAL.findStats(start, end, productType, paymentType, promotion);
+        List<StatsOrderByYearDTO> statsList = new ArrayList<>();
+        Map<Integer, Double> resultMap = new HashMap<>();
+        Map<Integer, Integer> quantityMap = new HashMap<>();
+
+        for (Object[] row : results) {
+            int orderYear = ((java.sql.Date) row[0]).toLocalDate().getYear();
+            Double totalPrice = ((Number) row[1]).doubleValue();
+            Integer quantityOrder = ((Number) row[2]).intValue();
+
+            resultMap.put(orderYear, resultMap.getOrDefault(orderYear, 0.0) + totalPrice);
+            quantityMap.put(orderYear, quantityMap.getOrDefault(orderYear, 0) + quantityOrder);
+        }
+
+        for (int year = start.getYear(); year <= end.getYear(); year++) {
+            Double sumPrice = resultMap.getOrDefault(year, 0.0);
+            Integer totalQuantity = quantityMap.getOrDefault(year, 0);
+            StatsOrderByYearDTO statsOrderDTO = new StatsOrderByYearDTO(year, sumPrice, totalQuantity);
+            statsList.add(statsOrderDTO);
+        }
+
+        return statsList;
+    }
+
 
 }

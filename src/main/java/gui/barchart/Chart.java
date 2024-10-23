@@ -39,18 +39,18 @@ public class Chart extends javax.swing.JPanel {
                 return model.get(index).getLabel();
             }
 
-            @Override
-            public void renderSeries(BlankPlotChart chart, Graphics2D g2, SeriesSize size, int index) {
-                double totalSeriesWidth = (seriesSize * legends.size()) + (seriesSpace * (legends.size() - 1));
-                double x = (size.getWidth() - totalSeriesWidth) / 2;
-                for (int i = 0; i < legends.size(); i++) {
-                    ModelLegend legend = legends.get(i);
-                    g2.setColor(legend.getColor());
-                    double seriesValues = chart.getSeriesValuesOf(model.get(index).getValues()[i], size.getHeight()) * animate;
-                    g2.fillRect((int) (size.getX() + x - 8), (int) (size.getY() + size.getHeight() - seriesValues), seriesSize + 20, (int) seriesValues);
-                    x += seriesSpace + seriesSize;
+                @Override
+                public void renderSeries(BlankPlotChart chart, Graphics2D g2, SeriesSize size, int index) {
+                    double totalSeriesWidth = (seriesSize * legends.size()) + (seriesSpace * (legends.size() - 1));
+                    double x = (size.getWidth() - totalSeriesWidth) / 2;
+                    for (int i = 0; i < legends.size(); i++) {
+                        ModelLegend legend = legends.get(i);
+                        g2.setColor(legend.getColor());
+                        double seriesValues = chart.getSeriesValuesOf(model.get(index).getValues()[i], size.getHeight()) * animate;
+                        g2.fillRect((int) (size.getX() + x - 8), (int) (size.getY() + size.getHeight() - seriesValues), seriesSize + 20, (int) seriesValues);
+                        x += seriesSpace + seriesSize;
+                    }
                 }
-            }
         });
     }
 

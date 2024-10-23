@@ -8,11 +8,11 @@ package dto;
  *
  * @author Hoang
  */
-public class StatsDTO {
+public class StatsPriceAndQuantityDTO {
     private int quantity;
     private double sumPrice;
 
-    public StatsDTO(int quantity, double sumPrice) {
+    public StatsPriceAndQuantityDTO(int quantity, double sumPrice) {
         this.quantity = quantity;
         this.sumPrice = sumPrice;
     }
