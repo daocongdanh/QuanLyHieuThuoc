@@ -60,7 +60,7 @@ public class TABPurchase extends javax.swing.JPanel {
         
         lookAndFeelSet();
 
-        txtSearchProduct.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mã SP, tên, mã vạch, SĐK");
+        txtSearchProduct.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số đăng ký, mã vạch");
         txtSearchSupplier.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại nhà cung cấp");
     }
     
@@ -291,10 +291,10 @@ public class TABPurchase extends javax.swing.JPanel {
                 .addGap(100, 100, 100)
                 .addComponent(txtSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMa, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnMa, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(239, 239, 239))
+                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,15 +311,9 @@ public class TABPurchase extends javax.swing.JPanel {
 
         add(headerPanel, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
-//
-//    private void setTxtEmpty(JLabel... labels) {
-//        for (JLabel x : labels) {
-//            x.setText("");
-//        }
-//    }
 
     private void searchProduct(String textTim) {
-        Product product = productBUS.searchProductBySDKOrId(textTim);
+        Product product = productBUS.getProductBySDK(textTim);
         if (product != null) {
             addSanPham(product);
             txtSearchProduct.setText("");
@@ -434,7 +428,7 @@ public class TABPurchase extends javax.swing.JPanel {
                     PnPurchaseOrderDetail pnPurchaseOrderDetail;
                     
                     XSSFRow excelRow = excelSheet.getRow(row);
-                    String productID = excelRow.getCell(1).getStringCellValue().trim();
+                    String regisNb = excelRow.getCell(1).getStringCellValue().trim();
                     String productName = excelRow.getCell(2).getStringCellValue().trim();
                     String batchName = excelRow.getCell(3).getStringCellValue().trim();
                     String experationDateStr = excelRow.getCell(4).getStringCellValue().trim();
@@ -445,7 +439,7 @@ public class TABPurchase extends javax.swing.JPanel {
                     int quantity = (int) excelRow.getCell(6).getNumericCellValue();
                     
                     int check = 0; 
-                    Product p = (Product) productBUS.searchProductById(productID).orElse(null);
+                    Product p = (Product) productBUS.getProductBySDK(regisNb);
                     List<UnitDetail> unitDetails = unitDetailBUS.getListUnitProduct(p);
                     List<Batch> batchs = batchBUS.getListBatchEnable(p);
                     pnPurchaseOrderDetail = new PnPurchaseOrderDetail(p, unitDetails, batchs, this);
@@ -514,8 +508,7 @@ public class TABPurchase extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-//            throw new RuntimeException("Import file bị lỗi");
+            throw new RuntimeException("Import file bị lỗi");
         }
     }//GEN-LAST:event_btnImportActionPerformed
 

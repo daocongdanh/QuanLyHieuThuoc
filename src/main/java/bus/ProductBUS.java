@@ -81,4 +81,8 @@ public class ProductBUS {
         return batchDTOs;
     }
     
+    public Product getProductBySDK(String SDK) {
+        return productDAL.findBySDK(SDK);
+    }
+    
 }
