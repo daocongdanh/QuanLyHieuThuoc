@@ -41,6 +41,10 @@ public class MessageDialog {
     public static void error(Object object, String có_lỗi_xảy_ra_trong_quá_trình_nhập_khẩu, String thông_báo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    public static void warning(Object object, String tên_sản_phẩm_đã_tồn_tại_trong_hệ_thống) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
 

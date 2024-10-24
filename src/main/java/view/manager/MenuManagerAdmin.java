@@ -31,30 +31,32 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
      */
 //    private TAB_STATISTICAL tabStatistical;
 //    private TAB_REPORT tabReport;
-    private TABCustomer tabCustomer;
+    //private TABCustomer tabCustomer;
 //    private TAB_DAMAGED tabDamaged;
 //    private TAB_ORDER tabOrder;
-    private TABPrecription tabPrescription;
+    //private TABPrecription tabPrescription;
 //    private TAB_PRODUCT tabProduct;
 //    private TAB_PROMOTION tabPromotion;
 //    private TAB_PURCHASE tabPurchase;
 //    private TAB_RETURN tabReturn;
 //    private TAB_STAFF tabStaff;
 //    private TAB_SUPPLIER tabSupplier;
-    private TABUnit tabUnit;
+    //private TABUnit tabUnit;
     private TabMenu currentTab;
-    private TABOrder tabOrder;
-    private TABPurchaseOrder tabPurChaseOrder;
-    private TABDamageItem tabDamageItem;
+    //private TABOrder tabOrder;
+   // private TABPurchaseOrder tabPurChaseOrder;
+   // private TABDamageItem tabDamageItem;
+    private TABProduct tabProduct;
 
     public MenuManagerAdmin() {
         ConnectDB.connect();
-        tabUnit = new TABUnit();
+       // tabUnit = new TABUnit();
 //        tabCustomer = new TABCustomer();
-        tabPrescription = new TABPrecription();
-        tabOrder = new TABOrder();
-        tabPurChaseOrder = new TABPurchaseOrder();
-        tabDamageItem = new TABDamageItem();
+       // tabPrescription = new TABPrecription();
+       // tabOrder = new TABOrder();
+        //tabPurChaseOrder = new TABPurchaseOrder();
+       // tabDamageItem = new TABDamageItem();
+        tabProduct = new TABProduct();
         initComponents();
         UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -64,7 +66,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 //        currentTab = TabMenu.TAB_UNIT;
 //        currentTab = TabMenu.TAB_ORDER;
 //        menuSwitch(tabPurChaseOrder, TabMenu.TAB_PURCHASE, menuPurchase);
-        menuSwitch(tabDamageItem, TabMenu.TAB_DAMAGED, menuDamaged);
+        menuSwitch(tabProduct, TabMenu.TAB_PRODUCT, menuProduct);
     }
 
     private void setTitleMenu() {         

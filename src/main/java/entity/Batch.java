@@ -102,6 +102,9 @@ public class Batch {
         }
         this.product = product;
     }
+    
+    //Mới thêm vào
+    public String getProductId() { return product.getProductId(); }
 
     @Override
     public String toString() {

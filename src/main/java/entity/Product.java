@@ -98,7 +98,15 @@ public class Product {
         this.active = active;
         this.productType = productType;
         setListBatch(listBatch);
+        
     }
+
+    
+
+    public void setVAT(double VAT) {
+        this.VAT = VAT;
+    }
+    
 
     public List<Batch> getListBatch() {
         return listBatch;

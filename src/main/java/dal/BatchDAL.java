@@ -74,6 +74,9 @@ public class BatchDAL implements BaseDAL<Batch, String>{
         query.setParameter(1, productId);
         return query.getSingleResult().intValue();
     }
+    public List<Batch> findAll1() {
+        return entityManager.createQuery("select b from Batch b", Batch.class).getResultList();
+    }
     
     
 }

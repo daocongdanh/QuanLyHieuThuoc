@@ -6,6 +6,7 @@ package dal;
 
 import jakarta.persistence.EntityManager;
 import entity.ProductTransactionHistory;
+import java.util.List;
 /**
  *
  * @author daoducdanh
@@ -21,4 +22,8 @@ public class ProductTransactionHistoryDAL {
         entityManager.persist(productTransactionHistory);
         return true;
     }
+    public List<ProductTransactionHistory> findAll() {
+        return entityManager.createQuery("select p from ProductTransactionHistory p", ProductTransactionHistory.class).getResultList();
+    }
+    
 }

@@ -37,5 +37,8 @@ public class BatchBUS {
     public Batch getBatchByNameAndProduct(String batchName, String productId){
         return batchDAL.findByNameAndProduct(batchName, productId);
     }
+    public List<Batch> getAllBatch(){
+        return batchDAL.findAll1();
+    }
     
 }
