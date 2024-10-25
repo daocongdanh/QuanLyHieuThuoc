@@ -36,7 +36,6 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
         addMenuClick();
-
     }
 
     private void setTitleMenu() {

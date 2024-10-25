@@ -30,7 +30,7 @@ public class OrderDetailDAL {
 
     public List<OrderDetail> getListOrderDetailByOrder(Order order) {
         TypedQuery<OrderDetail> query
-                = entityManager.createQuery("select od from OrderDetail od where od.order = ?1", OrderDetail.class);
+                = entityManager.createQuery("select od from OrderDetail od where od.order = ?1 ", OrderDetail.class);
         query.setParameter(1, order);
         return query.getResultList();
     }

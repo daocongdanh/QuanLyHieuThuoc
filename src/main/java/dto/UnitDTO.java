@@ -14,9 +14,9 @@ public class UnitDTO {
     private boolean isDefault;
 
     public UnitDTO(){
-        
+
     }
-    
+
     public UnitDTO(String name, int conversionRate, boolean isDefault) {
         this.name = name;
         this.conversionRate = conversionRate;
@@ -46,11 +46,11 @@ public class UnitDTO {
     public void setIsDefault(boolean isDefault) {
         this.isDefault = isDefault;
     }
-    
+
     @Override
     public String toString() {
-        return name; 
+        return name;
     }
-    
-    
+
+
 }
