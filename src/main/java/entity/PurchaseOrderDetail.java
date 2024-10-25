@@ -53,7 +53,6 @@ public class PurchaseOrderDetail {
         setPrice(price);
         setBatch(batch);
         setUnitDetail(unitDetail);
-        //setPurchaseOrder(purchaseOrder);
         setLineTotal();
     }
 

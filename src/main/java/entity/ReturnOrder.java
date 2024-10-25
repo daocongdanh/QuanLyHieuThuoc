@@ -61,12 +61,6 @@ public class ReturnOrder {
         setEmployee(employee);
         setOrder(order);
         setReturnOrderDetails(returnOrderDetails);
-
-        this.orderDate = orderDate;
-        this.employee = employee;
-        this.order = order;
-        this.returnOrderDetails = returnOrderDetails;
-
         this.status = status;
         for(ReturnOrderDetail returnOrderDetail : returnOrderDetails){
             returnOrderDetail.setReturnOrder(this);

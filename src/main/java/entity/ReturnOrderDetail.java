@@ -58,14 +58,15 @@ public class ReturnOrderDetail {
     }
 
     public ReturnOrderDetail(int quantity, double price, Batch batch, UnitDetail unitDetail, ReturnOrderDetailStatus
-             returnOrderDetailStatus) {
+             returnOrderDetailStatus, String reason) {
         setQuantity(quantity);
         setPrice(price);
         setBatch(batch);
         setUnitDetail(unitDetail);
+        setReason(reason);
         this.returnOrderDetailStatus = returnOrderDetailStatus;
         setLineTotal();
-        this.reason = reason;
+        
     }
 
     public int getQuantity() {
@@ -93,6 +94,8 @@ public class ReturnOrderDetail {
     }
 
     public void setReason(String reason) {
+        if(reason.equals(""))
+            throw new RuntimeException("Lý do khách trả hàng không được rỗng");
         this.reason = reason;
     }
 

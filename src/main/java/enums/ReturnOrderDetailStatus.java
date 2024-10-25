@@ -11,5 +11,5 @@ package enums;
 public enum ReturnOrderDetailStatus {
     PENDING,
     DAMAGED,
-    RETURN
+    RETURNED
 }
