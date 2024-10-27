@@ -103,7 +103,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                         returnOrderDetail.getReason(),
                         null
                 });
-            } else if ( returnOrderDetail.getReturnOrderDetailStatus().equals(ReturnOrderDetailStatus.RETURN)){
+            } else if ( returnOrderDetail.getReturnOrderDetailStatus().equals(ReturnOrderDetailStatus.RETURNED)){
                 tableDesignView.getModelTable().addRow(new Object[]{
                         returnOrderDetail.getBatch().getProduct().getProductId(),
                         returnOrderDetail.getBatch().getProduct().getName(),
@@ -148,7 +148,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
                     ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderId,
                             unitDetail.getUnitDetailId(), batch.getBatchId());
-                    returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.RETURN);
+                    returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.RETURNED);
                     if ( returnOrderDetailBUS.updateReturnOrderDetailToReturn(returnOrderDetail) ){
                         MessageDialog.info(null, "Sản phẩm đã thêm lại hệ thống.");
                         fillModal(returnOrderBUS.findById(txtReturnOrderId.getText().trim()));
