@@ -2,6 +2,7 @@ package view.manager;
 
 import javax.swing.UIManager;
 import view.manager.stats.PnOverrall;
+import view.manager.stats.PnProductStats;
 import view.manager.stats.PnStatsByTime;
 
 /**
@@ -15,6 +16,7 @@ public class TABStats extends javax.swing.JPanel {
         initComponents();
         tabbedStats.add("Tổng quan", new PnOverrall());
         tabbedStats.add("Thống kê theo thời gian", new PnStatsByTime());
+        tabbedStats.add("Thống kê sản phẩm", new PnProductStats());
         tabbedStats.setSelectedIndex(0);
     }
 

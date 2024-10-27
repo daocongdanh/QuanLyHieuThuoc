@@ -97,14 +97,5 @@ public class ProductDAL implements BaseDAL<Product, String> {
             return null;  // Trả về null nếu không tìm thấy sản phẩm
         }
     }
-    public Product findByName(String name) {
-        TypedQuery<Product> query = entityManager.createQuery("select p from Product p where p.name = ?1", Product.class);
-        query.setParameter(1, name);
-        try {
-            return query.getSingleResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
 }

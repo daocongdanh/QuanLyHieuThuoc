@@ -23,6 +23,7 @@ import view.common.TableDesign;
 import enums.ProductType;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 import util.FormatDate;
 
 import util.FormatNumber;
+import util.ImageUtil;
 import view.login.LoadApplication;
 
 /**
@@ -49,7 +51,7 @@ public class TABProduct extends javax.swing.JPanel {
 
     private String productEdit;
     private ImageIcon imageProductAdd;
-    private String imageProductEdit;
+    private ImageIcon imageProductEdit;
 
     public TABProduct() {
         productBUS = LoadApplication.productBUS;
@@ -119,7 +121,6 @@ public class TABProduct extends javax.swing.JPanel {
             for (ProductType type : ProductType.values()) {
                 cbbProductTypeEdit.addItem(type.toString());
             }
-            imageProductEdit = product.getImage();
             txtProductActiveIngre1.setText(product.getActiveIngredient());
             txtCountryOfOrigin1.setText(product.getCountryOfOrigin());
             txtProductDosage1.setText(product.getDosage());
@@ -140,6 +141,17 @@ public class TABProduct extends javax.swing.JPanel {
                 pnHaveUnitEdit.add(pnUnitSelect);
                 pnHaveUnitEdit.add(Box.createRigidArea(new Dimension(0, 3)));
             }
+
+            BufferedImage bufferImage = ImageUtil.getImage(product.getImage());
+
+            if (bufferImage != null) {
+                imageProductEdit = new ImageIcon(bufferImage);
+                imageProductEdit.setDescription(product.getImage());
+                Image imagePro = imageProductEdit.getImage().getScaledInstance(265, 269, Image.SCALE_SMOOTH);
+                ImageIcon img = new ImageIcon(imagePro);
+                lblImageEdit.setIcon(img);
+            }
+
             updateUnitPanel(pnHaveUnitEdit);
 
             if (table.getCellEditor() != null) {
@@ -243,7 +255,7 @@ public class TABProduct extends javax.swing.JPanel {
         modelEditProduct = new javax.swing.JDialog();
         tabEdit = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
-        lblImage1 = new javax.swing.JLabel();
+        lblImageEdit = new javax.swing.JLabel();
         btnAddImage1 = new javax.swing.JButton();
         txtProductName1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -339,8 +351,8 @@ public class TABProduct extends javax.swing.JPanel {
         jPanel8.setMinimumSize(new java.awt.Dimension(1350, 850));
         jPanel8.setPreferredSize(new java.awt.Dimension(1350, 850));
 
-        lblImage1.setBackground(new java.awt.Color(255, 255, 255));
-        lblImage1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblImageEdit.setBackground(new java.awt.Color(255, 255, 255));
+        lblImageEdit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnAddImage1.setBackground(new java.awt.Color(92, 107, 192));
         btnAddImage1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -505,11 +517,11 @@ public class TABProduct extends javax.swing.JPanel {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addComponent(lblImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(65, 65, 65))
-                            .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(btnAddImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(134, 134, 134)))
+                                .addGap(134, 134, 134))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(lblImageEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(65, 65, 65)))
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtProductName1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -599,7 +611,7 @@ public class TABProduct extends javax.swing.JPanel {
                             .addComponent(btnExitProductADD1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAddProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(lblImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblImageEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnAddImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(286, 286, 286))))
@@ -1075,12 +1087,22 @@ public class TABProduct extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         clearDataModelAdd();
+        BufferedImage bufferImage = ImageUtil.getImage("default.jpg");
+
+        if (bufferImage != null) {
+            imageProductAdd = new ImageIcon(bufferImage);
+            imageProductAdd.setDescription("default.jpg");
+            Image imagePro = imageProductAdd.getImage().getScaledInstance(265, 265, Image.SCALE_SMOOTH);
+            ImageIcon img = new ImageIcon(imagePro);
+            lblImage.setIcon(img);
+        }
 
         modelProductAdd.setTitle("Thêm sản phẩm");
         scrollUnit.setViewportView(pnHaveUnit);
         for (ProductType type : ProductType.values()) {
             cbbProductTypeAdd.addItem(type.toString());
         }
+
         List<String> unitNames = unitBUS.getAllUnits()
                 .stream().map(x -> x.getName()).toList();
         PnUnitSelect pnUnitSelect = new PnUnitSelect(unitNames, true, this, 1);
@@ -1179,6 +1201,24 @@ public class TABProduct extends javax.swing.JPanel {
         return unitDTOList;
     }
 
+    private String removeExtension(String filename) {
+        int dotIndex = filename.lastIndexOf('.');
+        if (dotIndex == -1) {
+            return filename;
+        }
+        return filename.substring(0, dotIndex);
+    }
+
+    private String getExtension(String filename) {
+        int dotIndex = filename.lastIndexOf('.');
+        if (dotIndex == -1 || dotIndex == filename.length() - 1) {
+            // Không có đuôi hoặc đuôi trống
+            return "";
+        }
+        return filename.substring(dotIndex + 1); // Trả về đuôi tệp
+    }
+
+
     private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
         // TODO add your handling code here:
         String name = txtProductName.getText().trim();
@@ -1200,7 +1240,6 @@ public class TABProduct extends javax.swing.JPanel {
             if (imageProductAdd != null) {
                 image = getImageFileName(imageProductAdd);
             }
-
             Product product = new Product();
             product.setName(name);
             product.setRegistrationNumber(registrationNumber);
@@ -1229,11 +1268,11 @@ public class TABProduct extends javax.swing.JPanel {
                 if (productBUS.createProduct(product, unitDTOList)) {
                     MessageDialog.info(null, "Thêm mới sản phẩm thành công");
                     clearDataModelAdd();
+                    ImageUtil.saveImage(imageProductAdd, removeExtension(image),getExtension(image));
                     modelProductAdd.dispose();
                     fillContent(productBUS.getAllProducts());
                 };
-            }
-            else {
+            } else {
                 MessageDialog.info(null, "Có đơn vị tính bị trùng");
                 return;
             }
@@ -1513,7 +1552,7 @@ public class TABProduct extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JLabel lblImage;
-    private javax.swing.JLabel lblImage1;
+    private javax.swing.JLabel lblImageEdit;
     private javax.swing.JDialog modelEditProduct;
     private javax.swing.JDialog modelProductAdd;
     private javax.swing.JPanel pnAll;

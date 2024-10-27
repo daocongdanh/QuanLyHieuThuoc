@@ -84,27 +84,12 @@ public class ProductBUS {
     public List<Product> getAllProducts(){
         return productDAL.findAll();
     }
-    
-//    public boolean createProduct1(Product product){
-//        try{
-//            transaction.begin();
-//            productDAL.insert(product);
-//            transaction.commit();
-//            return true;
-//        }
-//        catch(Exception e){
-//            System.out.println(e.getMessage());
-//            transaction.rollback();
-//            return false;
-//        }
-//    }
+
     public Product getProductById(String id){
         return productDAL.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm với id = " + id));
     }
-    public Product getProByName(String name){
-        return productDAL.findByName(name);
-    }
+
     public boolean updateProduct(Product product){
         try{
             transaction.begin();

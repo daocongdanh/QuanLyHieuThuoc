@@ -4,14 +4,20 @@
  */
 package enums;
 
-/**
- *
- * @author daoducdanh
- */
 public enum ProductType {
-    MEDICINE,
-    MEDICALSUPPLIES,
-    DIETARYSUPPLEMENT,
-    BABYCARE,
-    MEDICALEQUIPMENT
+    MEDICINE("Thuốc"),
+    MEDICALSUPPLIES("Vật tư y tế"),
+    DIETARYSUPPLEMENT("Thực phẩm chức năng"),
+    BABYCARE("Chăm sóc trẻ em"),
+    MEDICALEQUIPMENT("Thiết bị y tế");
+
+    private final String description;
+
+    ProductType(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
