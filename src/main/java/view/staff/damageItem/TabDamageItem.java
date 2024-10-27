@@ -205,17 +205,17 @@ public class TabDamageItem extends javax.swing.JPanel {
     private void btnTaoPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoPhieuActionPerformed
         List<DamageItemDetail> damageItemDetails = createListDamageItemDetail();
         if(damageItemDetails.isEmpty()){
-            MessageDialog.warring(null, "Không có sản phẩm");
+            MessageDialog.warning(null, "Không có sản phẩm");
             return;
         }
         try {
             Employee employee = CurrentEmployee.getEmployee();
             if (MessageDialog.confirm(null, "Bạn có chắc chắn muốn xuất hủy không?", "Xác nhận xuất hủy")) {
                 if (damageItemBUS.createDamageItem(employee, damageItemDetails)) {
-                    MessageDialog.warring(null, "Tạo phiếu xuất hủy hàng hóa thành công.");
+                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thành công.");
                     clearPnOrderDetail();
                 } else {
-                    MessageDialog.warring(null, "Tạo phiếu xuất hủy hàng hóa thất bại.");
+                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thất bại.");
                 }
             }
         } catch (Exception e) {
@@ -240,7 +240,7 @@ public class TabDamageItem extends javax.swing.JPanel {
         List<DamageItemDetail> damageItemDetails = new ArrayList<>();
         List<PnDamageItemDetail> list = getAllPnDamageItemDetail();
         if (list == null) {
-            MessageDialog.warring(null, "Không có sản phẩm !!!");
+            MessageDialog.warning(null, "Không có sản phẩm !!!");
         } else {
             for (PnDamageItemDetail pnDamageItemDetail : list) {
                 List<Batch> batchs = pnDamageItemDetail.getBatchs();

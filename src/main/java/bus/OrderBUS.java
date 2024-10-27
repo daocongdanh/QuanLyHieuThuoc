@@ -13,6 +13,8 @@ import dto.OrderDTO;
 import dto.StatsPriceAndQuantityDTO;
 import dto.StatsOrderByDayDTO;
 import dto.StatsOrderByYearDTO;
+import dto.StatsProductDTO;
+import enums.ProductType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import entity.*;
@@ -24,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import util.GeneratePDF;
+import util.StringUtils;
 
 /**
  *
@@ -165,62 +168,27 @@ public class OrderBUS {
         if (start.isAfter(end)) {
             throw new IllegalArgumentException("Start date must be before or equal to end date.");
         }
-        List<Object[]> results = orderDAL.statisByDate(start, end);
-        return getStatsOrderDTOS(start, end, results);
-    }
+        List<Order> orders = orderDAL.statisByDate(start, end);
 
-    public List<StatsOrderByDayDTO> getStatisticInDay(LocalDateTime now) {
-        // Đặt ngày bắt đầu và kết thúc cho ngày hiện tại
-        LocalDate startDate = now.toLocalDate();
-        LocalDateTime startOfDay = startDate.atStartOfDay();
-        LocalDateTime endOfDay = startDate.atTime(23, 59, 59); // Kết thúc vào 23:59:59
-
-        // Danh sách để lưu doanh thu theo giờ
-        List<StatsOrderByDayDTO> statsList = new ArrayList<>();
-        Map<Integer, Double> resultMap = new HashMap<>();
-        Map<Integer, Integer> quantityMap = new HashMap<>(); // Bản đồ lưu số lượng đơn hàng theo giờ
-
-        // Lấy kết quả từ cơ sở dữ liệu theo giờ
-        List<Object[]> results = orderDAL.statisByHour(startOfDay, endOfDay);
-
-        // Lưu kết quả vào resultMap và quantityMap
-        for (Object[] row : results) {
-            int hour = ((java.sql.Time) row[0]).toLocalTime().getHour();
-            Double totalPrice = ((Number) row[1]).doubleValue();
-            Integer quantityOrder = ((Number) row[2]).intValue(); // Lấy số lượng đơn hàng từ kết quả
-
-            // Lưu tổng giá trị và số lượng đơn hàng vào bản đồ
-            resultMap.put(hour, totalPrice);
-            quantityMap.put(hour, quantityOrder);
-        }
-
-        // Lặp qua các giờ trong ngày để tạo danh sách thống kê
-        for (int hour = 0; hour < 24; hour++) {
-            Double sumPrice = resultMap.getOrDefault(hour, 0.0);
-            Integer quantityOrder = quantityMap.getOrDefault(hour, 0); // Lấy số lượng đơn hàng
-            StatsOrderByDayDTO statsOrderDTO = new StatsOrderByDayDTO(now.withHour(hour), sumPrice, quantityOrder);
-            statsList.add(statsOrderDTO);
-        }
-
-        return statsList;
-    }
-
-    public List<StatsOrderByDayDTO> searchStats(LocalDateTime start, LocalDateTime end, String productType, String paymentType, String promotion) {
-        List<Object[]> results = orderDAL.findStats(start, end, productType, paymentType, promotion);
-
-        return getStatsOrderDTOS(start, end, results);
-    }
-
-    private List<StatsOrderByDayDTO> getStatsOrderDTOS(LocalDateTime start, LocalDateTime end, List<Object[]> results) {
         List<StatsOrderByDayDTO> statsList = new ArrayList<>();
         Map<LocalDate, Double> resultMap = new HashMap<>();
         Map<LocalDate, Integer> quantityMap = new HashMap<>();
-        for (Object[] row : results) {
-            LocalDate orderDate = ((java.sql.Date) row[0]).toLocalDate();
-            Double totalPrice = ((Number) row[1]).doubleValue();
-            Integer quantityOrder = ((Number) row[2]).intValue();
-            resultMap.put(orderDate, totalPrice);
-            quantityMap.put(orderDate, quantityOrder);
+
+        for (Order order : orders) {
+            LocalDate orderDate = order.getOrderDate().toLocalDate();
+            Double totalPrice = order.getTotalPrice();
+            if (resultMap.containsKey(orderDate)) {
+                resultMap.put(orderDate, resultMap.get(orderDate) + totalPrice);
+            }
+            else {
+                resultMap.put(orderDate, totalPrice);
+            }
+            if (quantityMap.containsKey(orderDate)) {
+                quantityMap.put(orderDate, quantityMap.get(orderDate) + 1);
+            }
+            else{
+                quantityMap.put(orderDate, 1);
+            }
         }
 
         for (LocalDate date = start.toLocalDate(); !date.isAfter(end.toLocalDate()); date = date.plusDays(1)) {
@@ -233,19 +201,157 @@ public class OrderBUS {
         return statsList;
     }
 
+    public List<StatsOrderByDayDTO> getStatisticInDay(LocalDateTime now) {
+        LocalDate startDate = now.toLocalDate();
+        LocalDateTime startOfDay = startDate.atStartOfDay();
+        LocalDateTime endOfDay = startDate.atTime(23, 59, 59);
+
+        List<StatsOrderByDayDTO> statsList = new ArrayList<>();
+        Map<Integer, Double> resultMap = new HashMap<>();
+        Map<Integer, Integer> quantityMap = new HashMap<>();
+
+        List<Order> orders = orderDAL.statisByDate(startOfDay, endOfDay);
+
+        // Lưu kết quả vào resultMap và quantityMap
+        for (Order order: orders) {
+            int hour = order.getOrderDate().toLocalTime().getHour();
+            Double totalPrice = order.getTotalPrice();
+            if (resultMap.containsKey(hour)) {
+                resultMap.put(hour, resultMap.get(hour) + totalPrice);
+            }
+            else {
+                resultMap.put(hour, totalPrice);
+            }
+            if (quantityMap.containsKey(hour)) {
+                quantityMap.put(hour, quantityMap.get(hour) + 1);
+            }
+            else{
+                quantityMap.put(hour, 1);
+            }
+        }
+
+        for (int hour = 0; hour < 24; hour++) {
+            Double sumPrice = resultMap.getOrDefault(hour, 0.0);
+            Integer quantityOrder = quantityMap.getOrDefault(hour, 0);
+            StatsOrderByDayDTO statsOrderDTO = new StatsOrderByDayDTO(now.withHour(hour), sumPrice, quantityOrder);
+            statsList.add(statsOrderDTO);
+        }
+
+        return statsList;
+    }
+
+    private List<Order> dataFilter(List<Order> orders,String productType, String paymentType, String promotion ){
+        if (StringUtils.isNotBlank(promotion)) {
+            if ("Không khuyến mãi".equals(promotion)) {
+                orders = orders.stream()
+                        .filter(order -> order.getPromotion() == null &&
+                                order.getOrderDetails().stream()
+                                        .noneMatch(detail -> detail.getDiscount() != 0.0))
+                        .toList();
+            } else if ("Có khuyến mãi".equals(promotion)) {
+                orders = orders.stream()
+                        .filter(order -> order.getPromotion() != null ||
+                                order.getOrderDetails().stream()
+                                        .anyMatch(detail -> detail.getDiscount() != 0.0))
+                        .toList();
+            }
+        }
+
+        if (StringUtils.isNotBlank(paymentType)) {
+            switch (paymentType) {
+                case "Tín dụng":
+                    orders = orders.stream()
+                            .filter(order -> order.getPaymentMethod() == PaymentMethod.BANK)
+                            .toList();
+                    break;
+                case "Tiền mặt":
+                    orders = orders.stream()
+                            .filter(order -> order.getPaymentMethod() == PaymentMethod.CASH)
+                            .toList();
+                    break;
+            }
+        }
+        if (StringUtils.isNotBlank(productType)) {
+            switch (productType) {
+                case "Thuốc":
+                    orders = orders.stream()
+                            .filter(order -> order.getOrderDetails().stream()
+                                    .anyMatch(orderDetail -> orderDetail.getUnitDetail().getProduct().getProductType() == ProductType.MEDICINE))
+                            .toList();
+
+                    break;
+                case "Vật tư y tế":
+                    orders = orders.stream()
+                            .filter(order -> order.getOrderDetails().stream()
+                                    .anyMatch(orderDetail -> orderDetail.getUnitDetail().getProduct().getProductType() == ProductType.MEDICALSUPPLIES))
+                            .toList();
+                    break;
+            }
+        }
+        return orders;
+    }
+
+    public List<StatsOrderByDayDTO> searchStats(LocalDateTime start, LocalDateTime end, String productType,
+                                                String paymentType, String promotion) {
+        List<StatsOrderByDayDTO> statsList = new ArrayList<>();
+        Map<LocalDate, Double> resultMap = new HashMap<>();
+        Map<LocalDate, Integer> quantityMap = new HashMap<>();
+
+        List<Order> orders = orderDAL.statisByDate(start, end);
+        orders = dataFilter(orders, productType, paymentType, promotion);
+        for (Order order : orders) {
+            LocalDate orderDate = order.getOrderDate().toLocalDate();
+            Double totalPrice = order.getTotalPrice();
+            if (resultMap.containsKey(orderDate)) {
+                resultMap.put(orderDate, resultMap.get(orderDate) + totalPrice);
+            }
+            else {
+                resultMap.put(orderDate, totalPrice);
+            }
+            if (quantityMap.containsKey(orderDate)) {
+                quantityMap.put(orderDate, quantityMap.get(orderDate) + 1);
+            }
+            else{
+                quantityMap.put(orderDate, 1);
+            }
+        }
+
+
+        for (LocalDate date = start.toLocalDate(); !date.isAfter(end.toLocalDate()); date = date.plusDays(1)) {
+            Double sumPrice = resultMap.getOrDefault(date, 0.0);
+            Integer totalQuantity = quantityMap.getOrDefault(date, 0);
+            StatsOrderByDayDTO statsOrderDTO = new StatsOrderByDayDTO(date.atStartOfDay(), sumPrice, totalQuantity);
+            statsList.add(statsOrderDTO);
+        }
+
+        return statsList;
+    }
+
+
     public List<StatsOrderByYearDTO> searchStatsByYear(LocalDateTime start, LocalDateTime end, String productType, String paymentType, String promotion) {
-        List<Object[]> results = orderDAL.findStats(start, end, productType, paymentType, promotion);
+
         List<StatsOrderByYearDTO> statsList = new ArrayList<>();
         Map<Integer, Double> resultMap = new HashMap<>();
         Map<Integer, Integer> quantityMap = new HashMap<>();
 
-        for (Object[] row : results) {
-            int orderYear = ((java.sql.Date) row[0]).toLocalDate().getYear();
-            Double totalPrice = ((Number) row[1]).doubleValue();
-            Integer quantityOrder = ((Number) row[2]).intValue();
+        List<Order> orders = orderDAL.statisByDate(start, end);
+        orders = dataFilter(orders, productType, paymentType, promotion);
+        for (Order order : orders) {
+            Integer year = order.getOrderDate().toLocalDate().getYear();
+            Double totalPrice = order.getTotalPrice();
 
-            resultMap.put(orderYear, resultMap.getOrDefault(orderYear, 0.0) + totalPrice);
-            quantityMap.put(orderYear, quantityMap.getOrDefault(orderYear, 0) + quantityOrder);
+            if (resultMap.containsKey(year)) {
+                resultMap.put(year, resultMap.get(year) + totalPrice);
+            }
+            else {
+                resultMap.put(year, totalPrice);
+            }
+            if (quantityMap.containsKey(year)) {
+                quantityMap.put(year, quantityMap.get(year) + 1);
+            }
+            else{
+                quantityMap.put(year, 1);
+            }
         }
 
         for (int year = start.getYear(); year <= end.getYear(); year++) {
@@ -256,6 +362,48 @@ public class OrderBUS {
         }
 
         return statsList;
+    }
+
+    public List<StatsProductDTO> getStatisticProductByDate(LocalDateTime start, LocalDateTime end) {
+        if (start.isAfter(end)) {
+            throw new IllegalArgumentException("Start date must be before or equal to end date.");
+        }
+        List<Order> orderList = orderDAL.statisByDate(start, end);
+        List<StatsProductDTO> ans = new ArrayList<>();
+        for (Order order : orderList) {
+            List<OrderDetail> lOd = order.getOrderDetails();
+            for (OrderDetail odt : lOd) {
+                Optional<StatsProductDTO> existingStats = ans.stream()
+                        .filter(dto -> dto.getProductName().equals(odt.getUnitDetail().getProduct().getName()))
+                        .findFirst();
+
+                if (existingStats.isPresent()) {
+                    StatsProductDTO statsProductDTO = existingStats.get();
+                    statsProductDTO.setSumPrice(statsProductDTO.getSumPrice() + odt.getLineTotal());
+                    if ( odt.getUnitDetail().isIsDefault() ){
+                        statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity());
+                    }
+                    else {
+                        statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity() * odt.getUnitDetail().getConversionRate());
+                    }
+                    
+                } else {
+                    StatsProductDTO statsProductDTO = new StatsProductDTO();
+                    statsProductDTO.setProductName(odt.getUnitDetail().getProduct().getName());
+                    statsProductDTO.setTime(order.getOrderDate());
+                    statsProductDTO.setSumPrice(odt.getLineTotal());
+                    if ( odt.getUnitDetail().isIsDefault() ){
+                        statsProductDTO.setQuantity(odt.getQuantity());
+                    }
+                    else {
+                        statsProductDTO.setQuantity(odt.getQuantity() * odt.getUnitDetail().getConversionRate());
+                    }
+                    
+                    ans.add(statsProductDTO);
+                }
+            }
+        }
+        return ans;
     }
 
 }

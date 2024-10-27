@@ -19,10 +19,16 @@ public class FormatDate {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return time.format(formatter);
     }
+    
+     public static String formatLocalDate(LocalDate time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return time.format(formatter);
+    }
 
     public static String formatDateToDayAndMonth(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
         return dateTime.format(formatter);
     }
+    
 
 }

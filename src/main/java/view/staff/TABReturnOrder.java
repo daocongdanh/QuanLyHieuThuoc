@@ -465,7 +465,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         List<ReturnOrderDetailDTO> returnOrderDetailDTOs = new ArrayList<>();
         List<PnOrderDetailReturn> listPnOrderDetailReturn = getAllPnOrderDetailThuoc();
         if (listPnOrderDetailReturn == null) {
-            MessageDialog.warring(null, "Không có sản phẩm !!!");
+            MessageDialog.warning(null, "Không có sản phẩm !!!");
         } else {
             for (PnOrderDetailReturn pnOrderDetailReturn : listPnOrderDetailReturn) {
                 JPanel pnListBatch = pnOrderDetailReturn.getPnListBatch();
@@ -565,7 +565,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 MessageDialog.info(null, "Hóa đơn này đã từng được tạo phiếu trả.");
             }
         } catch (Exception e) {
-            MessageDialog.warring(null, "Hóa đơn không tồn tại hoặc được tạo trong kỳ khuyến mãi.");
+            MessageDialog.warning(null, "Hóa đơn không tồn tại hoặc được tạo trong kỳ khuyến mãi.");
         }
     }
 

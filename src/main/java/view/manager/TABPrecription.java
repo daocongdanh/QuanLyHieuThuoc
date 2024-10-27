@@ -812,11 +812,11 @@ public class TABPrecription extends javax.swing.JPanel {
         String namePre = txtNamePrescription.getText().trim();
 
         if (namePre.equals("")) {
-            MessageDialog.warring(null, "Tên đơn thuốc mẫu không được để trống !!!");
+            MessageDialog.warning(null, "Tên đơn thuốc mẫu không được để trống !!!");
             return;
         }
         if (listPrecription.isEmpty()) {
-            MessageDialog.warring(null, "Chưa chọn sản phẩm !!!");
+            MessageDialog.warning(null, "Chưa chọn sản phẩm !!!");
             return;
         }
         Prescription prescription = new Prescription(null, namePre);
@@ -903,11 +903,11 @@ public class TABPrecription extends javax.swing.JPanel {
         String namePre = txtNamePrescriptionEdit.getText().trim();
 
         if (namePre.equals("")) {
-            MessageDialog.warring(null, "Tên đơn thuốc mẫu không được để trống !!!");
+            MessageDialog.warning(null, "Tên đơn thuốc mẫu không được để trống !!!");
             return;
         }
         if (listPrecription.isEmpty()) {
-            MessageDialog.warring(null, "Chưa chọn sản phẩm !!!");
+            MessageDialog.warning(null, "Chưa chọn sản phẩm !!!");
             return;
         }
 

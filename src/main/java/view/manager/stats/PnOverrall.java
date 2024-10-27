@@ -10,6 +10,7 @@ import bus.ReturnOrderBUS;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import dto.StatsPriceAndQuantityDTO;
 import dto.StatsOrderByDayDTO;
+import dto.StatsProductDTO;
 import gui.barchart.ModelChart;
 import java.awt.Color;
 import java.time.LocalDate;
@@ -84,6 +85,11 @@ public class PnOverrall extends javax.swing.JPanel {
         lblChart = new javax.swing.JLabel();
         comboDate = new javax.swing.JComboBox<>();
         chart = new gui.barchart.Chart();
+        jPanel14 = new javax.swing.JPanel();
+        jPanel16 = new javax.swing.JPanel();
+        lblChartProduct = new javax.swing.JLabel();
+        comboDateProduct = new javax.swing.JComboBox<>();
+        chartHorizontal1 = new gui.barchart.ChartHorizontal();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -327,6 +333,35 @@ public class PnOverrall extends javax.swing.JPanel {
         jPanel5.add(jPanel15, java.awt.BorderLayout.PAGE_START);
         jPanel5.add(chart, java.awt.BorderLayout.CENTER);
 
+        jPanel14.setPreferredSize(new java.awt.Dimension(1118, 300));
+        jPanel14.setLayout(new java.awt.BorderLayout());
+
+        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel16.setPreferredSize(new java.awt.Dimension(1188, 40));
+        jPanel16.setLayout(new java.awt.BorderLayout());
+
+        lblChartProduct.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        lblChartProduct.setText("TOP SẢN PHẨM BÁN CHẠY THEO THỜI GIAN");
+        lblChartProduct.setMaximumSize(new java.awt.Dimension(600, 40));
+        lblChartProduct.setMinimumSize(new java.awt.Dimension(600, 40));
+        lblChartProduct.setPreferredSize(new java.awt.Dimension(600, 40));
+        jPanel16.add(lblChartProduct, java.awt.BorderLayout.WEST);
+
+        comboDateProduct.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboDateProduct.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7 ngày qua", "Hôm nay", "Hôm qua", "Tháng này", "Tháng trước" }));
+        comboDateProduct.setPreferredSize(new java.awt.Dimension(120, 22));
+        comboDateProduct.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboDateProductItemStateChanged(evt);
+            }
+        });
+        jPanel16.add(comboDateProduct, java.awt.BorderLayout.EAST);
+
+        jPanel14.add(jPanel16, java.awt.BorderLayout.PAGE_START);
+        jPanel14.add(chartHorizontal1, java.awt.BorderLayout.CENTER);
+
+        jPanel5.add(jPanel14, java.awt.BorderLayout.PAGE_END);
+
         pnContent.add(jPanel5, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(pnContent, java.awt.BorderLayout.CENTER);
@@ -338,6 +373,63 @@ public class PnOverrall extends javax.swing.JPanel {
         // TODO add your handling code here:
         changeDateSelect();
     }//GEN-LAST:event_comboDateItemStateChanged
+
+    private void comboDateProductItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboDateProductItemStateChanged
+        // TODO add your handling code here:
+        //        7 ngày qua, Hôm nay, Hôm qua, Tháng này, Tháng trước
+        LocalDateTime now = LocalDateTime.now();
+        List<StatsProductDTO>  listStats = new ArrayList<>();
+        switch (comboDate.getSelectedIndex()) {
+            case 0 -> {
+                lblChartProduct.setText("TOP 5 SẢN PHẨM BÁN CHẠY 7 NGÀY GẦN NHẤT");
+                listStats = orderBUS.getStatisticProductByDate(now.minusDays(7).toLocalDate().atStartOfDay(), now);
+                loadDataChartProduct(listStats);
+                break;
+            }
+            case 1 -> {
+                lblChartProduct.setText("TOP 5 SẢN PHẨM BÁN CHẠY HÔM NAY");
+                LocalDateTime start = now.toLocalDate().atStartOfDay();
+                LocalDateTime end = now.toLocalDate().atTime(23, 59, 59, 999999999);
+
+                listStats = orderBUS.getStatisticProductByDate(start, end);
+                loadDataChartProduct(listStats);
+                break;
+            }
+            case 2 -> {
+                lblChartProduct.setText("TOP 5 SẢN PHẨM BÁN CHẠY HÔM QUA");
+                LocalDateTime start = now.minusDays(1).toLocalDate().atStartOfDay();
+                LocalDateTime end = now.minusDays(1).toLocalDate().atTime(23, 59, 59, 999999999);
+
+                listStats = orderBUS.getStatisticProductByDate(start, end);
+                loadDataChartProduct(listStats);
+                break;
+            }
+            case 3 -> {
+                lblChartProduct.setText("TOP 5 SẢN PHẨM BÁN CHẠY TRONG THÁNG " + now.getMonthValue());
+                LocalDateTime start = now.withDayOfMonth(1).toLocalDate().atStartOfDay();
+                LocalDateTime end = now.toLocalDate().withDayOfMonth(now.toLocalDate().lengthOfMonth()).atTime(23, 59, 59, 999999999);
+
+                listStats = orderBUS.getStatisticProductByDate(start, end);
+                loadDataChartProduct(listStats);
+                break;
+            }
+            case 4 -> {
+                lblChartProduct.setText("TOP 5 SẢN PHẨM BÁN CHẠY TRONG THÁNG TRƯỚC" + now.minusMonths(1).getMonthValue());
+                LocalDateTime start = now.minusMonths(1).withDayOfMonth(1).toLocalDate().atStartOfDay();
+                LocalDateTime end = now.minusMonths(1).toLocalDate().withDayOfMonth(now.toLocalDate().lengthOfMonth()).atTime(23, 59, 59, 999999999);
+
+                listStats = orderBUS.getStatisticProductByDate(start, end);
+                loadDataChartProduct(listStats);
+                break;
+            }
+            default -> {
+                lblChartProduct.setText("TOP 5 SẢN PHẨM BÁN CHẠY 7 NGÀY GẦN NHẤT");
+                listStats = orderBUS.getStatisticProductByDate(now.minusDays(7).toLocalDate().atStartOfDay(), now);
+                loadDataChartProduct(listStats);
+                break;
+            }
+        }
+    }//GEN-LAST:event_comboDateProductItemStateChanged
     private void initHeader() {
         lblIconReturn.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/returnProductIcon.svg")), 55, 55));
         lblIconOrder.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/orderIcon.svg")), 55, 55));
@@ -369,36 +461,46 @@ public class PnOverrall extends javax.swing.JPanel {
     private void initChart() {
         lblChart.setText("thống kê doanh thu 7 ngày gần nhất ( THEO NGÀY )".toUpperCase());
         chart.addLegend("Doanh thu", new Color(135, 189, 245));
+        chartHorizontal1.addLegend("Doanh thu", new Color(135, 189, 245));
         LocalDateTime start = LocalDateTime.now();
         List<StatsOrderByDayDTO> listStats = orderBUS.getStatisticByDate(start.minusDays(7).toLocalDate().atStartOfDay(), start);
-        loadDataChartDay(listStats);
+        loadDataChartDayRevenue(listStats);
     }
 
-    private void loadDataChartDay(List<StatsOrderByDayDTO> listStats) {
+    private void loadDataChartDayRevenue(List<StatsOrderByDayDTO> listStats) {
         chart.clear();
         for (StatsOrderByDayDTO e : listStats) {
-            chart.addData(new ModelChart(FormatDate.formatDateToDayAndMonth( e.getTime()),
+            chart.addData(new ModelChart(FormatDate.formatDateToDayAndMonth(e.getTime()),
                     new double[]{e.getSumPrice()}));
         }
         chart.start();
     }
 
-    private void loadDataChartOnlyDay(List<StatsOrderByDayDTO> listStats) {
+    private void loadDataChartOnlyDayRevenue(List<StatsOrderByDayDTO> listStats) {
         chart.clear();
         for (StatsOrderByDayDTO e : listStats) {
-            chart.addData(new ModelChart(e.getTime().getDayOfMonth() +"",
+            chart.addData(new ModelChart(e.getTime().getDayOfMonth() + "",
                     new double[]{e.getSumPrice()}));
         }
         chart.start();
     }
 
-    private void loadDataChartHour(List<StatsOrderByDayDTO> listStats) {
+    private void loadDataChartHourRevenue(List<StatsOrderByDayDTO> listStats) {
         chart.clear();
         for (StatsOrderByDayDTO e : listStats) {
-            chart.addData(new ModelChart(e.getTime().getHour()+ "",
+            chart.addData(new ModelChart(e.getTime().getHour() + "",
                     new double[]{e.getSumPrice()}));
         }
         chart.start();
+    }
+
+    private void loadDataChartProduct( List<StatsProductDTO> listStats){
+        chartHorizontal1.clear();
+        for (StatsProductDTO e : listStats) {
+            chartHorizontal1.addData(new ModelChart(e.getProductName(),
+                    new double[]{e.getSumPrice()}));
+        }
+        chartHorizontal1.start();
     }
 
     private void changeDateSelect() {
@@ -409,36 +511,42 @@ public class PnOverrall extends javax.swing.JPanel {
             case 0 -> {
                 lblChart.setText("THỐNG KÊ DOANH THU 7 NGÀY GẦN NHẤT ( THEO NGÀY )");
                 listStats = orderBUS.getStatisticByDate(now.minusDays(7).toLocalDate().atStartOfDay(), now);
-                loadDataChartDay(listStats);
+                loadDataChartDayRevenue(listStats);
+                break;
             }
             case 1 -> {
                 lblChart.setText("THỐNG KÊ DOANH THU HÔM NAY ( THEO GIỜ )");
                 listStats = orderBUS.getStatisticInDay(now);
-                loadDataChartHour(listStats);
+                loadDataChartHourRevenue(listStats);
+                break;
             }
             case 2 -> {
                 lblChart.setText("THỐNG KÊ DOANH THU HÔM QUA ( THEO GIỜ )");
                 listStats = orderBUS.getStatisticInDay(now.minusDays(1));
-                loadDataChartHour(listStats);
+                loadDataChartHourRevenue(listStats);
+                break;
             }
             case 3 -> {
-                lblChart.setText("THỐNG KÊ DOANH THU THÁNG " + now.getMonthValue() +  " ( THEO NGÀY )");
+                lblChart.setText("THỐNG KÊ DOANH THU THÁNG " + now.getMonthValue() + " ( THEO NGÀY )");
                 LocalDateTime start = now.with(TemporalAdjusters.firstDayOfMonth()).withHour(0).withMinute(0).withSecond(0).withNano(0);
                 LocalDateTime end = now.with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
-                listStats = orderBUS.getStatisticByDate( start, end );
-                loadDataChartOnlyDay(listStats);
+                listStats = orderBUS.getStatisticByDate(start, end);
+                loadDataChartOnlyDayRevenue(listStats);
+                break;
             }
             case 4 -> {
-                lblChart.setText("THỐNG KÊ DOANH THU THÁNG " + now.minusMonths(1).getMonthValue() +  " ( THEO NGÀY )");
+                lblChart.setText("THỐNG KÊ DOANH THU THÁNG " + now.minusMonths(1).getMonthValue() + " ( THEO NGÀY )");
                 LocalDateTime start = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth()).withHour(0).withMinute(0).withSecond(0).withNano(0);
                 LocalDateTime end = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
                 listStats = orderBUS.getStatisticByDate(start, end);
-                loadDataChartOnlyDay(listStats);
+                loadDataChartOnlyDayRevenue(listStats);
+                break;
             }
             default -> {
                 lblChart.setText("THỐNG KÊ DOANH THU 7 NGÀY GẦN NHẤT ( THEO NGÀY )");
                 listStats = orderBUS.getStatisticByDate(now.minusDays(7).toLocalDate().atStartOfDay(), now);
-                loadDataChartDay(listStats);
+                loadDataChartDayRevenue(listStats);
+                break;
             }
         }
 
@@ -511,7 +619,9 @@ public class PnOverrall extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private gui.barchart.Chart chart;
+    private gui.barchart.ChartHorizontal chartHorizontal1;
     private javax.swing.JComboBox<String> comboDate;
+    private javax.swing.JComboBox<String> comboDateProduct;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
@@ -520,7 +630,9 @@ public class PnOverrall extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -531,6 +643,7 @@ public class PnOverrall extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblChart;
     private javax.swing.JLabel lblChart1;
+    private javax.swing.JLabel lblChartProduct;
     private javax.swing.JLabel lblIconCompare;
     private javax.swing.JLabel lblIconOrder;
     private javax.swing.JLabel lblIconReturn;

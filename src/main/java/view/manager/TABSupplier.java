@@ -653,7 +653,7 @@ public class TABSupplier extends javax.swing.JPanel {
             Supplier supplier = supplierBUS.getSupplierById(supplierEdit);
             // Kiểm tra tên nhà cung cấp đã tồn tại chưa
             if(supplierBUS.getSupByName(name) != null) {
-                MessageDialog.warring(null, "Tên nhà cung cấp đã tồn tại trong hệ thống.");
+                MessageDialog.warning(null, "Tên nhà cung cấp đã tồn tại trong hệ thống.");
                 return;
             }
             // Cập nhật thông tin nhà cung cấp

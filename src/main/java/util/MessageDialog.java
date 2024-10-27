@@ -17,7 +17,7 @@ public class MessageDialog {
         JOptionPane.showMessageDialog(parent, message, "Info", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void warring(Component parent, String message) {
+    public static void warning(Component parent, String message) {
         JOptionPane.showMessageDialog(parent, message, "Warning!", JOptionPane.WARNING_MESSAGE);
     }
 

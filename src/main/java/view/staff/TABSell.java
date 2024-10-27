@@ -102,7 +102,7 @@ public class TABSell extends javax.swing.JPanel {
                 tabbedPaneDTM.setSelectedIndex(1);
                 fillContentPrescriptionDetail(prescriptionDetails);
             } else {
-                MessageDialog.warring(null, "Không có sản phẩm nào trong đơn thuốc mẫu !!!");
+                MessageDialog.warning(null, "Không có sản phẩm nào trong đơn thuốc mẫu !!!");
             }
             table.getCellEditor().stopCellEditing();
         };
@@ -428,7 +428,7 @@ public class TABSell extends javax.swing.JPanel {
     private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
         // TODO add your handling code here:
         if (prescriptionDetails.isEmpty()) {
-            MessageDialog.warring(null, "Không có sản phẩm nào trong đơn thuốc mẫu !!!");
+            MessageDialog.warning(null, "Không có sản phẩm nào trong đơn thuốc mẫu !!!");
         } else {
             PnTabOrder tabHoaDon = (PnTabOrder) tabbedPane.getSelectedComponent();
             int quantityPre = (int) spinnerQuantity.getValue();
@@ -488,7 +488,7 @@ public class TABSell extends javax.swing.JPanel {
             tabHoaDon.addSanPham(product);
             txtTimSanPham.setText("");
         } else {
-            MessageDialog.warring(null, "Sản phẩm không tồn tại !!!");
+            MessageDialog.warning(null, "Sản phẩm không tồn tại !!!");
         }
     }
 

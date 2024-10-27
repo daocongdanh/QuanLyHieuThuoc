@@ -206,7 +206,7 @@ public class PnTabOrder extends javax.swing.JPanel {
                 System.out.println(quantity + "--2--" + finalStock);
             }
             if (quantity > finalStock) {
-                MessageDialog.warring(null, String.format("Sản phẩm '%s' không đủ số lượng", product.getName()));
+                MessageDialog.warning(null, String.format("Sản phẩm '%s' không đủ số lượng", product.getName()));
                 return false;
             }
         }
@@ -230,7 +230,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         }
 
         if (unitDetails.isEmpty()) {
-            MessageDialog.warring(null, "Sản phẩm đã tồn tại");
+            MessageDialog.warning(null, "Sản phẩm đã tồn tại");
             return;
         }
 
@@ -312,11 +312,11 @@ public class PnTabOrder extends javax.swing.JPanel {
         List<OrderDTO> orderDTOs = new ArrayList<>();
         List<PnOrderDetail> listPnOrderDetail = getAllPnOrderDetailThuoc();
         if (listPnOrderDetail == null) {
-            MessageDialog.warring(null, "Chưa có chọn sản phẩm !!!");
+            MessageDialog.warning(null, "Chưa có chọn sản phẩm !!!");
         } else {
             for (PnOrderDetail pnOrderDetail : listPnOrderDetail) {
                 if (pnOrderDetail.getSoLuong() == 0) {
-                    MessageDialog.warring(null, String.format("Sản phẩm '%s' chưa chọn lô", pnOrderDetail.getProduct().getName()));
+                    MessageDialog.warning(null, String.format("Sản phẩm '%s' chưa chọn lô", pnOrderDetail.getProduct().getName()));
                     return null;
                 } else {
                     JPanel pnListBatch = pnOrderDetail.getPnListBatch();
@@ -707,12 +707,12 @@ public class PnTabOrder extends javax.swing.JPanel {
     private void txtTimKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKhachHangActionPerformed
         String txtTim = txtTimKhachHang.getText().trim();
         if (txtTim == null) {
-            MessageDialog.warring(null, "Chưa nhập số điện thoại khách muốn tìm !!!");
+            MessageDialog.warning(null, "Chưa nhập số điện thoại khách muốn tìm !!!");
         } else {
             Customer cus = customerBUS.getCustomerByPhone(txtTim);
             if (cus == null) {
                 customer = null;
-                MessageDialog.warring(null, "Khách hàng không tồn tại !!!");
+                MessageDialog.warning(null, "Khách hàng không tồn tại !!!");
             } else {
                 customer = cus;
                 txtTenKhachHang.setText(cus.getName());
@@ -741,7 +741,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         map.forEach((key, value) -> {
             Batch batch = batchBUS.getBatchByNameAndProduct((String) key.get(0), (String) key.get(1));
             if (batch.getStock() < value) {
-                MessageDialog.warring(null, String.format("Lô hàng '%s' của sản phẩm '%s' không đủ số lượng",
+                MessageDialog.warning(null, String.format("Lô hàng '%s' của sản phẩm '%s' không đủ số lượng",
                         (String) key.get(0), (String) key.get(1)));
                 return;
             }

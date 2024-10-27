@@ -846,19 +846,19 @@ public class TABPromotion extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         int selectedRow = tableDesign.getTable().getSelectedRow();
         if (selectedRow < 0) {
-            MessageDialog.warring(null, "Hãy chọn khuyến mãi muốn cập nhật thông tin");
+            MessageDialog.warning(null, "Hãy chọn khuyến mãi muốn cập nhật thông tin");
             return;
         }
         String status = (String) tableDesign.getModelTable().getValueAt(selectedRow, 5);
         if (!status.equals("Chưa phát hành")) {
-            MessageDialog.warring(null, "Chương trình khuyến mãi đã phát hành nên không thể chỉnh sửa");
+            MessageDialog.warning(null, "Chương trình khuyến mãi đã phát hành nên không thể chỉnh sửa");
             return;
         }
         String type = (String) tableDesign.getModelTable().getValueAt(selectedRow, 4);
         if (type.equals("Hóa đơn")) {
             Optional<Promotion> promotionExists = promotionBUS.getPromotionById((String) tableDesign.getModelTable().getValueAt(selectedRow, 0));
             if (promotionExists.isEmpty()) {
-                MessageDialog.warring(null, "Không tìm thấy khuyến mãi");
+                MessageDialog.warning(null, "Không tìm thấy khuyến mãi");
                 return;
             }
             Promotion promotion = promotionExists.get();
@@ -870,7 +870,7 @@ public class TABPromotion extends javax.swing.JPanel {
         } else {
             Optional<Promotion> promotionExists = promotionBUS.getPromotionById((String) tableDesign.getModelTable().getValueAt(selectedRow, 0));
             if (promotionExists.isEmpty()) {
-                MessageDialog.warring(null, "Không tìm thấy khuyến mãi");
+                MessageDialog.warning(null, "Không tìm thấy khuyến mãi");
                 return;
             }
             Promotion promotion = promotionExists.get();
@@ -912,11 +912,11 @@ public class TABPromotion extends javax.swing.JPanel {
         LocalDate end = jdate2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         double discount = (int) spinnerDiscount.getValue() * 1.0 / 100;
         if (start.isBefore(LocalDate.now())) {
-            MessageDialog.warring(null, "Ngày bắt đầu phải sau ngày hiện tại");
+            MessageDialog.warning(null, "Ngày bắt đầu phải sau ngày hiện tại");
             return;
         }
         if (start.isAfter(end)) {
-            MessageDialog.warring(null, "Ngày bắt đầu phải trước ngày kết thúc");
+            MessageDialog.warning(null, "Ngày bắt đầu phải trước ngày kết thúc");
             return;
         }
         try {
@@ -936,12 +936,12 @@ public class TABPromotion extends javax.swing.JPanel {
         // TODO add your handling code here:
         String productId = searchProduct.getText().trim();
         if (!checkExist(productId, tableDesignAdd)) {
-            MessageDialog.warring(null, "Sản phẩm đã tồn tại");
+            MessageDialog.warning(null, "Sản phẩm đã tồn tại");
             return;
         }
         Optional<Product> productExsist = productBUS.searchProductById(productId);
         if (productExsist.isEmpty()) {
-            MessageDialog.warring(null, "Không tìm thấy sản phẩm");
+            MessageDialog.warning(null, "Không tìm thấy sản phẩm");
         } else {
             Product product = productExsist.get();
             searchProduct.setText("");
@@ -970,17 +970,17 @@ public class TABPromotion extends javax.swing.JPanel {
         LocalDate end = jdate2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         double discount = (int) spinnerDiscountP.getValue() * 1.0 / 100;
         if (start.isBefore(LocalDate.now())) {
-            MessageDialog.warring(null, "Ngày bắt đầu phải sau ngày hiện tại");
+            MessageDialog.warning(null, "Ngày bắt đầu phải sau ngày hiện tại");
             return;
         }
         if (start.isAfter(end)) {
-            MessageDialog.warring(null, "Ngày bắt đầu phải trước ngày kết thúc");
+            MessageDialog.warning(null, "Ngày bắt đầu phải trước ngày kết thúc");
             return;
         }
         List<String> listProductIds = new ArrayList<>();
         int index = tableDesignAdd.getModelTable().getRowCount();
         if (index == 0) {
-            MessageDialog.warring(null, "Không có sản phẩm");
+            MessageDialog.warning(null, "Không có sản phẩm");
             return;
         }
         for (int i = 0; i < index; i++) {
@@ -1007,11 +1007,11 @@ public class TABPromotion extends javax.swing.JPanel {
         LocalDate end = jdate2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         double discount = (int) spinnerDiscountUpdate.getValue() * 1.0 / 100;
         if (start.isBefore(LocalDate.now())) {
-            MessageDialog.warring(null, "Ngày bắt đầu phải sau ngày hiện tại");
+            MessageDialog.warning(null, "Ngày bắt đầu phải sau ngày hiện tại");
             return;
         }
         if (start.isAfter(end)) {
-            MessageDialog.warring(null, "Ngày bắt đầu phải trước ngày kết thúc");
+            MessageDialog.warning(null, "Ngày bắt đầu phải trước ngày kết thúc");
             return;
         }
         int selectedRow = tableDesign.getTable().getSelectedRow();
@@ -1035,11 +1035,11 @@ public class TABPromotion extends javax.swing.JPanel {
         LocalDate end = jdate2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         double discount = (int) spinnerDiscountP1.getValue() * 1.0 / 100;
         if (start.isBefore(LocalDate.now())) {
-            MessageDialog.warring(null, "Ngày bắt đầu phải sau ngày hiện tại");
+            MessageDialog.warning(null, "Ngày bắt đầu phải sau ngày hiện tại");
             return;
         }
         if (start.isAfter(end)) {
-            MessageDialog.warring(null, "Ngày bắt đầu phải trước ngày kết thúc");
+            MessageDialog.warning(null, "Ngày bắt đầu phải trước ngày kết thúc");
             return;
         }
         int selectedRow = tableDesign.getTable().getSelectedRow();
@@ -1048,7 +1048,7 @@ public class TABPromotion extends javax.swing.JPanel {
         List<String> listProductIds = new ArrayList<>();
         int index = tableDesignUpdate.getModelTable().getRowCount();
         if (index == 0) {
-            MessageDialog.warring(null, "Không có sản phẩm");
+            MessageDialog.warning(null, "Không có sản phẩm");
             return;
         }
         for (int i = 0; i < index; i++) {
@@ -1068,12 +1068,12 @@ public class TABPromotion extends javax.swing.JPanel {
         // TODO add your handling code here:
         String productId = searchProduct1.getText().trim();
         if (!checkExist(productId, tableDesignUpdate)) {
-            MessageDialog.warring(null, "Sản phẩm đã tồn tại");
+            MessageDialog.warning(null, "Sản phẩm đã tồn tại");
             return;
         }
         Optional<Product> productExsist = productBUS.searchProductById(productId);
         if (productExsist.isEmpty()) {
-            MessageDialog.warring(null, "Không tìm thấy sản phẩm");
+            MessageDialog.warning(null, "Không tìm thấy sản phẩm");
         } else {
             Product product = productExsist.get();
             searchProduct1.setText("");
@@ -1086,12 +1086,12 @@ public class TABPromotion extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRow = tableDesign.getTable().getSelectedRow();
         if (selectedRow < 0) {
-            MessageDialog.warring(null, "Hãy chọn khuyến mãi muốn gửi tới khách hàng");
+            MessageDialog.warning(null, "Hãy chọn khuyến mãi muốn gửi tới khách hàng");
             return;
         }
         String status = (String) tableDesign.getModelTable().getValueAt(selectedRow, 5);
         if (status.equals("Đã phát hành")) {
-            MessageDialog.warring(null, "Chương trình khuyến mãi đã phát hành");
+            MessageDialog.warning(null, "Chương trình khuyến mãi đã phát hành");
             return;
         }
         if(MessageDialog.confirm(null, "Bạn có chắc muốn phát hành chương trình khuyến mãi?", "Phát hành chương trình khuyến mãi")){

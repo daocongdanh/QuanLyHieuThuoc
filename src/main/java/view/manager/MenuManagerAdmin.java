@@ -56,7 +56,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 
         // Tạo "Loading Panel"
         JPanel loadingPanel = new JPanel();
-        loadingPanel.setLayout(new GridBagLayout()); 
+        loadingPanel.setLayout(new GridBagLayout());
         JLabel loadingLabel = new JLabel("Đang tải...");
         loadingLabel.setFont(new Font("Arial", Font.BOLD, 24));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -71,7 +71,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuPanelMap.put(menuDamaged, () -> new TABDamageItem());
         menuPanelMap.put(menuOrder, () -> new TABOrder());
         menuPanelMap.put(menuPrescription, () -> new TABPrecription());
-// menuPanelMap.put(menuProduct, () -> new TABProductPanel());
+        menuPanelMap.put(menuProduct, () -> new TABProduct());
 // menuPanelMap.put(menuPromotion, () -> new TABPromotionPanel());
         menuPanelMap.put(menuPurchase, () -> new TABPurchaseOrder());
         menuPanelMap.put(menuReturn, () -> new TABReturnOrder());

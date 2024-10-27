@@ -402,12 +402,12 @@ public class PnStatsByDay extends javax.swing.JPanel {
         LocalDateTime end = localDateEnd.atTime(23, 59, 59, 999999999); // 23:59:59.999999999
 
         if (start.isAfter(end)) {
-            MessageDialog.warring(null, "Ngày bắt đầu phải trước ngày kết thúc");
+            MessageDialog.warning(null, "Ngày bắt đầu phải trước ngày kết thúc");
             return;
         }
         
         if ( end.getDayOfYear()- start.getDayOfYear() > 40 ){
-            MessageDialog.warring(null, "2 ngày chỉ cách nhau tối đa 40 ngày");
+            MessageDialog.warning(null, "2 ngày chỉ cách nhau tối đa 40 ngày");
             return;
         }
 

@@ -44,6 +44,13 @@ public class BatchBUS {
     public Batch getBatchByNameAndProduct(String batchName, String productId){
         return batchDAL.findByNameAndProduct(batchName, productId);
     }
+    public List<Batch> getAllBatch(){
+        return batchDAL.findAll1();
+    }
+    
+    public List<Batch> getListBatchByProduct(String productId){
+        return batchDAL.findByProductId(productId);
+    }
     
     public Map<UnitDetail, List<Batch>> getListBatchExpiration(){
         List<Batch> batchs = batchDAL.getAllBatchExpiration();

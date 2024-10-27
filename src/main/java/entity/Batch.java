@@ -107,7 +107,7 @@ public class Batch {
         }
         this.product = product;
     }
-
+    
     public boolean isStatus() {
         return status;
     }

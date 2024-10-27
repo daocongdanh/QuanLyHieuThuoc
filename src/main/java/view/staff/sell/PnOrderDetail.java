@@ -414,7 +414,7 @@ public class PnOrderDetail extends javax.swing.JPanel {
 
                     int newValue = (int) spinnerModal.getValue();
                     if (newValue > result) {
-                        MessageDialog.warring(null, "Không đủ số lượng");
+                        MessageDialog.warning(null, "Không đủ số lượng");
                         spinnerModal.setValue(newValue - 1);
                     }
 

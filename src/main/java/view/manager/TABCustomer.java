@@ -591,7 +591,7 @@ public class TABCustomer extends javax.swing.JPanel {
             boolean sex = comboSexAdd.getSelectedIndex() == 0;
 
             if (customerBUS.getCustomerByPhone(phone) != null) {
-                MessageDialog.warring(null, "Số điện thoại khách hàng đã tồn tại trong hệ thống.");
+                MessageDialog.warning(null, "Số điện thoại khách hàng đã tồn tại trong hệ thống.");
                 txtCusPhoneAdd.requestFocus();
                 return;
             }
@@ -647,7 +647,7 @@ public class TABCustomer extends javax.swing.JPanel {
         JTable table = tableDesign.getTable();
         int selectedRow = table.getSelectedRow();
         if (selectedRow == -1) {
-            MessageDialog.warring(null, "Bạn chưa chọn dòng muốn sửa !!!");
+            MessageDialog.warning(null, "Bạn chưa chọn dòng muốn sửa !!!");
             return;
         }
 
@@ -679,25 +679,25 @@ public class TABCustomer extends javax.swing.JPanel {
         String address = addressField.getText();
 
         if (name.trim().isEmpty()) {
-            MessageDialog.warring(null, "Tên khách hàng không được để trống.");
+            MessageDialog.warning(null, "Tên khách hàng không được để trống.");
             nameField.requestFocus();
             return false;
         }
 
         if (!phone.matches("^\\d{10,12}$")) {
-            MessageDialog.warring(null, "Số điện thoại phải là 10-12 chữ số.");
+            MessageDialog.warning(null, "Số điện thoại phải là 10-12 chữ số.");
             phoneField.requestFocus();
             return false;
         }
 
         if (address.trim().isEmpty()) {
-            MessageDialog.warring(null, "Địa chỉ không được để trống.");
+            MessageDialog.warning(null, "Địa chỉ không được để trống.");
             addressField.requestFocus();
             return false;
         }
 
         if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-            MessageDialog.warring(null, "Email không hợp lệ.");
+            MessageDialog.warning(null, "Email không hợp lệ.");
             emailField.requestFocus();
             return false;
         }

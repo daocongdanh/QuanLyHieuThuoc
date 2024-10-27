@@ -84,7 +84,7 @@ public class Product {
 
     public Product(String productId, String name, String registrationNumber, String activeIngredient, String dosage, 
             String packaging, String countryOfOrigin, String manufacturer, double purchasePrice, 
-            double sellingPrice, boolean active, ProductType productType, List<Batch> listBatch) {
+            double sellingPrice, boolean active,String image , ProductType productType, List<Batch> listBatch) {
         this.productId = productId;
         setName(name);
         this.registrationNumber = registrationNumber;
@@ -97,7 +97,8 @@ public class Product {
         setSellingPrice(sellingPrice);
         this.active = active;
         this.productType = productType;
-        setListBatch(listBatch);
+        this.image = image;
+        setListBatch(listBatch);     
     }
 
     public List<Batch> getListBatch() {

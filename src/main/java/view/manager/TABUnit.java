@@ -440,7 +440,7 @@ public class TABUnit extends javax.swing.JPanel {
         String name = txtNameUnitAdd.getText().trim();
         if (!name.equals("")) {
             if (unitBUS.getUnitByName(name) != null) {
-                MessageDialog.warring(null, "Tên đơn vị tính đã tồn tại trong hệ thống.");
+                MessageDialog.warning(null, "Tên đơn vị tính đã tồn tại trong hệ thống.");
                 return;
             }
             unitBUS.createUnit(new Unit(null, name));
@@ -449,7 +449,7 @@ public class TABUnit extends javax.swing.JPanel {
             modalAddUnit.dispose();
             fillContent(unitBUS.getAllUnits());
         } else {
-            MessageDialog.warring(null, "Dữ liệu nhập không được rỗng.");
+            MessageDialog.warning(null, "Dữ liệu nhập không được rỗng.");
         }
 
     }//GEN-LAST:event_btnAddUnitActionPerformed
@@ -460,14 +460,14 @@ public class TABUnit extends javax.swing.JPanel {
             Unit unit = unitBUS.getUnitById(unitIdEdit);
 
             if (unitBUS.checkUnitForEdit(unitIdEdit) == false) {
-                MessageDialog.warring(null, "Đơn vị tính này hiện đang có sản phẩm.");
+                MessageDialog.warning(null, "Đơn vị tính này hiện đang có sản phẩm.");
                 txtNameUnitEdit.setText("");
                 modalEditUnit.dispose();
                 return;
             };
 
             if (unitBUS.getUnitByName(name) != null) {
-                MessageDialog.warring(null, "Tên đơn vị tính đã tồn tại trong hệ thống.");
+                MessageDialog.warning(null, "Tên đơn vị tính đã tồn tại trong hệ thống.");
                 return;
             }
 

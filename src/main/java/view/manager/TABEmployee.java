@@ -645,7 +645,7 @@ public class TABEmployee extends javax.swing.JPanel {
         
         List<Employee> employees = employeeBUS.getEmployeeByKeyword(keyword);
         if(employees.size() < 1) {
-            MessageDialog.warring(null, "Không tìm thấy nhân viên phù hợp");
+            MessageDialog.warning(null, "Không tìm thấy nhân viên phù hợp");
         }
         else {
             fillContent(employees);
@@ -655,7 +655,7 @@ public class TABEmployee extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         int selectedRow = tableDesign.getTable().getSelectedRow();
         if (selectedRow < 0) {
-            MessageDialog.warring(null, "Hãy chọn nhân viên muốn cập nhật thông tin");
+            MessageDialog.warning(null, "Hãy chọn nhân viên muốn cập nhật thông tin");
         }
         else {
             employeeIdUpdate = (String) tableDesign.getTable().getValueAt(selectedRow, 0);
@@ -785,7 +785,7 @@ public class TABEmployee extends javax.swing.JPanel {
         JTable table = tableDesign.getTable();
         int selectedRow = table.getSelectedRow();
         if(selectedRow < 0) {
-            MessageDialog.warring(null, "Hãy chọn nhân viên muốn đặt lại mật khẩu.");
+            MessageDialog.warning(null, "Hãy chọn nhân viên muốn đặt lại mật khẩu.");
         } else {
             employeeIdUpdate = (String) table.getValueAt(selectedRow, 0);
         
@@ -801,7 +801,7 @@ public class TABEmployee extends javax.swing.JPanel {
         String newPass = new String(txtResetPassword.getPassword());
         
         if(newPass.equals("")) {
-            MessageDialog.warring(null, "Mật khẩu mới không được rỗng.");
+            MessageDialog.warning(null, "Mật khẩu mới không được rỗng.");
             txtResetPassword.requestFocus();
             return;
         }

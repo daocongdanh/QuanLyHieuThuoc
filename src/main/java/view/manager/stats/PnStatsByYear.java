@@ -388,7 +388,7 @@ public class PnStatsByYear extends javax.swing.JPanel {
         int yearEnd = Integer.parseInt((String) comboYearEnd.getSelectedItem());
         
         if ( yearStart > yearEnd ){
-            MessageDialog.warring(null, "Năm sau phải lớn hơn năm trước.");
+            MessageDialog.warning(null, "Năm sau phải lớn hơn năm trước.");
             return;
         }
         

@@ -166,6 +166,9 @@ public class ProductTransactionHistory {
         }
         this.product = product;
     }
+    
+    //Tự thêm
+    public String getProductId() { return product.getProductId(); }
 
     @Override
     public String toString() {

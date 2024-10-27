@@ -120,7 +120,7 @@ public class UnitBUS {
                 }
                 
                 if ( listUnitInsert.isEmpty() ){
-                    MessageDialog.warring(null, "File không được import do dữ liệu đã tồn tại trong hệ thống !!!");
+                    MessageDialog.warning(null, "File không được import do dữ liệu đã tồn tại trong hệ thống !!!");
                     return false;
                 }
 
@@ -133,7 +133,7 @@ public class UnitBUS {
                         return true;
                     } else {
                         String errorRow = rowNotImport.stream().map(x -> x.toString()).collect(Collectors.joining(","));
-                        MessageDialog.warring(null, "Các dòng bị lỗi là " + errorRow);
+                        MessageDialog.warning(null, "Các dòng bị lỗi là " + errorRow);
                         return false;
                     }
                 } else {

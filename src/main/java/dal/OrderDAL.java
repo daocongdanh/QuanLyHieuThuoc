@@ -97,84 +97,17 @@ public class OrderDAL implements BaseDAL<Order, String> {
         query.setParameter(2, end);
         return query.getResultList();
     }
+    
+    public List<Order> statisByDate(LocalDateTime start, LocalDateTime end) {
+        String jpql = "SELECT o FROM Order o WHERE o.orderDate BETWEEN :start AND :end";
 
-    public List<Object[]> statisByDate(LocalDateTime start, LocalDateTime end) {
-        StringBuilder sql =  new StringBuilder("SELECT CAST(order_date AS DATE), SUM(total_price), COUNT( distinct order_id) AS total_orders " +
-                "FROM orders " +
-                "WHERE order_date BETWEEN ?1 AND ?2 " +
-                "GROUP BY CAST(order_date AS DATE)");
-
-        Query query = entityManager.createNativeQuery(sql.toString());
-        query.setParameter(1, Timestamp.valueOf(start));
-        query.setParameter(2, Timestamp.valueOf(end));
+        Query query = entityManager.createQuery(jpql, Order.class);
+        query.setParameter("start", start);
+        query.setParameter("end", end);
 
         return query.getResultList();
     }
 
 
-    public List<Object[]> statisByHour(LocalDateTime startOfDay, LocalDateTime endOfDay) {
-        StringBuilder sql =  new StringBuilder("SELECT CAST(order_date AS TIME), SUM(total_price),  COUNT( distinct order_id) AS total_orders " +
-                "FROM orders " +
-                "WHERE order_date BETWEEN ?1 AND ?2 " +
-                "GROUP BY CAST(order_date AS TIME) " +
-                "ORDER BY CAST(order_date AS TIME)");
-        Query query = entityManager.createNativeQuery(sql.toString());
-        query.setParameter(1, Timestamp.valueOf(startOfDay));
-        query.setParameter(2, Timestamp.valueOf(endOfDay));
-        return query.getResultList();
-    }
-
-    public List<Object[]> findStats(LocalDateTime start, LocalDateTime end, String productType, String paymentType, String promotion) {
-        StringBuilder sql = new StringBuilder("SELECT \n" +
-                "    CAST(o.order_date AS DATE) AS order_date, \n" +
-                "    SUM(od.line_total) AS total_amount, \n" +
-                "    COUNT( distinct o.order_id) AS total_orders \n" +
-                "FROM \n" +
-                "    orders o \n" +
-                "JOIN \n" +
-                "    order_details od ON o.order_id = od.order_id \n" +
-                "JOIN \n" +
-                "    unit_details ud ON ud.unit_detail_id = od.unit_detail_id \n" +
-                "JOIN \n" +
-                "    products p ON ud.product_id = p.product_id \n" +
-                "WHERE \n" +
-                "    o.order_date BETWEEN ?1 AND ?2\n");
-
-        if (StringUtils.isNotBlank(productType)) {
-            switch (productType) {
-                case "Thuốc":
-                    sql.append(" AND p.product_type = 'MEDICINE'");
-                    break;
-                case "Vật tư y tế":
-                    sql.append(" AND p.product_type = 'MEDICALSUPPLIES'");
-                    break;
-            }
-        }
-        if (StringUtils.isNotBlank(paymentType)) {
-            switch (paymentType) {
-                case "Tín dụng":
-                    sql.append(" AND o.payment_method = 'BANK'");
-                    break;
-                case "Tiền mặt":
-                    sql.append(" AND o.payment_method = 'CASH'");
-                    break;
-            }
-        }
-        if (StringUtils.isNotBlank(promotion)) {
-            if ("Không khuyến mãi".equals(promotion)) {
-                sql.append(" AND o.promotion_id IS NULL");
-            } else if ("Có khuyến mãi".equals(promotion)) {
-                sql.append(" AND o.promotion_id IS NOT NULL");
-            }
-        }
-
-        sql.append(" GROUP BY CAST(o.order_date AS DATE)");
-
-        Query query = entityManager.createNativeQuery(sql.toString());
-        query.setParameter(1, Timestamp.valueOf(start));
-        query.setParameter(2, Timestamp.valueOf(end));
-
-        return query.getResultList();
-    }
 
 }

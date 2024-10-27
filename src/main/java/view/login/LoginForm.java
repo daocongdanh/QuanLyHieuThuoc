@@ -193,10 +193,10 @@ public class LoginForm extends javax.swing.JFrame {
         String username = usernameTxt.getText().trim();
         String password = String.valueOf(passwordTxt.getPassword());
         if(username.equals("")){
-            MessageDialog.warring(null, "Tài khoản không được rỗng");
+            MessageDialog.warning(null, "Tài khoản không được rỗng");
         }
         else if(password.equals("")){
-            MessageDialog.warring(null, "Mật khẩu không được rỗng");
+            MessageDialog.warning(null, "Mật khẩu không được rỗng");
         }
         else{
             Account account = accountBUS.login(username, password);
