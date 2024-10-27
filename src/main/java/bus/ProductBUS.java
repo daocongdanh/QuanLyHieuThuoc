@@ -58,15 +58,15 @@ public class ProductBUS {
     public List<Product> searchProductByKeyword(String keyword, String type, String productType, boolean active) {
         return productDAL.searchProduct(keyword, type, productType, active);
     }
-    
-    public Product searchProductBySDKOrId( String keyword ) {
+
+    public Product searchProductBySDKOrId(String keyword) {
         return productDAL.searchProductBySDKOrId(keyword);
     }
-    
-    public Optional<Product> searchProductById( String id ){
+
+    public Optional<Product> searchProductById(String id) {
         return productDAL.findById(id);
     }
-    
+
     public List<BatchDTO> getListBatchEnableProduct(Product product) {
         List<Batch> listBatch = product.getListBatch();
         List<BatchDTO> batchDTOs = new ArrayList<>();
@@ -81,31 +81,47 @@ public class ProductBUS {
         }
         return batchDTOs;
     }
-    public List<Product> getAllProducts(){
+
+    public List<Product> getAllProducts() {
         return productDAL.findAll();
     }
 
-    public Product getProductById(String id){
+    public Product getProductById(String id) {
         return productDAL.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm với id = " + id));
     }
 
-    public boolean updateProduct(Product product){
-        try{
+    public boolean updateProduct(Product product, List<UnitDTO> unitDTOs) {
+        try {
             transaction.begin();
             productDAL.update(product);
+            
+            List<UnitDetail> unitProduct = unitDetailDAL.findByProductId(product.getProductId());
+            for ( UnitDetail x : unitProduct){
+                unitDetailDAL.remove(x);
+            }
+            for (UnitDTO unitDTO : unitDTOs) {
+                Unit unit = unitDAL.findByName(unitDTO.getName());
+                UnitDetail unitDetail = new UnitDetail(unitDTO.getConversionRate(),
+                        unitDTO.isIsDefault(), product, unit);
+                unitDetailDAL.insert(unitDetail);
+            }
+
             transaction.commit();
             return true;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             transaction.rollback();
             return false;
         }
     }
-    
+
     public Product getProductBySDK(String SDK) {
         return productDAL.findBySDK(SDK);
     }
-    
+
+    public boolean checkExistSDK(String registrationNumber) {
+        return productDAL.checkExistSDK(registrationNumber);
+    }
+
 }

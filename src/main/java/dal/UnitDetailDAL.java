@@ -25,6 +25,11 @@ public class UnitDetailDAL{
         return true;
     }
     
+    public boolean remove( UnitDetail unitDetail){
+        entityManager.remove(unitDetail);
+        return true;
+    }
+    
     public UnitDetail findByProductAndUnit(String productId, String unitId){
         TypedQuery<UnitDetail> query = 
                 entityManager.createQuery("select ud from UnitDetail ud where "
@@ -39,6 +44,14 @@ public class UnitDetailDAL{
                 entityManager.createQuery("select ud from UnitDetail ud where "
                         + "ud.product = ?1", UnitDetail.class);
         query.setParameter(1, product);
+        return query.getResultList();
+    }
+    
+      public List<UnitDetail> findByProductId(String productId){
+        TypedQuery<UnitDetail> query = 
+                entityManager.createQuery("select ud from UnitDetail ud where "
+                        + "ud.product.productId = ?1", UnitDetail.class);
+        query.setParameter(1, productId);
         return query.getResultList();
     }
     

@@ -20,4 +20,13 @@ public enum ProductType {
     public String getDescription() {
         return description;
     }
+
+    public static ProductType fromDescription(String description) {
+        for (ProductType productType : ProductType.values()) {
+            if (productType.getDescription().equalsIgnoreCase(description)) {
+                return productType;
+            }
+        }
+        throw new IllegalArgumentException("Không tìm thấy enum với mô tả: " + description);
+    }
 }

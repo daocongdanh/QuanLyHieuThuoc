@@ -68,7 +68,6 @@ public class PnStatsByMonth extends javax.swing.JPanel {
         headerPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnSearch = new javax.swing.JButton();
-        txtOrder = new javax.swing.JButton();
         comboProductType = new javax.swing.JComboBox<>();
         comboPaymentType = new javax.swing.JComboBox<>();
         comboIsPromotion = new javax.swing.JComboBox<>();
@@ -117,19 +116,6 @@ public class PnStatsByMonth extends javax.swing.JPanel {
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
-            }
-        });
-
-        txtOrder.setBackground(new java.awt.Color(115, 165, 71));
-        txtOrder.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtOrder.setForeground(new java.awt.Color(255, 255, 255));
-        txtOrder.setText("Xuất excel");
-        txtOrder.setMaximumSize(new java.awt.Dimension(150, 40));
-        txtOrder.setMinimumSize(new java.awt.Dimension(150, 40));
-        txtOrder.setPreferredSize(new java.awt.Dimension(150, 40));
-        txtOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtOrderActionPerformed(evt);
             }
         });
 
@@ -191,9 +177,7 @@ public class PnStatsByMonth extends javax.swing.JPanel {
                         .addComponent(comboIsPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))))
+                        .addGap(189, 189, 189))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,9 +198,7 @@ public class PnStatsByMonth extends javax.swing.JPanel {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(comboPaymentType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboIsPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboProductType, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(comboYear)
                     .addComponent(comboMonth, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -387,10 +369,6 @@ public class PnStatsByMonth extends javax.swing.JPanel {
         add(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrderActionPerformed
-
-    }//GEN-LAST:event_txtOrderActionPerformed
-
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         int month = comboMonth.getSelectedIndex() + 1;
         int year = Integer.parseInt((String) comboYear.getSelectedItem());
@@ -484,7 +462,6 @@ public class PnStatsByMonth extends javax.swing.JPanel {
     private javax.swing.JLabel txtAverage;
     private javax.swing.JLabel txtBestDay;
     private javax.swing.JLabel txtMaxPrice;
-    private javax.swing.JButton txtOrder;
     private javax.swing.JLabel txtSumOfQuantity;
     // End of variables declaration//GEN-END:variables
 }

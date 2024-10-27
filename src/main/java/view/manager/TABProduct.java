@@ -40,13 +40,13 @@ import view.login.LoadApplication;
  */
 public class TABProduct extends javax.swing.JPanel {
 
-    private ProductBUS productBUS;
+    private final ProductBUS productBUS;
     private final UnitBUS unitBUS;
     private TableDesign tableDesign;
     private TableDesign tablleDesignTab2;
     private TableDesign tablleDesignTab3;
-    private BatchBUS batchBUS;
-    private ProductTransactionHistoryBUS transactionBUS;
+    private final BatchBUS batchBUS;
+    private final ProductTransactionHistoryBUS transactionBUS;
     private final UnitDetailBUS unitDetailBUS;
 
     private String productEdit;
@@ -119,7 +119,7 @@ public class TABProduct extends javax.swing.JPanel {
             productEdit = (String) table.getValueAt(selectedRow, 0);
             Product product = productBUS.getProductById(productEdit);
             for (ProductType type : ProductType.values()) {
-                cbbProductTypeEdit.addItem(type.toString());
+                cbbProductTypeEdit.addItem(type.getDescription());
             }
             txtProductActiveIngre1.setText(product.getActiveIngredient());
             txtCountryOfOrigin1.setText(product.getCountryOfOrigin());
@@ -127,7 +127,7 @@ public class TABProduct extends javax.swing.JPanel {
             txtProductManufacturer1.setText(product.getManufacturer());
             txtProductName1.setText(product.getName());
             txtProductPakaging1.setText(product.getPackaging());
-            cbbProductTypeEdit.setSelectedItem(product.getProductType().toString());
+            cbbProductTypeEdit.setSelectedItem(product.getProductType().getDescription());
             txtProductPurchasePrice1.setText(String.valueOf(product.getPurchasePrice()));
             txtProductRegisNumber1.setText(product.getRegistrationNumber());
             txtProductSellingPrice1.setText(String.valueOf(product.getSellingPrice()));
@@ -142,7 +142,7 @@ public class TABProduct extends javax.swing.JPanel {
                 pnHaveUnitEdit.add(Box.createRigidArea(new Dimension(0, 3)));
             }
 
-            BufferedImage bufferImage = ImageUtil.getImage(product.getImage());
+            BufferedImage bufferImage = ImageUtil.getImage(removeExtension(product.getImage()));
 
             if (bufferImage != null) {
                 imageProductEdit = new ImageIcon(bufferImage);
@@ -276,7 +276,7 @@ public class TABProduct extends javax.swing.JPanel {
         jLabel23 = new javax.swing.JLabel();
         txtProductPakaging1 = new javax.swing.JTextField();
         btnExitProductADD1 = new javax.swing.JButton();
-        btnAddProduct1 = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
         cbbProductTypeEdit = new javax.swing.JComboBox<>();
         jLabel25 = new javax.swing.JLabel();
@@ -365,11 +365,6 @@ public class TABProduct extends javax.swing.JPanel {
         });
 
         txtProductName1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtProductName1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProductName1ActionPerformed(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel10.setText("Tên sản phẩm");
@@ -395,11 +390,6 @@ public class TABProduct extends javax.swing.JPanel {
         jLabel17.setText("Số đăng ký");
 
         txtProductRegisNumber1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtProductRegisNumber1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProductRegisNumber1ActionPerformed(evt);
-            }
-        });
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel18.setText("Giá nhập");
@@ -461,12 +451,12 @@ public class TABProduct extends javax.swing.JPanel {
             }
         });
 
-        btnAddProduct1.setBackground(new java.awt.Color(92, 107, 192));
-        btnAddProduct1.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddProduct1.setText("Thêm");
-        btnAddProduct1.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setBackground(new java.awt.Color(92, 107, 192));
+        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
+        btnEdit.setText("Sửa");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddProduct1ActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
@@ -511,7 +501,7 @@ public class TABProduct extends javax.swing.JPanel {
                 .addContainerGap(134, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(btnAddProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExitProductADD1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
@@ -609,7 +599,7 @@ public class TABProduct extends javax.swing.JPanel {
                         .addGap(68, 68, 68)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnExitProductADD1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAddProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(lblImageEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -1087,7 +1077,7 @@ public class TABProduct extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         clearDataModelAdd();
-        BufferedImage bufferImage = ImageUtil.getImage("default.jpg");
+        BufferedImage bufferImage = ImageUtil.getImage("default");
 
         if (bufferImage != null) {
             imageProductAdd = new ImageIcon(bufferImage);
@@ -1100,7 +1090,7 @@ public class TABProduct extends javax.swing.JPanel {
         modelProductAdd.setTitle("Thêm sản phẩm");
         scrollUnit.setViewportView(pnHaveUnit);
         for (ProductType type : ProductType.values()) {
-            cbbProductTypeAdd.addItem(type.toString());
+            cbbProductTypeAdd.addItem(type.getDescription());
         }
 
         List<String> unitNames = unitBUS.getAllUnits()
@@ -1129,7 +1119,7 @@ public class TABProduct extends javax.swing.JPanel {
         // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Chọn hình ảnh");
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Hình ảnh", "jpg", "png", "gif"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("JPG Images", "jpg"));
 
         int userSelection = fileChooser.showOpenDialog(this);
 
@@ -1234,7 +1224,7 @@ public class TABProduct extends javax.swing.JPanel {
             double purchasePrice = Double.parseDouble(txtProductPurchasePrice.getText().trim());
             double sellingPrice = Double.parseDouble(txtProductSellingPrice.getText().trim());
 
-            ProductType productType = ProductType.valueOf(productTypeString.toUpperCase());
+            ProductType productType = ProductType.fromDescription(productTypeString);
 
             String image = "default.jpg";
             if (imageProductAdd != null) {
@@ -1265,13 +1255,19 @@ public class TABProduct extends javax.swing.JPanel {
                     .size() < unitDTOList.size();
 
             if (!hasDuplicates) {
-                if (productBUS.createProduct(product, unitDTOList)) {
-                    MessageDialog.info(null, "Thêm mới sản phẩm thành công");
-                    clearDataModelAdd();
-                    ImageUtil.saveImage(imageProductAdd, removeExtension(image),getExtension(image));
-                    modelProductAdd.dispose();
-                    fillContent(productBUS.getAllProducts());
-                };
+                if (!productBUS.checkExistSDK(registrationNumber)) {
+                    if (productBUS.createProduct(product, unitDTOList)) {
+                        MessageDialog.info(null, "Thêm mới sản phẩm thành công");
+                        clearDataModelAdd();
+                        ImageUtil.saveImageIcon(imageProductAdd, removeExtension(image));
+                        modelProductAdd.dispose();
+                        fillContent(productBUS.getAllProducts());
+                    };
+                } else {
+                    MessageDialog.warning(null, "Số đăng ký đã tồn tại");
+                    return;
+                }
+
             } else {
                 MessageDialog.info(null, "Có đơn vị tính bị trùng");
                 return;
@@ -1438,12 +1434,23 @@ public class TABProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAddImage1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddImage1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddImage1ActionPerformed
+        // TODO add your handling code here:        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn hình ảnh");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("JPG Images", "jpg"));
 
-    private void txtProductName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductName1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtProductName1ActionPerformed
+        int userSelection = fileChooser.showOpenDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToOpen = fileChooser.getSelectedFile();
+            String imagePath = fileToOpen.getAbsolutePath();
+            imageProductEdit = new ImageIcon(imagePath);
+            imageProductEdit.setDescription(imagePath);
+            Image imagePro = imageProductEdit.getImage().getScaledInstance(265, 265, Image.SCALE_SMOOTH);
+            ImageIcon img = new ImageIcon(imagePro);
+            lblImageEdit.setIcon(img);
+        }
+    }//GEN-LAST:event_btnAddImage1ActionPerformed
 
     private void txtProductManufacturer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductManufacturer1ActionPerformed
         // TODO add your handling code here:
@@ -1452,10 +1459,6 @@ public class TABProduct extends javax.swing.JPanel {
     private void txtCountryOfOrigin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCountryOfOrigin1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCountryOfOrigin1ActionPerformed
-
-    private void txtProductRegisNumber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductRegisNumber1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtProductRegisNumber1ActionPerformed
 
     private void txtProductPurchasePrice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductPurchasePrice1ActionPerformed
         // TODO add your handling code here:
@@ -1481,9 +1484,89 @@ public class TABProduct extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExitProductADD1ActionPerformed
 
-    private void btnAddProduct1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProduct1ActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddProduct1ActionPerformed
+        String name = txtProductName1.getText().trim();
+        String manufacturer = txtProductManufacturer1.getText().trim();
+        String activeIngredient = txtProductActiveIngre1.getText().trim();
+        String dosage = txtProductDosage1.getText().trim();
+        String countryOfOrigin = txtCountryOfOrigin1.getText().trim();
+        String packaging = txtProductPakaging1.getText().trim();
+        String productTypeString = cbbProductTypeEdit.getSelectedItem().toString().trim();
+        String registrationNumber = txtProductRegisNumber1.getText().trim();
+
+        try {
+            boolean checkImage = false;
+            Product product = productBUS.getProductById(productEdit);
+            double purchasePrice = Double.parseDouble(txtProductPurchasePrice1.getText().trim());
+            double sellingPrice = Double.parseDouble(txtProductSellingPrice1.getText().trim());
+
+            ProductType productType = ProductType.fromDescription(productTypeString);
+
+            String image = product.getImage();
+            if (imageProductEdit != null) {
+                if (image.equals(getImageFileName(imageProductEdit))) {
+                    checkImage = true;
+                } else {
+                    image = getImageFileName(imageProductEdit);
+                    checkImage = false;
+                }
+
+            }
+
+            product.setName(name);
+            product.setRegistrationNumber(registrationNumber);
+            product.setActiveIngredient(activeIngredient);
+            product.setDosage(dosage);
+            product.setPackaging(packaging);
+            product.setCountryOfOrigin(countryOfOrigin);
+            product.setManufacturer(manufacturer);
+            product.setPurchasePrice(purchasePrice);
+            product.setSellingPrice(sellingPrice);
+            product.setActive(true);
+            product.setImage(image);
+            product.setProductType(productType);
+
+            List<UnitDTO> unitDTOList = createUnitDTOList(pnHaveUnitEdit);
+            if (unitDTOList == null) {
+                return;
+            }
+
+            boolean hasDuplicates = unitDTOList.stream()
+                    .map(UnitDTO::getName)
+                    .collect(Collectors.toSet())
+                    .size() < unitDTOList.size();
+
+            if (!hasDuplicates) {
+                if (!productBUS.checkExistSDK(registrationNumber)) {
+                    if (productBUS.updateProduct(product, unitDTOList)) {
+                        MessageDialog.info(null, "Sửa thông tin sản phẩm thành công");
+                        clearDataModelAdd();
+                        if (!checkImage) {
+                            ImageUtil.saveImageIcon(imageProductEdit, removeExtension(image));
+                        }
+
+                        modelEditProduct.dispose();
+                        fillContent(productBUS.getAllProducts());
+                    };
+                } else {
+                    MessageDialog.info(null, "Số đăng ký đã tồn tại");
+                    return;
+                }
+
+            } else {
+                MessageDialog.info(null, "Có đơn vị tính bị trùng");
+                return;
+            }
+
+        } catch (NumberFormatException e) {
+            MessageDialog.error(null, "Giá trị không hợp lệ: " + e.getMessage());
+        } catch (Exception e) {
+            MessageDialog.error(null, e.getMessage());
+        }
+
+
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void cbbProductTypeEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbProductTypeEditActionPerformed
         // TODO add your handling code here:
@@ -1512,7 +1595,7 @@ public class TABProduct extends javax.swing.JPanel {
     private javax.swing.JButton btnAddImage;
     private javax.swing.JButton btnAddImage1;
     private javax.swing.JButton btnAddProduct;
-    private javax.swing.JButton btnAddProduct1;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnExitProductADD;
     private javax.swing.JButton btnExitProductADD1;
     private javax.swing.JButton btnOpenModalAddSup;

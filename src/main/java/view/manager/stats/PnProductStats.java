@@ -7,28 +7,22 @@ package view.manager.stats;
 import bus.OrderBUS;
 import bus.PurchaseOrderBUS;
 import bus.ReturnOrderBUS;
-import com.formdev.flatlaf.extras.FlatSVGIcon;
-import dto.StatsPriceAndQuantityDTO;
-import dto.StatsOrderByDayDTO;
 import dto.StatsProductDTO;
 import enums.ProductType;
 import gui.barchart.ModelChart;
 import gui.piechart.ModelPieChart;
+import gui.piechart.PieChart;
 import java.awt.Color;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import util.FormatDate;
-import util.FormatNumber;
 import util.MessageDialog;
-import util.ResizeImage;
 import view.login.LoadApplication;
 
 /**
@@ -53,6 +47,9 @@ public class PnProductStats extends javax.swing.JPanel {
         jDateFrom.setDate(Date.valueOf(LocalDate.now()));
         jDateTo.setDate(Date.valueOf(LocalDate.now()));
         chart.start();
+        lbdt.setVisible(false);
+        lbt5.setVisible(false);
+        lbtl.setVisible(false);
 
     }
 
@@ -69,8 +66,11 @@ public class PnProductStats extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         lblXuHuong = new javax.swing.JLabel();
         pieChart = new gui.piechart.PieChart();
-        pieChart1 = new gui.piechart.PieChart();
-        pieChart2 = new gui.piechart.PieChart();
+        chartTop5 = new gui.piechart.PieChart();
+        chartQuantity = new gui.piechart.PieChart();
+        lbdt = new javax.swing.JLabel();
+        lbt5 = new javax.swing.JLabel();
+        lbtl = new javax.swing.JLabel();
         pnContent = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -95,12 +95,27 @@ public class PnProductStats extends javax.swing.JPanel {
         jPanel1.setLayout(new java.awt.BorderLayout(0, 6));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setPreferredSize(new java.awt.Dimension(1118, 400));
+        jPanel4.setPreferredSize(new java.awt.Dimension(1118, 430));
 
         lblXuHuong.setBackground(new java.awt.Color(255, 255, 255));
         lblXuHuong.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         lblXuHuong.setText("XU HƯỚNG MUA HÀNG");
         lblXuHuong.setPreferredSize(new java.awt.Dimension(37, 30));
+
+        lbdt.setBackground(new java.awt.Color(255, 255, 255));
+        lbdt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbdt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbdt.setText("Doanh Thu Theo Loại");
+
+        lbt5.setBackground(new java.awt.Color(255, 255, 255));
+        lbt5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbt5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbt5.setText("Xu Hướng Mua");
+
+        lbtl.setBackground(new java.awt.Color(255, 255, 255));
+        lbtl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbtl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbtl.setText("Số Lượng Theo Loại");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -109,16 +124,23 @@ public class PnProductStats extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblXuHuong, javax.swing.GroupLayout.PREFERRED_SIZE, 1118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblXuHuong, javax.swing.GroupLayout.PREFERRED_SIZE, 1118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(313, 313, 313))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(pieChart, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(110, 110, 110)
-                        .addComponent(pieChart2, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(110, 110, 110)
-                        .addComponent(pieChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(162, 162, 162))))
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbdt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
+                        .addGap(150, 150, 150)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(chartQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(lbtl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(150, 150, 150)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbt5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(chartTop5, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))))
+                .addGap(162, 162, 162))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,9 +148,14 @@ public class PnProductStats extends javax.swing.JPanel {
                 .addComponent(lblXuHuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                    .addComponent(pieChart1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                    .addComponent(pieChart2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE))
+                    .addComponent(pieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                    .addComponent(chartTop5, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                    .addComponent(chartQuantity, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbdt, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbt5)
+                    .addComponent(lbtl))
                 .addContainerGap())
         );
 
@@ -225,7 +252,7 @@ public class PnProductStats extends javax.swing.JPanel {
                     .addComponent(jLabel1))
                 .addGap(42, 42, 42)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(455, Short.MAX_VALUE))
+                .addContainerGap(567, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +297,9 @@ public class PnProductStats extends javax.swing.JPanel {
         lblXuHuong.setText("XU HƯỚNG MUA HÀNG TỪ NGÀY " + FormatDate.formatDateNoHour(start) + " ĐẾN NGÀY " + FormatDate.formatDateNoHour(end));
         lblChartProduct.setText("TOP 5 SẢN PHẨM BÁN CHẠY TỪ NGÀY " + FormatDate.formatDateNoHour(start) + " ĐẾN NGÀY " + FormatDate.formatDateNoHour(end));
         loadDataChartProduct(listStats);
-        loadChartPieProduct(listPie);
+        loadChartPieProductPrice(listPie, pieChart);
+        loadChartPieProductQuantity(listPie, chartQuantity);
+        loadChartPieProductTop5(listPie, chartTop5);
     }//GEN-LAST:event_btnSearchActionPerformed
 
 //    private void overallProduct(){
@@ -335,10 +364,10 @@ public class PnProductStats extends javax.swing.JPanel {
 
     private Color getColor(int index) {
         Color[] color = new Color[]{
-            new Color(255, 99, 132), // Đỏ hồng
             new Color(54, 162, 235), // Xanh da trời
-            new Color(255, 206, 86), // Vàng
+            new Color(255, 99, 132), // Đỏ hồng
             new Color(75, 192, 192), // Xanh ngọc
+            new Color(255, 206, 86), // Vàng
             new Color(153, 102, 255), // Tím
             new Color(255, 159, 64), // Cam
             new Color(201, 203, 207), // Xám nhạt
@@ -352,20 +381,26 @@ public class PnProductStats extends javax.swing.JPanel {
     private void loadDataChartProduct(List<StatsProductDTO> listStats) {
         chart.clear();
         int i = 0;
+        listStats.sort((o1, o2) -> Double.compare(o2.getSumPrice(), o1.getSumPrice()));
         for (StatsProductDTO e : listStats) {
+            i++;
             chart.addData(new ModelChart(e.getProductName(),
                     new double[]{e.getQuantity()}));
-
+            if (i == 5) {
+                break;
+            }
         }
         chart.start();
     }
 
-    private void loadChartPieProduct(List<StatsProductDTO> listStats) {
-       if ( listStats == null){
-           pieChart.removeAll();
-       }
-        
-        pieChart.clearData();
+    private void loadChartPieProductPrice(List<StatsProductDTO> listStats, PieChart pie) {
+        if (listStats.isEmpty()) {
+            pie.removeAll();
+            lbdt.setVisible(false);
+            return;
+        }
+
+        pie.clearData();
         int i = 0;
         Map<String, Double> productTypeMap = new HashMap<>();
         for (StatsProductDTO e : listStats) {
@@ -380,15 +415,73 @@ public class PnProductStats extends javax.swing.JPanel {
         for (Map.Entry<String, Double> entry : productTypeMap.entrySet()) {
             String productType = entry.getKey();
             Double sumPrice = entry.getValue();
-            pieChart.addData(new ModelPieChart(productType, sumPrice, getColor(i)));
+            pie.addData(new ModelPieChart(productType, sumPrice, getColor(i)));
             i++;
         }
+        lbdt.setVisible(true);
+    }
+
+    private void loadChartPieProductQuantity(List<StatsProductDTO> listStats, PieChart pie) {
+        if (listStats.isEmpty()) {
+            lbtl.setVisible(false);
+            pie.removeAll();
+            return;
+        }
+
+        pie.clearData();
+        int i = 0;
+        Map<String, Integer> productTypeMap = new HashMap<>();
+        for (StatsProductDTO e : listStats) {
+
+            String productTypeDescription = e.getProductType().getDescription();
+            if (productTypeMap.containsKey(productTypeDescription)) {
+                productTypeMap.put(productTypeDescription, productTypeMap.get(productTypeDescription) + e.getQuantity());
+            } else {
+                productTypeMap.put(productTypeDescription, e.getQuantity());
+            }
+        }
+        for (Map.Entry<String, Integer> entry : productTypeMap.entrySet()) {
+            String productType = entry.getKey();
+            Integer quantiy = entry.getValue();
+            pie.addData(new ModelPieChart(productType, quantiy, getColor(i)));
+            i++;
+        }
+        lbtl.setVisible(true);
+    }
+
+    private void loadChartPieProductTop5(List<StatsProductDTO> listStats, PieChart pie) {
+        if (listStats.isEmpty()) {
+            lbt5.setVisible(false);
+            pie.removeAll();
+            return;
+        }
+
+        pie.clearData();
+        int i = 0;
+        int remainingQuantity = 0;
+
+        for (StatsProductDTO e : listStats) {
+            if (i < 5) {
+                pie.addData(new ModelPieChart(e.getProductName(), e.getQuantity(), getColor(i)));
+            } else {
+ 
+                remainingQuantity += e.getQuantity();
+            }
+            i++;
+        }
+        if (remainingQuantity > 0) {
+            pie.addData(new ModelPieChart("Còn lại", remainingQuantity, getColor(i)));
+        }
+
+        lbt5.setVisible(true);
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
     private gui.barchart.Chart chart;
+    private gui.piechart.PieChart chartQuantity;
+    private gui.piechart.PieChart chartTop5;
     private javax.swing.JComboBox<String> comboProductType;
     private com.toedter.calendar.JDateChooser jDateFrom;
     private com.toedter.calendar.JDateChooser jDateTo;
@@ -401,11 +494,12 @@ public class PnProductStats extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel lbdt;
     private javax.swing.JLabel lblChartProduct;
     private javax.swing.JLabel lblXuHuong;
+    private javax.swing.JLabel lbt5;
+    private javax.swing.JLabel lbtl;
     private gui.piechart.PieChart pieChart;
-    private gui.piechart.PieChart pieChart1;
-    private gui.piechart.PieChart pieChart2;
     private javax.swing.JPanel pnContent;
     // End of variables declaration//GEN-END:variables
 }

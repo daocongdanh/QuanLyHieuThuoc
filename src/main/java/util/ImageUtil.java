@@ -17,35 +17,39 @@ import javax.swing.ImageIcon;
  */
 public class ImageUtil {
 
-    public static BufferedImage getImage(String imageName) {
+    public static BufferedImage getImage(String fileName) {
+        // Đường dẫn đến tệp hình ảnh
+        String path = "src/main/resources/img/" + fileName + ".jpg";
+
         BufferedImage image = null;
-        try (InputStream is = ImageUtil.class.getClassLoader().getResourceAsStream("img/" + imageName)) {
-            if (is != null) {
-                image = ImageIO.read(is);
-            } else {
-                System.err.println("Image not found: " + imageName);
-            }
+        try {
+            // Đọc hình ảnh từ tệp
+            image = ImageIO.read(new File(path));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Lỗi khi đọc hình ảnh: " + e.getMessage());
         }
+
         return image;
     }
 
-    public static void saveImage(ImageIcon icon, String filename, String format) {
+    public static void saveImageIcon(ImageIcon imageIcon, String fileName) {
+        // Chuyển đổi ImageIcon thành BufferedImage
+        BufferedImage bufferedImage = new BufferedImage(
+                imageIcon.getIconWidth(),
+                imageIcon.getIconHeight(),
+                BufferedImage.TYPE_INT_RGB);
+
+        // Vẽ ImageIcon lên BufferedImage
+        bufferedImage.getGraphics().drawImage(imageIcon.getImage(), 0, 0, null);
+
+        // Đường dẫn nơi sẽ lưu hình ảnh
+        String path = "src/main/resources/img/" + fileName + ".jpg";
+
         try {
-            // Chuyển đổi ImageIcon thành BufferedImage
-            BufferedImage bufferedImage;
-            if (icon.getImage() instanceof BufferedImage) {
-                bufferedImage = (BufferedImage) icon.getImage();
-            } else {
-                bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-                bufferedImage.getGraphics().drawImage(icon.getImage(), 0, 0, null);
-            }
-            File outputFile = new File("src/main/resources/img/" + filename + "." + format); 
-            ImageIO.write(bufferedImage, format, outputFile);
-            System.out.println("Image saved: " + outputFile.getAbsolutePath());
+            // Lưu hình ảnh
+            ImageIO.write(bufferedImage, "jpg", new File(path));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Lỗi khi lưu hình ảnh: " + e.getMessage());
         }
     }
 

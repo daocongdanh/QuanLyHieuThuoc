@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @author Hoang
  */
 public class BatchDTO {
-    
+
     private String name;
     private int stock;
     private LocalDate expirationDate;
@@ -36,9 +36,6 @@ public class BatchDTO {
         this.quantity = quantity;
     }
 
-
-    
-    
     public String getName() {
         return name;
     }
@@ -61,11 +58,11 @@ public class BatchDTO {
 
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
-    }  
+    }
 
     @Override
     public String toString() {
         return "BatchDTO{" + "name=" + name + ", stock=" + stock + ", expirationDate=" + expirationDate + ", quantity=" + quantity + '}';
     }
-    
+
 }

@@ -55,7 +55,6 @@ public class PnStatsByDay extends javax.swing.JPanel {
         jDateTo = new com.toedter.calendar.JDateChooser();
         jDateFrom = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
-        txtOrder = new javax.swing.JButton();
         comboProductType = new javax.swing.JComboBox<>();
         comboPaymentType = new javax.swing.JComboBox<>();
         comboIsPromotion = new javax.swing.JComboBox<>();
@@ -121,19 +120,6 @@ public class PnStatsByDay extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel2.setText("-->");
 
-        txtOrder.setBackground(new java.awt.Color(115, 165, 71));
-        txtOrder.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtOrder.setForeground(new java.awt.Color(255, 255, 255));
-        txtOrder.setText("Xuất excel");
-        txtOrder.setMaximumSize(new java.awt.Dimension(150, 40));
-        txtOrder.setMinimumSize(new java.awt.Dimension(150, 40));
-        txtOrder.setPreferredSize(new java.awt.Dimension(150, 40));
-        txtOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtOrderActionPerformed(evt);
-            }
-        });
-
         comboProductType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         comboProductType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Thuốc", "Vật tư y tế" }));
 
@@ -191,9 +177,7 @@ public class PnStatsByDay extends javax.swing.JPanel {
                         .addComponent(comboIsPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))))
+                        .addGap(189, 189, 189))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,9 +198,7 @@ public class PnStatsByDay extends javax.swing.JPanel {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(comboPaymentType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboIsPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDateFrom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -364,7 +346,7 @@ public class PnStatsByDay extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addContainerGap(466, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,10 +447,6 @@ public class PnStatsByDay extends javax.swing.JPanel {
         }
     }
 
-    private void txtOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrderActionPerformed
-
-    }//GEN-LAST:event_txtOrderActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
@@ -500,7 +478,6 @@ public class PnStatsByDay extends javax.swing.JPanel {
     private javax.swing.JLabel txtAverage;
     private javax.swing.JLabel txtBestDay;
     private javax.swing.JLabel txtMaxPrice;
-    private javax.swing.JButton txtOrder;
     private javax.swing.JLabel txtSumOfQuantity;
     // End of variables declaration//GEN-END:variables
 }
