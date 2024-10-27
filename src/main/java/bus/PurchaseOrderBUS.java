@@ -19,7 +19,10 @@ import entity.*;
 import jakarta.persistence.EntityTransaction;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -49,69 +52,106 @@ public class PurchaseOrderBUS {
         this.productTransactionHistoryDAL = new ProductTransactionHistoryDAL(entityManager);
     }
 
-    public boolean createPurchaseOrder(String employeeId, String supplierId,
-            List<PurchaseOrderDTO> purchaseOrderDTOs) {
+    public boolean createPurchaseOrder(Employee employee, Supplier supplier,
+        List<PurchaseOrderDTO> purchaseOrderDTOs) {
         try {
             transaction.begin();
+            
+            if (employee == null) {
+                throw new RuntimeException("Nhân viên không được rỗng");
+            }
+            if (supplier == null) {
+                throw new RuntimeException("Nhà cung cấp không được rỗng");
+            }
 
-            Employee employee = employeeDAL.findById(employeeId)
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên"));
-            Supplier supplier = supplierDAL.findById(supplierId)
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy nhà cung cấp"));
             List<PurchaseOrderDetail> purchaseOrderDetails = new ArrayList<>();
+
             for (PurchaseOrderDTO purchaseOrderDTO : purchaseOrderDTOs) {
                 Unit unit = unitDAL.findByName(purchaseOrderDTO.getUnitName());
-                UnitDetail unitDetail
-                        = unitDetailDAL.findByProductAndUnit(purchaseOrderDTO.getProductId(), unit.getUnitId());
-                Batch batch = batchDAL.findByNameAndProduct(purchaseOrderDTO.getBatchName(), purchaseOrderDTO.getProductId());
+                if (unit == null) {
+                    throw new RuntimeException("Không tìm thấy đơn vị: " + purchaseOrderDTO.getUnitName());
+                }
+
+                UnitDetail unitDetail = unitDetailDAL.findByProductAndUnit(purchaseOrderDTO.getProductId(), unit.getUnitId());
+                if (unitDetail == null) {
+                    throw new RuntimeException("Không tìm thấy chi tiết đơn vị cho sản phẩm: " + purchaseOrderDTO.getProductId());
+                }
+
                 Product product = productDAL.findById(purchaseOrderDTO.getProductId())
                         .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
 
+                Batch batch = batchDAL.findByNameAndProduct(purchaseOrderDTO.getBatchName(), purchaseOrderDTO.getProductId());
+                
                 PurchaseOrderDetail purchaseOrderDetail;
                 if (batch == null) {
                     Batch newBatch = new Batch(null,
-                            purchaseOrderDTO.getBatchName(), purchaseOrderDTO.getExpirationDate().toLocalDate(),
+                            purchaseOrderDTO.getBatchName(), purchaseOrderDTO.getExpirationDate(),
                             purchaseOrderDTO.getQuantity() * unitDetail.getConversionRate(), product, true);
                     batchDAL.insert(newBatch);
-                    purchaseOrderDetail
-                            = new PurchaseOrderDetail(purchaseOrderDTO.getQuantity(),
-                                    product.getPurchasePrice() * unitDetail.getConversionRate(),
-                                    newBatch, unitDetail);
+
+                    purchaseOrderDetail = new PurchaseOrderDetail(purchaseOrderDTO.getQuantity(),
+                            product.getPurchasePrice() * unitDetail.getConversionRate(),
+                            newBatch, unitDetail);
                 } else {
-                    purchaseOrderDetail
-                            = new PurchaseOrderDetail(purchaseOrderDTO.getQuantity(),
-                                    product.getPurchasePrice() * unitDetail.getConversionRate(),
-                                    batch, unitDetail);
                     batch.setStock(batch.getStock() + purchaseOrderDTO.getQuantity() * unitDetail.getConversionRate());
                     batchDAL.update(batch);
+
+                    purchaseOrderDetail = new PurchaseOrderDetail(purchaseOrderDTO.getQuantity(),
+                            product.getPurchasePrice() * unitDetail.getConversionRate(),
+                            batch, unitDetail);
                 }
                 purchaseOrderDetails.add(purchaseOrderDetail);
             }
+
             PurchaseOrder purchaseOrder = new PurchaseOrder(null, LocalDateTime.now(), employee, supplier, purchaseOrderDetails);
             purchaseOrderDAL.insert(purchaseOrder);
 
-            for (PurchaseOrderDetail purchaseOrderDetail : purchaseOrderDetails) {
+            Map<String, List<PurchaseOrderDetail>> map = purchaseOrderDetails.stream()
+                    .collect(Collectors.groupingBy(
+                            purchaseOrderDetail -> purchaseOrderDetail.getUnitDetail().getProduct().getProductId(),
+                            LinkedHashMap::new,
+                            Collectors.toList()
+                    ));
+            map.forEach((key, value) -> {
+                PurchaseOrderDetail purchaseOrderDetail = value.get(0);
                 UnitDetail unitDetail = purchaseOrderDetail.getUnitDetail();
                 Product product = unitDetail.getProduct();
+                int totalQuantity = value.stream()
+                        .mapToInt(x -> x.getQuantity() * x.getUnitDetail().getConversionRate())
+                        .sum();
 
-                double costPrice = product.getPurchasePrice() * purchaseOrderDetail.getQuantity();
+                double totalTransactionPrice = value.stream()
+                        .mapToDouble(PurchaseOrderDetail::getLineTotal)
+                        .sum();
+
+                double costPrice = product.getPurchasePrice() * totalQuantity;
+
                 int finalStock = batchDAL.getFinalStockByProduct(product.getProductId());
 
-                ProductTransactionHistory productTransactionHistory
-                        = new ProductTransactionHistory(purchaseOrder.getPurchaseOrderId(), purchaseOrder.getOrderDate(),
-                                "Nhập hàng", purchaseOrder.getSupplier().getName(),
-                                purchaseOrderDetail.getLineTotal(), costPrice,
-                                purchaseOrderDetail.getQuantity() * unitDetail.getConversionRate(), finalStock, product);
+                ProductTransactionHistory productTransactionHistory = new ProductTransactionHistory(
+                        purchaseOrder.getPurchaseOrderId(), // Mã giao dịch
+                        purchaseOrder.getOrderDate(),       // Ngày giao dịch
+                        "Nhập hàng",                        // Loại giao dịch
+                        purchaseOrder.getSupplier().getName(), // Tên nhà cung cấp
+                        totalTransactionPrice,              // Tổng giá trị giao dịch
+                        costPrice,                          // Giá vốn
+                        totalQuantity,                      // Tổng số lượng
+                        finalStock,                         // Số lượng tồn kho cuối cùng
+                        product                             // Sản phẩm
+                );
+
                 productTransactionHistoryDAL.insert(productTransactionHistory);
-            }
+            });
 
             transaction.commit();
             return true;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             transaction.rollback();
             return false;
         }
+
     }
 
     public List<PurchaseOrder> getAllPurchaseOrders() {

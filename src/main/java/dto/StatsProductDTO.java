@@ -1,5 +1,7 @@
 package dto;
 
+import enums.ProductType;
+
 import java.time.LocalDateTime;
 
 public class StatsProductDTO {
@@ -7,17 +9,27 @@ public class StatsProductDTO {
     private String productName;
     private Integer quantity;
     private Double sumPrice;
+    private ProductType productType;
     private LocalDateTime time;
 
     public StatsProductDTO() {
 
     }
 
-    public StatsProductDTO(String productName, Integer quantity, Double sumPrice, LocalDateTime time) {
+    public StatsProductDTO(String productName, Integer quantity, Double sumPrice, LocalDateTime time, ProductType productType) {
         this.productName = productName;
         this.quantity = quantity;
         this.sumPrice = sumPrice;
         this.time = time;
+        this.productType = productType;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     public String getProductName() {

@@ -69,4 +69,9 @@ public class BatchBUS {
         return map;
     }
     
+    
+    public Batch getBatchByName(String batchName) {
+        return batchDAL.findByName(batchName);
+    }
+      
 }

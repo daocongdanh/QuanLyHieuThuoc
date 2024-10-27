@@ -364,6 +364,57 @@ public class OrderBUS {
         return statsList;
     }
 
+    public List<StatsProductDTO> getStatisticProductByDateAndType(LocalDateTime start, LocalDateTime end, String productType) {
+        if (start.isAfter(end)) {
+            throw new IllegalArgumentException("Start date must be before or equal to end date.");
+        }
+        List<Order> orderList = orderDAL.statisByDate(start, end);
+        List<StatsProductDTO> ans = new ArrayList<>();
+        for (Order order : orderList) {
+            List<OrderDetail> lOd = order.getOrderDetails();
+            for (OrderDetail odt : lOd) {
+                Optional<StatsProductDTO> existingStats = ans.stream()
+                        .filter(dto -> dto.getProductName().equals(odt.getUnitDetail().getProduct().getName()))
+                        .findFirst();
+
+                if (existingStats.isPresent()) {
+                    StatsProductDTO statsProductDTO = existingStats.get();
+                    statsProductDTO.setSumPrice(statsProductDTO.getSumPrice() + odt.getLineTotal());
+                    if ( odt.getUnitDetail().isIsDefault() ){
+                        statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity());
+                    }
+                    else {
+                        statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity() * odt.getUnitDetail().getConversionRate());
+                    }
+                    
+                } else {
+                    StatsProductDTO statsProductDTO = new StatsProductDTO();
+                    statsProductDTO.setProductName(odt.getUnitDetail().getProduct().getName());
+                    statsProductDTO.setTime(order.getOrderDate());
+                    statsProductDTO.setSumPrice(odt.getLineTotal());
+                    statsProductDTO.setProductType(odt.getUnitDetail().getProduct().getProductType());
+                    if ( odt.getUnitDetail().isIsDefault() ){
+                        statsProductDTO.setQuantity(odt.getQuantity());
+                    }
+                    else {
+                        statsProductDTO.setQuantity(odt.getQuantity() * odt.getUnitDetail().getConversionRate());
+                    }
+                    
+                    ans.add(statsProductDTO);
+                }
+            }
+        }
+       
+        if ( productType.equals("Tất cả")){
+            return ans;
+        }
+        
+        ans = ans.stream().filter(x-> x.getProductType().getDescription().equals(productType))
+                .toList();
+        
+        return ans;
+    }
+    
     public List<StatsProductDTO> getStatisticProductByDate(LocalDateTime start, LocalDateTime end) {
         if (start.isAfter(end)) {
             throw new IllegalArgumentException("Start date must be before or equal to end date.");
@@ -392,6 +443,7 @@ public class OrderBUS {
                     statsProductDTO.setProductName(odt.getUnitDetail().getProduct().getName());
                     statsProductDTO.setTime(order.getOrderDate());
                     statsProductDTO.setSumPrice(odt.getLineTotal());
+                    statsProductDTO.setProductType(odt.getUnitDetail().getProduct().getProductType());
                     if ( odt.getUnitDetail().isIsDefault() ){
                         statsProductDTO.setQuantity(odt.getQuantity());
                     }

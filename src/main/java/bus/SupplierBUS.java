@@ -91,6 +91,8 @@ public class SupplierBUS {
         return supplierDAL.searchSuppliersByText(text);
     }
     
+    
+    
 //   public void exportToExcel(String filePath) {
 //    Workbook workbook = null;
 //    FileOutputStream fileOut = null;
@@ -125,5 +127,9 @@ public class SupplierBUS {
 //        JOptionPane.showMessageDialog(null, "Lỗi khi xuất Excel: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
 //        }
 //   }
+
+    public Supplier getSupplierByPhone(String txtTim) {
+       return supplierDAL.findByPhone(txtTim);
+    }
          
 }
