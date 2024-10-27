@@ -97,5 +97,15 @@ public class ProductDAL implements BaseDAL<Product, String> {
             return null;  // Trả về null nếu không tìm thấy sản phẩm
         }
     }
+    
+    public Product findBySDK(String SDK) {
+        TypedQuery<Product> query = entityManager.createQuery("select p from Product p where p.registrationNumber = ?1", Product.class);
+        query.setParameter(1, SDK);
+        try {
+            return query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 }

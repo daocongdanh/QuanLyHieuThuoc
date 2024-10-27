@@ -61,7 +61,7 @@ public class BatchDAL implements BaseDAL<Batch, String>{
     }
     
     public List<Batch> findByProduct (Product product){
-         TypedQuery<Batch> query = 
+        TypedQuery<Batch> query = 
                 entityManager.createQuery("select b from Batch b where b.product = ?1", Batch.class);
         query.setParameter(1, product);
         return query.getResultList();
@@ -73,7 +73,20 @@ public class BatchDAL implements BaseDAL<Batch, String>{
                 + "where b.product.productId = ?1 and b.expirationDate > CURRENT_DATE group by b.product.productId", Long.class);
         query.setParameter(1, productId);
         return query.getSingleResult().intValue();
-    }
+    }   
+    
+    public Batch findByName (String batchName){
+        TypedQuery<Batch> query = 
+                entityManager.createQuery("select b from Batch b where b.name = ?1", Batch.class);
+        query.setParameter(1, batchName);
+        try {
+            return query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    } 
+    
+
     public List<Batch> findAll1() {
         return entityManager.createQuery("select b from Batch b", Batch.class).getResultList();
     }
