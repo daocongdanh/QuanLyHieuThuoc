@@ -136,8 +136,6 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         menuPurchase = new view.common.MenuChoice();
         menuReturn = new view.common.MenuChoice();
         menuDamaged = new view.common.MenuChoice();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         mainContent = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -148,35 +146,10 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         pnLeft.setBackground(new java.awt.Color(211, 237, 187));
         pnLeft.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 232, 232), 2));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("ADMIN");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout pnLeftLayout = new javax.swing.GroupLayout(pnLeft);
         pnLeft.setLayout(pnLeftLayout);
         pnLeftLayout.setHorizontalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(pnLeftLayout.createSequentialGroup()
                 .addGroup(pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(menuReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,9 +165,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         pnLeftLayout.setVerticalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addGap(74, 74, 74)
                 .addComponent(menuSell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(menuProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,7 +181,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
                 .addComponent(menuReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(menuReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(378, Short.MAX_VALUE))
+                .addContainerGap(387, Short.MAX_VALUE))
         );
 
         Box.add(pnLeft, java.awt.BorderLayout.WEST);
@@ -260,8 +231,6 @@ public class MenuManagerStaff extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Box;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel mainContent;
     private view.common.MenuChoice menuCustomer;
     private view.common.MenuChoice menuDamaged;
