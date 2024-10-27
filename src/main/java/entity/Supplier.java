@@ -101,7 +101,6 @@ public class Supplier {
         if (email == null || !email.matches("^[a-zA-Z0-9]+@[a-zA-Z]+\\.com$")) {
             throw new RuntimeException("Email không hợp lệ");
         }
-
         this.email = email;
     }
 

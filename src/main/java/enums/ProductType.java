@@ -10,6 +10,8 @@ package enums;
  */
 public enum ProductType {
     MEDICINE,
-    SERVICE,
-    MEDICALSUPPLIES
+    MEDICALSUPPLIES,
+    DIETARYSUPPLEMENT,
+    BABYCARE,
+    MEDICALEQUIPMENT
 }

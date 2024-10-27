@@ -84,10 +84,10 @@ public class Product {
 
     public Product(String productId, String name, String registrationNumber, String activeIngredient, String dosage, 
             String packaging, String countryOfOrigin, String manufacturer, double purchasePrice, 
-            double sellingPrice, boolean active,String image , ProductType productType, List<Batch> listBatch) {
+            double sellingPrice, boolean active, ProductType productType, String image) {
         this.productId = productId;
         setName(name);
-        this.registrationNumber = registrationNumber;
+        setRegistrationNumber(registrationNumber);
         this.activeIngredient = activeIngredient;
         this.dosage = dosage;
         this.packaging = packaging;
@@ -97,8 +97,7 @@ public class Product {
         setSellingPrice(sellingPrice);
         this.active = active;
         this.productType = productType;
-        this.image = image;
-        setListBatch(listBatch);     
+        setImage(image);
     }
 
     public List<Batch> getListBatch() {
@@ -147,6 +146,9 @@ public class Product {
     }
 
     public void setRegistrationNumber(String registrationNumber) {
+        if (registrationNumber.equals("")) {
+            throw new RuntimeException("Số đăng ký không được rỗng!");
+        }
         this.registrationNumber = registrationNumber;
     }
 
@@ -236,6 +238,8 @@ public class Product {
         this.productType = productType;
     }
 
+    
+    
     @Override
     public String toString() {
         return "Product{" + "productId=" + productId + ", name=" + name + ", registrationNumber=" + registrationNumber + ", activeIngredient=" + activeIngredient + ", dosage=" + dosage + ", packaging=" + packaging + ", countryOfOrigin=" + countryOfOrigin + ", manufacturer=" + manufacturer + ", purchasePrice=" + purchasePrice + ", sellingPrice=" + sellingPrice + ", active=" + active + ", VAT=" + VAT + ", productType=" + productType + '}';

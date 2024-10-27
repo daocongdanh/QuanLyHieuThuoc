@@ -86,10 +86,6 @@ public class ProductTransactionHistory {
     }
 
     public void setTransactionDate(LocalDateTime transactionDate) {
-        LocalDateTime curentDate = LocalDateTime.now();
-//        if(transactionDate == null || !transactionDate.isEqual(curentDate) ){
-//            throw  new RuntimeException("Ngày giao dịch không hợp lệ");
-//        }
         this.transactionDate = transactionDate;
     }
 
@@ -117,9 +113,9 @@ public class ProductTransactionHistory {
     }
 
     public void setTransactionPrice(double transactionPrice) {
-//        if(transactionPrice <0){
-//            throw new RuntimeException("Giá giao dịch không hợp lệ");
-//        }
+        if(transactionPrice <0){
+            throw new RuntimeException("Giá giao dịch không hợp lệ");
+        }
         this.transactionPrice = transactionPrice;
     }
 
@@ -139,9 +135,6 @@ public class ProductTransactionHistory {
     }
 
     public void setQuantity(int quantity) {
-//        if(quantity <0){
-//            throw new RuntimeException("Số lượng sản phẩm không hợp lệ");
-//        }
         this.quantity = quantity;
     }
 

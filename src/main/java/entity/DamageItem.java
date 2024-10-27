@@ -103,7 +103,7 @@ public class DamageItem {
     }
 
     public void setDamageItemDetails(List<DamageItemDetail> damageItemDetails) {
-        if (damageItemDetails.size() < 1) {
+        if (damageItemDetails == null) {
             throw new RuntimeException("Các chi tiết đơn xuất hủy không được rỗng!");
         }
         this.damageItemDetails = damageItemDetails;
