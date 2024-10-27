@@ -108,5 +108,14 @@ public class OrderDAL implements BaseDAL<Order, String> {
        return query.getResultList();
     }
 
+    public List<Order> findOrderByDateAndEmp(LocalDateTime start, LocalDateTime end, String employeeID) {
+        String jpql = "select o from Order o where (o.orderDate between ?1 and ?2) and o.employee.employeeId = ?3";
+        TypedQuery<Order> query = entityManager.createQuery(jpql, Order.class);
+        query.setParameter(1, start);
+        query.setParameter(2, end);
+        query.setParameter(3, employeeID);
+
+        return query.getResultList();
+    }
 
 }
