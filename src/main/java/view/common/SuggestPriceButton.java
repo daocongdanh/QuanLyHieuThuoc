@@ -5,6 +5,7 @@
 package view.common;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,6 +34,7 @@ public class SuggestPriceButton {
         // Khởi tạo các nút toggle
         for (int i = 0; i < btnSuggest.length; i++) {
             btnSuggest[i] = new JToggleButton();
+            btnSuggest[i].setFont(new Font("Arial", Font.PLAIN, 14));
             btnSuggest[i].setVisible(false);
             buttonGroup.add(btnSuggest[i]); // Thêm mỗi nút vào nhóm buttonGroup
         }

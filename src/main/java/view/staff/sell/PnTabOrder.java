@@ -383,6 +383,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         pnMid.setMinimumSize(new java.awt.Dimension(200, 200));
         pnMid.setOpaque(false);
 
+        pnContent.setBackground(new java.awt.Color(255, 255, 255));
         pnContent.setLayout(new javax.swing.BoxLayout(pnContent, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(pnContent);
 
@@ -401,7 +402,7 @@ public class PnTabOrder extends javax.swing.JPanel {
 
         pnLeft.setBackground(new java.awt.Color(255, 255, 255));
 
-        txtTimKhachHang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTimKhachHang.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtTimKhachHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTimKhachHangActionPerformed(evt);

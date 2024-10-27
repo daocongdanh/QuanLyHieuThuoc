@@ -5,6 +5,7 @@
 package view.staff;
 
 import bus.*;
+import com.formdev.flatlaf.FlatClientProperties;
 import dto.BatchDTO;
 import dto.OrderDetailSelected;
 import dto.ReturnOrderDetailDTO;
@@ -50,8 +51,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         orderDetailBUS = LoadApplication.orderDetailBUS;
         returnOrderBUS = LoadApplication.returnOrderBUS;
 
-//        txtTienKhachDua.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "0 đ");
-//        txtTimKhachHang.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại khách hàng");
+        txtSearchOrder.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mã hóa đơn");
     }
 
     @SuppressWarnings("unchecked")
@@ -82,19 +82,16 @@ public class TABReturnOrder extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtEmpName = new javax.swing.JLabel();
         headerPanel = new javax.swing.JPanel();
-        actionPanel = new javax.swing.JPanel();
-        btnAdd = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        txtSearchOrder = new javax.swing.JTextField();
         btnOpenModalAddUnit = new javax.swing.JButton();
+        txtSearchOrder = new javax.swing.JTextField();
 
         setLayout(new java.awt.BorderLayout());
 
         pnMid.setMinimumSize(new java.awt.Dimension(200, 200));
         pnMid.setOpaque(false);
 
+        pnContent.setBackground(new java.awt.Color(255, 255, 255));
         pnContent.setLayout(new javax.swing.BoxLayout(pnContent, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(pnContent);
 
@@ -359,54 +356,11 @@ public class TABReturnOrder extends javax.swing.JPanel {
         headerPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(232, 232, 232), 2, true));
         headerPanel.setLayout(new java.awt.BorderLayout());
 
-        actionPanel.setBackground(new java.awt.Color(255, 255, 255));
-        actionPanel.setPreferredSize(new java.awt.Dimension(600, 100));
-        actionPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 6, 5));
-
-        btnAdd.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnAdd.setText("THÊM");
-        btnAdd.setBorder(null);
-        btnAdd.setBorderPainted(false);
-        btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAdd.setFocusPainted(false);
-        btnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAdd.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionPanel.add(btnAdd);
-
-        btnUpdate.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnUpdate.setText("XEM");
-        btnUpdate.setBorder(null);
-        btnUpdate.setBorderPainted(false);
-        btnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnUpdate.setFocusPainted(false);
-        btnUpdate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnUpdate.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnUpdate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionPanel.add(btnUpdate);
-
-        headerPanel.add(actionPanel, java.awt.BorderLayout.WEST);
-
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setPreferredSize(new java.awt.Dimension(590, 100));
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 16, 24));
-
-        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel9.setPreferredSize(new java.awt.Dimension(584, 50));
-        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));
-
-        txtSearchOrder.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtSearchOrder.setMinimumSize(new java.awt.Dimension(300, 40));
-        txtSearchOrder.setPreferredSize(new java.awt.Dimension(300, 40));
-        txtSearchOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchOrderActionPerformed(evt);
-            }
-        });
-        jPanel9.add(txtSearchOrder);
 
         btnOpenModalAddUnit.setBackground(new java.awt.Color(115, 165, 71));
-        btnOpenModalAddUnit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnOpenModalAddUnit.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnOpenModalAddUnit.setForeground(new java.awt.Color(255, 255, 255));
         btnOpenModalAddUnit.setText("Tìm kiếm");
         btnOpenModalAddUnit.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -417,9 +371,35 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 btnOpenModalAddUnitActionPerformed(evt);
             }
         });
-        jPanel9.add(btnOpenModalAddUnit);
 
-        jPanel7.add(jPanel9);
+        txtSearchOrder.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtSearchOrder.setMinimumSize(new java.awt.Dimension(300, 40));
+        txtSearchOrder.setPreferredSize(new java.awt.Dimension(300, 40));
+        txtSearchOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchOrderActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(txtSearchOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btnOpenModalAddUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSearchOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOpenModalAddUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         headerPanel.add(jPanel7, java.awt.BorderLayout.CENTER);
 
@@ -588,11 +568,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private Customer customer;
     private Order order;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel actionPanel;
-    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnOpenModalAddUnit;
     private javax.swing.JButton btnTaoPhieu;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -607,7 +584,6 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnContent;
     private javax.swing.JPanel pnLeft;
