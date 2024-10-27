@@ -123,7 +123,7 @@ public class TABSell extends javax.swing.JPanel {
     }
 
     private void customUI() {
-        txtTimSanPham.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên, mã vạch, SĐK");
+        txtTimSanPham.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mã vạch, Số đăng ký");
         txtDTM.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm đơn thuốc mẫu");
     }
 
@@ -309,15 +309,20 @@ public class TABSell extends javax.swing.JPanel {
 
         pnMi.setBackground(new java.awt.Color(204, 204, 204));
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        jPanel1.setToolTipText("");
 
-        txtTimSanPham.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTimSanPham.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtTimSanPham.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtTimSanPhamKeyPressed(evt);
             }
         });
 
+        btnMa.setBackground(new java.awt.Color(115, 165, 71));
+        btnMa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnMa.setForeground(new java.awt.Color(255, 255, 255));
         btnMa.setText("Mã");
         btnMa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,6 +330,9 @@ public class TABSell extends javax.swing.JPanel {
             }
         });
 
+        btnThemHD.setBackground(new java.awt.Color(115, 165, 71));
+        btnThemHD.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnThemHD.setForeground(new java.awt.Color(255, 255, 255));
         btnThemHD.setText("Thêm Hóa Đơn");
         btnThemHD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,6 +340,9 @@ public class TABSell extends javax.swing.JPanel {
             }
         });
 
+        btnDonThuocMau.setBackground(new java.awt.Color(115, 165, 71));
+        btnDonThuocMau.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDonThuocMau.setForeground(new java.awt.Color(255, 255, 255));
         btnDonThuocMau.setText("Đơn Thuốc Mẫu");
         btnDonThuocMau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -359,14 +370,16 @@ public class TABSell extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtTimSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                     .addComponent(btnThemHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDonThuocMau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnDonThuocMau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
         );
 
-        tabbedPane.setBackground(new java.awt.Color(232, 234, 237));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        tabbedPane.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -376,7 +389,7 @@ public class TABSell extends javax.swing.JPanel {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+            .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnMiLayout = new javax.swing.GroupLayout(pnMi);

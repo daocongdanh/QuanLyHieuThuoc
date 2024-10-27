@@ -104,6 +104,7 @@ public class TABPurchase extends javax.swing.JPanel {
         pnMid.setMinimumSize(new java.awt.Dimension(200, 200));
         pnMid.setOpaque(false);
 
+        pnContent.setBackground(new java.awt.Color(255, 255, 255));
         pnContent.setLayout(new javax.swing.BoxLayout(pnContent, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(pnContent);
 
@@ -111,11 +112,11 @@ public class TABPurchase extends javax.swing.JPanel {
         pnMid.setLayout(pnMidLayout);
         pnMidLayout.setHorizontalGroup(
             pnMidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1433, Short.MAX_VALUE)
         );
         pnMidLayout.setVerticalGroup(
             pnMidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
         );
 
         add(pnMid, java.awt.BorderLayout.CENTER);
@@ -124,7 +125,7 @@ public class TABPurchase extends javax.swing.JPanel {
         pnLeft.setPreferredSize(new java.awt.Dimension(485, 650));
 
         btnConfirmPurchase.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnConfirmPurchase.setText("Hoàn Thành");
+        btnConfirmPurchase.setText("Nhập hàng ( F8 )");
         btnConfirmPurchase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmPurchaseActionPerformed(evt);
@@ -229,29 +230,29 @@ public class TABPurchase extends javax.swing.JPanel {
         pnLeftLayout.setHorizontalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
+                .addContainerGap(548, Short.MAX_VALUE)
                 .addGroup(pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnConfirmPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtSearchSupplier)
                     .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(549, Short.MAX_VALUE))
         );
         pnLeftLayout.setVerticalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(txtSearchSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
+                .addGap(20, 20, 20)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 295, Short.MAX_VALUE)
                 .addComponent(btnConfirmPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(68, 68, 68))
         );
 
         add(pnLeft, java.awt.BorderLayout.EAST);
@@ -260,7 +261,8 @@ public class TABPurchase extends javax.swing.JPanel {
         headerPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(232, 232, 232), 2, true));
         headerPanel.setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
 
         txtSearchProduct.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtSearchProduct.addActionListener(new java.awt.event.ActionListener() {
@@ -269,6 +271,9 @@ public class TABPurchase extends javax.swing.JPanel {
             }
         });
 
+        btnMa.setBackground(new java.awt.Color(115, 165, 71));
+        btnMa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnMa.setForeground(new java.awt.Color(255, 255, 255));
         btnMa.setText("Mã");
         btnMa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,6 +281,9 @@ public class TABPurchase extends javax.swing.JPanel {
             }
         });
 
+        btnImport.setBackground(new java.awt.Color(115, 165, 71));
+        btnImport.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnImport.setForeground(new java.awt.Color(255, 255, 255));
         btnImport.setText("Import");
         btnImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -413,6 +421,7 @@ public class TABPurchase extends javax.swing.JPanel {
                 XSSFSheet excelSheet = excelImport.getSheetAt(0);
                 
                 String phoneSupplier = excelSheet.getRow(3).getCell(1).getStringCellValue().trim();
+                System.out.println(phoneSupplier);
                 Supplier sup = supplierBUS.getSupplierByPhone(phoneSupplier);
                 if (sup == null) {
                     supplier = null;

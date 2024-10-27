@@ -58,6 +58,7 @@ public class TabDamageItem extends javax.swing.JPanel {
         pnMid.setMinimumSize(new java.awt.Dimension(200, 200));
         pnMid.setOpaque(false);
 
+        pnContent.setBackground(new java.awt.Color(255, 255, 255));
         pnContent.setLayout(new javax.swing.BoxLayout(pnContent, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(pnContent);
 

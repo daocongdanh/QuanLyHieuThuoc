@@ -8,28 +8,7 @@ import dal.SupplierDAL;
 import entity.Supplier;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import util.MessageDialog;
 
 /**
  *
@@ -38,7 +17,6 @@ import util.MessageDialog;
 public class SupplierBUS {
     private SupplierDAL supplierDAL;
     private EntityTransaction transaction;
-    private Object CellType;
     
     public SupplierBUS(EntityManager entityManager){
         this.supplierDAL = new SupplierDAL(entityManager);

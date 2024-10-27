@@ -132,7 +132,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
 
         dialogChonLo = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
-        txtTimLo = new javax.swing.JTextField();
         btnXacNhan = new javax.swing.JButton();
         scrollPane = new javax.swing.JScrollPane();
         pnChuaLo = new javax.swing.JPanel();
@@ -154,14 +153,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(651, 285));
-
-        txtTimLo.setBackground(new java.awt.Color(239, 240, 242));
-        txtTimLo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtTimLo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimLoActionPerformed(evt);
-            }
-        });
 
         btnXacNhan.setText("Xác nhận");
         btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
@@ -186,9 +177,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
                         .addGap(501, 501, 501)
                         .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(txtTimLo, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(56, Short.MAX_VALUE))
@@ -196,11 +184,9 @@ public class PnOrderDetail extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(txtTimLo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
@@ -488,16 +474,10 @@ public class PnOrderDetail extends javax.swing.JPanel {
     private void btnChonLoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonLoActionPerformed
 //         TODO add your handling code here:
         fillBatch();
-        txtTimLo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên lô, hạn sử dụng");
-
         dialogChonLo.setVisible(true);
         dialogChonLo.pack();
         dialogChonLo.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnChonLoActionPerformed
-
-    private void txtTimLoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimLoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimLoActionPerformed
 
     public JPanel getPnListBatch() {
         return pnListBatch;
@@ -606,7 +586,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
     private javax.swing.JLabel txtDiscount;
     private javax.swing.JLabel txtDonGia;
     private javax.swing.JLabel txtTenSP;
-    private javax.swing.JTextField txtTimLo;
     private javax.swing.JLabel txtTongTien;
     // End of variables declaration//GEN-END:variables
 }
