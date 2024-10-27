@@ -49,6 +49,7 @@ public class LoadApplication extends javax.swing.JFrame {
     public static ReturnOrderDetailBUS returnOrderDetailBUS;
     public static SupplierBUS supplierBUS;
     public static ProductTransactionHistoryBUS productTransactionHistoryBUS;
+    public static ReportBUS reportBUS;
 
     public LoadApplication() {
         initComponents();
@@ -146,6 +147,7 @@ public class LoadApplication extends javax.swing.JFrame {
                     returnOrderDetailBUS = new ReturnOrderDetailBUS(em);
                     supplierBUS = new SupplierBUS(em);
                     productTransactionHistoryBUS = new ProductTransactionHistoryBUS(em);
+                    reportBUS = new ReportBUS(em);
                 }
 //                load.progressLoading.setForeground(Color.orange);
             }

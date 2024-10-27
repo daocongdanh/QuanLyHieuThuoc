@@ -1095,7 +1095,9 @@ public class TABPromotion extends javax.swing.JPanel {
             return;
         }
         if(MessageDialog.confirm(null, "Bạn có chắc muốn phát hành chương trình khuyến mãi?", "Phát hành chương trình khuyến mãi")){
-            System.out.println("ok");
+            promotionBUS.sendMail(tableDesign.getTable().getValueAt(selectedRow, 0).toString());
+            MessageDialog.info(null, "Gửi mail chương trình khuyến mãi đến khách hàng thành công");
+            tableDesign.getTable().setValueAt("Đã phát hành", selectedRow, 5);
         }
     }//GEN-LAST:event_btnEmailActionPerformed
 

@@ -79,6 +79,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 // menuPanelMap.put(menuSupplier, () -> new TABSupplierPanel());
         menuPanelMap.put(menuUnit, () -> new TABUnit());
         menuPanelMap.put(menuPromotion, () -> new TABPromotion());
+        menuPanelMap.put(menuReport, () -> new TABReport());
         menuSwitch(new TABStats(), menuStatistical, mainContent, menuList, currentPanel);
 
         for (MenuChoice menu : menuList) {

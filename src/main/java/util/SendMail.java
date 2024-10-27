@@ -30,10 +30,11 @@ import javax.mail.internet.MimeMultipart;
  * @author daoducdanh
  */
 public class SendMail {
+
     private String fromEmail = "gvhoang30112004@gmail.com";
     private String password = "cdbpubumgnhvbtpc";
 
-    public void SendMailVoucher(String toEmail, String subject, String body, List<File> files) {
+    public void SendMail(String toEmail, String subject, String body) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
@@ -51,68 +52,18 @@ public class SendMail {
 
         try {
             MimeMessage msg = new MimeMessage(session);
-            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+            msg.addHeader("Content-type", "text/html; charset=UTF-8");
             msg.addHeader("format", "flowed");
             msg.addHeader("Content-Transfer-Encoding", "8bit");
-            msg.setFrom(new InternetAddress(fromEmail, "Galaxy Cinema"));
+            msg.setFrom(new InternetAddress(fromEmail, "Nhà Thuốc Tây Á"));
             msg.setReplyTo(InternetAddress.parse(fromEmail, false));
             msg.setSubject(subject, "UTF-8");
-            if (files == null) {
-                msg.setContent(body, "text/html; charset=utf-8");
-            }
             msg.setSentDate(new Date());
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-
-            if (files != null) {
-                //Attachments
-                Multipart multipart = new MimeMultipart();
-
-                //Content
-                BodyPart bodyPart = new MimeBodyPart();
-                bodyPart.setContent(body, "text/html; charset=utf-8");
-                multipart.addBodyPart(bodyPart);
-                for (File file : files) {
-                    DataSource dataSource = new FileDataSource(file);
-                    MimeBodyPart mimeBodyPart = new MimeBodyPart();
-                    mimeBodyPart.setDataHandler(new DataHandler(dataSource));
-                    mimeBodyPart.setFileName(file.getName());
-                    multipart.addBodyPart(mimeBodyPart);
-                }
-                msg.setContent(multipart);
-            }
-            Transport.send(msg);
-        } catch (MessagingException | UnsupportedEncodingException e) {
-            System.out.println("Error");
-        }
-    }
-    public void sendMailResetPassword(String toEmail, String subject, String body){
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-
-        Authenticator auth = new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(fromEmail, password);
-            }
-        };
-        Session session = Session.getInstance(props, auth);
-        try {
-            MimeMessage msg = new MimeMessage(session);
-            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-            msg.addHeader("format", "flowed");
-            msg.addHeader("Content-Transfer-Encoding", "8bit");
-            msg.setFrom(new InternetAddress(fromEmail, "Galaxy Cinema"));
-            msg.setReplyTo(InternetAddress.parse(fromEmail, false));
-            msg.setSubject(subject, "UTF-8");
             msg.setContent(body, "text/html; charset=utf-8");
-            msg.setSentDate(new Date());
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
             Transport.send(msg);
         } catch (MessagingException | UnsupportedEncodingException e) {
-            System.out.println("Error");
+            System.out.println(e.getMessage());
         }
     }
 }
