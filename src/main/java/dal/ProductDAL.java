@@ -106,5 +106,15 @@ public class ProductDAL implements BaseDAL<Product, String> {
             return null;
         }
     }
-
+    
+    public Product findBySDK(String sdk){
+        TypedQuery<Product> query = entityManager.createQuery("select p from Product p where p.registrationNumber = ?1", Product.class);
+        query.setParameter(1, sdk);
+        try {
+            return query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
 }

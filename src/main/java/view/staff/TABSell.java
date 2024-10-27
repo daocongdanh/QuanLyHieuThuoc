@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import view.common.TableDesign;
 import entity.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import util.MessageDialog;
@@ -311,9 +312,9 @@ public class TABSell extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         txtTimSanPham.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtTimSanPham.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimSanPhamActionPerformed(evt);
+        txtTimSanPham.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTimSanPhamKeyPressed(evt);
             }
         });
 
@@ -398,6 +399,8 @@ public class TABSell extends javax.swing.JPanel {
 
     private void btnMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaActionPerformed
         // TODO add your handling code here:
+        String sdk = txtTimSanPham.getText().trim();
+        searchProduct(sdk);
     }//GEN-LAST:event_btnMaActionPerformed
 
     private void btnThemHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemHDActionPerformed
@@ -407,12 +410,6 @@ public class TABSell extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Chỉ tối đa 15 tab");
         }
     }//GEN-LAST:event_btnThemHDActionPerformed
-
-    private void txtTimSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimSanPhamActionPerformed
-        // TODO add your handling code here:
-        String textTim = txtTimSanPham.getText();
-        searchProduct(textTim);
-    }//GEN-LAST:event_txtTimSanPhamActionPerformed
 
     private void btnDonThuocMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDonThuocMauActionPerformed
         // TODO add your handling code here:
@@ -437,6 +434,15 @@ public class TABSell extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btnApplyActionPerformed
+
+    private void txtTimSanPhamKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimSanPhamKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            String sdk = txtTimSanPham.getText().trim();
+            searchProduct(sdk);
+            txtTimSanPham.requestFocus();
+        }
+    }//GEN-LAST:event_txtTimSanPhamKeyPressed
 
     private void addTabHoaDon() {
         PnTabOrder banHang = new PnTabOrder(this);
@@ -481,8 +487,8 @@ public class TABSell extends javax.swing.JPanel {
         return panel;
     }
 
-    private void searchProduct(String textTim) {
-        Product product = productBUS.searchProductBySDKOrId(textTim);
+    private void searchProduct(String sdk) {
+        Product product = productBUS.getProductBySDK(sdk);
         if (product != null) {
             PnTabOrder tabHoaDon = (PnTabOrder) tabbedPane.getSelectedComponent();
             tabHoaDon.addSanPham(product);

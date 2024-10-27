@@ -119,4 +119,8 @@ public class ProductBUS {
         }
     }
     
+    public Product getProductBySDK(String sdk){
+        return productDAL.findBySDK(sdk);
+    }
+    
 }

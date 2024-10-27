@@ -132,12 +132,12 @@ public class PromotionBUS {
         if(promotion.getPromotionType().equals(PromotionType.ORDER)){
             String body = mailTemplate.mailOrder(promotion);
             String subject = "🎉 Khuyến Mãi Giảm Giá Trên Hóa Đơn! Mua Sắm Ngay Tại Nhà Thuốc 🎉";
-            sendMail.SendMail("daocongdanh47@gmail.com", subject, body);
+            sendMail.sendMail("daocongdanh47@gmail.com", subject, body);
         }
         else{
             String body = mailTemplate.mailProduct(promotion);
             String subject = "🎉 Ưu Đãi Đặc Biệt Cho Một Số Sản Phẩm Tại Nhà Thuốc! 🎉";
-            sendMail.SendMail("daocongdanh47@gmail.com", subject, body);
+            sendMail.sendMail("daocongdanh47@gmail.com", subject, body);
         }
         promotion.setStatus(false);
         promotionDAL.update(promotion);
