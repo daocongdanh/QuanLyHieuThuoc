@@ -63,4 +63,7 @@ public class CustomerBUS {
         return customerDAL.findAll();
     }
 
+    public List<Customer> getCustomerByKeyword(String keyword) {
+        return customerDAL.findByKeyword(keyword);
+    }
 }

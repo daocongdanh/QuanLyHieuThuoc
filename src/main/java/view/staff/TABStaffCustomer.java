@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package view.manager;
+package view.staff;
 
+import view.manager.*;
 import bus.CustomerBUS;
 import bus.UnitBUS;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -26,12 +27,12 @@ import view.login.LoadApplication;
  *
  * @author Hoang
  */
-public class TABCustomer extends javax.swing.JPanel {
+public class TABStaffCustomer extends javax.swing.JPanel {
 
     private final CustomerBUS customerBUS;
     private TableDesign tableDesign;
 
-    public TABCustomer() {
+    public TABStaffCustomer() {
         customerBUS = LoadApplication.customerBUS;
         initComponents();
         setUIManager();

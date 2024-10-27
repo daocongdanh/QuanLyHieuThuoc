@@ -31,6 +31,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
+import util.GenerateBarcode;
 
 /**
  *
@@ -163,5 +164,10 @@ public class Main {
         for(Batch batch : batchs){
             System.out.println(batch);
         }
+        
+//        GenerateBarcode barcode = new GenerateBarcode();
+//        barcode.generate("VD-9957-10", "sp1.png");
+//        barcode.generate("VN-20514-17", "sp2.png");
+//        barcode.generate("VN-20467-17", "sp3.png");
     }
 }

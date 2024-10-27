@@ -8,6 +8,7 @@ import entity.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
@@ -57,4 +58,10 @@ public class CustomerDAL implements BaseDAL<Customer, String>{
             return null;  
         }
     }
+    
+    public List<Customer> findByKeyword(String keyword) {
+        TypedQuery<Customer> query = entityManager.createQuery("select e from Customer e where e.name like ?1 or e.phone like ?1 or e.email like ?1", Customer.class);
+        query.setParameter(1, "%" + keyword + "%");
+        return query.getResultList();
+    }  
 }

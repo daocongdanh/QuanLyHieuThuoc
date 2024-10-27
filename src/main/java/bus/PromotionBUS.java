@@ -4,6 +4,7 @@
  */
 package bus;
 
+import dal.CustomerDAL;
 import dal.ProductDAL;
 import dal.ProductPromotionDetailDAL;
 import dal.PromotionDAL;
@@ -14,6 +15,8 @@ import jakarta.persistence.EntityTransaction;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import util.MailTemplate;
+import util.SendMail;
 
 /**
  *
@@ -24,12 +27,18 @@ public class PromotionBUS {
     private PromotionDAL promotionDAL;
     private ProductDAL productDAL;
     private ProductPromotionDetailDAL productPromotionDetailDAL;
+    private MailTemplate mailTemplate;
+    private SendMail sendMail;
+    private CustomerDAL customerDAL;
     private EntityTransaction transaction;
 
     public PromotionBUS(EntityManager entityManager) {
         this.promotionDAL = new PromotionDAL(entityManager);
         this.productDAL = new ProductDAL(entityManager);
         this.productPromotionDetailDAL = new ProductPromotionDetailDAL(entityManager);
+        this.mailTemplate = new MailTemplate(entityManager);
+        this.sendMail = new SendMail();
+        this.customerDAL = new CustomerDAL(entityManager);
         this.transaction = entityManager.getTransaction();
     }
 
@@ -115,5 +124,22 @@ public class PromotionBUS {
                 .stream()
                 .map(ProductPromotionDetail::getProduct)
                 .toList();
+    }
+    
+    public void sendMail(String promotionId){
+        Promotion promotion = promotionDAL.findById(promotionId).get();
+        
+        if(promotion.getPromotionType().equals(PromotionType.ORDER)){
+            String body = mailTemplate.mailOrder(promotion);
+            String subject = "🎉 Khuyến Mãi Giảm Giá Trên Hóa Đơn! Mua Sắm Ngay Tại Nhà Thuốc 🎉";
+            sendMail.sendMail("daocongdanh47@gmail.com", subject, body);
+        }
+        else{
+            String body = mailTemplate.mailProduct(promotion);
+            String subject = "🎉 Ưu Đãi Đặc Biệt Cho Một Số Sản Phẩm Tại Nhà Thuốc! 🎉";
+            sendMail.sendMail("daocongdanh47@gmail.com", subject, body);
+        }
+        promotion.setStatus(false);
+        promotionDAL.update(promotion);
     }
 }
