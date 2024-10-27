@@ -121,4 +121,8 @@ public class DamageItemBUS {
     public List<DamageItem> search(LocalDateTime start, LocalDateTime end, String txtEmployee){
         return damageItemDAL.search(start, end, txtEmployee);
     }
+    
+    public List<DamageItem> getByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID){
+        return damageItemDAL.findByDateAndEmp(start, end, empID);
+    }
 }

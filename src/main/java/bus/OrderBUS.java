@@ -457,5 +457,9 @@ public class OrderBUS {
         }
         return ans;
     }
+    
+    public List<Order> getOrderByDateAndEmp(LocalDateTime start, LocalDateTime end, String employeeID) {
+        return orderDAL.findOrderByDateAndEmp(start, end, employeeID);
+    }
 
 }
