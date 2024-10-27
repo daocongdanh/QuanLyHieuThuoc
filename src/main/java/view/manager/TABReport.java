@@ -15,12 +15,28 @@ import javax.swing.BorderFactory;
 import view.common.TableDesign;
 import entity.*;
 import enums.PaymentMethod;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableModel;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import util.*;
+import static util.JTableExporter.openFile;
 import view.login.LoadApplication;
 
 /**
@@ -65,7 +81,7 @@ public class TABReport extends javax.swing.JPanel {
                     "Trả hàng", returnOrder.getEmployee().getName(), FormatNumber.formatToVND(returnOrder.getTotalPrice())});
             } else if (obj instanceof PurchaseOrder purchaseOrder) {
                 tableDesign.getModelTable().addRow(new Object[]{purchaseOrder.getPurchaseOrderId(), FormatDate.formatDate(purchaseOrder.getOrderDate()),
-                    "Nhập hàng hàng", purchaseOrder.getEmployee().getName(), FormatNumber.formatToVND(purchaseOrder.getTotalPrice())});
+                    "Nhập hàng", purchaseOrder.getEmployee().getName(), FormatNumber.formatToVND(purchaseOrder.getTotalPrice())});
             } else if (obj instanceof DamageItem damageItem) {
                 tableDesign.getModelTable().addRow(new Object[]{damageItem.getDamageItemId(), FormatDate.formatDate(damageItem.getOrderDate()),
                     "Xuất hủy", damageItem.getEmployee().getName(), FormatNumber.formatToVND(damageItem.getTotalPrice())});
@@ -487,9 +503,123 @@ public class TABReport extends javax.swing.JPanel {
         fillContent(report);
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    private static CellStyle createStyleForHeader(Sheet sheet) {
+        // Tạo font chữ
+        Font font = sheet.getWorkbook().createFont();
+        font.setFontName("Times New Roman");
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);  // BOLDWEIGHT cho Apache POI 3.9
+        font.setFontHeightInPoints((short) 14);
+
+        // Tạo CellStyle
+        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+        cellStyle.setFont(font);
+        cellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
+        return cellStyle;
+    }
+    
     private void txtOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrderActionPerformed
-        // TODO add your handling code here:
-        JTableExporter.exportJTableToExcel(tableDesign.getTable());
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn đường dẫn lưu file Excel");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("XLSX files", "xlsx");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+
+        int userChoice = fileChooser.showSaveDialog(null);
+        if (userChoice == JFileChooser.APPROVE_OPTION) {
+            try {
+                String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+                if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                    filePath += ".xlsx";
+                }
+
+                TableModel model = tableDesign.getTable().getModel();
+                Workbook workbook;
+
+                // Khởi tạo workbook cho định dạng xlsx
+                if (filePath.endsWith(".xlsx")) {
+                    workbook = new XSSFWorkbook();
+                } else {
+                    workbook = new HSSFWorkbook();
+                }
+
+                Sheet sheet = workbook.createSheet("Sheet1");
+
+                // Tạo dòng tiêu đề
+                CellStyle cellStyle = createStyleForHeader(sheet);
+                Row headerRow = sheet.createRow(0);
+                for (int i = 0; i < model.getColumnCount(); i++) {
+                    Cell headerCell = headerRow.createCell(i);
+                    headerCell.setCellValue(model.getColumnName(i));
+                    headerCell.setCellStyle(cellStyle);
+                }
+
+                int r = 0;
+                // Tạo dòng dữ liệu
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    Row dataRow = sheet.createRow(i + 1);
+                    for (int j = 0; j < model.getColumnCount(); j++) {
+                        Cell dataCell = dataRow.createCell(j);
+                        Object value = model.getValueAt(i, j);
+                        if (value != null) {
+                            dataCell.setCellValue(value.toString());
+                        }
+                    }
+                    r = i;
+                }
+                
+                Row dataRowBan = sheet.createRow(r + 1);
+                Cell dataCellBan = dataRowBan.createCell(0);
+                Cell dataCellBan1 = dataRowBan.createCell(1);
+                Cell dataCellBan2 = dataRowBan.createCell(2);
+                dataCellBan.setCellValue("Bán hàng:");
+                dataCellBan1.setCellValue("Số lượng: " + orderQty.getText());
+                dataCellBan2.setCellValue("Tổng giá trị:" + orderPrice.getText());
+                
+                Row dataRowNhap = sheet.createRow(r + 2);
+                Cell dataCellNhap = dataRowNhap.createCell(0);
+                Cell dataCellNhap1 = dataRowNhap.createCell(1);
+                Cell dataCellNhap2 = dataRowNhap.createCell(2);
+                dataCellNhap.setCellValue("Nhập hàng:");
+                dataCellNhap1.setCellValue("Số lượng: " + purchaseQty.getText());
+                dataCellNhap2.setCellValue("Tổng giá trị:" + purchasePrice.getText());
+                
+                Row dataRowTra = sheet.createRow(r + 3);
+                Cell dataCellTra = dataRowTra.createCell(0);
+                Cell dataCellTra1 = dataRowTra.createCell(1);
+                Cell dataCellTra2 = dataRowTra.createCell(2);
+                dataCellTra.setCellValue("Trả hàng:");
+                dataCellTra1.setCellValue("Số lượng: " + returnQty.getText());
+                dataCellTra2.setCellValue("Tổng giá trị:" + returnPrice.getText());
+                
+                Row dataRowHuy = sheet.createRow(r + 4);
+                Cell dataCellHuy = dataRowHuy.createCell(0);
+                Cell dataCellHuy1 = dataRowHuy.createCell(1);
+                Cell dataCellHuy2 = dataRowHuy.createCell(2);
+                dataCellHuy.setCellValue("Xuất hủy:");
+                dataCellHuy1.setCellValue("Số lượng: " + damageQty.getText());
+                dataCellHuy2.setCellValue("Tổng giá trị:" + damagePrice.getText());
+                
+                Row dataRowTong = sheet.createRow(r + 5);
+                Cell dataCellTong = dataRowTong.createCell(0);
+                dataCellTong.setCellValue("Tổng lợi nhuận: " + profit.getText());
+
+                // Điều chỉnh kích thước cột
+                for (int i = 0; i < model.getColumnCount(); i++) {
+                    sheet.autoSizeColumn(i);
+                }
+
+                // Ghi dữ liệu ra file
+                try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                    workbook.write(fileOut);
+                }
+
+                openFile(filePath);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Lỗi đọc file!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_txtOrderActionPerformed
 
 

@@ -118,5 +118,9 @@ public class ReturnOrderBUS {
         }
         return new StatsPriceAndQuantityDTO(quantity, sumPrice);
     }
+    
+    public List<ReturnOrder> getByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID) {
+        return returnOrderDAL.searchByDateAndEmp(start, end, empID);
+    }
 
 }

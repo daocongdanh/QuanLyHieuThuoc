@@ -98,5 +98,14 @@ public class ReturnOrderDAL implements BaseDAL<ReturnOrder, String> {
         query.setParameter(2, end);
         return query.getResultList();
     }
+    
+    public List<ReturnOrder> searchByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID) {
+        String jpql = "select ro from ReturnOrder ro where (ro.orderDate between ?1 and ?2) and ro.employee.employeeId = ?3";
+        TypedQuery<ReturnOrder> query = entityManager.createQuery(jpql, ReturnOrder.class);
+        query.setParameter(1, start);
+        query.setParameter(2, end);
+        query.setParameter(3, empID);
+        return query.getResultList();
+    }
 
 }

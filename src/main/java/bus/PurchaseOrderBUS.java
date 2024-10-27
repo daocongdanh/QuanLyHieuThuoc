@@ -171,4 +171,8 @@ public class PurchaseOrderBUS {
         }
         return new StatsPriceAndQuantityDTO(quantity, sumPrice);
     }
+    
+    public List<PurchaseOrder> getByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID) {
+        return purchaseOrderDAL.searchByDateAndEmp(start, end, empID);
+    }
 }

@@ -77,5 +77,14 @@ public class PurchaseOrderDAL implements BaseDAL<PurchaseOrder, String> {
         query.setParameter(2, end);
         return query.getResultList();
     }
+    
+    public List<PurchaseOrder> searchByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID) {
+        String jpql = "select po from PurchaseOrder po where (po.orderDate between ?1 and ?2) and po.employee.employeeId = ?3";
+        TypedQuery<PurchaseOrder> query = entityManager.createQuery(jpql, PurchaseOrder.class);
+        query.setParameter(1, start);
+        query.setParameter(2, end);
+        query.setParameter(3, empID);
+        return query.getResultList();
+    }
 
 }

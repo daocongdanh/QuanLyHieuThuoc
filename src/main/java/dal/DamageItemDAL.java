@@ -71,4 +71,14 @@ public class DamageItemDAL implements BaseDAL<DamageItem, String>{
         query.setParameter(2, end);
         return query.getResultList();
     }
+    
+    public List<DamageItem> findByDateAndEmp(LocalDateTime start, LocalDateTime end, String employeeID) {
+        String jpql = "select d from DamageItem d where (d.orderDate between ?1 and ?2) and d.employee.employeeId = ?3";
+        TypedQuery<DamageItem> query = entityManager.createQuery(jpql, DamageItem.class);
+        query.setParameter(1, start);
+        query.setParameter(2, end);
+        query.setParameter(3, employeeID);
+
+        return query.getResultList();
+    }
 }

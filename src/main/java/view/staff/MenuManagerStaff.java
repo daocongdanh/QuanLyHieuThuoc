@@ -76,7 +76,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
                 menuReturn, menuSupplier, menuSell, menuExit
         );
         Map<MenuChoice, Supplier<JPanel>> menuPanelMap = new HashMap<>();
-//        menuPanelMap.put(menuReport, tabReport);
+        menuPanelMap.put(menuReport, () -> new TABIndividualReport());
         menuPanelMap.put(menuCustomer, () -> new TABStaffCustomer());
         menuPanelMap.put(menuDamaged, () -> new TabDamageItem());
 //        menuPanelMap.put(menuProduct, tabProduct);
