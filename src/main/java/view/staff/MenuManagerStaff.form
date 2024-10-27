@@ -66,6 +66,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="menuExit" min="-2" max="-2" attributes="0"/>
                           <Component id="menuReport" min="-2" max="-2" attributes="0"/>
                           <Component id="menuSell" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="menuProduct" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -98,7 +99,9 @@
                       <Component id="menuReturn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="menuReport" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="387" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="menuExit" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="318" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -119,6 +122,8 @@
             <Component class="view.common.MenuChoice" name="menuReturn">
             </Component>
             <Component class="view.common.MenuChoice" name="menuDamaged">
+            </Component>
+            <Component class="view.common.MenuChoice" name="menuExit">
             </Component>
           </SubComponents>
         </Container>
