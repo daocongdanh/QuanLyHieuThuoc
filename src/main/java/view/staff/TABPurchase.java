@@ -439,6 +439,9 @@ public class TABPurchase extends javax.swing.JPanel {
                     
                     int check = 0; 
                     Product p = (Product) productBUS.getProductBySDK(regisNb);
+                    if (p == null) {
+                        MessageDialog.error(null, "Chưa có sản phẩm " + productName);
+                    }
                     List<UnitDetail> unitDetails = unitDetailBUS.getListUnitProduct(p);
                     List<Batch> batchs = batchBUS.getListBatchEnable(p);
                     pnPurchaseOrderDetail = new PnPurchaseOrderDetail(p, unitDetails, batchs, this);
