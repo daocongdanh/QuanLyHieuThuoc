@@ -168,7 +168,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(590, 100));
 
         btnSearch.setBackground(new java.awt.Color(115, 165, 71));
-        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Tra cứu");
         btnSearch.setMaximumSize(new java.awt.Dimension(150, 40));

@@ -218,6 +218,8 @@ public class TabDamageItem extends javax.swing.JPanel {
         });
         pnContent.revalidate();
         pnContent.repaint();
+        
+        changeTongTienHoaDon();
     }
     
     private static CellStyle createStyleForHeader(Sheet sheet) {
@@ -246,7 +248,6 @@ public class TabDamageItem extends javax.swing.JPanel {
             Employee employee = CurrentEmployee.getEmployee();
             if (MessageDialog.confirm(null, "Bạn có chắc chắn muốn xuất hủy không?", "Xác nhận xuất hủy")) {
                 if (damageItemBUS.createDamageItem(employee, damageItemDetails)) {
-                    MessageDialog.info(null, "Chọn nơi lưu trữ file excel");
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setDialogTitle("Chọn đường dẫn lưu file Excel");
                     FileNameExtensionFilter filter = new FileNameExtensionFilter("XLSX files", "xlsx");
@@ -281,6 +282,7 @@ public class TabDamageItem extends javax.swing.JPanel {
                             Cell headerCell4 = headerRow.createCell(3);
                             Cell headerCell5 = headerRow.createCell(4);
                             Cell headerCell6 = headerRow.createCell(5);
+                            Cell headerCell7 = headerRow.createCell(6);
                             
                             headerCell1.setCellValue("Mã sản phẩm");
                             headerCell2.setCellValue("Tên sản phẩm");
@@ -288,6 +290,7 @@ public class TabDamageItem extends javax.swing.JPanel {
                             headerCell4.setCellValue("Hạn sử dụng");
                             headerCell5.setCellValue("Đơn vị tính");
                             headerCell6.setCellValue("Số lượng");
+                            headerCell7.setCellValue("Giá trị hủy");
                             
                             headerCell1.setCellStyle(cellStyle);
                             headerCell2.setCellStyle(cellStyle);
@@ -295,8 +298,10 @@ public class TabDamageItem extends javax.swing.JPanel {
                             headerCell4.setCellStyle(cellStyle);
                             headerCell5.setCellStyle(cellStyle);
                             headerCell6.setCellStyle(cellStyle);
+                            headerCell7.setCellStyle(cellStyle);
                             
                             int r = 0;
+                            double t = 0.0;
                             // Tạo dòng dữ liệu
                             for (DamageItemDetail damageItemDetail : damageItemDetails) {
                                 Row dataRow = sheet.createRow(r + 1);
@@ -306,12 +311,15 @@ public class TabDamageItem extends javax.swing.JPanel {
                                 Cell dataCell4 = dataRow.createCell(3);
                                 Cell dataCell5 = dataRow.createCell(4);
                                 Cell dataCell6 = dataRow.createCell(5);
+                                Cell dataCell7 = dataRow.createCell(6);
                                 dataCell1.setCellValue(damageItemDetail.getUnitDetail().getProduct().getProductId());
                                 dataCell2.setCellValue(damageItemDetail.getUnitDetail().getProduct().getName());
                                 dataCell3.setCellValue(damageItemDetail.getBatch().getName());
                                 dataCell4.setCellValue(damageItemDetail.getBatch().getExpirationDate().toString());
                                 dataCell5.setCellValue(damageItemDetail.getUnitDetail().getUnit().getName());
                                 dataCell6.setCellValue(damageItemDetail.getQuantity());
+                                dataCell7.setCellValue(damageItemDetail.getLineTotal());
+                                t += damageItemDetail.getLineTotal();
                                 r++;
                             }
 
@@ -320,6 +328,12 @@ public class TabDamageItem extends javax.swing.JPanel {
                             Cell dataCellNV1 = dataRowNV.createCell(1);
                             dataCellNV.setCellValue("Nhân viên lập đơn:");
                             dataCellNV1.setCellValue(CurrentEmployee.getEmployee().getName() + "_" + CurrentEmployee.getEmployee().getEmployeeId());
+                            
+                            Row dataRowTGT = sheet.createRow(r + 2);
+                            Cell dataCellTGT = dataRowTGT.createCell(0);
+                            Cell dataCellTGT1 = dataRowTGT.createCell(1);
+                            dataCellTGT.setCellValue("Tổng giá trị hủy:");
+                            dataCellTGT1.setCellValue(t);
 
                             // Điều chỉnh kích thước cột
                             for (int i = 0; i < 6; i++) {
