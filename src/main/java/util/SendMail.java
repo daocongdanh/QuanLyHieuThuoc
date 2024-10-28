@@ -4,15 +4,10 @@
  */
 package util;
 
-import jakarta.mail.Authenticator;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import jakarta.mail.Message;
-import jakarta.mail.MessagingException;
-import jakarta.mail.PasswordAuthentication;
-import jakarta.mail.Session;
-import jakarta.mail.Transport;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
 
 /**
  *
@@ -23,33 +18,39 @@ public class SendMail {
     private String fromEmail = "daocongdanh47@gmail.com";
     private String password = "twprarakvduhxvxi";
 
-     public void sendMail(String toEmail, String subject, String body) {
-        String host = "smtp.mailtrap.io";
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.port", "587");
+    public void sendMail(String toEmail, String subject, String body) {
+        String host = "smtp.gmail.com";
 
-        // Tạo đối tượng Session
-        Session session = Session.getInstance(props, new Authenticator() {
-            @Override
+        // Thiết lập properties
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "587");
+
+        // Tạo session với thông tin xác thực
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, password);
             }
         });
 
         try {
+            // Tạo đối tượng MimeMessage
             Message message = new MimeMessage(session);
-            message.setReplyTo(InternetAddress.parse(fromEmail, false));
-            message.setSubject(subject);
             message.setFrom(new InternetAddress(fromEmail));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            message.setSubject(subject);
+
+            // Thiết lập nội dung HTML
             message.setContent(body, "text/html; charset=utf-8");
+
+            // Gửi email
             Transport.send(message);
-            System.out.println("Email sent successfully!");
+            System.out.println("Email đã được gửi thành công!");
+
         } catch (MessagingException e) {
-            System.out.println("Mail error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
