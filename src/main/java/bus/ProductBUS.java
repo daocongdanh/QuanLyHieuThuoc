@@ -11,6 +11,7 @@ import dto.BatchDTO;
 import dto.UnitDTO;
 import jakarta.persistence.EntityManager;
 import entity.*;
+import enums.ProductType;
 import jakarta.persistence.EntityTransaction;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -124,4 +125,9 @@ public class ProductBUS {
         return productDAL.checkExistSDK(registrationNumber);
     }
 
+    
+    public List<Product> searchProductsBy4Field(String name, String registrationNumber, ProductType productType, Boolean active) {
+        return productDAL.searchProductsBy4Field(name, registrationNumber, productType, active);
+    }
+    
 }

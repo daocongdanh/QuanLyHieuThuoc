@@ -8,19 +8,17 @@ import bus.OrderBUS;
 import bus.PurchaseOrderBUS;
 import bus.ReturnOrderBUS;
 import bus.DamageItemBUS;
-import com.formdev.flatlaf.FlatClientProperties;
-import connectDB.ConnectDB;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
 import view.common.TableDesign;
 import entity.*;
-import enums.PaymentMethod;
 import java.awt.Dimension;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import javax.swing.UIManager;
 import util.*;
 import view.login.LoadApplication;
@@ -37,7 +35,6 @@ public class TABIndividualReport extends javax.swing.JPanel {
     private final ReturnOrderBUS returnOrderBUS;
     private final DamageItemBUS damageItemBUS;
     private TableDesign tableDesign;
-    
 
     public TABIndividualReport() {
         orderBUS = LoadApplication.orderBUS;
@@ -54,62 +51,91 @@ public class TABIndividualReport extends javax.swing.JPanel {
         jDateFrom.setDate(Date.valueOf(LocalDate.now()));
         jDateTo.setDate(Date.valueOf(LocalDate.now()));
     }
+
     private void fillTable() {
         String[] headers = {"Mã phiếu", "Ngày tạo", "Loại phiếu", "Giá trị"};
         List<Integer> tableWidths = Arrays.asList(200, 200, 200, 200);
         tableDesign = new TableDesign(headers, tableWidths);
         scrollTable.setViewportView(tableDesign.getTable());
         scrollTable.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
-        List<Order> orders = orderBUS.getOrderByDateAndEmp(LocalDate.now().atStartOfDay(), LocalDate.now().atTime(23, 59, 59, 999999999), CurrentEmployee.getEmployee().getEmployeeId());
-        List<PurchaseOrder> purchaseOrders = purchaseOrderBUS.getByDateAndEmp(LocalDate.now().atStartOfDay(), LocalDate.now().atTime(23, 59, 59, 999999999), CurrentEmployee.getEmployee().getEmployeeId());
-        List<ReturnOrder> returnOrders = returnOrderBUS.getByDateAndEmp(LocalDate.now().atStartOfDay(), LocalDate.now().atTime(23, 59, 59, 999999999), CurrentEmployee.getEmployee().getEmployeeId());
-        List<DamageItem> damageItems = damageItemBUS.getByDateAndEmp(LocalDate.now().atStartOfDay(), LocalDate.now().atTime(23, 59, 59, 999999999), CurrentEmployee.getEmployee().getEmployeeId());
-        fillContent(orders, purchaseOrders, returnOrders, damageItems);
     }
-    
+
     private void fillContent(List<Order> orders, List<PurchaseOrder> purchaseOrders, List<ReturnOrder> returnOrders, List<DamageItem> damageItems) {
+        List<Object> objects = new ArrayList<>();
+        objects.addAll(orders);
+        objects.addAll(purchaseOrders);
+        objects.addAll(returnOrders);
+        objects.addAll(damageItems);
+
+        objects.sort((o1, o2) -> {
+            LocalDateTime date1 = getOrderDate(o1);
+            LocalDateTime date2 = getOrderDate(o2);
+            return date2.compareTo(date1);
+        });
         int countHD = 0, countPNH = 0, countPTH = 0, countPXH = 0;
         double tongDoanhThu = 0.0, tongBan = 0.0, tongNhap = 0.0, tongTra = 0.0, tongHuy = 0.0;
         tableDesign.getModelTable().setRowCount(0);
         for (Order order : orders) {
-            tableDesign.getModelTable().addRow(new Object[]{order.getOrderId(), FormatDate.formatDate(order.getOrderDate()), 
-            "Hóa đơn bán hàng", FormatNumber.formatToVND(order.getTotalPrice())});
             countHD++;
             tongBan += order.getTotalPrice();
             tongDoanhThu += order.getTotalPrice();
         }
         for (PurchaseOrder purchaseOrder : purchaseOrders) {
-            tableDesign.getModelTable().addRow(new Object[]{purchaseOrder.getPurchaseOrderId(), FormatDate.formatDate(purchaseOrder.getOrderDate()), 
-            "Phiếu nhập hàng", FormatNumber.formatToVND(purchaseOrder.getTotalPrice())});
             countPNH++;
             tongNhap -= purchaseOrder.getTotalPrice();
             tongDoanhThu -= purchaseOrder.getTotalPrice();
         }
         for (ReturnOrder returnOrder : returnOrders) {
-            tableDesign.getModelTable().addRow(new Object[]{returnOrder.getReturnOrderId(), FormatDate.formatDate(returnOrder.getOrderDate()), 
-            "Phiếu trả hàng", FormatNumber.formatToVND(returnOrder.getTotalPrice())});
             countPTH++;
             tongTra -= returnOrder.getTotalPrice();
             tongDoanhThu -= returnOrder.getTotalPrice();
         }
         for (DamageItem damageItem : damageItems) {
-            tableDesign.getModelTable().addRow(new Object[]{damageItem.getDamageItemId(), FormatDate.formatDate(damageItem.getOrderDate()), 
-            "Phiếu xuất hủy", FormatNumber.formatToVND(damageItem.getTotalPrice())});
             countPXH++;
             tongHuy -= damageItem.getTotalPrice();
             tongDoanhThu -= damageItem.getTotalPrice();
         }
-        
-        txtTongHD.setText(countHD+"");
-        txtTongPNH.setText(countPNH+"");
-        txtTongPTH.setText(countPTH+"");
-        txtTongPXH.setText(countPXH+"");
+
+        objects.forEach(obj -> {
+            if (obj instanceof Order order) {
+                tableDesign.getModelTable().addRow(new Object[]{order.getOrderId(), FormatDate.formatDate(order.getOrderDate()),
+                    "Hóa đơn bán hàng", FormatNumber.formatToVND(order.getTotalPrice())});
+            } else if (obj instanceof ReturnOrder returnOrder) {
+                tableDesign.getModelTable().addRow(new Object[]{returnOrder.getReturnOrderId(), FormatDate.formatDate(returnOrder.getOrderDate()),
+                    "Phiếu trả hàng", FormatNumber.formatToVND(returnOrder.getTotalPrice())});
+            } else if (obj instanceof PurchaseOrder purchaseOrder) {
+                tableDesign.getModelTable().addRow(new Object[]{purchaseOrder.getPurchaseOrderId(), FormatDate.formatDate(purchaseOrder.getOrderDate()),
+                    "Phiếu nhập hàng", FormatNumber.formatToVND(purchaseOrder.getTotalPrice())});
+            } else if (obj instanceof DamageItem damageItem) {
+                tableDesign.getModelTable().addRow(new Object[]{damageItem.getDamageItemId(), FormatDate.formatDate(damageItem.getOrderDate()),
+                    "Phiếu xuất hủy", FormatNumber.formatToVND(damageItem.getTotalPrice())});
+            }
+        });
+
+        txtTongHD.setText(countHD + "");
+        txtTongPNH.setText(countPNH + "");
+        txtTongPTH.setText(countPTH + "");
+        txtTongPXH.setText(countPXH + "");
         txtTongGiaTriBan.setText(FormatNumber.formatToVND(tongBan));
         txtTongGiaTriNhap.setText(FormatNumber.formatToVND(tongNhap));
         txtTongGiaTriTra.setText(FormatNumber.formatToVND(tongTra));
         txtTongGiaTriHuy.setText(FormatNumber.formatToVND(tongHuy));
         txtTongDoanhThu.setText(FormatNumber.formatToVND(tongDoanhThu));
     }
+
+    private LocalDateTime getOrderDate(Object obj) {
+        if (obj instanceof Order order) {
+            return order.getOrderDate();
+        } else if (obj instanceof ReturnOrder returnOrder) {
+            return returnOrder.getOrderDate();
+        } else if (obj instanceof PurchaseOrder purchaseOrder) {
+            return purchaseOrder.getOrderDate();
+        } else if (obj instanceof DamageItem damageItem) {
+            return damageItem.getOrderDate();
+        }
+        return null;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -168,7 +194,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(590, 100));
 
         btnSearch.setBackground(new java.awt.Color(115, 165, 71));
-        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Tra cứu");
         btnSearch.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -255,7 +281,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
 
         txtTongDoanhThu.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtTongDoanhThu.setForeground(new java.awt.Color(255, 0, 0));
-        txtTongDoanhThu.setText("0đ");
+        txtTongDoanhThu.setText("0 đ");
 
         lblTongHoaDon1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lblTongHoaDon1.setText("Nhập hàng:    SL:");
@@ -288,16 +314,16 @@ public class TABIndividualReport extends javax.swing.JPanel {
         lblTongHoaDon7.setText("|     Tổng giá trị:");
 
         txtTongGiaTriBan.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        txtTongGiaTriBan.setText("0đ");
+        txtTongGiaTriBan.setText("0 đ");
 
         txtTongGiaTriTra.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        txtTongGiaTriTra.setText("0đ");
+        txtTongGiaTriTra.setText("0 đ");
 
         txtTongGiaTriHuy.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        txtTongGiaTriHuy.setText("0đ");
+        txtTongGiaTriHuy.setText("0 đ");
 
         txtTongGiaTriNhap.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        txtTongGiaTriNhap.setText("0đ");
+        txtTongGiaTriNhap.setText("0 đ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -412,22 +438,19 @@ public class TABIndividualReport extends javax.swing.JPanel {
         // TODO add your handling code here:
         java.util.Date date1 = jDateFrom.getDate();
         java.util.Date date2 = jDateTo.getDate();
-        
+
         if (date1 == null) {
             MessageDialog.warning(null, "Ngày bắt đầu không hợp lệ");
             return;
         }
-        
+
         if (date2 == null) {
             MessageDialog.warning(null, "Ngày kết thúc không hợp lệ");
             return;
         }
 
-        LocalDate localDateStart = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate localDateEnd = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        LocalDateTime start = localDateStart.atStartOfDay(); // 00:00:00
-        LocalDateTime end = localDateEnd.atTime(23, 59, 59, 999999999); // 23:59:59.999999999
+        LocalDateTime start = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime end = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
         if (start.isAfter(end)) {
             MessageDialog.warning(null, "Ngày bắt đầu phải trước ngày kết thúc");
@@ -474,7 +497,5 @@ public class TABIndividualReport extends javax.swing.JPanel {
     private javax.swing.JLabel txtTongPTH;
     private javax.swing.JLabel txtTongPXH;
     // End of variables declaration//GEN-END:variables
-
-    
 
 }

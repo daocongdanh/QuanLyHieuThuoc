@@ -54,9 +54,7 @@ public class TABUnit extends javax.swing.JPanel {
     private void addIconFeature() {
         btnAdd.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/addBtn.svg")), 35, 35));
         btnUpdate.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/editBtn.svg")), 35, 35));
-        btnDelete.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/deleteBtn.svg")), 35, 35));
         btnImport.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/import.svg")), 35, 35));
-        btnExport.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/export.svg")), 35, 35));
     }
 
     private void fillContent(List<Unit> units) {
@@ -98,9 +96,7 @@ public class TABUnit extends javax.swing.JPanel {
         actionPanel = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
         btnImport = new javax.swing.JButton();
-        btnExport = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         scrollTable = new javax.swing.JScrollPane();
 
@@ -300,7 +296,7 @@ public class TABUnit extends javax.swing.JPanel {
         jPanel6.add(txtSearchUnit);
 
         btnOpenModalAddUnit.setBackground(new java.awt.Color(115, 165, 71));
-        btnOpenModalAddUnit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnOpenModalAddUnit.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnOpenModalAddUnit.setForeground(new java.awt.Color(255, 255, 255));
         btnOpenModalAddUnit.setText("Tìm kiếm");
         btnOpenModalAddUnit.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -353,22 +349,6 @@ public class TABUnit extends javax.swing.JPanel {
         });
         actionPanel.add(btnUpdate);
 
-        btnDelete.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnDelete.setText("XÓA");
-        btnDelete.setBorder(null);
-        btnDelete.setBorderPainted(false);
-        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDelete.setFocusPainted(false);
-        btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnDelete.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-        actionPanel.add(btnDelete);
-
         btnImport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnImport.setText("IMPORT");
         btnImport.setBorder(null);
@@ -384,17 +364,6 @@ public class TABUnit extends javax.swing.JPanel {
             }
         });
         actionPanel.add(btnImport);
-
-        btnExport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnExport.setText("EXPORT");
-        btnExport.setBorder(null);
-        btnExport.setBorderPainted(false);
-        btnExport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnExport.setFocusPainted(false);
-        btnExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExport.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionPanel.add(btnExport);
 
         headerPanel.add(actionPanel, java.awt.BorderLayout.WEST);
 
@@ -526,10 +495,6 @@ public class TABUnit extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_modalAddUnitMouseClicked
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
     private void txtSearchUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchUnitActionPerformed
         String name = txtSearchUnit.getText().trim();
         List<Unit> units = unitBUS.getUnitByNameSearch(name);
@@ -542,11 +507,9 @@ public class TABUnit extends javax.swing.JPanel {
     private javax.swing.JPanel actionPanel;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAddUnit;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEditUnit;
     private javax.swing.JButton btnExitModalAdd;
     private javax.swing.JButton btnExitModalEdit;
-    private javax.swing.JButton btnExport;
     private javax.swing.JButton btnImport;
     private javax.swing.JButton btnOpenModalAddUnit;
     private javax.swing.JButton btnUpdate;

@@ -19,7 +19,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -406,6 +405,7 @@ public class TABPurchase extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMaActionPerformed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        clearPnOrderDetail();
         try {
             JFileChooser chooserFile = new JFileChooser();
             chooserFile.setDialogTitle("Chọn file");
@@ -421,7 +421,6 @@ public class TABPurchase extends javax.swing.JPanel {
                 XSSFSheet excelSheet = excelImport.getSheetAt(0);
                 
                 String phoneSupplier = excelSheet.getRow(3).getCell(1).getStringCellValue().trim();
-                System.out.println(phoneSupplier);
                 Supplier sup = supplierBUS.getSupplierByPhone(phoneSupplier);
                 if (sup == null) {
                     supplier = null;
@@ -449,9 +448,18 @@ public class TABPurchase extends javax.swing.JPanel {
                     int check = 0; 
                     Product p = (Product) productBUS.getProductBySDK(regisNb);
                     if (p == null) {
-                        MessageDialog.error(null, "Chưa có sản phẩm " + productName);
+                        MessageDialog.warning(null, "Sản phẩm không tồn tại: " + productName);
+                        continue;
                     }
                     List<UnitDetail> unitDetails = unitDetailBUS.getListUnitProduct(p);
+                    UnitDetail checkExists = unitDetails
+                            .stream()
+                            .filter(u -> u.getUnit().getName().equalsIgnoreCase(unitName)).findFirst().orElse(null);
+                    if(checkExists == null){
+                        MessageDialog.warning(null, "Đơn vị tính không tồn tại: " + productName);
+                        continue;
+                    }
+                    
                     List<Batch> batchs = batchBUS.getListBatchEnable(p);
                     pnPurchaseOrderDetail = new PnPurchaseOrderDetail(p, unitDetails, batchs, this);
                     for (Component component : pnContent.getComponents()) {

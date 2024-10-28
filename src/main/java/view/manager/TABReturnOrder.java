@@ -452,7 +452,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
                         .addGap(141, 141, 141)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -506,7 +506,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(1190, 170));
 
         btnSearch.setBackground(new java.awt.Color(115, 165, 71));
-        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Tìm kiếm");
         btnSearch.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -538,7 +538,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         jLabel2.setText("-->");
 
         txtOrder.setBackground(new java.awt.Color(115, 165, 71));
-        txtOrder.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtOrder.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtOrder.setForeground(new java.awt.Color(255, 255, 255));
         txtOrder.setText("Xuất excel");
         txtOrder.setMaximumSize(new java.awt.Dimension(150, 40));

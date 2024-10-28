@@ -115,10 +115,44 @@ public class ProductDAL implements BaseDAL<Product, String> {
 
         try {
             Long count = query.getSingleResult();
-            return count > 0; 
+            return count > 0;
         } catch (Exception e) {
-            return false; 
+            return false;
         }
+    }
+
+    public List<Product> searchProductsBy4Field(String name, String registrationNumber, ProductType productType, Boolean active) {
+        String jpql = "SELECT p FROM Product p WHERE 1=1";
+
+        if (name != null && !name.isEmpty()) {
+            jpql += " AND p.name LIKE :name";
+        }
+        if (registrationNumber != null && !registrationNumber.isEmpty()) {
+            jpql += " AND p.registrationNumber LIKE :registrationNumber";
+        }
+        if (productType != null) {
+            jpql += " AND p.productType = :productType";
+        }
+        if (active != null) {
+            jpql += " AND p.active = :active";
+        }
+
+        Query query = entityManager.createQuery(jpql, Product.class);
+
+        if (name != null && !name.isEmpty()) {
+            query.setParameter("name", "%" + name + "%");
+        }
+        if (registrationNumber != null && !registrationNumber.isEmpty()) {
+            query.setParameter("registrationNumber", "%" + registrationNumber + "%");
+        }
+        if (productType != null) {
+            query.setParameter("productType", productType);
+        }
+        if (active != null) {
+            query.setParameter("active", active);
+        }
+
+        return query.getResultList();
     }
 
 }

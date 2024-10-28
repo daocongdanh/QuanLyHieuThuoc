@@ -51,7 +51,7 @@ public class TABOrder extends javax.swing.JPanel {
         tableDesign = new TableDesign(headers, tableWidths);
         scrollTable.setViewportView(tableDesign.getTable());
         scrollTable.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
-        List<Order> orders = orderBUS.getAllOrders();
+        List<Order> orders = orderBUS.search(LocalDate.now().atStartOfDay(), LocalDate.now().atTime(23, 59, 59, 999999999), "", "");
         fillContent(orders);
     }
 
@@ -112,7 +112,7 @@ public class TABOrder extends javax.swing.JPanel {
         txtCus.setPreferredSize(new java.awt.Dimension(300, 40));
 
         btnSearch.setBackground(new java.awt.Color(115, 165, 71));
-        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Tìm kiếm");
         btnSearch.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -144,7 +144,7 @@ public class TABOrder extends javax.swing.JPanel {
         jLabel2.setText("-->");
 
         txtOrder.setBackground(new java.awt.Color(115, 165, 71));
-        txtOrder.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtOrder.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtOrder.setForeground(new java.awt.Color(255, 255, 255));
         txtOrder.setText("Xuất excel");
         txtOrder.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -192,7 +192,7 @@ public class TABOrder extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         headerPanel.add(jPanel5, java.awt.BorderLayout.CENTER);

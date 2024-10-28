@@ -4,8 +4,10 @@
  */
 package dal;
 import entity.Prescription;
+import entity.Unit;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 import util.GenerateId;
@@ -44,5 +46,10 @@ public class PrescriptionDAL implements BaseDAL<Prescription, String>{
         return entityManager.createQuery("select p from Prescription p", Prescription.class).getResultList();
     }
 
+    public List<Prescription> findbyNameSearch(String name) {
+        TypedQuery<Prescription> query = entityManager.createQuery("select pr from Prescription pr where pr.name like ?1", Prescription.class);
+        query.setParameter(1, "%" + name + "%");
+        return query.getResultList();
+    }
     
 }

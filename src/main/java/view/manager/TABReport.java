@@ -195,7 +195,7 @@ public class TABReport extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(590, 100));
 
         btnSearch.setBackground(new java.awt.Color(115, 165, 71));
-        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Tra cứu");
         btnSearch.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -223,7 +223,7 @@ public class TABReport extends javax.swing.JPanel {
         jLabel2.setText("-->");
 
         txtOrder.setBackground(new java.awt.Color(115, 165, 71));
-        txtOrder.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtOrder.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtOrder.setForeground(new java.awt.Color(255, 255, 255));
         txtOrder.setText("Xuất excel");
         txtOrder.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -271,7 +271,7 @@ public class TABReport extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         headerPanel.add(jPanel5, java.awt.BorderLayout.CENTER);

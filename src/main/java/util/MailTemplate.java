@@ -63,7 +63,7 @@ public class MailTemplate {
                 + "        style=\"width: 100%; height: 300px; object-fit: cover;\">\n"
                 + "      <div style=\"background-color: #ffffff; padding: 20px; margin-top: -5px;\">\n"
                 + "        <p>Kính gửi Quý Khách Hàng,</p>\n"
-                + "        <p>Chúng tôi xin gửi đến bạn chương trình khuyến mãi đặc biệt giảm giá lên tới <b>";
+                + "        <p>Chúng tôi xin gửi đến bạn chương trình khuyến mãi đặc biệt <b>giảm giá lên tới ";
 
         html += (int) (promotion.getDiscount() * 100) + "%</b> cho một số sản phẩm được chọn:</p>";
 
