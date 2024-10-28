@@ -212,8 +212,7 @@ public class TABSupplier extends javax.swing.JPanel {
             }
         });
 
-        btnSupplierAdd.setBackground(new java.awt.Color(0, 51, 255));
-        btnSupplierAdd.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnSupplierAdd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSupplierAdd.setText("Thêm");
         btnSupplierAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,8 +220,9 @@ public class TABSupplier extends javax.swing.JPanel {
             }
         });
 
-        btnSupplierExit.setBackground(new java.awt.Color(255, 0, 0));
-        btnSupplierExit.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnSupplierExit.setBackground(new java.awt.Color(92, 107, 192));
+        btnSupplierExit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSupplierExit.setForeground(new java.awt.Color(255, 255, 255));
         btnSupplierExit.setText("Thoát");
         btnSupplierExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,16 +234,9 @@ public class TABSupplier extends javax.swing.JPanel {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSupplierAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
-                .addComponent(btnSupplierExit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70))
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(90, 90, 90)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,13 +245,23 @@ public class TABSupplier extends javax.swing.JPanel {
                             .addComponent(txtSupNameAdd))
                         .addGap(84, 84, 84)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtSupPhoneAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtSupEmailAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txtSupTaxCodeAdd))
-                .addGap(59, 96, Short.MAX_VALUE))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtSupEmailAdd)
+                            .addComponent(txtSupPhoneAdd)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(111, 715, Short.MAX_VALUE))
+                    .addComponent(txtSupTaxCodeAdd)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSupplierAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSupplierExit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(115, 115, 115))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,11 +286,11 @@ public class TABSupplier extends javax.swing.JPanel {
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSupTaxCodeAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addGap(48, 48, 48)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSupplierExit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSupplierAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(60, Short.MAX_VALUE))
+                    .addComponent(btnSupplierAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSupplierExit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout modelSupplierAddLayout = new javax.swing.GroupLayout(modelSupplierAdd.getContentPane());
@@ -363,8 +366,9 @@ public class TABSupplier extends javax.swing.JPanel {
             }
         });
 
-        btnSupplierEdit.setBackground(new java.awt.Color(0, 0, 255));
+        btnSupplierEdit.setBackground(new java.awt.Color(78, 94, 186));
         btnSupplierEdit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSupplierEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnSupplierEdit.setText("Sửa");
         btnSupplierEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,8 +376,9 @@ public class TABSupplier extends javax.swing.JPanel {
             }
         });
 
-        btnSupplierExit2.setBackground(new java.awt.Color(255, 0, 0));
+        btnSupplierExit2.setBackground(new java.awt.Color(236, 82, 113));
         btnSupplierExit2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSupplierExit2.setForeground(new java.awt.Color(255, 255, 255));
         btnSupplierExit2.setText("Thoát");
         btnSupplierExit2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -390,9 +395,9 @@ public class TABSupplier extends javax.swing.JPanel {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSupplierEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(btnSupplierExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSupplierEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSupplierExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtSupTaxCodeEdit)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,7 +415,8 @@ public class TABSupplier extends javax.swing.JPanel {
                             .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSupEmailEdit)
-                            .addComponent(txtSupPhoneEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtSupPhoneEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(77, 77, 77))
         );
         jPanel8Layout.setVerticalGroup(
@@ -486,7 +492,7 @@ public class TABSupplier extends javax.swing.JPanel {
         jPanel6.add(txtSearchSupplier);
 
         btnOpenModalAddSup.setBackground(new java.awt.Color(115, 165, 71));
-        btnOpenModalAddSup.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnOpenModalAddSup.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnOpenModalAddSup.setForeground(new java.awt.Color(255, 255, 255));
         btnOpenModalAddSup.setText("Tìm kiếm");
         btnOpenModalAddSup.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -651,11 +657,7 @@ public class TABSupplier extends javax.swing.JPanel {
 
         if (!name.equals("") && !address.equals("") && !phone.equals("") && !email.equals("") && !taxCode.equals("")) {
             Supplier supplier = supplierBUS.getSupplierById(supplierEdit);
-            // Kiểm tra tên nhà cung cấp đã tồn tại chưa
-            if(supplierBUS.getSupByName(name) != null) {
-                MessageDialog.warning(null, "Tên nhà cung cấp đã tồn tại trong hệ thống.");
-                return;
-            }
+
             // Cập nhật thông tin nhà cung cấp
             supplier.setName(name);
             supplier.setAddress(address);

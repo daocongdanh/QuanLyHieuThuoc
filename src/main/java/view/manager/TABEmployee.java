@@ -533,7 +533,7 @@ public class TABEmployee extends javax.swing.JPanel {
         panelActionSearch.add(txtSearchEmployee);
 
         btnSearchEmployee.setBackground(new java.awt.Color(115, 165, 71));
-        btnSearchEmployee.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSearchEmployee.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnSearchEmployee.setForeground(new java.awt.Color(255, 255, 255));
         btnSearchEmployee.setText("Tìm kiếm");
         btnSearchEmployee.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -551,7 +551,7 @@ public class TABEmployee extends javax.swing.JPanel {
         }
 
         btnResetPassword.setBackground(new java.awt.Color(115, 165, 71));
-        btnResetPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnResetPassword.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnResetPassword.setForeground(new java.awt.Color(255, 255, 255));
         btnResetPassword.setText("Đặt lại mật khẩu");
         btnResetPassword.setMaximumSize(new java.awt.Dimension(200, 40));

@@ -7,6 +7,7 @@ package view.manager;
 import bus.PrescriptionBUS;
 import bus.ProductBUS;
 import bus.UnitDetailBUS;
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import dto.PrescriptionDTO;
 import entity.Prescription;
@@ -24,6 +25,7 @@ import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import util.MessageDialog;
 import util.ResizeImage;
@@ -69,21 +71,11 @@ public class TABPrecription extends javax.swing.JPanel {
     private void addIconFeature() {
         btnAdd.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/addBtn.svg")), 35, 35));
         btnUpdate.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/editBtn.svg")), 35, 35));
-        btnDelete.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/deleteBtn.svg")), 35, 35));
-        btnImport.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/import.svg")), 35, 35));
-        btnExport.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/export.svg")), 35, 35));
     }
 
     private void setUIManager() {
-//        txtCusAddressAdd.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Địa chỉ");
-//        txtCusAddressEdit.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Địa chỉ");
-//        txtCusEmailAdd.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Email");
-//        txtCusEmailEdit.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Email");
-//        txtCusNameAdd.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên khách hàng");
-//        txtCusNameEdit.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên khách hàng");
-//        txtCusPhoneAdd.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại");
-//        txtCusPhoneEdit.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại");
-//        UIManager.put("Button.arc", 10);
+        txtSearchCus.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm theo tên");
+        UIManager.put("Button.arc", 10);
     }
 
     private void fillTable() {
@@ -300,6 +292,8 @@ public class TABPrecription extends javax.swing.JPanel {
         txtSearchProduct = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         btnAddCustomer1 = new javax.swing.JButton();
+        jLabel22 = new javax.swing.JLabel();
+        txtMoTa = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         scrollPanelAdd = new javax.swing.JScrollPane();
         btnExitModalAdd = new javax.swing.JButton();
@@ -320,14 +314,11 @@ public class TABPrecription extends javax.swing.JPanel {
         headerPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        btnOpenModalAddCus = new javax.swing.JButton();
         txtSearchCus = new javax.swing.JTextField();
+        btnOpenModalAddCus = new javax.swing.JButton();
         actionPanel = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnImport = new javax.swing.JButton();
-        btnExport = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         scrollTable = new javax.swing.JScrollPane();
 
@@ -366,27 +357,44 @@ public class TABPrecription extends javax.swing.JPanel {
             }
         });
 
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel22.setText("Mô tả");
+
+        txtMoTa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtNamePrescription)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel19))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(txtSearchProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAddCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18)
+                            .addComponent(txtNamePrescription, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22)
+                            .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNamePrescription, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtMoTa)
+                    .addComponent(txtNamePrescription, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -636,19 +644,29 @@ public class TABPrecription extends javax.swing.JPanel {
         jPanel6.setPreferredSize(new java.awt.Dimension(584, 50));
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));
 
-        btnOpenModalAddCus.setBackground(new java.awt.Color(115, 165, 71));
-        btnOpenModalAddCus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnOpenModalAddCus.setForeground(new java.awt.Color(255, 255, 255));
-        btnOpenModalAddCus.setText("Thêm khách hàng");
-        jPanel6.add(btnOpenModalAddCus);
-
         txtSearchCus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSearchCus.setMinimumSize(new java.awt.Dimension(300, 40));
+        txtSearchCus.setPreferredSize(new java.awt.Dimension(300, 40));
         txtSearchCus.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearchCusKeyReleased(evt);
             }
         });
         jPanel6.add(txtSearchCus);
+
+        btnOpenModalAddCus.setBackground(new java.awt.Color(115, 165, 71));
+        btnOpenModalAddCus.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnOpenModalAddCus.setForeground(new java.awt.Color(255, 255, 255));
+        btnOpenModalAddCus.setText("Tìm kiếm");
+        btnOpenModalAddCus.setMaximumSize(new java.awt.Dimension(150, 40));
+        btnOpenModalAddCus.setMinimumSize(new java.awt.Dimension(150, 40));
+        btnOpenModalAddCus.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnOpenModalAddCus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenModalAddCusActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnOpenModalAddCus);
 
         jPanel5.add(jPanel6);
 
@@ -690,44 +708,6 @@ public class TABPrecription extends javax.swing.JPanel {
         });
         actionPanel.add(btnUpdate);
 
-        btnDelete.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnDelete.setText("XÓA");
-        btnDelete.setBorder(null);
-        btnDelete.setBorderPainted(false);
-        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDelete.setFocusPainted(false);
-        btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnDelete.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionPanel.add(btnDelete);
-
-        btnImport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnImport.setText("IMPORT");
-        btnImport.setBorder(null);
-        btnImport.setBorderPainted(false);
-        btnImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnImport.setFocusPainted(false);
-        btnImport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnImport.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnImport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnImport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportActionPerformed(evt);
-            }
-        });
-        actionPanel.add(btnImport);
-
-        btnExport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnExport.setText("EXPORT");
-        btnExport.setBorder(null);
-        btnExport.setBorderPainted(false);
-        btnExport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnExport.setFocusPainted(false);
-        btnExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExport.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionPanel.add(btnExport);
-
         headerPanel.add(actionPanel, java.awt.BorderLayout.WEST);
 
         pnAll.add(headerPanel, java.awt.BorderLayout.PAGE_START);
@@ -738,9 +718,9 @@ public class TABPrecription extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1167, Short.MAX_VALUE)
+            .addGap(0, 1306, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(scrollTable, javax.swing.GroupLayout.DEFAULT_SIZE, 1167, Short.MAX_VALUE))
+                .addComponent(scrollTable, javax.swing.GroupLayout.DEFAULT_SIZE, 1306, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -757,10 +737,6 @@ public class TABPrecription extends javax.swing.JPanel {
     private void txtSearchCusKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchCusKeyReleased
 
     }//GEN-LAST:event_txtSearchCusKeyReleased
-
-    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-
-    }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
@@ -810,6 +786,7 @@ public class TABPrecription extends javax.swing.JPanel {
         // TODO add your handling code here:
         List<PrescriptionDTO> listPrecription = getPrescriptionDTOsFromTableModal(tableDesignAdd);
         String namePre = txtNamePrescription.getText().trim();
+        String mt = txtMoTa.getText().trim();
 
         if (namePre.equals("")) {
             MessageDialog.warning(null, "Tên đơn thuốc mẫu không được để trống !!!");
@@ -942,18 +919,21 @@ public class TABPrecription extends javax.swing.JPanel {
         modalEditPrecription.dispose();
     }//GEN-LAST:event_btnExitModalEditActionPerformed
 
+    private void btnOpenModalAddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenModalAddCusActionPerformed
+        String name = txtSearchCus.getText().trim();
+        List<Prescription> prescriptions = prescriptionBUS.getByNameSearch(name);
+        fillContent(prescriptions);
+    }//GEN-LAST:event_btnOpenModalAddCusActionPerformed
+
     private String prescriptionIdEdit;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionPanel;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAddCustomer1;
     private javax.swing.JButton btnAddPrecription;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEditPrescription;
     private javax.swing.JButton btnExitModalAdd;
     private javax.swing.JButton btnExitModalEdit;
-    private javax.swing.JButton btnExport;
-    private javax.swing.JButton btnImport;
     private javax.swing.JButton btnOpenModalAddCus;
     private javax.swing.JButton btnSearchProductModal;
     private javax.swing.JButton btnUpdate;
@@ -962,6 +942,7 @@ public class TABPrecription extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -977,6 +958,7 @@ public class TABPrecription extends javax.swing.JPanel {
     private javax.swing.JScrollPane scrollPanelAdd;
     private javax.swing.JScrollPane scrollPanelEdit;
     private javax.swing.JScrollPane scrollTable;
+    private javax.swing.JTextField txtMoTa;
     private javax.swing.JTextField txtNamePrescription;
     private javax.swing.JTextField txtNamePrescriptionEdit;
     private javax.swing.JTextField txtSearchCus;

@@ -25,6 +25,7 @@ import view.common.MenuChoice;
 
 import static view.common.MenuChoice.menuSwitch;
 import view.login.LoadApplication;
+import view.staff.TABStaffSupplier;
 
 /**
  *
@@ -76,7 +77,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuPanelMap.put(menuPurchase, () -> new TABPurchaseOrder());
         menuPanelMap.put(menuReturn, () -> new TABReturnOrder());
         menuPanelMap.put(menuStaff, () -> new TABEmployee());
-// menuPanelMap.put(menuSupplier, () -> new TABSupplierPanel());
+        menuPanelMap.put(menuSupplier, () -> new TABSupplier());
         menuPanelMap.put(menuUnit, () -> new TABUnit());
         menuPanelMap.put(menuPromotion, () -> new TABPromotion());
         menuPanelMap.put(menuReport, () -> new TABReport());

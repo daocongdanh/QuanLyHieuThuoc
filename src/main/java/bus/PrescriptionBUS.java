@@ -103,4 +103,8 @@ public class PrescriptionBUS {
     public List<PrescriptionDetail> getAllPrescripDetailsByPrescription(String prescriptionId) {
         return prescriptionDetailDAL.findAllByPrescription(prescriptionId);
     }
+    
+    public List<Prescription> getByNameSearch(String name) {
+        return prescriptionDAL.findbyNameSearch(name);
+    }
 }

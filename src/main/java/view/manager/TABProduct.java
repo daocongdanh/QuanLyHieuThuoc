@@ -66,12 +66,13 @@ public class TABProduct extends javax.swing.JPanel {
     }
 
     private void setUIManager() {
-        txtSearchSupplier.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm theo tên, email, số điện thoại");
+        txtSearchNamePD.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên sản phẩm");
+        txtSearchSDKPD.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số đăng ký");
         txtCountryOfOrigin.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập xuất xứ");
 //        txtProductActive.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập hoat động");
         txtProductActiveIngre.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập hoạt chất");
         txtProductDosage.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập liều lượng");
-        txtProductManufacturer.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập tên nhà cung cấp");
+        txtProductManufacturer.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập tên nhà sản xuất");
         txtProductName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập tên sản phẩm");
         txtProductPakaging.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập quy trình đóng gói");
         txtProductPurchasePrice.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập giá nhập vào");
@@ -110,7 +111,8 @@ public class TABProduct extends javax.swing.JPanel {
                 product.isActive() ? "Đang hoạt động" : "Ngừng hoạt động"});
         }
     }
-
+    
+    int c = 0;
     private void updateTab1Data() {
         JTable table = tableDesign.getTable();
         int selectedRow = table.getSelectedRow();
@@ -160,6 +162,7 @@ public class TABProduct extends javax.swing.JPanel {
 
         } else {
             MessageDialog.error(null, "Vui lòng chọn một sản phẩm để sửa.");
+            c = 1;
         }
     }
 
@@ -276,7 +279,7 @@ public class TABProduct extends javax.swing.JPanel {
         jLabel23 = new javax.swing.JLabel();
         txtProductPakaging1 = new javax.swing.JTextField();
         btnExitProductADD1 = new javax.swing.JButton();
-        btnAddProduct1 = new javax.swing.JButton();
+        btnEditProduct = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
         cbbProductTypeEdit = new javax.swing.JComboBox<>();
         jLabel25 = new javax.swing.JLabel();
@@ -321,7 +324,10 @@ public class TABProduct extends javax.swing.JPanel {
         headerPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        txtSearchSupplier = new javax.swing.JTextField();
+        txtSearchNamePD = new javax.swing.JTextField();
+        txtSearchSDKPD = new javax.swing.JTextField();
+        optionPdType = new javax.swing.JComboBox<>();
+        optionPdStatus = new javax.swing.JComboBox<>();
         btnOpenModalAddSup = new javax.swing.JButton();
         actionPanel = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
@@ -330,10 +336,8 @@ public class TABProduct extends javax.swing.JPanel {
         ProductScrollPane = new javax.swing.JScrollPane();
 
         modelEditProduct.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        modelEditProduct.setMaximumSize(new java.awt.Dimension(1350, 850));
         modelEditProduct.setMinimumSize(new java.awt.Dimension(1350, 850));
         modelEditProduct.setModal(true);
-        modelEditProduct.setPreferredSize(new java.awt.Dimension(1350, 850));
 
         tabEdit.setBackground(new java.awt.Color(255, 255, 255));
         tabEdit.setMaximumSize(new java.awt.Dimension(1350, 850));
@@ -461,12 +465,12 @@ public class TABProduct extends javax.swing.JPanel {
             }
         });
 
-        btnAddProduct1.setBackground(new java.awt.Color(92, 107, 192));
-        btnAddProduct1.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddProduct1.setText("Thêm");
-        btnAddProduct1.addActionListener(new java.awt.event.ActionListener() {
+        btnEditProduct.setBackground(new java.awt.Color(92, 107, 192));
+        btnEditProduct.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditProduct.setText("Sửa");
+        btnEditProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddProduct1ActionPerformed(evt);
+                btnEditProductActionPerformed(evt);
             }
         });
 
@@ -511,7 +515,7 @@ public class TABProduct extends javax.swing.JPanel {
                 .addContainerGap(134, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(btnAddProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExitProductADD1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
@@ -609,7 +613,7 @@ public class TABProduct extends javax.swing.JPanel {
                         .addGap(68, 68, 68)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnExitProductADD1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAddProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(lblImageEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -964,21 +968,55 @@ public class TABProduct extends javax.swing.JPanel {
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 16, 24));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setPreferredSize(new java.awt.Dimension(584, 50));
+        jPanel6.setMinimumSize(new java.awt.Dimension(600, 50));
+        jPanel6.setPreferredSize(new java.awt.Dimension(900, 50));
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));
 
-        txtSearchSupplier.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtSearchSupplier.setMinimumSize(new java.awt.Dimension(300, 40));
-        txtSearchSupplier.setPreferredSize(new java.awt.Dimension(300, 40));
-        txtSearchSupplier.addActionListener(new java.awt.event.ActionListener() {
+        txtSearchNamePD.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtSearchNamePD.setMinimumSize(new java.awt.Dimension(170, 40));
+        txtSearchNamePD.setPreferredSize(new java.awt.Dimension(170, 40));
+        txtSearchNamePD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchSupplierActionPerformed(evt);
+                txtSearchNamePDActionPerformed(evt);
             }
         });
-        jPanel6.add(txtSearchSupplier);
+        jPanel6.add(txtSearchNamePD);
+
+        txtSearchSDKPD.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtSearchSDKPD.setMinimumSize(new java.awt.Dimension(170, 40));
+        txtSearchSDKPD.setName(""); // NOI18N
+        txtSearchSDKPD.setPreferredSize(new java.awt.Dimension(170, 40));
+        txtSearchSDKPD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchSDKPDActionPerformed(evt);
+            }
+        });
+        jPanel6.add(txtSearchSDKPD);
+
+        optionPdType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        optionPdType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Thuốc", "Vật tư y tế", "Thực phẩm chức năng", "Chăm sóc trẻ em", "Thiết bị y tế" }));
+        optionPdType.setMinimumSize(new java.awt.Dimension(170, 40));
+        optionPdType.setPreferredSize(new java.awt.Dimension(170, 40));
+        optionPdType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optionPdTypeActionPerformed(evt);
+            }
+        });
+        jPanel6.add(optionPdType);
+
+        optionPdStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        optionPdStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Đang hoạt động", "Ngưng bán" }));
+        optionPdStatus.setMinimumSize(new java.awt.Dimension(170, 40));
+        optionPdStatus.setPreferredSize(new java.awt.Dimension(170, 40));
+        optionPdStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optionPdStatusActionPerformed(evt);
+            }
+        });
+        jPanel6.add(optionPdStatus);
 
         btnOpenModalAddSup.setBackground(new java.awt.Color(115, 165, 71));
-        btnOpenModalAddSup.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnOpenModalAddSup.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnOpenModalAddSup.setForeground(new java.awt.Color(255, 255, 255));
         btnOpenModalAddSup.setText("Tìm kiếm");
         btnOpenModalAddSup.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -996,7 +1034,7 @@ public class TABProduct extends javax.swing.JPanel {
         headerPanel.add(jPanel5, java.awt.BorderLayout.CENTER);
 
         actionPanel.setBackground(new java.awt.Color(255, 255, 255));
-        actionPanel.setPreferredSize(new java.awt.Dimension(600, 100));
+        actionPanel.setPreferredSize(new java.awt.Dimension(300, 100));
         actionPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 6, 5));
 
         btnAdd.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -1067,17 +1105,37 @@ public class TABProduct extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOpenModalAddSupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenModalAddSupActionPerformed
-//        searchSuppliers();
+        String name = txtSearchNamePD.getText().trim();
+        String sdk = txtSearchSDKPD.getText().trim();
+        ProductType productType = null;
+        Boolean active = null;
+        
+        if(optionPdType.getSelectedIndex() == 1) productType = ProductType.MEDICINE;
+        if(optionPdType.getSelectedIndex() == 2) productType = ProductType.MEDICALSUPPLIES;
+        if(optionPdType.getSelectedIndex() == 3) productType = ProductType.DIETARYSUPPLEMENT;
+        if(optionPdType.getSelectedIndex() == 4) productType = ProductType.BABYCARE;
+        if(optionPdType.getSelectedIndex() == 5) productType = ProductType.MEDICALEQUIPMENT;
+        
+        if(optionPdStatus.getSelectedIndex() == 1) active = true;
+        if(optionPdStatus.getSelectedIndex() == 2) active = false;
+        
+        List<Product> products = productBUS.searchProductsBy4Field(name, sdk, productType, active);
+        
+        fillContent(products);
     }//GEN-LAST:event_btnOpenModalAddSupActionPerformed
 
-    private void txtSearchSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchSupplierActionPerformed
-//        searchSuppliers();
-    }//GEN-LAST:event_txtSearchSupplierActionPerformed
+    private void txtSearchNamePDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchNamePDActionPerformed
+
+    }//GEN-LAST:event_txtSearchNamePDActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+
         clearDataModelEdit();
         updateTab1Data();
+        if(c==1) {
+            c = 0;
+            return;
+        }
         updateTab2Data();
         updateTab3Data();
         modelEditProduct.setLocationRelativeTo(null);
@@ -1228,7 +1286,9 @@ public class TABProduct extends javax.swing.JPanel {
         String countryOfOrigin = txtCountryOfOrigin.getText().trim();
         String packaging = txtProductPakaging.getText().trim();
         String productTypeString = cbbProductTypeAdd.getSelectedItem().toString().trim();
-        String registrationNumber = txtProductRegisNumber.getText().trim();;
+        String registrationNumber = txtProductRegisNumber.getText().trim();
+        
+        Product p = productBUS.getProductBySDK(registrationNumber);
 
         try {
             double purchasePrice = Double.parseDouble(txtProductPurchasePrice.getText().trim());
@@ -1241,18 +1301,18 @@ public class TABProduct extends javax.swing.JPanel {
                 image = getImageFileName(imageProductAdd);
             }
             Product product = new Product();
-            product.setName(name);
-            product.setRegistrationNumber(registrationNumber);
-            product.setActiveIngredient(activeIngredient);
-            product.setDosage(dosage);
-            product.setPackaging(packaging);
-            product.setCountryOfOrigin(countryOfOrigin);
-            product.setManufacturer(manufacturer);
-            product.setPurchasePrice(purchasePrice);
-            product.setSellingPrice(sellingPrice);
-            product.setActive(true);
-            product.setImage(image);
-            product.setProductType(productType);
+            p.setName(name);
+            p.setRegistrationNumber(registrationNumber);
+            p.setActiveIngredient(activeIngredient);
+            p.setDosage(dosage);
+            p.setPackaging(packaging);
+            p.setCountryOfOrigin(countryOfOrigin);
+            p.setManufacturer(manufacturer);
+            p.setPurchasePrice(purchasePrice);
+            p.setSellingPrice(sellingPrice);
+            p.setActive(true);
+            p.setImage(image);
+            p.setProductType(productType);
 
             List<UnitDTO> unitDTOList = createUnitDTOList(pnHaveUnit);
             if (unitDTOList == null) {
@@ -1265,13 +1325,13 @@ public class TABProduct extends javax.swing.JPanel {
                     .size() < unitDTOList.size();
 
             if (!hasDuplicates) {
-                if (productBUS.createProduct(product, unitDTOList)) {
-                    MessageDialog.info(null, "Thêm mới sản phẩm thành công");
+                if (productBUS.updateProduct(product)) {
+                    MessageDialog.info(null, "Cập nhật sản phẩm thành công!");
                     clearDataModelAdd();
                     ImageUtil.saveImage(imageProductAdd, removeExtension(image),getExtension(image));
-                    modelProductAdd.dispose();
+                    modelEditProduct.dispose();
                     fillContent(productBUS.getAllProducts());
-                };
+                }
             } else {
                 MessageDialog.info(null, "Có đơn vị tính bị trùng");
                 return;
@@ -1478,12 +1538,75 @@ public class TABProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_txtProductPakaging1ActionPerformed
 
     private void btnExitProductADD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitProductADD1ActionPerformed
-        // TODO add your handling code here:
+        clearDataModelEdit();
+        modelEditProduct.dispose();
     }//GEN-LAST:event_btnExitProductADD1ActionPerformed
 
-    private void btnAddProduct1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProduct1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddProduct1ActionPerformed
+    private void btnEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductActionPerformed
+        String name = txtProductName.getText().trim();
+        String manufacturer = txtProductManufacturer.getText().trim();
+        String activeIngredient = txtProductActiveIngre.getText().trim();
+        String dosage = txtProductDosage.getText().trim();
+        String countryOfOrigin = txtCountryOfOrigin.getText().trim();
+        String packaging = txtProductPakaging.getText().trim();
+        String productTypeString = cbbProductTypeAdd.getSelectedItem().toString().trim();
+        String registrationNumber = txtProductRegisNumber.getText().trim();
+        
+        
+
+        try {
+            double purchasePrice = Double.parseDouble(txtProductPurchasePrice.getText().trim());
+            double sellingPrice = Double.parseDouble(txtProductSellingPrice.getText().trim());
+
+            ProductType productType = ProductType.valueOf(productTypeString.toUpperCase());
+
+            String image = "default.jpg";
+            if (imageProductAdd != null) {
+                image = getImageFileName(imageProductAdd);
+            }
+            Product product = new Product();
+            product.setName(name);
+            product.setRegistrationNumber(registrationNumber);
+            product.setActiveIngredient(activeIngredient);
+            product.setDosage(dosage);
+            product.setPackaging(packaging);
+            product.setCountryOfOrigin(countryOfOrigin);
+            product.setManufacturer(manufacturer);
+            product.setPurchasePrice(purchasePrice);
+            product.setSellingPrice(sellingPrice);
+            product.setActive(true);
+            product.setImage(image);
+            product.setProductType(productType);
+
+            List<UnitDTO> unitDTOList = createUnitDTOList(pnHaveUnit);
+            if (unitDTOList == null) {
+                return;
+            }
+
+            boolean hasDuplicates = unitDTOList.stream()
+                    .map(UnitDTO::getName)
+                    .collect(Collectors.toSet())
+                    .size() < unitDTOList.size();
+
+            if (!hasDuplicates) {
+                if (productBUS.createProduct(product, unitDTOList)) {
+                    MessageDialog.info(null, "Thêm mới sản phẩm thành công");
+                    clearDataModelAdd();
+                    ImageUtil.saveImage(imageProductAdd, removeExtension(image),getExtension(image));
+                    modelProductAdd.dispose();
+                    fillContent(productBUS.getAllProducts());
+                };
+            } else {
+                MessageDialog.info(null, "Có đơn vị tính bị trùng");
+                return;
+            }
+
+        } catch (NumberFormatException e) {
+            MessageDialog.error(null, "Giá trị không hợp lệ: " + e.getMessage());
+        } catch (Exception e) {
+            MessageDialog.error(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnEditProductActionPerformed
 
     private void cbbProductTypeEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbProductTypeEditActionPerformed
         // TODO add your handling code here:
@@ -1493,6 +1616,18 @@ public class TABProduct extends javax.swing.JPanel {
         // TODO add your handling code here:
         addPnUnit(pnHaveUnitEdit, 2);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtSearchSDKPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchSDKPDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchSDKPDActionPerformed
+
+    private void optionPdTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionPdTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_optionPdTypeActionPerformed
+
+    private void optionPdStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionPdStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_optionPdStatusActionPerformed
 
     public JPanel getPnHaveUnit() {
         return pnHaveUnit;
@@ -1512,7 +1647,7 @@ public class TABProduct extends javax.swing.JPanel {
     private javax.swing.JButton btnAddImage;
     private javax.swing.JButton btnAddImage1;
     private javax.swing.JButton btnAddProduct;
-    private javax.swing.JButton btnAddProduct1;
+    private javax.swing.JButton btnEditProduct;
     private javax.swing.JButton btnExitProductADD;
     private javax.swing.JButton btnExitProductADD1;
     private javax.swing.JButton btnOpenModalAddSup;
@@ -1555,6 +1690,8 @@ public class TABProduct extends javax.swing.JPanel {
     private javax.swing.JLabel lblImageEdit;
     private javax.swing.JDialog modelEditProduct;
     private javax.swing.JDialog modelProductAdd;
+    private javax.swing.JComboBox<String> optionPdStatus;
+    private javax.swing.JComboBox<String> optionPdType;
     private javax.swing.JPanel pnAll;
     private javax.swing.JPanel pnHaveUnit;
     private javax.swing.JPanel pnHaveUnitEdit;
@@ -1579,7 +1716,8 @@ public class TABProduct extends javax.swing.JPanel {
     private javax.swing.JTextField txtProductRegisNumber1;
     private javax.swing.JTextField txtProductSellingPrice;
     private javax.swing.JTextField txtProductSellingPrice1;
-    private javax.swing.JTextField txtSearchSupplier;
+    private javax.swing.JTextField txtSearchNamePD;
+    private javax.swing.JTextField txtSearchSDKPD;
     // End of variables declaration//GEN-END:variables
 
 }
