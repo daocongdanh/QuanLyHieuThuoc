@@ -215,6 +215,7 @@ public class TabDamageItem extends javax.swing.JPanel {
             PnDamageItemDetail pnDamageItemDetail = new PnDamageItemDetail(key, value, this);
             pnContent.add(pnDamageItemDetail);
         });
+        changeTongTienHoaDon();
         pnContent.revalidate();
         pnContent.repaint();
     }

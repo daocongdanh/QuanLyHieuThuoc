@@ -20,6 +20,7 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import view.login.LoginForm;
 import view.manager.TABStats;
 import view.staff.damageItem.TabDamageItem;
 
@@ -60,7 +61,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
     }
 
     private void addMenuClick() {
-
+        
         JPanel loadingPanel = new JPanel();
         loadingPanel.setLayout(new GridBagLayout());
         JLabel loadingLabel = new JLabel("Đang tải...");
@@ -73,7 +74,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         
         List<MenuChoice> menuList = Arrays.asList(
                 menuReport, menuCustomer, menuDamaged, menuProduct, menuPurchase,
-                menuReturn, menuSupplier, menuSell, menuExit
+                menuReturn, menuSupplier, menuSell
         );
         Map<MenuChoice, Supplier<JPanel>> menuPanelMap = new HashMap<>();
         menuPanelMap.put(menuReport, () -> new TABIndividualReport());
@@ -148,6 +149,12 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         pnLeft.setBackground(new java.awt.Color(211, 237, 187));
         pnLeft.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 232, 232), 2));
 
+        menuExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuExitMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnLeftLayout = new javax.swing.GroupLayout(pnLeft);
         pnLeft.setLayout(pnLeftLayout);
         pnLeftLayout.setHorizontalGroup(
@@ -208,6 +215,14 @@ public class MenuManagerStaff extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuExitMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        LoginForm login = new LoginForm();
+        login.setLocationRelativeTo(null);
+        login.setVisible(true);
+    }//GEN-LAST:event_menuExitMouseClicked
 
     /**
      * @param args the command line arguments

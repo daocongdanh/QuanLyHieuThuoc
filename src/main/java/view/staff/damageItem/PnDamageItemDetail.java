@@ -31,6 +31,7 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
         this.tabDamageItem = tabDamageItem;
         initComponents();
         fillFirst();
+
     }
 
     public int getSoLuong() {
@@ -59,7 +60,7 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
         }
         spinnerSoLuong.setValue(qty);
         setLineTotal();
-        tabDamageItem.changeTongTienHoaDon();
+
     }
 
     @SuppressWarnings("unchecked")

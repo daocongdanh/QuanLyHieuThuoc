@@ -178,6 +178,7 @@ public class TABProduct extends javax.swing.JPanel {
         ScrollPaneTab2.setViewportView(tablleDesignTab2.getTable());
 
         List<ProductTransactionHistory> transactions = transactionBUS.getProductTransactionHistoryByProductId(productEdit);
+        transactions.sort((o1, o2) -> o1.getTransactionDate().compareTo(o2.getTransactionDate()));
         fillTab2Content(transactions);
     }
 
@@ -1057,11 +1058,11 @@ public class TABProduct extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOpenModalAddSupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenModalAddSupActionPerformed
-//        searchSuppliers();
+
     }//GEN-LAST:event_btnOpenModalAddSupActionPerformed
 
     private void txtSearchSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchSupplierActionPerformed
-//        searchSuppliers();
+
     }//GEN-LAST:event_txtSearchSupplierActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed

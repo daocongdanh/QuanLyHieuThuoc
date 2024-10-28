@@ -47,7 +47,7 @@ public class ReturnOrderDetailBUS {
             }
 
             Batch batch = returnOrderDetail.getBatch();
-            batch.setStock(batch.getStock() + returnOrderDetail.getQuantity());
+            batch.setStock(batch.getStock() + returnOrderDetail.getQuantity() * returnOrderDetail.getUnitDetail().getConversionRate());
             batchDAL.update(batch);
 
             Product product = returnOrderDetail.getUnitDetail().getProduct();
@@ -58,11 +58,15 @@ public class ReturnOrderDetailBUS {
                 productTransactionHistory = new ProductTransactionHistory();
                 productTransactionHistory.setTransactionId(returnOrder.getReturnOrderId());
                 productTransactionHistory.setProduct(product);
-                productTransactionHistory.setQuantity(returnOrderDetail.getQuantity());
+                productTransactionHistory.setQuantity(returnOrderDetail.getQuantity() *
+                        returnOrderDetail.getUnitDetail().getConversionRate());
                 productTransactionHistory.setTransactionDate(returnOrder.getOrderDate());
-                productTransactionHistory.setTransactionPrice(returnOrderDetail.getLineTotal());
+                productTransactionHistory.setTransactionPrice( returnOrderDetail.getQuantity() *
+                        returnOrderDetail.getUnitDetail().getConversionRate()
+                        * product.getSellingPrice());
                 productTransactionHistory.setTransactionType("Trả hàng");
-                productTransactionHistory.setCostPrice(product.getPurchasePrice() * returnOrderDetail.getQuantity());
+                productTransactionHistory.setCostPrice(product.getPurchasePrice() * returnOrderDetail.getQuantity()
+                                                            * returnOrderDetail.getUnitDetail().getConversionRate());
                 productTransactionHistory.setFinalStock(batchDAL.getFinalStockByProduct(product.getProductId()));
                 productTransactionHistory.setPartner( returnOrder.getOrder().getCustomer() == null ? "Khách vãng lai" :
                         (returnOrder.getOrder().getCustomer().getName()));
@@ -71,8 +75,12 @@ public class ReturnOrderDetailBUS {
             }
             else {
                 productTransactionHistory.setFinalStock(batchDAL.getFinalStockByProduct(product.getProductId()));
-                productTransactionHistory.setQuantity(productTransactionHistory.getQuantity() + returnOrderDetail.getQuantity());
-                productTransactionHistory.setTransactionPrice(productTransactionHistory.getTransactionPrice() + returnOrderDetail.getLineTotal());
+                productTransactionHistory.setQuantity(productTransactionHistory.getQuantity() +
+                        returnOrderDetail.getQuantity() * returnOrderDetail.getUnitDetail().getConversionRate());
+                productTransactionHistory.setTransactionPrice(productTransactionHistory.getTransactionPrice()
+                        + returnOrderDetail.getQuantity() *
+                        returnOrderDetail.getUnitDetail().getConversionRate()
+                        * product.getSellingPrice());
                 productTransactionHistoryDAL.update(productTransactionHistory);
             }
 

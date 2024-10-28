@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import java.util.List;
+import util.MessageDialog;
 
 /**
  *
@@ -175,7 +176,7 @@ public class PnPurchaseSelectBatch extends javax.swing.JPanel {
         lblQuantity.setText("Số lượng nhập");
 
         spinnerQuantity.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        spinnerQuantity.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+        spinnerQuantity.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         spinnerQuantity.setFocusable(false);
 
         btnConfirmQuantityBatch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -309,6 +310,13 @@ public class PnPurchaseSelectBatch extends javax.swing.JPanel {
     private void btnConfirmQuantityBatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmQuantityBatchActionPerformed
         // TODO add your handling code here:
         modalSoLuong.dispose();
+        try{
+            jSpinner.commitEdit();
+        }
+        catch( Exception e ){
+            return;
+        }
+        
         int quantity = (int)spinnerQuantity.getValue();
         jSpinner.setValue((int) jSpinner.getValue() - batchDTO.getQuantity() + quantity);
         Container parent = this.getParent();

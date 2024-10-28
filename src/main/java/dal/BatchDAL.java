@@ -68,13 +68,22 @@ public class BatchDAL implements BaseDAL<Batch, String>{
 
     }
 
-    public int getFinalStockByProduct(String productId){
-        TypedQuery<Long> query = entityManager.createQuery("select sum(b.stock) from Batch b "
-                + "where b.product.productId = ?1 and b.expirationDate > CURRENT_DATE group by b.product.productId", Long.class);
+    public int getFinalStockByProduct(String productId) {
+        TypedQuery<Long> query = entityManager.createQuery(
+                "select sum(b.stock) from Batch b "
+                        + "where b.product.productId = ?1 and b.expirationDate > CURRENT_DATE group by b.product.productId",
+                Long.class
+        );
         query.setParameter(1, productId);
-        return query.getSingleResult().intValue();
-    }   
-    
+
+        // Sử dụng getResultList để tránh lỗi nếu không có kết quả
+        List<Long> result = query.getResultList();
+
+        // Kiểm tra nếu không có kết quả, trả về 0, ngược lại trả về giá trị kết quả
+        return result.isEmpty() ? 0 : result.get(0).intValue();
+    }
+
+
     public Batch findByName (String batchName){
         TypedQuery<Batch> query = 
                 entityManager.createQuery("select b from Batch b where b.name = ?1", Batch.class);

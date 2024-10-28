@@ -17,11 +17,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import util.ResizeImage;
 import util.FormatNumber;
@@ -76,7 +79,7 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
     public JComboBox<UnitDetail> getComboChonDvt() {
         return comboChonDvt;
     }
-    
+
     private void customUI() {
         txtNameNewBatch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập tên lô mới");
     }
@@ -213,7 +216,7 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         lblQuantity2.setText("Số lượng");
 
         spinnerQuantityNewBatch.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        spinnerQuantityNewBatch.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+        spinnerQuantityNewBatch.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         spinnerQuantityNewBatch.setFocusable(false);
 
         btnConfirmCreateNewBatch.setText("Xác nhận");
@@ -420,7 +423,7 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
         int quantity = (int) spinnerSoLuong.getValue();
         txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * product.getPurchasePriceVAT()));
-        txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()* quantity * product.getPurchasePriceVAT()));
+        txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * quantity * product.getPurchasePriceVAT()));
     }
 
     private void fillBatch() {
@@ -586,11 +589,17 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
 
     private void btnConfirmCreateNewBatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmCreateNewBatchActionPerformed
         String nameNewBatch = txtNameNewBatch.getText().trim();
-        if(nameNewBatch.equals("")) {
+        try {
+            spinnerQuantityNewBatch.commitEdit();
+        } catch (ParseException ex) {
+            return;
+        }
+
+        if (nameNewBatch.equals("")) {
             MessageDialog.error(null, "Tên lô mới không được rỗng!");
             return;
         }
-        int stockNewBatch = (int)spinnerQuantityNewBatch.getValue();
+        int stockNewBatch = (int) spinnerQuantityNewBatch.getValue();
         int quantityNewBatch = stockNewBatch;
         try {
             Date date = ExperationDateNewBatch.getDate();
@@ -601,7 +610,7 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
             }
             BatchDTO b = new BatchDTO(nameNewBatch, stockNewBatch, expDateNewBatch, quantityNewBatch);
             UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-        
+
             pnListBatch.add(new PnPurchaseSelectBatch(b, unitDetail, spinnerSoLuong));
             pnListBatch.revalidate();
             pnListBatch.repaint();
@@ -612,7 +621,7 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         } catch (Exception e) {
             MessageDialog.error(null, "Ngày hết hạn không hợp lệ!");
         }
-        
+
         int value = 0;
         for (Component component : pnListBatch.getComponents()) {
             if (component instanceof PnPurchaseSelectBatch) {

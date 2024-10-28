@@ -124,6 +124,9 @@
             <Component class="view.common.MenuChoice" name="menuDamaged">
             </Component>
             <Component class="view.common.MenuChoice" name="menuExit">
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuExitMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

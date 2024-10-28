@@ -62,9 +62,9 @@ public class ReturnOrderBUS {
                     Batch batch = batchDAL.findByNameAndProduct(detailDTO.getBatchName(), detailDTO.getProduct().getProductId());
                     UnitDetail unitDetail = detailDTO.getUnitDetail();
                     returnOrderDetail.setBatch(batch);
-                    returnOrderDetail.setQuantity(detailDTO.getQuantityReturn());
+                    returnOrderDetail.setQuantity(detailDTO.getQuantityReturn() );
                     returnOrderDetail.setUnitDetail(unitDetail);
-                    returnOrderDetail.setPrice(detailDTO.getProduct().getPrice());
+                    returnOrderDetail.setPrice(detailDTO.getProduct().getSellingPrice()* unitDetail.getConversionRate());
                     returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.PENDING);
                     returnOrderDetail.setLineTotal();
                     returnOrderDetail.setReason(detailDTO.getReason());

@@ -149,10 +149,6 @@ public class OrderBUS {
                 .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));
     }
 
-    public Order findByIdAndNotInPromotion(String orderId) {
-        return orderDAL.findByIdAndNotInPromotion(orderId)
-                .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));
-    }
 
     public StatsPriceAndQuantityDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
         List<Order> orders = orderDAL.searchByDate(start, end);

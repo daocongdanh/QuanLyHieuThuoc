@@ -57,14 +57,6 @@ public class OrderDAL implements BaseDAL<Order, String> {
         return entityManager.createQuery("select o from Order o", Order.class).getResultList();
     }
 
-    public Optional<Order> findByIdAndNotInPromotion(String id) {
-        TypedQuery<Order> query = entityManager.createQuery(
-                "SELECT o FROM Order o WHERE o.orderId = ?1 AND o.promotion IS NULL", Order.class);
-        query.setParameter(1, id);
-
-        List<Order> results = query.getResultList();
-        return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
-    }
 
     public List<Order> search(LocalDateTime start, LocalDateTime end, String txtCustomer, String txtEmployee) {
         StringBuilder jpql = new StringBuilder("select o from Order o where (o.orderDate between ?1 and ?2) ");
