@@ -165,7 +165,7 @@ public class GeneratePDF {
                 productNameCell.setBorder(Rectangle.NO_BORDER);
                 productTable.addCell(productNameCell);
                 
-                PdfPCell unitCell = new PdfPCell(new Phrase( item.getUnitDetail().getUnit().getName()));
+                PdfPCell unitCell = new PdfPCell(new Phrase( item.getBatch().getProduct().getUnit().getName()));
                 unitCell.setBorder(Rectangle.NO_BORDER);
                 productTable.addCell(unitCell);
 

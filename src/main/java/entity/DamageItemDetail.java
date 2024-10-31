@@ -35,11 +35,6 @@ public class DamageItemDetail {
     private Batch batch;
     
     @ManyToOne
-    @JoinColumn(name = "unit_detail_id")
-    @Id
-    private UnitDetail unitDetail;
-    
-    @ManyToOne
     @JoinColumn(name = "damage_item_id")
     @Id
     private DamageItem damageItem;
@@ -47,11 +42,10 @@ public class DamageItemDetail {
     public DamageItemDetail() {
     }
 
-    public DamageItemDetail(int quantity, double price, Batch batch, UnitDetail unitDetail) {
+    public DamageItemDetail(int quantity, double price, Batch batch) {
         setQuantity(quantity);
         setPrice(price);
         setBatch(batch);
-        setUnitDetail(unitDetail);
         setLineTotal();
     }
 
@@ -96,16 +90,6 @@ public class DamageItemDetail {
         this.batch = batch;
     }
 
-    public UnitDetail getUnitDetail() {
-        return unitDetail;
-    }
-
-    public void setUnitDetail(UnitDetail unitDetail) {
-        if (unitDetail == null) {
-            throw new RuntimeException("Chi tiết đơn vị tính không được rỗng!");
-        }
-        this.unitDetail = unitDetail;
-    }
 
     public DamageItem getDamageItem() {
         return damageItem;
@@ -118,10 +102,5 @@ public class DamageItemDetail {
         this.damageItem = damageItem;
     }
 
-    @Override
-    public String toString() {
-        return "DamageItemDetail{" + "quantity=" + quantity + ", price=" + price + ", lineTotal=" + lineTotal + ", batch=" + batch + ", unitDetail=" + unitDetail + ", damageItem=" + damageItem + '}';
-    }
-    
     
 }

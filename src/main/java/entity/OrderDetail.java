@@ -36,11 +36,7 @@ public class OrderDetail {
     @JoinColumn(name = "batch_id")
     @Id
     private Batch batch;
-    
-    @ManyToOne
-    @JoinColumn(name = "unit_detail_id")
-    @Id
-    private UnitDetail unitDetail;
+
     
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -51,11 +47,10 @@ public class OrderDetail {
         
     }
 
-    public OrderDetail(int quantity, double price, double discount, Batch batch, UnitDetail unitDetail) {
+    public OrderDetail(int quantity, double price, double discount, Batch batch) {
         setQuantity(quantity);
         setPrice(price);
         setBatch(batch);
-        setUnitDetail(unitDetail);
         setDiscount(discount);
         setLineTotal();
         
@@ -103,16 +98,6 @@ public class OrderDetail {
         this.batch = batch;
     }
 
-    public UnitDetail getUnitDetail() {
-        return unitDetail;
-    }
-
-    public void setUnitDetail(UnitDetail unitDetail) {
-        if (unitDetail == null) {
-            throw new RuntimeException("Chi tiết đơn vị tính không được rỗng!");
-        }
-        this.unitDetail = unitDetail;
-    }
 
     public Order getOrder() {
         return order;

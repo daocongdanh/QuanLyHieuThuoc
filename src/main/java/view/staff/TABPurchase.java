@@ -43,7 +43,6 @@ public class TABPurchase extends javax.swing.JPanel {
     /**
      * Creates new form TabHoaDon
      */
-    private final UnitDetailBUS unitDetailBUS;
     private final BatchBUS batchBUS;
     private final ProductBUS productBUS;
     private final SupplierBUS supplierBUS;
@@ -52,7 +51,6 @@ public class TABPurchase extends javax.swing.JPanel {
     public TABPurchase() {
         initComponents();
         productBUS = LoadApplication.productBUS;
-        unitDetailBUS = LoadApplication.unitDetailBUS;
         batchBUS = LoadApplication.batchBUS;
         supplierBUS = LoadApplication.supplierBUS;
         purchaseOrderBUS = LoadApplication.purchaseOrderBUS;
@@ -421,15 +419,13 @@ public class TABPurchase extends javax.swing.JPanel {
                 XSSFSheet excelSheet = excelImport.getSheetAt(0);
                 
                 String phoneSupplier = excelSheet.getRow(3).getCell(1).getStringCellValue().trim();
-                Supplier sup = supplierBUS.getSupplierByPhone(phoneSupplier);
-                if (sup == null) {
-                    supplier = null;
+                supplier = supplierBUS.getSupplierByPhone(phoneSupplier);
+                if (supplier == null) {
                     MessageDialog.warning(null, "Nhà cung cấp không tồn tại !!!");
                     return;
                 }
-                supplier = sup;
-                txtSupplierId.setText(sup.getSupplierId());
-                txtSupplierName.setText(sup.getName());
+                txtSupplierId.setText(supplier.getSupplierId());
+                txtSupplierName.setText(supplier.getName());
                 txtSearchSupplier.setText("");
 
                 for (int row = 6; row <= excelSheet.getLastRowNum(); row++) {

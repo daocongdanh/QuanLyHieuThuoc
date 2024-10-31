@@ -91,13 +91,14 @@ public class PnOrderDetail extends javax.swing.JPanel {
         pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
                 + product.getImage())), 82, 82));
         spinnerSoLuong.setValue(0);
+        UnitDetail unitDetail = getSelectedUnitDetail();
         if (promotion != null) {
             DecimalFormat df = new DecimalFormat("- #.00 %");
             txtDiscount.setText(df.format(promotion.getDiscount()));
-            txtDonGia.setText(FormatNumber.formatToVND(product.getPrice() * (1 - promotion.getDiscount())));
+            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() *  (product.getPrice() * (1 - promotion.getDiscount()))));
         } else {
             txtDiscount.setText("");
-            txtDonGia.setText(FormatNumber.formatToVND(product.getPrice()));
+            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() *product.getPrice()));
         }
         int value = (Integer) spinnerSoLuong.getValue();
         txtTongTien.setText(FormatNumber.formatToVND(product.getPrice() * value));

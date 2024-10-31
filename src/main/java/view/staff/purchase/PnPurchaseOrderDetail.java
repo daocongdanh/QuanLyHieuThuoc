@@ -96,8 +96,8 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
                 + product.getImage())), 82, 82));
         spinnerSoLuong.setValue(0);
-
-        txtDonGia.setText(FormatNumber.formatToVND(product.getPurchasePriceVAT()));
+        UnitDetail unitDetail = getSelectedUnitDetail();
+        txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * product.getPurchasePriceVAT()));
         int value = (Integer) spinnerSoLuong.getValue();
         txtTongTien.setText(FormatNumber.formatToVND(product.getPurchasePriceVAT() * value));
     }

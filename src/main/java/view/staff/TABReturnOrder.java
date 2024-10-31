@@ -35,7 +35,6 @@ public class TABReturnOrder extends javax.swing.JPanel {
      */
     private final OrderBUS orderBUS;
     private final CustomerBUS customerBUS;
-    private final UnitDetailBUS unitDetailBUS;
     private final BatchBUS batchBUS;
     private final PromotionBUS promotionBUS;
     private final OrderDetailBUS orderDetailBUS;
@@ -45,7 +44,6 @@ public class TABReturnOrder extends javax.swing.JPanel {
         initComponents();
         orderBUS = LoadApplication.orderBUS;
         customerBUS = LoadApplication.customerBUS;
-        unitDetailBUS = LoadApplication.unitDetailBUS;
         batchBUS = LoadApplication.batchBUS;
         promotionBUS = LoadApplication.promotionBUS;
         orderDetailBUS = LoadApplication.orderDetailBUS;

@@ -5,14 +5,8 @@
 package entity;
 
 import enums.ProductType;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.List;
 import org.hibernate.annotations.Nationalized;
 
@@ -77,6 +71,10 @@ public class Product {
     
     @OneToMany( mappedBy = "product" ,cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     private List<Batch> listBatch;
+
+    @ManyToOne
+    @JoinColumn(  name = "unit_id")
+    private Unit unit;
     
     public Product(){
         
@@ -84,7 +82,7 @@ public class Product {
 
     public Product(String productId, String name, String registrationNumber, String activeIngredient, String dosage, 
             String packaging, String countryOfOrigin, String manufacturer, double purchasePrice, 
-            double sellingPrice, boolean active, ProductType productType, String image) {
+            double sellingPrice, boolean active, ProductType productType, String image, Unit unit) {
         this.productId = productId;
         setName(name);
         setRegistrationNumber(registrationNumber);
@@ -97,7 +95,16 @@ public class Product {
         setSellingPrice(sellingPrice);
         this.active = active;
         this.productType = productType;
+        this.unit = unit;
         setImage(image);
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     public List<Batch> getListBatch() {

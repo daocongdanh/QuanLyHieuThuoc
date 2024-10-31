@@ -47,7 +47,6 @@ public class TABProduct extends javax.swing.JPanel {
     private TableDesign tablleDesignTab3;
     private final BatchBUS batchBUS;
     private final ProductTransactionHistoryBUS transactionBUS;
-    private final UnitDetailBUS unitDetailBUS;
 
     private String productEdit;
     private ImageIcon imageProductAdd;
@@ -58,7 +57,6 @@ public class TABProduct extends javax.swing.JPanel {
         batchBUS = LoadApplication.batchBUS;
         transactionBUS = LoadApplication.productTransactionHistoryBUS;
         unitBUS = LoadApplication.unitBUS;
-        unitDetailBUS = LoadApplication.unitDetailBUS;
         initComponents();
         setUIManager();
         fillTable();
@@ -105,7 +103,7 @@ public class TABProduct extends javax.swing.JPanel {
                 product.getName(),
                 product.getRegistrationNumber(),
                 product.getCountryOfOrigin(),
-                product.getProductType(),
+                product.getProductType().getDescription(),
                 FormatNumber.formatToVND(product.getPurchasePrice()),
                 FormatNumber.formatToVND(product.getSellingPrice()),
                 product.isActive() ? "Đang hoạt động" : "Ngừng hoạt động"});
@@ -181,7 +179,7 @@ public class TABProduct extends javax.swing.JPanel {
         ScrollPaneTab2.setViewportView(tablleDesignTab2.getTable());
 
         List<ProductTransactionHistory> transactions = transactionBUS.getProductTransactionHistoryByProductId(productEdit);
-        transactions.sort((o1, o2) -> o1.getTransactionDate().compareTo(o2.getTransactionDate()));
+        transactions.sort((o1, o2) -> o2.getTransactionDate().compareTo(o1.getTransactionDate()));
         fillTab2Content(transactions);
     }
 

@@ -34,7 +34,6 @@ public class LoadApplication extends javax.swing.JFrame {
      */
     public static OrderBUS orderBUS;
     public static CustomerBUS customerBUS;
-    public static UnitDetailBUS unitDetailBUS;
     public static BatchBUS batchBUS;
     public static PromotionBUS promotionBUS;
     public static OrderDetailBUS orderDetailBUS;
@@ -132,7 +131,6 @@ public class LoadApplication extends javax.swing.JFrame {
                     EntityManager em = ConnectDB.getEntityManager();
                     orderBUS = new OrderBUS(em);
                     customerBUS = new CustomerBUS(em);
-                    unitDetailBUS = new UnitDetailBUS(em);
                     batchBUS = new BatchBUS(em);
                     promotionBUS = new PromotionBUS(em);
                     orderDetailBUS = new OrderDetailBUS(em);

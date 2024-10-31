@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
+import util.ResizeImage;
 import view.common.MenuChoice;
 
 import static view.common.MenuChoice.menuSwitch;
@@ -48,7 +49,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
     }
 
     private void addMenuClick() {
-        menuExit.setTitleMenu("Đăng xuất");
+
         List<MenuChoice> menuList = Arrays.asList(
                 menuStatistical, menuReport, menuCustomer, menuDamaged, menuOrder,
                 menuPrescription, menuProduct, menuPromotion, menuPurchase,
@@ -143,6 +144,10 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuSupplier.setTitleMenu("Quản Lý Nhà Cung Cấp");
         menuUnit.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/unitIcon.svg"))));
         menuUnit.setTitleMenu("Quản Lý Đơn Vị Tính");
+        menuExit.setTitleMenu("Đăng xuất");
+        menuExit.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/exiticon.svg"))));
+        menuExit.setDefault();
+        lblIcon.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.jpg")), 68, 68));
     }
 
     private void UIManagerSet() {
@@ -179,6 +184,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuOrder = new view.common.MenuChoice();
         menuPromotion = new view.common.MenuChoice();
         menuExit = new view.common.MenuChoice();
+        lblIcon = new javax.swing.JLabel();
         mainContent = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -216,13 +222,16 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
                         .addComponent(menuDamaged, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(menuOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(menuPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         pnLeftLayout.setVerticalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(0, 0, 0)
+                .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(menuStatistical, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(menuReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,7 +259,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
                 .addComponent(menuPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         Box.add(pnLeft, java.awt.BorderLayout.WEST);
@@ -298,6 +307,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Box;
+    private javax.swing.JLabel lblIcon;
     private javax.swing.JPanel mainContent;
     private view.common.MenuChoice menuCustomer;
     private view.common.MenuChoice menuDamaged;

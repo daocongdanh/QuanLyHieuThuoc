@@ -42,7 +42,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private final ReturnOrderBUS returnOrderBUS;
     private final ReturnOrderDetailBUS returnOrderDetailBUS;
     private final UnitBUS unitBUS;
-    private final UnitDetailBUS unitDetailBUS;
+//    private final UnitDetailBUS unitDetailBUS;
     private TableDesign tableDesign;
     private TableDesign tableDesignView;
     private TableDesign tableDesignEdit;
@@ -51,7 +51,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         returnOrderBUS = LoadApplication.returnOrderBUS;
         returnOrderDetailBUS = LoadApplication.returnOrderDetailBUS;
         unitBUS = LoadApplication.unitBUS;
-        unitDetailBUS = LoadApplication.unitDetailBUS;
+//        unitDetailBUS = LoadApplication.unitDetailBUS;
         initComponents();
         setUIManager();
         fillTable();

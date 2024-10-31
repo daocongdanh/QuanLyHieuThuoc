@@ -35,11 +35,6 @@ public class PurchaseOrderDetail {
     private Batch batch;
     
     @ManyToOne
-    @JoinColumn(name = "unit_detail_id")
-    @Id
-    private UnitDetail unitDetail;
-    
-    @ManyToOne
     @JoinColumn(name = "purchase_order_id")
     @Id
     private PurchaseOrder purchaseOrder;
@@ -48,11 +43,10 @@ public class PurchaseOrderDetail {
         
     }
 
-    public PurchaseOrderDetail(int quantity, double price, Batch batch, UnitDetail unitDetail) {
+    public PurchaseOrderDetail(int quantity, double price, Batch batch) {
         setQuantity(quantity);
         setPrice(price);
         setBatch(batch);
-        setUnitDetail(unitDetail);
         setLineTotal();
     }
 
@@ -94,16 +88,6 @@ public class PurchaseOrderDetail {
         this.batch = batch;
     }
 
-    public UnitDetail getUnitDetail() {
-        return unitDetail;
-    }
-
-    public void setUnitDetail(UnitDetail unitDetail) {
-        if(unitDetail == null)
-            throw new RuntimeException("Chi tiết đơn vị tính không được rỗng");
-        this.unitDetail = unitDetail;
-    }
-
     public PurchaseOrder getPurchaseOrder() {
         return purchaseOrder;
     }
@@ -115,9 +99,5 @@ public class PurchaseOrderDetail {
         this.purchaseOrder = purchaseOrder;
     }
 
-    @Override
-    public String toString() {
-        return "PurchaseOrderDetail{" + "quantity=" + quantity + ", price=" + price + ", lineTotal=" + lineTotal + ", batch=" + batch + ", unitDetail=" + unitDetail + ", purchaseOrder=" + purchaseOrder + '}';
-    }
     
 }

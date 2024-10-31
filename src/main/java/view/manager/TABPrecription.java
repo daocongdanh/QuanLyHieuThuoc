@@ -50,7 +50,6 @@ public class TABPrecription extends javax.swing.JPanel {
     private TableDesign tableDesignAdd;
     private TableDesign tableDesignEdit;
     private final ProductBUS productBUS;
-    private final UnitDetailBUS unitDetailBUS;
     private final PrescriptionBUS prescriptionBUS;
     private List<Product> listProductAdd;
     private List<Product> listProductEdit;
@@ -58,7 +57,6 @@ public class TABPrecription extends javax.swing.JPanel {
 
     public TABPrecription() {
         productBUS = LoadApplication.productBUS;
-        unitDetailBUS = LoadApplication.unitDetailBUS;
         prescriptionBUS = LoadApplication.prescriptionBUS;
         initComponents();
         setUIManager();

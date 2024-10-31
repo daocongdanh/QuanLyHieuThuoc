@@ -14,6 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import util.MessageDialog;
 import entity.*;
 import util.CurrentEmployee;
+import util.ResizeImage;
 import view.manager.MenuManagerAdmin;
 import view.staff.MenuManagerStaff;
 
@@ -25,9 +26,9 @@ public class LoginForm extends javax.swing.JFrame {
 
     private AccountBUS accountBUS;
     public LoginForm() {
-        ConnectDB.connect();
-        this.accountBUS = new AccountBUS(ConnectDB.getEntityManager());
+        this.accountBUS = LoadApplication.accountBUS;
         initComponents();
+        jLabel3.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.jpg")), 563, 563) );
     }
 
     /**
@@ -60,36 +61,20 @@ public class LoginForm extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anhnen.jpg"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
-        );
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon.jpg"))); // NOI18N
+        jPanel1.add(jLabel3);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 550));
 
-        jPanel2.setBackground(new java.awt.Color(0, 144, 218));
+        jPanel2.setBackground(new java.awt.Color(162, 195, 139));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Tên đăng nhập");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Mật khẩu");
 
         usernameTxt.setFont(usernameTxt.getFont().deriveFont(usernameTxt.getFont().getSize()+4f));
@@ -112,13 +97,11 @@ public class LoginForm extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Đăng nhập");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(0, 144, 218));
         btnLogin.setText("Đăng nhập");
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.addActionListener(new java.awt.event.ActionListener() {

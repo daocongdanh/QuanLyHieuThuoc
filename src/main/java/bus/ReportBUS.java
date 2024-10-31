@@ -94,7 +94,7 @@ public class ReportBUS {
             }
             if (entry.getKey().equals("Bán hàng")) {
                 profit += totalValue;
-            } else {
+            } else if(!entry.getKey().equals("Xuất hủy")) {
                 profit -= totalValue;
             }
         }

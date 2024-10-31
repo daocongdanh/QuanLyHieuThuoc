@@ -43,11 +43,7 @@ public class ReturnOrderDetail {
     @Id
     private Batch batch;
     
-    @ManyToOne
-    @JoinColumn(name = "unit_detail_id")
-    @Id
-    private UnitDetail unitDetail;
-    
+
     @ManyToOne
     @JoinColumn(name = "return_order_id")
     @Id
@@ -57,12 +53,11 @@ public class ReturnOrderDetail {
         
     }
 
-    public ReturnOrderDetail(int quantity, double price, Batch batch, UnitDetail unitDetail, ReturnOrderDetailStatus
+    public ReturnOrderDetail(int quantity, double price, Batch batch, ReturnOrderDetailStatus
              returnOrderDetailStatus, String reason) {
         setQuantity(quantity);
         setPrice(price);
         setBatch(batch);
-        setUnitDetail(unitDetail);
         setReason(reason);
         this.returnOrderDetailStatus = returnOrderDetailStatus;
         setLineTotal();
@@ -118,16 +113,6 @@ public class ReturnOrderDetail {
             throw new RuntimeException("Lô hàng không được rỗng");
         }
         this.batch = batch;
-    }
-
-    public UnitDetail getUnitDetail() {
-        return unitDetail;
-    }
-
-    public void setUnitDetail(UnitDetail unitDetail) {
-        if(unitDetail == null)
-            throw new RuntimeException("Chi tiết đơn vị tính không được rỗng");
-        this.unitDetail = unitDetail;
     }
 
     public ReturnOrder getReturnOrder() {
