@@ -5,7 +5,6 @@
 package view.staff.sell;
 
 import dto.BatchDTO;
-import entity.UnitDetail;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -28,7 +27,6 @@ public class PnSelectBatch extends javax.swing.JPanel {
      * Creates new form PnLo
      */
     private BatchDTO batchDTO;
-    private UnitDetail unitDetail;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private JSpinner jSpinner;
     
@@ -36,57 +34,57 @@ public class PnSelectBatch extends javax.swing.JPanel {
         initComponents();
     }
     
-    private int getStock(){
-        double stock = batchDTO.getStock();
-        double conversionRate = unitDetail.getConversionRate();
-        double result = stock / conversionRate;
-        return (int) Math.floor(result);
-    }
-
-    public JSpinner getSpinnerQuantity() {
-        return spinnerQuantity;
-    }
-    
-    public PnSelectBatch(BatchDTO batchDTO,UnitDetail unitDetail, JSpinner jSpinner ){
-        initComponents();
-        this.batchDTO = batchDTO;
-        this.unitDetail = unitDetail;
-        this.jSpinner = jSpinner;
-        
-        String name = batchDTO.getName() + " - " + formatter.format(batchDTO.getExpirationDate())
-                    + " - SL: " + batchDTO.getQuantity();
-        txtBatch.setText(name);
-        btnRemove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Fire event để thông báo xóa batch này
-                jSpinner.setValue((int)jSpinner.getValue() - batchDTO.getQuantity());
-                fireDeleteBatchEvent();
-            }
-        });
-        spinnerQuantity.setValue(batchDTO.getQuantity());
-    }
-
-    public void setName(){
-        String name = batchDTO.getName() + " - " + formatter.format(batchDTO.getExpirationDate())
-                    + " - SL: " + batchDTO.getQuantity();
-        txtBatch.setText(name);
-    }
-    public UnitDetail getUnitDetail() {
-        return unitDetail;
-    }
-
-    public void setUnitDetail(UnitDetail unitDetail) {
-        this.unitDetail = unitDetail;
-    }
-
-    public BatchDTO getBatchDTO() {
-        return batchDTO;
-    }
-
-    public void setBatchDTO(BatchDTO batchDTO) {
-        this.batchDTO = batchDTO;
-    }
+//    private int getStock(){
+//        double stock = batchDTO.getStock();
+//        double conversionRate = unitDetail.getConversionRate();
+//        double result = stock / conversionRate;
+//        return (int) Math.floor(result);
+//    }
+//
+//    public JSpinner getSpinnerQuantity() {
+//        return spinnerQuantity;
+//    }
+//    
+//    public PnSelectBatch(BatchDTO batchDTO,UnitDetail unitDetail, JSpinner jSpinner ){
+//        initComponents();
+//        this.batchDTO = batchDTO;
+//        this.unitDetail = unitDetail;
+//        this.jSpinner = jSpinner;
+//        
+//        String name = batchDTO.getName() + " - " + formatter.format(batchDTO.getExpirationDate())
+//                    + " - SL: " + batchDTO.getQuantity();
+//        txtBatch.setText(name);
+//        btnRemove.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                // Fire event để thông báo xóa batch này
+//                jSpinner.setValue((int)jSpinner.getValue() - batchDTO.getQuantity());
+//                fireDeleteBatchEvent();
+//            }
+//        });
+//        spinnerQuantity.setValue(batchDTO.getQuantity());
+//    }
+//
+//    public void setName(){
+//        String name = batchDTO.getName() + " - " + formatter.format(batchDTO.getExpirationDate())
+//                    + " - SL: " + batchDTO.getQuantity();
+//        txtBatch.setText(name);
+//    }
+//    public UnitDetail getUnitDetail() {
+//        return unitDetail;
+//    }
+//
+//    public void setUnitDetail(UnitDetail unitDetail) {
+//        this.unitDetail = unitDetail;
+//    }
+//
+//    public BatchDTO getBatchDTO() {
+//        return batchDTO;
+//    }
+//
+//    public void setBatchDTO(BatchDTO batchDTO) {
+//        this.batchDTO = batchDTO;
+//    }
 
     public JSpinner getjSpinner() {
         return jSpinner;
@@ -301,57 +299,57 @@ public class PnSelectBatch extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void txtBatchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBatchMouseClicked
-        txtName.setText(batchDTO.getName());
-        txtExpirationDate.setText(formatter.format(batchDTO.getExpirationDate()));
-        txtStock.setText(getStock() + "");
-        spinnerQuantity.setValue(batchDTO.getQuantity());
-        modalSoLuong.setTitle(batchDTO.getName() + " - " + formatter.format(batchDTO.getExpirationDate()));
-        modalSoLuong.setLocationRelativeTo(null);
-        modalSoLuong.setVisible(true);
+//        txtName.setText(batchDTO.getName());
+//        txtExpirationDate.setText(formatter.format(batchDTO.getExpirationDate()));
+//        txtStock.setText(getStock() + "");
+//        spinnerQuantity.setValue(batchDTO.getQuantity());
+//        modalSoLuong.setTitle(batchDTO.getName() + " - " + formatter.format(batchDTO.getExpirationDate()));
+//        modalSoLuong.setLocationRelativeTo(null);
+//        modalSoLuong.setVisible(true);
         
     }//GEN-LAST:event_txtBatchMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        modalSoLuong.dispose();
-        int quantity = (int)spinnerQuantity.getValue();
-        jSpinner.setValue((int) jSpinner.getValue() - batchDTO.getQuantity() + quantity);
-        Container parent = this.getParent();
-        List<PnSelectBatch> pnSelectBatchs = new ArrayList<>();
-        for(Component component : parent.getComponents()){
-            if(component instanceof PnSelectBatch){
-                PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
-                pnSelectBatchs.add(pnSelectBatch);
-            }
-        }
-        
-        for(PnSelectBatch pnSelectBatch : pnSelectBatchs){
-            if(pnSelectBatch.getBatchDTO().getName().equals(batchDTO.getName())){
-                pnSelectBatch.getBatchDTO().setQuantity(quantity);
-            }
-        }
-        
-        parent.removeAll();
-        parent.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 3));
-        for (PnSelectBatch pnSelectBatch : pnSelectBatchs) {
-            PnSelectBatch newPnSelectBatch = new PnSelectBatch(pnSelectBatch.getBatchDTO(), unitDetail, jSpinner);
-            parent.add(newPnSelectBatch);
-        }
-        parent.revalidate();
-        parent.repaint();
-        
+//        modalSoLuong.dispose();
+//        int quantity = (int)spinnerQuantity.getValue();
+//        jSpinner.setValue((int) jSpinner.getValue() - batchDTO.getQuantity() + quantity);
+//        Container parent = this.getParent();
+//        List<PnSelectBatch> pnSelectBatchs = new ArrayList<>();
+//        for(Component component : parent.getComponents()){
+//            if(component instanceof PnSelectBatch){
+//                PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
+//                pnSelectBatchs.add(pnSelectBatch);
+//            }
+//        }
+//        
+//        for(PnSelectBatch pnSelectBatch : pnSelectBatchs){
+//            if(pnSelectBatch.getBatchDTO().getName().equals(batchDTO.getName())){
+//                pnSelectBatch.getBatchDTO().setQuantity(quantity);
+//            }
+//        }
+//        
+//        parent.removeAll();
+//        parent.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 3));
+//        for (PnSelectBatch pnSelectBatch : pnSelectBatchs) {
+//            PnSelectBatch newPnSelectBatch = new PnSelectBatch(pnSelectBatch.getBatchDTO(), unitDetail, jSpinner);
+//            parent.add(newPnSelectBatch);
+//        }
+//        parent.revalidate();
+//        parent.repaint();
+//        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void spinnerQuantityStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerQuantityStateChanged
         // TODO add your handling code here:
-        double stock = batchDTO.getStock();
-        double conversionRate = unitDetail.getConversionRate();
-        double result = stock / conversionRate;
-        int value = (int) spinnerQuantity.getValue();
-        if(value > result){
-            MessageDialog.error(null, "Không đủ số lượng");
-            spinnerQuantity.setValue(value - 1);
-        }
+//        double stock = batchDTO.getStock();
+//        double conversionRate = unitDetail.getConversionRate();
+//        double result = stock / conversionRate;
+//        int value = (int) spinnerQuantity.getValue();
+//        if(value > result){
+//            MessageDialog.error(null, "Không đủ số lượng");
+//            spinnerQuantity.setValue(value - 1);
+//        }
     }//GEN-LAST:event_spinnerQuantityStateChanged
 
 

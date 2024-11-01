@@ -4,7 +4,6 @@
  */
 package dto;
 
-import entity.UnitDetail;
 import java.util.List;
 
 /**
@@ -12,25 +11,15 @@ import java.util.List;
  * @author daoducdanh
  */
 public class OrderDetailSelected {
-    private UnitDetail unitDetail;
     private List<BatchDTO> batchDTOs;
     
     public OrderDetailSelected(){
         
     }
 
-    public OrderDetailSelected(UnitDetail unitDetail, List<BatchDTO> batchDTOs) {
-        this.unitDetail = unitDetail;
+    public OrderDetailSelected(List<BatchDTO> batchDTOs) {
         this.batchDTOs = batchDTOs;
                 
-    }
-
-    public UnitDetail getUnitDetail() {
-        return unitDetail;
-    }
-
-    public void setUnitDetail(UnitDetail unitDetail) {
-        this.unitDetail = unitDetail;
     }
 
     public List<BatchDTO> getBatchDTOs() {

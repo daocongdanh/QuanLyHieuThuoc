@@ -22,31 +22,31 @@ public class PnChonLo extends javax.swing.JPanel {
      * Creates new form pnChonLo
      */
     private Batch batch;
-    private UnitDetail unitDetail;
+//    private UnitDetail unitDetail;
 
     public PnChonLo() {
         initComponents();
         setMargin();
     }
 
-    public PnChonLo(Batch batch, UnitDetail unitDetail) {
-        this.batch = batch;
-        this.unitDetail = unitDetail;
-        initComponents();
-
-        double stock = batch.getStock();
-        double conversionRate = unitDetail.getConversionRate();
-        int result = (int) Math.floor(stock / conversionRate);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        
-        String name = batch.getName() + " - " + formatter.format(batch.getExpirationDate())
-                    + " - Tồn: " + result;
-            btnTenLo.setText(name);
-        setMargin();
-        
-        
-    }
+//    public PnChonLo(Batch batch, UnitDetail unitDetail) {
+//        this.batch = batch;
+//        this.unitDetail = unitDetail;
+//        initComponents();
+//
+//        double stock = batch.getStock();
+//        double conversionRate = unitDetail.getConversionRate();
+//        int result = (int) Math.floor(stock / conversionRate);
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        
+//        String name = batch.getName() + " - " + formatter.format(batch.getExpirationDate())
+//                    + " - Tồn: " + result;
+//            btnTenLo.setText(name);
+//        setMargin();
+//        
+//        
+//    }
 
     public JToggleButton getBtnTenLo() {
         return this.btnTenLo;
@@ -60,13 +60,13 @@ public class PnChonLo extends javax.swing.JPanel {
         this.batch = batch;
     }
 
-    public UnitDetail getUnitDetail() {
-        return unitDetail;
-    }
-
-    public void setUnitDetail(UnitDetail unitDetail) {
-        this.unitDetail = unitDetail;
-    }
+//    public UnitDetail getUnitDetail() {
+//        return unitDetail;
+//    }
+//
+//    public void setUnitDetail(UnitDetail unitDetail) {
+//        this.unitDetail = unitDetail;
+//    }
 
     private void setMargin() {
         // Set an empty border with 10 pixels margin on all sides

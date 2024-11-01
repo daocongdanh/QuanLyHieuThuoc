@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class ReturnOrderDetailBUS {
 
-    private final ProductTransactionHistoryDAL productTransactionHistoryDAL;
     private final ReturnOrderDAL returnOrderDAL;
     private final ReturnOrderDetailDAL returnOrderDetailDAL;
     private final BatchDAL batchDAL;
@@ -22,94 +21,58 @@ public class ReturnOrderDetailBUS {
 
     public ReturnOrderDetailBUS(EntityManager entityManager) {
         this.returnOrderDetailDAL = new ReturnOrderDetailDAL(ConnectDB.getEntityManager());
-        this.productTransactionHistoryDAL = new ProductTransactionHistoryDAL(ConnectDB.getEntityManager());
         this.returnOrderDAL = new ReturnOrderDAL(ConnectDB.getEntityManager());
         this.batchDAL = new BatchDAL(ConnectDB.getEntityManager());
         this.transaction = entityManager.getTransaction();
 
     }
+    
+    public ReturnOrderDetail findByReturnOrderIdAndProductId( String returnOrderId, String productId ){
+        return returnOrderDAL.findByReturnOrderIdAndProductId(returnOrderId, productId);
+    }
 
     public boolean updateReturnOrderDetailToReturn(ReturnOrderDetail returnOrderDetail) {
-        try{
+        try {
             transaction.begin();
-            ReturnOrderDetail reOld = returnOrderDetailDAL.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderDetail.getReturnOrder().getReturnOrderId(),
-                    returnOrderDetail.getUnitDetail().getUnitDetailId(), returnOrderDetail.getBatch().getBatchId());
+            ReturnOrderDetail reOld = returnOrderDetailDAL.findByReturnOrderIdAndProductId(returnOrderDetail.getReturnOrder().getReturnOrderId(),
+                    returnOrderDetail.getProduct().getProductId());
             reOld.setReturnOrderDetailStatus(returnOrderDetail.getReturnOrderDetailStatus());
             returnOrderDetailDAL.update(reOld);
 
             ReturnOrder returnOrder = returnOrderDetail.getReturnOrder();
-            List<ReturnOrderDetail> detailList  = returnOrder.getReturnOrderDetails();
+            List<ReturnOrderDetail> detailList = returnOrder.getReturnOrderDetails();
             if (detailList.stream()
-                    .allMatch( x-> x.getReturnOrderDetailStatus() != ReturnOrderDetailStatus.PENDING)) {
+                    .allMatch(x -> x.getReturnOrderDetailStatus() != ReturnOrderDetailStatus.PENDING)) {
 
                 returnOrder.setStatus(true);
                 returnOrderDAL.update(returnOrder);
             }
 
-            Batch batch = returnOrderDetail.getBatch();
-            batch.setStock(batch.getStock() + returnOrderDetail.getQuantity() * returnOrderDetail.getUnitDetail().getConversionRate());
+            Batch batch = batchDAL.findBatchNearExpirationHaveProductId(returnOrderDetail.getProduct().getProductId());
+            batch.setStock(batch.getStock() + returnOrderDetail.getQuantity());
             batchDAL.update(batch);
-
-            Product product = returnOrderDetail.getUnitDetail().getProduct();
-
-            ProductTransactionHistory productTransactionHistory = productTransactionHistoryDAL.findByTransactionIdAndProductId(returnOrder.getReturnOrderId()
-                            , product.getProductId()).orElse(null);
-            if ( productTransactionHistory == null  ){
-                productTransactionHistory = new ProductTransactionHistory();
-                productTransactionHistory.setTransactionId(returnOrder.getReturnOrderId());
-                productTransactionHistory.setProduct(product);
-                productTransactionHistory.setQuantity(returnOrderDetail.getQuantity() *
-                        returnOrderDetail.getUnitDetail().getConversionRate());
-                productTransactionHistory.setTransactionDate(returnOrder.getOrderDate());
-                productTransactionHistory.setTransactionPrice( returnOrderDetail.getQuantity() *
-                        returnOrderDetail.getUnitDetail().getConversionRate()
-                        * product.getSellingPrice());
-                productTransactionHistory.setTransactionType("Trả hàng");
-                productTransactionHistory.setCostPrice(product.getPurchasePrice() * returnOrderDetail.getQuantity()
-                                                            * returnOrderDetail.getUnitDetail().getConversionRate());
-                productTransactionHistory.setFinalStock(batchDAL.getFinalStockByProduct(product.getProductId()));
-                productTransactionHistory.setPartner( returnOrder.getOrder().getCustomer() == null ? "Khách vãng lai" :
-                        (returnOrder.getOrder().getCustomer().getName()));
-                productTransactionHistoryDAL.insert(productTransactionHistory);
-
-            }
-            else {
-                productTransactionHistory.setFinalStock(batchDAL.getFinalStockByProduct(product.getProductId()));
-                productTransactionHistory.setQuantity(productTransactionHistory.getQuantity() +
-                        returnOrderDetail.getQuantity() * returnOrderDetail.getUnitDetail().getConversionRate());
-                productTransactionHistory.setTransactionPrice(productTransactionHistory.getTransactionPrice()
-                        + returnOrderDetail.getQuantity() *
-                        returnOrderDetail.getUnitDetail().getConversionRate()
-                        * product.getSellingPrice());
-                productTransactionHistoryDAL.update(productTransactionHistory);
-            }
 
             transaction.commit();
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             transaction.rollback();
             return false;
         }
     }
 
-
-    public ReturnOrderDetail findByReturnOrderIdAndUnitDetailIdAndBatchId( String returnOrderId, int unitDetailId, String batchId){
-        return  returnOrderDetailDAL.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderId, unitDetailId, batchId);
-    }
-
     public boolean updateReturnOrderDetailToDamage(ReturnOrderDetail returnOrderDetail) {
-        try{
+        try {
             transaction.begin();
-            ReturnOrderDetail reOld = returnOrderDetailDAL.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderDetail.getReturnOrder().getReturnOrderId(),
-                    returnOrderDetail.getUnitDetail().getUnitDetailId(), returnOrderDetail.getBatch().getBatchId());
+            ReturnOrderDetail reOld = returnOrderDetailDAL.findByReturnOrderIdAndProductId(returnOrderDetail.getReturnOrder().getReturnOrderId(),
+                    returnOrderDetail.getProduct().getProductId());
 
             reOld.setReturnOrderDetailStatus(returnOrderDetail.getReturnOrderDetailStatus());
             returnOrderDetailDAL.update(reOld);
 
             ReturnOrder returnOrder = returnOrderDetail.getReturnOrder();
-            List<ReturnOrderDetail> detailList  = returnOrder.getReturnOrderDetails();
+            List<ReturnOrderDetail> detailList = returnOrder.getReturnOrderDetails();
             if (detailList.stream()
-                    .allMatch( x-> x.getReturnOrderDetailStatus() != ReturnOrderDetailStatus.PENDING)) {
+                    .allMatch(x -> x.getReturnOrderDetailStatus() != ReturnOrderDetailStatus.PENDING)) {
 
                 returnOrder.setStatus(true);
                 returnOrderDAL.update(returnOrder);
@@ -117,7 +80,7 @@ public class ReturnOrderDetailBUS {
 
             transaction.commit();
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             transaction.rollback();
             return false;
         }

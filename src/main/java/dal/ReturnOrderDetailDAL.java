@@ -32,13 +32,12 @@ public class ReturnOrderDetailDAL {
         return true;
     }
 
-    public ReturnOrderDetail findByReturnOrderIdAndUnitDetailIdAndBatchId( String returnOrderId, int unitDetailId, String batchId) {
+    public ReturnOrderDetail findByReturnOrderIdAndProductId( String returnOrderId, String productId) {
         TypedQuery<ReturnOrderDetail> query =
                 entityManager.createQuery("select rod from ReturnOrderDetail rod "
-                        + "where rod.returnOrder.returnOrderId = ?1 and rod.unitDetail.unitDetailId = ?2 and rod.batch.batchId = ?3", ReturnOrderDetail.class);
+                        + "where rod.returnOrder.returnOrderId = ?1 and rod.product.productId= ?2", ReturnOrderDetail.class);
         query.setParameter(1, returnOrderId);
-        query.setParameter(2, unitDetailId);
-        query.setParameter(3, batchId);
+        query.setParameter(2, productId);
         try{
             return query.getSingleResult();
         }

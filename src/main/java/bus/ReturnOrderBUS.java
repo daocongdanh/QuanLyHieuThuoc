@@ -7,7 +7,6 @@ package bus;
 import connectDB.ConnectDB;
 import dal.BatchDAL;
 import dal.ReturnOrderDAL;
-import dal.UnitDetailDAL;
 import dto.ReturnOrderDetailDTO;
 import dto.StatsPriceAndQuantityDTO;
 import entity.Batch;
@@ -16,7 +15,6 @@ import entity.Employee;
 import entity.Order;
 import entity.ReturnOrder;
 import entity.ReturnOrderDetail;
-import entity.UnitDetail;
 import enums.ReturnOrderDetailStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -32,13 +30,11 @@ import java.util.List;
 public class ReturnOrderBUS {
 
     private BatchDAL batchDAL;
-    private UnitDetailDAL unitDetailDAL;
     private ReturnOrderDAL returnOrderDAL;
     private EntityTransaction transaction;
 
     public ReturnOrderBUS(EntityManager entityManager) {
         this.returnOrderDAL = new ReturnOrderDAL(ConnectDB.getEntityManager());
-        this.unitDetailDAL = new UnitDetailDAL(ConnectDB.getEntityManager());
         this.batchDAL = new BatchDAL(ConnectDB.getEntityManager());
         this.transaction = entityManager.getTransaction();
     }
@@ -59,12 +55,10 @@ public class ReturnOrderBUS {
             for (ReturnOrderDetailDTO detailDTO : returnOrderDetailDTOs) {
                 if (detailDTO.getQuantityReturn() != 0) {
                     ReturnOrderDetail returnOrderDetail = new ReturnOrderDetail();
-                    Batch batch = batchDAL.findByNameAndProduct(detailDTO.getBatchName(), detailDTO.getProduct().getProductId());
-                    UnitDetail unitDetail = detailDTO.getUnitDetail();
-                    returnOrderDetail.setBatch(batch);
+                    returnOrderDetail.setProduct(detailDTO.getProduct());
                     returnOrderDetail.setQuantity(detailDTO.getQuantityReturn() );
-                    returnOrderDetail.setUnitDetail(unitDetail);
-                    returnOrderDetail.setPrice(detailDTO.getProduct().getSellingPrice()* unitDetail.getConversionRate());
+
+                    returnOrderDetail.setPrice(detailDTO.getProduct().getSellingPrice());
                     returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.PENDING);
                     returnOrderDetail.setLineTotal();
                     returnOrderDetail.setReason(detailDTO.getReason());

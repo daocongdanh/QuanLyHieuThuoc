@@ -5,10 +5,8 @@
 package view.staff;
 
 import view.staff.sell.PnTabOrder;
-import bus.PrescriptionBUS;
 import bus.ProductBUS;
 import com.formdev.flatlaf.FlatClientProperties;
-import connectDB.ConnectDB;
 import entity.Product;
 import java.awt.Color;
 import java.awt.Component;
@@ -27,7 +25,6 @@ import javax.swing.UIManager;
 import java.util.Arrays;
 import java.util.List;
 import view.common.TableDesign;
-import entity.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -47,15 +44,12 @@ public class TABSell extends javax.swing.JPanel {
     private final ProductBUS productBUS;
     private TableDesign tablePrescription;
     private TableDesign tablePrescriptionDetail;
-    private final PrescriptionBUS prescriptionBUS;
-    private List<PrescriptionDetail> prescriptionDetails = new ArrayList<>();
 
     /**
      * Creates new form LapHoaDonForm
      */
     public TABSell() {
         productBUS = LoadApplication.productBUS;
-        prescriptionBUS = LoadApplication.prescriptionBUS;
         lookAndFeelSet();
         initComponents();
         customUI();
@@ -79,48 +73,48 @@ public class TABSell extends javax.swing.JPanel {
         tablePrescription = new TableDesign(headers, tableWidths, List.of(false, false, true));
         tablePrescription.setTableHeaderFontSize(12);
         scrollTable.setViewportView(tablePrescription.getTable());
-        List<Prescription> prescriptions = prescriptionBUS.getAllPrescriptions();
-        fillContent(prescriptions);
-        addEventBtnEditInTable();
+//        List<Prescription> prescriptions = prescriptionBUS.getAllPrescriptions();
+//        fillContent(prescriptions);
+//        addEventBtnEditInTable();
     }
 
-    private void fillContent(List<Prescription> prescriptions) {
-        tablePrescription.getModelTable().setRowCount(0);
-        for (Prescription prescription : prescriptions) {
-            tablePrescription.getModelTable().addRow(new Object[]{prescription.getPrescriptionId(),
-                prescription.getName(), null});
-        }
-    }
+//    private void fillContent(List<Prescription> prescriptions) {
+//        tablePrescription.getModelTable().setRowCount(0);
+//        for (Prescription prescription : prescriptions) {
+//            tablePrescription.getModelTable().addRow(new Object[]{prescription.getPrescriptionId(),
+//                prescription.getName(), null});
+//        }
+//    }
 
-    private void addEventBtnEditInTable() {
-        JTable table = tablePrescription.getTable();
-        TableActionEventOneAction event = (int row) -> {
-            int selectedRow = table.getSelectedRow();
-            String prescriptionId = (String) table.getValueAt(selectedRow, 0);
-            List<PrescriptionDetail> details = prescriptionBUS.getAllPrescripDetailsByPrescription(prescriptionId);
-            if (!details.isEmpty()) {
-                prescriptionDetails = details;
-                tabbedPaneDTM.setSelectedIndex(1);
-                fillContentPrescriptionDetail(prescriptionDetails);
-            } else {
-                MessageDialog.warning(null, "Không có sản phẩm nào trong đơn thuốc mẫu !!!");
-            }
-            table.getCellEditor().stopCellEditing();
-        };
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOneAction(1));
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOneAction(event,1));
-    }
-
-    private void fillContentPrescriptionDetail(List<PrescriptionDetail> prescriptionDetails) {
-        tablePrescriptionDetail.getModelTable().setRowCount(0);
-        for (PrescriptionDetail prescriptionDetail : prescriptionDetails) {
-            UnitDetail unitDetail = prescriptionDetail.getUnitDetail();
-            Product product = unitDetail.getProduct();
-            tablePrescriptionDetail.getModelTable().addRow(new Object[]{product.getProductId(), product.getName(),
-                unitDetail.getUnit().getName(), prescriptionDetail.getQuantity(), prescriptionDetail.getDescription()
-            });
-        }
-    }
+//    private void addEventBtnEditInTable() {
+//        JTable table = tablePrescription.getTable();
+//        TableActionEventOneAction event = (int row) -> {
+//            int selectedRow = table.getSelectedRow();
+//            String prescriptionId = (String) table.getValueAt(selectedRow, 0);
+//            List<PrescriptionDetail> details = prescriptionBUS.getAllPrescripDetailsByPrescription(prescriptionId);
+//            if (!details.isEmpty()) {
+//                prescriptionDetails = details;
+//                tabbedPaneDTM.setSelectedIndex(1);
+//                fillContentPrescriptionDetail(prescriptionDetails);
+//            } else {
+//                MessageDialog.warning(null, "Không có sản phẩm nào trong đơn thuốc mẫu !!!");
+//            }
+//            table.getCellEditor().stopCellEditing();
+//        };
+//        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOneAction(1));
+//        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOneAction(event,1));
+//    }
+//
+//    private void fillContentPrescriptionDetail(List<PrescriptionDetail> prescriptionDetails) {
+//        tablePrescriptionDetail.getModelTable().setRowCount(0);
+//        for (PrescriptionDetail prescriptionDetail : prescriptionDetails) {
+//            UnitDetail unitDetail = prescriptionDetail.getUnitDetail();
+//            Product product = unitDetail.getProduct();
+//            tablePrescriptionDetail.getModelTable().addRow(new Object[]{product.getProductId(), product.getName(),
+//                unitDetail.getUnit().getName(), prescriptionDetail.getQuantity(), prescriptionDetail.getDescription()
+//            });
+//        }
+//    }
 
     private void customUI() {
         txtTimSanPham.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mã vạch, Số đăng ký");
@@ -437,15 +431,15 @@ public class TABSell extends javax.swing.JPanel {
 
     private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
         // TODO add your handling code here:
-        if (prescriptionDetails.isEmpty()) {
-            MessageDialog.warning(null, "Không có sản phẩm nào trong đơn thuốc mẫu !!!");
-        } else {
-            PnTabOrder tabHoaDon = (PnTabOrder) tabbedPane.getSelectedComponent();
-            int quantityPre = (int) spinnerQuantity.getValue();
-            if (tabHoaDon.addDonThuocMau(prescriptionDetails, quantityPre)) {
-                modalSelectPrescription.dispose();
-            }
-        }
+//        if (prescriptionDetails.isEmpty()) {
+//            MessageDialog.warning(null, "Không có sản phẩm nào trong đơn thuốc mẫu !!!");
+//        } else {
+//            PnTabOrder tabHoaDon = (PnTabOrder) tabbedPane.getSelectedComponent();
+//            int quantityPre = (int) spinnerQuantity.getValue();
+//            if (tabHoaDon.addDonThuocMau(prescriptionDetails, quantityPre)) {
+//                modalSelectPrescription.dispose();
+//            }
+//        }
     }//GEN-LAST:event_btnApplyActionPerformed
 
     private void txtTimSanPhamKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimSanPhamKeyPressed
@@ -504,7 +498,7 @@ public class TABSell extends javax.swing.JPanel {
         Product product = productBUS.getProductBySDK(sdk);
         if (product != null) {
             PnTabOrder tabHoaDon = (PnTabOrder) tabbedPane.getSelectedComponent();
-            tabHoaDon.addSanPham(product);
+//            tabHoaDon.addSanPham(product);
             txtTimSanPham.setText("");
         } else {
             MessageDialog.warning(null, "Sản phẩm không tồn tại !!!");

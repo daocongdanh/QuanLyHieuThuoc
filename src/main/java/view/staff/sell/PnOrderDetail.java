@@ -4,28 +4,14 @@
  */
 package view.staff.sell;
 
-import bus.OrderDetailBUS;
-import com.formdev.flatlaf.FlatClientProperties;
 import dto.BatchDTO;
-import dto.OrderDetailSelected;
 import entity.Product;
 import java.awt.Component;
 import java.util.List;
 import entity.*;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.event.ItemEvent;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import util.ResizeImage;
-import util.FormatNumber;
-import util.MessageDialog;
 
 /**
  *
@@ -34,98 +20,98 @@ import util.MessageDialog;
 public class PnOrderDetail extends javax.swing.JPanel {
 
     private Product product;
-    private List<UnitDetail> unitDetails;
+//    private List<UnitDetail> unitDetails;
     private List<Batch> batchs;
     private Promotion promotion;
     private PnTabOrder tabHoaDon;
-    private OrderDetailSelected orderDetailSelected;
+//    private OrderDetailSelected orderDetailSelected;
 
     public PnOrderDetail() {
         initComponents();
     }
 
-    public PnOrderDetail(Product product, List<UnitDetail> unitDetails, List<Batch> batchs, Promotion promotion,
-            PnTabOrder tabHoaDon, OrderDetailSelected orderDetailSelected) {
-        this.unitDetails = unitDetails;
-        this.batchs = batchs;
-        this.product = product;
-        this.promotion = promotion;
-        this.tabHoaDon = tabHoaDon;
-        this.orderDetailSelected = orderDetailSelected;
-        initComponents();
-        fillFirst();
-    }
+//    public PnOrderDetail(Product product, List<UnitDetail> unitDetails, List<Batch> batchs, Promotion promotion,
+//            PnTabOrder tabHoaDon, OrderDetailSelected orderDetailSelected) {
+//        this.unitDetails = unitDetails;
+//        this.batchs = batchs;
+//        this.product = product;
+//        this.promotion = promotion;
+//        this.tabHoaDon = tabHoaDon;
+//        this.orderDetailSelected = orderDetailSelected;
+//        initComponents();
+//        fillFirst();
+//    }
 
     public Product getProduct() {
         return product;
     }
 
-    public UnitDetail getSelectedUnitDetail() {
-        return (UnitDetail) comboChonDvt.getSelectedItem();
-    }
-
-    public int getSoLuong() {
-        return (int) spinnerSoLuong.getValue();
-    }
-
-    public void setUnitDetails(List<UnitDetail> unitDetails) {
-        this.unitDetails = unitDetails;
-    }
-
-    public List<UnitDetail> getUnitDetails() {
-        return unitDetails;
-    }
-
-    public JComboBox<UnitDetail> getComboChonDvt() {
-        return comboChonDvt;
-    }
-
-    private void fillFirst() {
-        comboChonDvt.removeAllItems();
-
-        for (UnitDetail unitDetail : unitDetails) {
-            comboChonDvt.addItem(unitDetail);
-        }
-
-        txtTenSP.setText(product.getName());
-        pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
-                + product.getImage())), 82, 82));
-        spinnerSoLuong.setValue(0);
-        UnitDetail unitDetail = getSelectedUnitDetail();
-        if (promotion != null) {
-            DecimalFormat df = new DecimalFormat("- #.00 %");
-            txtDiscount.setText(df.format(promotion.getDiscount()));
-            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() *  (product.getPrice() * (1 - promotion.getDiscount()))));
-        } else {
-            txtDiscount.setText("");
-            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() *product.getPrice()));
-        }
-        int value = (Integer) spinnerSoLuong.getValue();
-        txtTongTien.setText(FormatNumber.formatToVND(product.getPrice() * value));
-
-        if (orderDetailSelected != null) {
-            comboChonDvt.setSelectedItem(orderDetailSelected.getUnitDetail());
-            List<BatchDTO> batchDTOs = orderDetailSelected.getBatchDTOs();
-            int qty = 0;
-
-            for (BatchDTO batchDTO : batchDTOs) {
-                qty += batchDTO.getQuantity();
-                PnSelectBatch pnSelectBatch = new PnSelectBatch(batchDTO, orderDetailSelected.getUnitDetail(), spinnerSoLuong);
-                pnListBatch.add(pnSelectBatch);
-            }
-            spinnerSoLuong.setValue(qty);
-            setLineTotal();
-        }
-    }
-
-    public void fillQuantity(int quantity) {
-        spinnerSoLuong.setValue(quantity);
-    }
-
-    public void updateUnitDetails(UnitDetail unitDetailTmp) {
-        unitDetails.remove(unitDetailTmp);
-        comboChonDvt.removeItem(unitDetailTmp);
-    }
+//    public UnitDetail getSelectedUnitDetail() {
+//        return (UnitDetail) comboChonDvt.getSelectedItem();
+//    }
+//
+//    public int getSoLuong() {
+//        return (int) spinnerSoLuong.getValue();
+//    }
+//
+//    public void setUnitDetails(List<UnitDetail> unitDetails) {
+//        this.unitDetails = unitDetails;
+//    }
+//
+//    public List<UnitDetail> getUnitDetails() {
+//        return unitDetails;
+//    }
+//
+//    public JComboBox<UnitDetail> getComboChonDvt() {
+//        return comboChonDvt;
+//    }
+//
+//    private void fillFirst() {
+//        comboChonDvt.removeAllItems();
+//
+//        for (UnitDetail unitDetail : unitDetails) {
+//            comboChonDvt.addItem(unitDetail);
+//        }
+//
+//        txtTenSP.setText(product.getName());
+//        pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
+//                + product.getImage())), 82, 82));
+//        spinnerSoLuong.setValue(0);
+//        UnitDetail unitDetail = getSelectedUnitDetail();
+//        if (promotion != null) {
+//            DecimalFormat df = new DecimalFormat("- #.00 %");
+//            txtDiscount.setText(df.format(promotion.getDiscount()));
+//            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() *  (product.getPrice() * (1 - promotion.getDiscount()))));
+//        } else {
+//            txtDiscount.setText("");
+//            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() *product.getPrice()));
+//        }
+//        int value = (Integer) spinnerSoLuong.getValue();
+//        txtTongTien.setText(FormatNumber.formatToVND(product.getPrice() * value));
+//
+//        if (orderDetailSelected != null) {
+//            comboChonDvt.setSelectedItem(orderDetailSelected.getUnitDetail());
+//            List<BatchDTO> batchDTOs = orderDetailSelected.getBatchDTOs();
+//            int qty = 0;
+//
+//            for (BatchDTO batchDTO : batchDTOs) {
+//                qty += batchDTO.getQuantity();
+//                PnSelectBatch pnSelectBatch = new PnSelectBatch(batchDTO, orderDetailSelected.getUnitDetail(), spinnerSoLuong);
+//                pnListBatch.add(pnSelectBatch);
+//            }
+//            spinnerSoLuong.setValue(qty);
+//            setLineTotal();
+//        }
+//    }
+//
+//    public void fillQuantity(int quantity) {
+//        spinnerSoLuong.setValue(quantity);
+//    }
+//
+//    public void updateUnitDetails(UnitDetail unitDetailTmp) {
+//        unitDetails.remove(unitDetailTmp);
+//        comboChonDvt.removeItem(unitDetailTmp);
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -142,7 +128,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
         spinnerSoLuong = new javax.swing.JSpinner();
         txtDonGia = new javax.swing.JLabel();
         txtTongTien = new javax.swing.JLabel();
-        comboChonDvt = new javax.swing.JComboBox<>();
         pnHinh = new javax.swing.JLabel();
         txtDiscount = new javax.swing.JLabel();
         pnListBatch = new javax.swing.JPanel();
@@ -243,13 +228,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
         txtTongTien.setText("0 đ");
         txtTongTien.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        comboChonDvt.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        comboChonDvt.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboChonDvtItemStateChanged(evt);
-            }
-        });
-
         pnHinh.setBackground(new java.awt.Color(204, 204, 204));
 
         txtDiscount.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -290,9 +268,7 @@ public class PnOrderDetail extends javax.swing.JPanel {
                             .addComponent(txtDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboChonDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
+                                .addGap(145, 145, 145)
                                 .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -311,7 +287,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(comboChonDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -337,144 +312,96 @@ public class PnOrderDetail extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public Double getLineTotal() {
-        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-        if (unitDetail != null) {
-            int quantity = (Integer) spinnerSoLuong.getValue();
-            return unitDetail.getConversionRate() * quantity * product.getPrice();
-        }
-        return 0.0;
-    }
-
-    public double getPriceDiscount() {
-        if (promotion != null) {
-            return getLineTotal() * promotion.getDiscount();
-        } else {
-            return 0;
-        }
-    }
-
-    public void setLineTotal() {
-        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-        int quantity = (int) spinnerSoLuong.getValue();
-        if (promotion != null) {
-            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()
-                    * product.getPrice() * (1 - promotion.getDiscount())));
-            txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()
-                    * quantity * product.getPrice() * (1 - promotion.getDiscount())));
-        } else {
-            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * product.getPrice()));
-            txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()
-                    * quantity * product.getPrice()));
-        }
-    }
-
-    private void fillBatch() {
-        pnChuaLo.removeAll();
-        for (Batch batch : batchs) {
-            UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-            PnChonLo chonLo = new PnChonLo(batch, unitDetail);
-            chonLo.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-            JSpinner spinnerModal = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
-            spinnerModal.setFont(new Font("Arial", Font.PLAIN, 16));
-            Dimension spinnerSize = new Dimension(80, 50); // Chiều rộng 80, chiều cao 30
-            spinnerModal.setPreferredSize(spinnerSize);
-            spinnerModal.setEnabled(false);
-
-            JPanel panelContainer = new JPanel();
-            panelContainer.setBackground(Color.white);
-            panelContainer.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-            panelContainer.add(chonLo);
-            panelContainer.add(Box.createRigidArea(new Dimension(20, 0)));
-            panelContainer.add(spinnerModal);
-
-            pnChuaLo.add(panelContainer);
-
-            spinnerModal.addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    double stock = batch.getStock();
-                    double conversionRate = unitDetail.getConversionRate();
-                    double result = stock / conversionRate;
-
-                    int newValue = (int) spinnerModal.getValue();
-                    if (newValue > result) {
-                        MessageDialog.warning(null, "Không đủ số lượng");
-                        spinnerModal.setValue(newValue - 1);
-                    }
-
-                }
-            });
-
-            for (Component component : pnListBatch.getComponents()) {
-                if (component instanceof PnSelectBatch) {
-                    PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
-                    if (chonLo.getBatch().getName().equals(pnSelectBatch.getBatchDTO().getName())) {
-                        chonLo.getBtnTenLo().setEnabled(false);
-                    }
-                }
-            }
-        }
-    }
+//    public Double getLineTotal() {
+//        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
+//        if (unitDetail != null) {
+//            int quantity = (Integer) spinnerSoLuong.getValue();
+//            return unitDetail.getConversionRate() * quantity * product.getPrice();
+//        }
+//        return 0.0;
+//    }
+//
+//    public double getPriceDiscount() {
+//        if (promotion != null) {
+//            return getLineTotal() * promotion.getDiscount();
+//        } else {
+//            return 0;
+//        }
+//    }
+//
+//    public void setLineTotal() {
+//        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
+//        int quantity = (int) spinnerSoLuong.getValue();
+//        if (promotion != null) {
+//            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()
+//                    * product.getPrice() * (1 - promotion.getDiscount())));
+//            txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()
+//                    * quantity * product.getPrice() * (1 - promotion.getDiscount())));
+//        } else {
+//            txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * product.getPrice()));
+//            txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()
+//                    * quantity * product.getPrice()));
+//        }
+//    }
+//
+//    private void fillBatch() {
+//        pnChuaLo.removeAll();
+//        for (Batch batch : batchs) {
+//            UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
+//            PnChonLo chonLo = new PnChonLo(batch, unitDetail);
+//            chonLo.setAlignmentX(Component.LEFT_ALIGNMENT);
+//
+//            JSpinner spinnerModal = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
+//            spinnerModal.setFont(new Font("Arial", Font.PLAIN, 16));
+//            Dimension spinnerSize = new Dimension(80, 50); // Chiều rộng 80, chiều cao 30
+//            spinnerModal.setPreferredSize(spinnerSize);
+//            spinnerModal.setEnabled(false);
+//
+//            JPanel panelContainer = new JPanel();
+//            panelContainer.setBackground(Color.white);
+//            panelContainer.setLayout(new FlowLayout(FlowLayout.LEFT));
+//
+//            panelContainer.add(chonLo);
+//            panelContainer.add(Box.createRigidArea(new Dimension(20, 0)));
+//            panelContainer.add(spinnerModal);
+//
+//            pnChuaLo.add(panelContainer);
+//
+//            spinnerModal.addChangeListener(new ChangeListener() {
+//                @Override
+//                public void stateChanged(ChangeEvent e) {
+//                    double stock = batch.getStock();
+//                    double conversionRate = unitDetail.getConversionRate();
+//                    double result = stock / conversionRate;
+//
+//                    int newValue = (int) spinnerModal.getValue();
+//                    if (newValue > result) {
+//                        MessageDialog.warning(null, "Không đủ số lượng");
+//                        spinnerModal.setValue(newValue - 1);
+//                    }
+//
+//                }
+//            });
+//
+//            for (Component component : pnListBatch.getComponents()) {
+//                if (component instanceof PnSelectBatch) {
+//                    PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
+//                    if (chonLo.getBatch().getName().equals(pnSelectBatch.getBatchDTO().getName())) {
+//                        chonLo.getBtnTenLo().setEnabled(false);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private void spinnerSoLuongStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerSoLuongStateChanged
-        setLineTotal();
-        tabHoaDon.changeTongTienHoaDon();
+//        setLineTotal();
+//        tabHoaDon.changeTongTienHoaDon();
     }//GEN-LAST:event_spinnerSoLuongStateChanged
-
-    private void comboChonDvtItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboChonDvtItemStateChanged
-        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-
-        if (unitDetail != null) {
-            if (evt.getStateChange() == ItemEvent.DESELECTED) {
-                UnitDetail detailTmp = (UnitDetail) evt.getItem();
-                Container parent = this.getParent();
-                if (parent != null) {
-                    for (Component component : parent.getComponents()) {
-                        if (component instanceof PnOrderDetail) {
-                            PnOrderDetail pnOrderDetail = (PnOrderDetail) component;
-
-                            if (pnOrderDetail.getProduct().equals(product) && !pnOrderDetail.getSelectedUnitDetail().equals(unitDetail)) {
-
-                                List<UnitDetail> details = pnOrderDetail.getUnitDetails();
-                                details.remove(unitDetail);
-                                details.add(detailTmp);
-                                pnOrderDetail.getComboChonDvt().removeItem(unitDetail);
-                                pnOrderDetail.getComboChonDvt().addItem(detailTmp);
-                                pnOrderDetail.setUnitDetails(details);
-                            }
-                        }
-                    }
-                }
-                List<PnSelectBatch> pnSelectBatchs = new ArrayList<>();
-                for (Component component : pnListBatch.getComponents()) {
-                    if (component instanceof PnSelectBatch) {
-                        PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
-                        BatchDTO batchDTO = pnSelectBatch.getBatchDTO();
-                        batchDTO.setQuantity(1);
-                        pnSelectBatchs.add(new PnSelectBatch(batchDTO, unitDetail, spinnerSoLuong));
-                    }
-                }
-                pnListBatch.removeAll();
-                int value = 0;
-                for (PnSelectBatch pnSelectBatch : pnSelectBatchs) {
-                    pnListBatch.add(pnSelectBatch);
-                    value += pnSelectBatch.getBatchDTO().getQuantity();
-                }
-                spinnerSoLuong.setValue(value);
-                pnListBatch.revalidate();
-                pnListBatch.repaint();
-                setLineTotal();
-                tabHoaDon.changeTongTienHoaDon();
-            }
-        }
-    }//GEN-LAST:event_comboChonDvtItemStateChanged
 
     private void btnChonLoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonLoActionPerformed
 //         TODO add your handling code here:
-        fillBatch();
+//        fillBatch();
         dialogChonLo.setVisible(true);
         dialogChonLo.pack();
         dialogChonLo.setLocationRelativeTo(null);
@@ -488,57 +415,57 @@ public class PnOrderDetail extends javax.swing.JPanel {
         return spinnerSoLuong;
     }
 
-    public void setQuantity() {
-        int value = 0;
-        for (Component component : pnListBatch.getComponents()) {
-            if (component instanceof PnSelectBatch) {
-                PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
-                value += pnSelectBatch.getBatchDTO().getQuantity();
-            }
-        }
-        spinnerSoLuong.setValue(value);
-    }
+//    public void setQuantity() {
+//        int value = 0;
+//        for (Component component : pnListBatch.getComponents()) {
+//            if (component instanceof PnSelectBatch) {
+//                PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
+//                value += pnSelectBatch.getBatchDTO().getQuantity();
+//            }
+//        }
+//        spinnerSoLuong.setValue(value);
+//    }
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
-        List<BatchDTO> batchDTOs = getSelectedBatchDTO();
-        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-        for (BatchDTO batchDTO : batchDTOs) {
-            pnListBatch.add(new PnSelectBatch(batchDTO, unitDetail, spinnerSoLuong));
-        }
-        pnListBatch.revalidate();
-        pnListBatch.repaint();
-        dialogChonLo.dispose();
-
-        int value = 0;
-        for (Component component : pnListBatch.getComponents()) {
-            if (component instanceof PnSelectBatch) {
-                PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
-                value += pnSelectBatch.getBatchDTO().getQuantity();
-            }
-        }
-        spinnerSoLuong.setValue(value);
+//        List<BatchDTO> batchDTOs = getSelectedBatchDTO();
+//        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
+//        for (BatchDTO batchDTO : batchDTOs) {
+//            pnListBatch.add(new PnSelectBatch(batchDTO, unitDetail, spinnerSoLuong));
+//        }
+//        pnListBatch.revalidate();
+//        pnListBatch.repaint();
+//        dialogChonLo.dispose();
+//
+//        int value = 0;
+//        for (Component component : pnListBatch.getComponents()) {
+//            if (component instanceof PnSelectBatch) {
+//                PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
+//                value += pnSelectBatch.getBatchDTO().getQuantity();
+//            }
+//        }
+//        spinnerSoLuong.setValue(value);
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void btnXoaOderDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaOderDetailMouseClicked
         // TODO add your handling code here:
-        Container parent = this.getParent();
-        if (parent != null) {
-            parent.remove(this);
-            UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-            for (Component component : parent.getComponents()) {
-                if (component instanceof PnOrderDetail pnOrderDetail) {
-                    if (pnOrderDetail.getProduct().equals(product)) {
-                        List<UnitDetail> details = pnOrderDetail.getUnitDetails();
-                        details.add(unitDetail);
-                        pnOrderDetail.setUnitDetails(details);
-                        pnOrderDetail.getComboChonDvt().addItem(unitDetail);
-                    }
-                }
-            }
-            parent.revalidate();
-            parent.repaint();
-        }
-        tabHoaDon.changeTongTienHoaDon();
+//        Container parent = this.getParent();
+//        if (parent != null) {
+//            parent.remove(this);
+//            UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
+//            for (Component component : parent.getComponents()) {
+//                if (component instanceof PnOrderDetail pnOrderDetail) {
+//                    if (pnOrderDetail.getProduct().equals(product)) {
+//                        List<UnitDetail> details = pnOrderDetail.getUnitDetails();
+//                        details.add(unitDetail);
+//                        pnOrderDetail.setUnitDetails(details);
+//                        pnOrderDetail.getComboChonDvt().addItem(unitDetail);
+//                    }
+//                }
+//            }
+//            parent.revalidate();
+//            parent.repaint();
+//        }
+//        tabHoaDon.changeTongTienHoaDon();
     }//GEN-LAST:event_btnXoaOderDetailMouseClicked
 
     private List<BatchDTO> getSelectedBatchDTO() {
@@ -576,7 +503,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
     private javax.swing.JButton btnChonLo;
     private javax.swing.JButton btnXacNhan;
     private javax.swing.JLabel btnXoaOderDetail;
-    private javax.swing.JComboBox<UnitDetail> comboChonDvt;
     private javax.swing.JDialog dialogChonLo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pnChuaLo;

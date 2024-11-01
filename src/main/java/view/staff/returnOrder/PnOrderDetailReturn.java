@@ -4,16 +4,14 @@
  */
 package view.staff.returnOrder;
 
-import view.staff.sell.PnSelectBatch;
-import bus.OrderDetailBUS;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import connectDB.ConnectDB;
 import dto.BatchDTO;
 import dto.OrderDetailSelected;
 import entity.Product;
-import java.awt.Component;
-import java.util.List;
 import entity.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.util.Objects;
 import javax.swing.*;
 import util.ResizeImage;
 import util.FormatNumber;
@@ -28,33 +26,95 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
     private Product product;
     private TABReturnOrder tabTraHang;
     private OrderDetailSelected orderDetailSelected;
-    private UnitDetail unitDetail;
     private String reason;
+    private OrderDetail orderDetail;
+    private int type;
+    private int maxQuantity;
 
     public PnOrderDetailReturn() {
         initComponents();
     }
 
-    public PnOrderDetailReturn(OrderDetail orderDetail, UnitDetail unitDetail, OrderDetailSelected orderDetailSelected,
-            TABReturnOrder tabTraHang) {
-        this.unitDetail = unitDetail;
-        this.product = unitDetail.getProduct();
+    public PnOrderDetailReturn(OrderDetail orderDetail, OrderDetailSelected orderDetailSelected,
+            TABReturnOrder tabTraHang, int type) {
+        this.product = orderDetail.getBatch().getProduct();
         this.tabTraHang = tabTraHang;
         this.orderDetailSelected = orderDetailSelected;
+        this.type = type;
+        this.orderDetail = orderDetail;
         initComponents();
         fillFirst();
+        validType(type);
         reason = "";
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PnOrderDetailReturn other = (PnOrderDetailReturn) obj;
+        if (!Objects.equals(this.product, other.product)) {
+            return false;
+        }
+        if (!Objects.equals(this.tabTraHang, other.tabTraHang)) {
+            return false;
+        }
+        if (!Objects.equals(this.orderDetailSelected, other.orderDetailSelected)) {
+            return false;
+        }
+        return Objects.equals(this.orderDetail, other.orderDetail);
+    }
+
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
+    }
+
+    public OrderDetailSelected getOrderDetailSelected() {
+        return orderDetailSelected;
+    }
+
+    public void setOrderDetailSelected(OrderDetailSelected orderDetailSelected) {
+        this.orderDetailSelected = orderDetailSelected;
+    }
+
+    private void validType(int type) {
+        if (type == 1) {
+            lblIcon.setIcon(ResizeImage.resizeImage((new FlatSVGIcon(getClass().getResource("/img/tick.svg"))), 30, 30));
+            btnXoaOderDetail.setIcon(null);
+            spinnerSoLuong.setEnabled(false);
+        } else if (type == 2) {
+            lblIcon.setIcon(ResizeImage.resizeImage((new FlatSVGIcon(getClass().getResource("/img/note.svg"))), 30, 30));
+            spinnerSoLuong.setEnabled(true);
+            lblIcon.setVisible(true);
+            btnXoaOderDetail.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/delete.jpg")), 25, 25));
+            SpinnerNumberModel model = (SpinnerNumberModel) spinnerSoLuong.getModel();
+            model.setMaximum(maxQuantity);
+            model.setMinimum(1);
+        }
     }
 
     public Product getProduct() {
         return product;
     }
 
-    public UnitDetail getSelectedUnitDetail() {
-        return (UnitDetail) comboChonDvt.getSelectedItem();
-    }
-    
-    public String getReason(){
+    public String getReason() {
         return this.reason;
     }
 
@@ -62,35 +122,17 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
         return (int) spinnerSoLuong.getValue();
     }
 
-    public JComboBox<UnitDetail> getComboChonDvt() {
-        return comboChonDvt;
-    }
-
     private void fillFirst() {
-        
-        lblIcon.setIcon(ResizeImage.resizeImage((new FlatSVGIcon(getClass().getResource("/img/note.svg"))),30,30));
-        
-        comboChonDvt.removeAllItems();
-        comboChonDvt.addItem(unitDetail);
-
+        txtDvt.setText(product.getUnit().getName());
         txtTenSP.setText(product.getName());
         pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
                 + product.getImage())), 82, 82));
-
-        if (orderDetailSelected != null) {
-            comboChonDvt.setSelectedItem(orderDetailSelected.getUnitDetail());
-            List<BatchDTO> batchDTOs = orderDetailSelected.getBatchDTOs();
-            int qty = 0;
-
-            for (BatchDTO batchDTO : batchDTOs) {
-                qty += batchDTO.getQuantity();
-                PnSelectBatchReturn pnSelectBatchReturn = new PnSelectBatchReturn(batchDTO, orderDetailSelected.getUnitDetail(), spinnerSoLuong);
-                pnListBatch.add(pnSelectBatchReturn);
-            }
-
-            spinnerSoLuong.setValue(qty);
-            setLineTotal();
+        maxQuantity = 0;
+        for (BatchDTO x : orderDetailSelected.getBatchDTOs()) {
+            maxQuantity += x.getQuantity();
         }
+        fillQuantity(maxQuantity);
+        setLineTotal();
     }
 
     public void fillQuantity(int quantity) {
@@ -112,17 +154,16 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
         spinnerSoLuong = new javax.swing.JSpinner();
         txtDonGia = new javax.swing.JLabel();
         txtTongTien = new javax.swing.JLabel();
-        comboChonDvt = new javax.swing.JComboBox<>();
         pnHinh = new javax.swing.JLabel();
-        pnListBatch = new javax.swing.JPanel();
         lblIcon = new javax.swing.JLabel();
+        txtDvt = new javax.swing.JLabel();
+        btnXoaOderDetail = new javax.swing.JLabel();
+        btnXoaOderDetail.setIcon( ResizeImage.resizeImage( new javax.swing.ImageIcon(getClass().getResource("/img/delete.jpg")) , 25, 25));
 
         modalGhiChu.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         modalGhiChu.setTitle("Lý do trả hàng");
-        modalGhiChu.setMaximumSize(new java.awt.Dimension(665, 405));
         modalGhiChu.setMinimumSize(new java.awt.Dimension(665, 405));
         modalGhiChu.setModal(true);
-        modalGhiChu.setPreferredSize(new java.awt.Dimension(665, 405));
         modalGhiChu.setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -198,9 +239,9 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(232, 232, 232)));
-        setMaximumSize(new java.awt.Dimension(1139, 170));
-        setMinimumSize(new java.awt.Dimension(1139, 170));
-        setPreferredSize(new java.awt.Dimension(1139, 170));
+        setMaximumSize(new java.awt.Dimension(1139, 140));
+        setMinimumSize(new java.awt.Dimension(1139, 140));
+        setPreferredSize(new java.awt.Dimension(1139, 140));
         setRequestFocusEnabled(false);
 
         txtTenSP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -226,13 +267,7 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
         txtTongTien.setText("0 đ");
         txtTongTien.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        comboChonDvt.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        comboChonDvt.setEnabled(false);
-
         pnHinh.setBackground(new java.awt.Color(204, 204, 204));
-
-        pnListBatch.setBackground(new java.awt.Color(255, 255, 255));
-        pnListBatch.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 3));
 
         lblIcon.setText("Ghi chú");
         lblIcon.setMaximumSize(new java.awt.Dimension(38, 38));
@@ -244,74 +279,79 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
             }
         });
 
+        txtDvt.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtDvt.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        txtDvt.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        btnXoaOderDetail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaOderDetailMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(btnXoaOderDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 43, Short.MAX_VALUE)
-                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(comboChonDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15))
-                    .addComponent(pnListBatch, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE))
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(comboChonDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(46, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(45, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(pnHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(pnListBatch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+                        .addGap(24, 24, 24)
+                        .addComponent(pnHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(btnXoaOderDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     public Double getLineTotal() {
-        if (unitDetail != null) {
-            int quantity = (Integer) spinnerSoLuong.getValue();
-            return unitDetail.getConversionRate() * quantity * product.getPrice();
-        }
-        return 0.0;
+        int quantity = (Integer) spinnerSoLuong.getValue();
+        return quantity * product.getPrice();
     }
 
     public void setLineTotal() {
         int quantity = (Integer) spinnerSoLuong.getValue();
-        txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * product.getPrice()));
-        txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()
-                * quantity * product.getPrice()));
-
+        txtDonGia.setText(FormatNumber.formatToVND(product.getPrice()));
+        txtTongTien.setText(FormatNumber.formatToVND(quantity * product.getPrice()));
     }
 
 
@@ -321,9 +361,14 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
     }//GEN-LAST:event_spinnerSoLuongStateChanged
 
     private void lblIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconMouseClicked
-        txtAreaReason.setText(reason);
-        modalGhiChu.setLocationRelativeTo(null);
-        modalGhiChu.setVisible(true);
+        if (type == 2) {
+            txtAreaReason.setText(reason);
+            modalGhiChu.setLocationRelativeTo(null);
+            modalGhiChu.setVisible(true);
+        } else if (type == 1) {
+            tabTraHang.addOrderDetailToReturn(this);
+        }
+
     }//GEN-LAST:event_lblIconMouseClicked
 
     private void btnExitModalAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitModalAddActionPerformed
@@ -334,33 +379,31 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        reason  = txtAreaReason.getText();
+        reason = txtAreaReason.getText();
         modalGhiChu.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public JPanel getPnListBatch() {
-        return pnListBatch;
-    }
+    private void btnXoaOderDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaOderDetailMouseClicked
+        // TODO add your handling code here:
+        if (type == 2) {
+            Container parent = this.getParent();
+            if (parent != null) {
+                parent.remove(this);
+                parent.revalidate();
+                parent.repaint();
+            }
+            tabTraHang.changeTongTienHoaDon();
+        }
+    }//GEN-LAST:event_btnXoaOderDetailMouseClicked
 
     public JSpinner getSpinnerSoLuong() {
         return spinnerSoLuong;
     }
 
-    public void setQuantity() {
-        int value = 0;
-        for (Component component : pnListBatch.getComponents()) {
-            if (component instanceof PnSelectBatch) {
-                PnSelectBatch pnSelectBatch = (PnSelectBatch) component;
-                value += pnSelectBatch.getBatchDTO().getQuantity();
-            }
-        }
-        spinnerSoLuong.setValue(value);
-    }
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExitModalAdd;
-    private javax.swing.JComboBox<UnitDetail> comboChonDvt;
+    private javax.swing.JLabel btnXoaOderDetail;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -368,10 +411,10 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
     private javax.swing.JLabel lblIcon;
     private javax.swing.JDialog modalGhiChu;
     private javax.swing.JLabel pnHinh;
-    private javax.swing.JPanel pnListBatch;
     private javax.swing.JSpinner spinnerSoLuong;
     private javax.swing.JTextArea txtAreaReason;
     private javax.swing.JLabel txtDonGia;
+    private javax.swing.JLabel txtDvt;
     private javax.swing.JLabel txtTenSP;
     private javax.swing.JLabel txtTongTien;
     // End of variables declaration//GEN-END:variables

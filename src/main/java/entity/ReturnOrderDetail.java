@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entity;
+
 import enums.ReturnOrderDetailStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Nationalized;
+
 /**
  *
  * @author daoducdanh
@@ -20,57 +22,68 @@ import org.hibernate.annotations.Nationalized;
 @Entity
 @Table(name = "return_order_details")
 public class ReturnOrderDetail {
-    
+
     @Column(name = "quantity")
     private int quantity;
-    
+
     @Column(name = "price")
     private double price;
-    
+
     @Column(name = "reason")
     @Nationalized
     private String reason;
-    
+
     @Column(name = "line_total")
     private double lineTotal;
-    
+
     @Column(name = "return_order_detail_status")
     @Enumerated(EnumType.STRING)
     private ReturnOrderDetailStatus returnOrderDetailStatus;
-    
+
+    @Column(name = "final_reason")
+    private String finalReason;
+
     @ManyToOne
-    @JoinColumn(name = "batch_id")
+    @JoinColumn(name = "product_id")
     @Id
-    private Batch batch;
-    
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name = "return_order_id")
     @Id
     private ReturnOrder returnOrder;
-    
-    public ReturnOrderDetail(){
-        
+
+    public ReturnOrderDetail() {
+
     }
 
-    public ReturnOrderDetail(int quantity, double price, Batch batch, ReturnOrderDetailStatus
-             returnOrderDetailStatus, String reason) {
+    public ReturnOrderDetail(int quantity, double price, Batch batch, ReturnOrderDetailStatus returnOrderDetailStatus, String reason, String finalReason) {
         setQuantity(quantity);
         setPrice(price);
-        setBatch(batch);
+        this.product = product;
         setReason(reason);
         this.returnOrderDetailStatus = returnOrderDetailStatus;
         setLineTotal();
-        
+        this.finalReason = finalReason;
+
     }
 
     public int getQuantity() {
         return quantity;
     }
 
+    public String getFinalReason() {
+        return finalReason;
+    }
+
+    public void setFinalReason(String finalReason) {
+        this.finalReason = finalReason;
+    }
+
     public void setQuantity(int quantity) {
-        if(quantity < 0)
+        if (quantity < 0) {
             throw new RuntimeException("Số lượng sản phẩm không hợp lệ");
+        }
         this.quantity = quantity;
     }
 
@@ -79,8 +92,9 @@ public class ReturnOrderDetail {
     }
 
     public void setPrice(double price) {
-        if (price < 0)
+        if (price < 0) {
             throw new RuntimeException("Giá sản phẩm không hợp lệ");
+        }
         this.price = price;
     }
 
@@ -89,30 +103,26 @@ public class ReturnOrderDetail {
     }
 
     public void setReason(String reason) {
-        if(reason.equals(""))
+        if (reason.equals("")) {
             throw new RuntimeException("Lý do khách trả hàng không được rỗng");
+        }
         this.reason = reason;
     }
 
-    
-    
     public double getLineTotal() {
         return lineTotal;
     }
 
     public void setLineTotal() {
-        this.lineTotal = (this.batch.getProduct().getVAT() + 1) * (this.quantity * this.price);
+        this.lineTotal = (this.product.getVAT() + 1) * (this.quantity * this.price);
     }
 
-    public Batch getBatch() {
-        return batch;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setBatch(Batch batch) {
-        if(batch == null){
-            throw new RuntimeException("Lô hàng không được rỗng");
-        }
-        this.batch = batch;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public ReturnOrder getReturnOrder() {
@@ -120,8 +130,9 @@ public class ReturnOrderDetail {
     }
 
     public void setReturnOrder(ReturnOrder returnOrder) {
-        if(returnOrder == null)
+        if (returnOrder == null) {
             throw new RuntimeException("Hóa đơn trả khách hàng không được rỗng");
+        }
         this.returnOrder = returnOrder;
     }
 

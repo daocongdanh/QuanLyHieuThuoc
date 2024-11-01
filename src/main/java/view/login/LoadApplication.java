@@ -8,20 +8,7 @@ import bus.*;
 import com.formdev.flatlaf.FlatLightLaf;
 import connectDB.ConnectDB;
 import jakarta.persistence.EntityManager;
-import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import jdk.jshell.spi.ExecutionControl;
 import util.ResizeImage;
-import view.manager.TABCustomer;
-import view.manager.TABDamageItem;
-import view.manager.TABEmployee;
-import view.manager.TABOrder;
-import view.manager.TABPrecription;
-import view.manager.TABPurchaseOrder;
-import view.manager.TABReturnOrder;
-import view.manager.TABStats;
-import view.manager.TABUnit;
 
 /**
  *
@@ -42,12 +29,10 @@ public class LoadApplication extends javax.swing.JFrame {
     public static DamageItemBUS damageItemBUS;
     public static EmployeeBUS employeeBUS;
     public static ProductBUS productBUS;
-    public static PrescriptionBUS prescriptionBUS;
     public static PurchaseOrderBUS purchaseOrderBUS;
     public static UnitBUS unitBUS;
     public static ReturnOrderDetailBUS returnOrderDetailBUS;
     public static SupplierBUS supplierBUS;
-    public static ProductTransactionHistoryBUS productTransactionHistoryBUS;
     public static ReportBUS reportBUS;
 
     public LoadApplication() {
@@ -139,12 +124,10 @@ public class LoadApplication extends javax.swing.JFrame {
                     damageItemBUS = new DamageItemBUS(em);
                     employeeBUS = new EmployeeBUS(em);
                     productBUS = new ProductBUS(em);
-                    prescriptionBUS = new PrescriptionBUS(em);
                     purchaseOrderBUS = new PurchaseOrderBUS(em);
                     unitBUS = new UnitBUS(em);
                     returnOrderDetailBUS = new ReturnOrderDetailBUS(em);
                     supplierBUS = new SupplierBUS(em);
-                    productTransactionHistoryBUS = new ProductTransactionHistoryBUS(em);
                     reportBUS = new ReportBUS(em);
                 }
 //                load.progressLoading.setForeground(Color.orange);

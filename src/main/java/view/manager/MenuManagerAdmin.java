@@ -4,8 +4,11 @@
  */
 package view.manager;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import connectDB.ConnectDB;
 import java.awt.Color;
 import java.awt.Font;
@@ -41,7 +44,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 
     public MenuManagerAdmin() {
         initComponents();
-        UIManagerSet();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitleMenu();
         addMenuClick();
@@ -52,7 +54,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
 
         List<MenuChoice> menuList = Arrays.asList(
                 menuStatistical, menuReport, menuCustomer, menuDamaged, menuOrder,
-                menuPrescription, menuProduct, menuPromotion, menuPurchase,
+                menuProduct, menuPromotion, menuPurchase,
                 menuReturn, menuStaff, menuSupplier, menuUnit
         );
         Map<MenuChoice, Supplier<JPanel>> menuPanelMap = new HashMap<>();
@@ -73,7 +75,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuPanelMap.put(menuCustomer, () -> new TABCustomer());
         menuPanelMap.put(menuDamaged, () -> new TABDamageItem());
         menuPanelMap.put(menuOrder, () -> new TABOrder());
-        menuPanelMap.put(menuPrescription, () -> new TABPrecription());
         menuPanelMap.put(menuProduct, () -> new TABProduct());
 // menuPanelMap.put(menuPromotion, () -> new TABPromotionPanel());
         menuPanelMap.put(menuPurchase, () -> new TABPurchaseOrder());
@@ -128,8 +129,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuDamaged.setTitleMenu("Quản Lý Xuất Hủy");
         menuOrder.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/orderIcon.svg"))));
         menuOrder.setTitleMenu("Quản Lý Đơn Hàng");
-        menuPrescription.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/precriptionIcon.svg"))));
-        menuPrescription.setTitleMenu("Quản Lý Đơn Thuốc Mẫu");
         menuProduct.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/productIcon.svg"))));
         menuProduct.setTitleMenu("Quản Lý Sản Phẩm");
         menuPromotion.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/promotionIcon.svg"))));
@@ -150,15 +149,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         lblIcon.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.jpg")), 68, 68));
     }
 
-    private void UIManagerSet() {
-        UIManager.put("TextComponent.arc", 8);
-        UIManager.put("Component.arc", 8);
-        UIManager.put("TabbedPane.selectedBackground", Color.white);
-        UIManager.put("TabbedPane.tabHeight", 45);
-        UIManager.put("ToggleButton.selectedBackground", new Color(81, 154, 244));
-        UIManager.put("ToggleButton.selectedForeground", Color.WHITE);
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,7 +164,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuReport = new view.common.MenuChoice();
         menuProduct = new view.common.MenuChoice();
         menuUnit = new view.common.MenuChoice();
-        menuPrescription = new view.common.MenuChoice();
         menuStaff = new view.common.MenuChoice();
         menuCustomer = new view.common.MenuChoice();
         menuSupplier = new view.common.MenuChoice();
@@ -213,7 +202,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
                         .addComponent(menuReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(menuProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(menuUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(menuPrescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(menuStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(menuCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(menuSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,8 +228,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(menuUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(menuPrescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addComponent(menuStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(menuCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,7 +245,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
                 .addComponent(menuPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
 
         Box.add(pnLeft, java.awt.BorderLayout.WEST);
@@ -295,8 +281,12 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        FlatLightLaf.setup();
-
+        FlatRobotoFont.install();
+        FlatLaf.setPreferredFontFamily(FlatRobotoFont.FAMILY);
+        FlatLaf.setPreferredLightFontFamily(FlatRobotoFont.FAMILY_LIGHT);
+        FlatLaf.setPreferredSemiboldFontFamily(FlatRobotoFont.FAMILY_SEMIBOLD);
+        FlatLaf.registerCustomDefaultsSource("style");
+        FlatIntelliJLaf.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -313,7 +303,6 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
     private view.common.MenuChoice menuDamaged;
     private view.common.MenuChoice menuExit;
     private view.common.MenuChoice menuOrder;
-    private view.common.MenuChoice menuPrescription;
     private view.common.MenuChoice menuProduct;
     private view.common.MenuChoice menuPromotion;
     private view.common.MenuChoice menuPurchase;

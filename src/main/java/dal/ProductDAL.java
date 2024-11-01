@@ -154,5 +154,23 @@ public class ProductDAL implements BaseDAL<Product, String> {
 
         return query.getResultList();
     }
+    
+    public List<Product> findByUnitId( String unitId) {
+        StringBuilder queryBuilder = new StringBuilder("select p from Product p where p.unit.unitId = ?1");
+        Query query = entityManager.createQuery(queryBuilder.toString(), Product.class);
+        query.setParameter(1, unitId);
+        return query.getResultList();
+    }
 
+    public Product searchBySDKAndUnitId(String sdk, String unitId) {
+        TypedQuery<Product> query = entityManager.createQuery("select p from Product p where p.registrationNumber = ?1" +
+                " and p.unit.unitId = ?2 ", Product.class);
+        query.setParameter(1, sdk);
+        query.setParameter(2, unitId);
+        try {
+            return query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

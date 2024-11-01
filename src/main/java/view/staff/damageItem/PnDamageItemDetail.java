@@ -17,7 +17,7 @@ import util.FormatNumber;
  */
 public class PnDamageItemDetail extends javax.swing.JPanel {
 
-    private UnitDetail unitDetail;
+//    private UnitDetail unitDetail;
     private List<Batch> batchs;
     private TabDamageItem tabDamageItem;
 
@@ -25,43 +25,43 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
         initComponents();
     }
 
-    public PnDamageItemDetail(UnitDetail unitDetail, List<Batch> batchs, TabDamageItem tabDamageItem) {
-        this.unitDetail = unitDetail;
-        this.batchs = batchs;
-        this.tabDamageItem = tabDamageItem;
-        initComponents();
-        fillFirst();
-
-    }
+//    public PnDamageItemDetail(UnitDetail unitDetail, List<Batch> batchs, TabDamageItem tabDamageItem) {
+//        this.unitDetail = unitDetail;
+//        this.batchs = batchs;
+//        this.tabDamageItem = tabDamageItem;
+//        initComponents();
+//        fillFirst();
+//
+//    }
 
     public int getSoLuong() {
         return (int) spinnerSoLuong.getValue();
     }
 
-    private void fillFirst() {
-        // fill unit
-        comboChonDvt.removeAllItems();
-        comboChonDvt.addItem(unitDetail);
-        Product product = unitDetail.getProduct();
-
-        txtTenSP.setText(product.getName());
-        pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
-                + product.getImage())), 82, 82));
-        spinnerSoLuong.setValue(0);
-        int value = (Integer) spinnerSoLuong.getValue();
-        txtTongTien.setText(FormatNumber.formatToVND(product.getPrice() * value));
-
-        int qty = 0;
-
-        for (Batch batch : batchs) {
-            qty += batch.getStock();
-            PnSelectBatchDamageItem pnSelectBatchDamageItem = new PnSelectBatchDamageItem(batch);
-            pnListBatch.add(pnSelectBatchDamageItem);
-        }
-        spinnerSoLuong.setValue(qty);
-        setLineTotal();
-
-    }
+//    private void fillFirst() {
+//        // fill unit
+//        comboChonDvt.removeAllItems();
+//        comboChonDvt.addItem(unitDetail);
+//        Product product = unitDetail.getProduct();
+//
+//        txtTenSP.setText(product.getName());
+//        pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
+//                + product.getImage())), 82, 82));
+//        spinnerSoLuong.setValue(0);
+//        int value = (Integer) spinnerSoLuong.getValue();
+//        txtTongTien.setText(FormatNumber.formatToVND(product.getPrice() * value));
+//
+//        int qty = 0;
+//
+//        for (Batch batch : batchs) {
+//            qty += batch.getStock();
+//            PnSelectBatchDamageItem pnSelectBatchDamageItem = new PnSelectBatchDamageItem(batch);
+//            pnListBatch.add(pnSelectBatchDamageItem);
+//        }
+//        spinnerSoLuong.setValue(qty);
+//        setLineTotal();
+//
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -73,7 +73,6 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
         spinnerSoLuong = new javax.swing.JSpinner();
         txtDonGia = new javax.swing.JLabel();
         txtTongTien = new javax.swing.JLabel();
-        comboChonDvt = new javax.swing.JComboBox<>();
         pnHinh = new javax.swing.JLabel();
         pnListBatch = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -109,9 +108,6 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
         txtTongTien.setText("0 đ");
         txtTongTien.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        comboChonDvt.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        comboChonDvt.setEnabled(false);
-
         pnHinh.setBackground(new java.awt.Color(204, 204, 204));
 
         pnListBatch.setBackground(new java.awt.Color(255, 255, 255));
@@ -137,9 +133,7 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 2, Short.MAX_VALUE)
                         .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboChonDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addGap(145, 145, 145)
                         .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,7 +152,6 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(comboChonDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -182,29 +175,29 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public Double getLineTotal() {
-        Product product = unitDetail.getProduct();
-        int quantity = (int) spinnerSoLuong.getValue();
-        double price = product.getPurchasePrice() * (1 + product.getVAT());
-        return unitDetail.getConversionRate() * quantity * price;
-    }
-    public void setLineTotal() {
-        Product product = unitDetail.getProduct();
-        int quantity = (int) spinnerSoLuong.getValue();
-        double price = product.getPurchasePrice() * (1 + product.getVAT());
-        txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * price));
-        txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()
-                * quantity * price));
-    }
-    
-    public List<Batch> getBatchs() {
-        return batchs;
-    }
-
-    public UnitDetail getUnitDetail() {
-        return unitDetail;
-    }
-    
+//    public Double getLineTotal() {
+//        Product product = unitDetail.getProduct();
+//        int quantity = (int) spinnerSoLuong.getValue();
+//        double price = product.getPurchasePrice() * (1 + product.getVAT());
+//        return unitDetail.getConversionRate() * quantity * price;
+//    }
+//    public void setLineTotal() {
+//        Product product = unitDetail.getProduct();
+//        int quantity = (int) spinnerSoLuong.getValue();
+//        double price = product.getPurchasePrice() * (1 + product.getVAT());
+//        txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * price));
+//        txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate()
+//                * quantity * price));
+//    }
+//    
+//    public List<Batch> getBatchs() {
+//        return batchs;
+//    }
+//
+//    public UnitDetail getUnitDetail() {
+//        return unitDetail;
+//    }
+//    
     
     private void btnXoaOderDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaOderDetailMouseClicked
         // TODO add your handling code here:
@@ -219,7 +212,6 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnXoaOderDetail;
-    private javax.swing.JComboBox<UnitDetail> comboChonDvt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel pnHinh;
     private javax.swing.JPanel pnListBatch;

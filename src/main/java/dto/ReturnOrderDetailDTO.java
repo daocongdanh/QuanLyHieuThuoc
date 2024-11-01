@@ -1,7 +1,6 @@
 package dto;
 
 import entity.Product;
-import entity.UnitDetail;
 
 /**
  *
@@ -10,19 +9,15 @@ import entity.UnitDetail;
 public class ReturnOrderDetailDTO {
 
     private Product product;
-    private UnitDetail unitDetail;
     private int quantityReturn;
-    private String batchName;
     private String reason;
 
     public ReturnOrderDetailDTO() {
     }
 
-    public ReturnOrderDetailDTO(Product product, UnitDetail unitDetail, int quantityReturn, String batchName, String reason) {
+    public ReturnOrderDetailDTO(Product product, int quantityReturn, String reason) {
         this.product = product;
-        this.unitDetail = unitDetail;
         this.quantityReturn = quantityReturn;
-        this.batchName = batchName;
         this.reason = reason;
     }
 
@@ -38,24 +33,8 @@ public class ReturnOrderDetailDTO {
         return product;
     }
 
-    public String getBatchName() {
-        return batchName;
-    }
-
-    public void setBatchName(String batchName) {
-        this.batchName = batchName;
-    }
-
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public UnitDetail getUnitDetail() {
-        return unitDetail;
-    }
-
-    public void setUnitDetail(UnitDetail unitDetail) {
-        this.unitDetail = unitDetail;
     }
 
     public int getQuantityReturn() {

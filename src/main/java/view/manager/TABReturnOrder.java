@@ -7,7 +7,6 @@ package view.manager;
 import bus.ReturnOrderBUS;
 import bus.ReturnOrderDetailBUS;
 import bus.UnitBUS;
-import bus.UnitDetailBUS;
 import com.formdev.flatlaf.FlatClientProperties;
 import java.util.Arrays;
 import java.util.List;
@@ -78,9 +77,9 @@ public class TABReturnOrder extends javax.swing.JPanel {
     }
 
     private void fillTableModal() {
-        String[] headers = {"Mã hàng", "Tên hàng", "Đơn vị tính" ,"Số lô", "Số lượng", "Giá trả hàng","Lý do trả", "Thao tác"};
-        List<Integer> tableWidths = Arrays.asList(100, 200, 100 , 120, 70, 140,200, 130);
-        tableDesignView = new TableDesign(headers, tableWidths, List.of(false, false, false, false, false,false , false, true));
+        String[] headers = {"Mã hàng", "Tên hàng", "Đơn vị tính", "Số lượng", "Giá trả hàng","Lý do trả", "Thao tác"};
+        List<Integer> tableWidths = Arrays.asList(100, 200, 100 , 70, 140,200, 130);
+        tableDesignView = new TableDesign(headers, tableWidths, List.of(false, false,false, false,false , false, true));
         scrollTableView.setViewportView(tableDesignView.getTable());
         scrollTableView.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
         tableDesignView.setTableHeaderFontSize(14);
@@ -94,10 +93,9 @@ public class TABReturnOrder extends javax.swing.JPanel {
         for (ReturnOrderDetail returnOrderDetail : returnOrderDetails) {
             if (returnOrderDetail.getReturnOrderDetailStatus().equals(ReturnOrderDetailStatus.PENDING)) {
                 tableDesignView.getModelTable().addRow(new Object[]{
-                        returnOrderDetail.getBatch().getProduct().getProductId(),
-                        returnOrderDetail.getBatch().getProduct().getName(),
-                        returnOrderDetail.getUnitDetail().getUnit().getName(),
-                        returnOrderDetail.getBatch().getName(),
+                        returnOrderDetail.getProduct().getProductId(),
+                        returnOrderDetail.getProduct().getName(),
+                        returnOrderDetail.getProduct().getUnit().getName(),
                         returnOrderDetail.getQuantity(),
                         FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
                         returnOrderDetail.getReason(),
@@ -105,10 +103,9 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 });
             } else if ( returnOrderDetail.getReturnOrderDetailStatus().equals(ReturnOrderDetailStatus.RETURNED)){
                 tableDesignView.getModelTable().addRow(new Object[]{
-                        returnOrderDetail.getBatch().getProduct().getProductId(),
-                        returnOrderDetail.getBatch().getProduct().getName(),
-                        returnOrderDetail.getUnitDetail().getUnit().getName(),
-                        returnOrderDetail.getBatch().getName(),
+                        returnOrderDetail.getProduct().getProductId(),
+                        returnOrderDetail.getProduct().getName(),
+                        returnOrderDetail.getProduct().getUnit().getName(),
                         returnOrderDetail.getQuantity(),
                         FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
                         returnOrderDetail.getReason(),
@@ -117,10 +114,9 @@ public class TABReturnOrder extends javax.swing.JPanel {
             }
             else {
                 tableDesignView.getModelTable().addRow(new Object[]{
-                        returnOrderDetail.getBatch().getProduct().getProductId(),
-                        returnOrderDetail.getBatch().getProduct().getName(),
-                        returnOrderDetail.getUnitDetail().getUnit().getName(),
-                        returnOrderDetail.getBatch().getName(),
+                        returnOrderDetail.getProduct().getProductId(),
+                        returnOrderDetail.getProduct().getName(),
+                         returnOrderDetail.getProduct().getUnit().getName(),
                         returnOrderDetail.getQuantity(),
                         FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
                         returnOrderDetail.getReason(),
@@ -139,15 +135,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 String returnOrderId = txtReturnOrderId.getText();
                 String productId = (String) table.getValueAt(row,0);
                 String productName = (String) table.getValueAt(row,1);
-                String unitName = (String) table.getValueAt(row,2);
-                String batchName = (String) table.getValueAt(row,3);
-                if ( MessageDialog.confirm(null, "Bạn muốn thêm lại sản phẩm " + productName +  " với số lô "
-                        + batchName + " vào hệ thống", "Xác nhận") ){
-                    UnitDetail unitDetail = unitDetailBUS.findByProductAndUnit(productId, unitBUS.getUnitByName(unitName).getUnitId());
-                    Batch batch = batchBUS.getBatchByNameAndProduct(batchName,productId);
-
-                    ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderId,
-                            unitDetail.getUnitDetailId(), batch.getBatchId());
+                if ( MessageDialog.confirm(null, "Bạn muốn thêm lại sản phẩm " + productName + " vào hệ thống", "Xác nhận") ){
+                    ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndProductId(returnOrderId,productId);
                     returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.RETURNED);
                     if ( returnOrderDetailBUS.updateReturnOrderDetailToReturn(returnOrderDetail) ){
                         MessageDialog.info(null, "Sản phẩm đã thêm lại hệ thống.");
@@ -166,15 +155,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 String returnOrderId = txtReturnOrderId.getText();
                 String productId = (String) table.getValueAt(row,0);
                 String productName = (String) table.getValueAt(row,1);
-                String unitName = (String) table.getValueAt(row,2);
-                String batchName = (String) table.getValueAt(row,3);
-                if ( MessageDialog.confirm(null, "Bạn muốn loại bỏ sản phẩm " + productName +  " với số lô "
-                        + batchName, "Xác nhận") ){
-                    UnitDetail unitDetail = unitDetailBUS.findByProductAndUnit(productId, unitBUS.getUnitByName(unitName).getUnitId());
-                    Batch batch = batchBUS.getBatchByNameAndProduct(batchName,productId);
-
-                    ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndUnitDetailIdAndBatchId(returnOrderId,
-                            unitDetail.getUnitDetailId(), batch.getBatchId());
+                if ( MessageDialog.confirm(null, "Bạn muốn loại bỏ sản phẩm " + productName, "Xác nhận") ){
+                    ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndProductId(returnOrderId,productId);
                     returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.DAMAGED);
                     if ( returnOrderDetailBUS.updateReturnOrderDetailToDamage(returnOrderDetail) ){
                         MessageDialog.info(null, "Sản phẩm loại bỏ.");

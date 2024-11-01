@@ -4,8 +4,8 @@
  */
 package bus;
 
+import dal.ProductDAL;
 import dal.UnitDAL;
-import dal.UnitDetailDAL;
 import jakarta.persistence.EntityManager;
 import entity.Unit;
 import jakarta.persistence.EntityTransaction;
@@ -28,13 +28,13 @@ import util.MessageDialog;
  * @author daoducdanh
  */
 public class UnitBUS {
-    private UnitDAL unitDAL;
-    private UnitDetailDAL unitDetailDAL;
+    private final UnitDAL unitDAL;
+    private final ProductDAL productDAL;
     private EntityTransaction transaction;
     
     public UnitBUS(EntityManager entityManager){
         this.unitDAL = new UnitDAL(entityManager);
-        this.unitDetailDAL = new UnitDetailDAL(entityManager);
+        this.productDAL = new ProductDAL(entityManager);
         this.transaction = entityManager.getTransaction();
     }
     
@@ -85,7 +85,7 @@ public class UnitBUS {
     
     public boolean checkUnitForEdit( String unitId ){
         // check unit khong thuoc ve san pham nao
-        if ( !unitDetailDAL.findByUnit(unitId).isEmpty() ){
+        if ( !productDAL.findByUnitId(unitId).isEmpty() ){
             return false;
         } 
         return true;

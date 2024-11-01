@@ -7,8 +7,6 @@ package bus;
 import dal.BatchDAL;
 import dal.OrderDAL;
 import dal.ProductDAL;
-import dal.ProductTransactionHistoryDAL;
-import dal.UnitDetailDAL;
 import dto.OrderDTO;
 import dto.StatsPriceAndQuantityDTO;
 import dto.StatsOrderByDayDTO;
@@ -36,98 +34,94 @@ public class OrderBUS {
 
     private final OrderDAL orderDAL;
     private final BatchDAL batchDAL;
-    private final UnitDetailDAL unitDetailDAL;
     private final ProductDAL productDAL;
     private final PromotionBUS promotionBUS;
-    private final ProductTransactionHistoryDAL productTransactionHistoryDAL;
     private final EntityTransaction transaction;
     private final GeneratePDF generatePDF = new GeneratePDF();
 
     public OrderBUS(EntityManager entityManager) {
         this.orderDAL = new OrderDAL(entityManager);
         this.batchDAL = new BatchDAL(entityManager);
-        this.unitDetailDAL = new UnitDetailDAL(entityManager);
         this.productDAL = new ProductDAL(entityManager);
         this.promotionBUS = new PromotionBUS(entityManager);
-        this.productTransactionHistoryDAL = new ProductTransactionHistoryDAL(entityManager);
         this.transaction = entityManager.getTransaction();
     }
 
     public boolean createOrder(Employee employee, Customer customer, Promotion promotion,
             List<OrderDTO> orderDTOs) {
         try {
-            transaction.begin();
-
-            if (employee == null) {
-                throw new RuntimeException("Nhân viên không được rỗng");
-            }
-
-            List<OrderDetail> orderDetails = new ArrayList<>();
-
-            for (OrderDTO orderDTO : orderDTOs) {
-                Unit unit = orderDTO.getUnitDetail().getUnit();
-                UnitDetail unitDetail
-                        = unitDetailDAL.findByProductAndUnit(orderDTO.getProductId(), unit.getUnitId());
-                Batch batch = batchDAL.findByNameAndProduct(orderDTO.getBatchName(), orderDTO.getProductId());
-                Product product = productDAL.findById(orderDTO.getProductId())
-                        .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
-                Promotion exsistPromotion = promotionBUS.getPromotionByProduct(product);
-                double discount = exsistPromotion != null ? exsistPromotion.getDiscount() : 0;
-                OrderDetail orderDetail = new OrderDetail(orderDTO.getQuantity(),
-                        product.getSellingPrice() * unitDetail.getConversionRate(),
-                        discount, batch, unitDetail);
-                orderDetails.add(orderDetail);
-                int stock = batch.getStock() - orderDTO.getQuantity() * unitDetail.getConversionRate();
-                if (stock < 0) {
-                    throw new RuntimeException("Số lượng không đủ với lô hàng: " + batch.getName());
-                }
-                batch.setStock(stock);
-            }
-            Order order;
-            if (promotion != null) {
-                if (!promotion.getPromotionType().equals(PromotionType.ORDER)) {
-                    throw new RuntimeException("Không phải khuyến mãi trên hóa đơn");
-                }
-                if (promotion.getStartedDate().isAfter(LocalDate.now())) {
-                    throw new RuntimeException("Chưa đến đợt khuyến mãi");
-                }
-                if (promotion.getEndedDate().isBefore(LocalDate.now())) {
-                    throw new RuntimeException("Khuyến mãi đã hết hạn");
-                }
-                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, promotion, orderDetails);
-            } else {
-                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, null, orderDetails);
-            }
-
-            orderDAL.insert(order);
-            Map<String, List<OrderDetail>> map = orderDetails.stream()
-                    .collect(Collectors.groupingBy(
-                            orderDetail -> orderDetail.getUnitDetail().getProduct().getProductId(),
-                            LinkedHashMap::new,
-                            Collectors.toList()
-                    ));
-            map.forEach((key, value) -> {
-                OrderDetail orderDetail = value.get(0);
-                UnitDetail unitDetail = orderDetail.getUnitDetail();
-                Product product = unitDetail.getProduct();
-                int sumQuantity = value.stream()
-                        .mapToInt(x -> x.getQuantity() * x.getUnitDetail().getConversionRate())
-                        .sum();
-                double costPrice = product.getPurchasePrice() * sumQuantity;
-                double transactionPrice = value.stream()
-                        .mapToDouble(OrderDetail::getLineTotal)
-                        .sum();
-                int finalStock = batchDAL.getFinalStockByProduct(product.getProductId());
-                ProductTransactionHistory productTransactionHistory
-                        = new ProductTransactionHistory(order.getOrderId(), order.getOrderDate(),
-                                "Bán hàng", order.getCustomer() == null ? "Khách vãng lai" : (order.getCustomer().getName()),
-                                transactionPrice, costPrice, -sumQuantity, finalStock, product);
-                productTransactionHistoryDAL.insert(productTransactionHistory);
-
-            });
-
-            generatePDF.GeneratePDF(order);
-            transaction.commit();
+//            transaction.begin();
+//
+//            if (employee == null) {
+//                throw new RuntimeException("Nhân viên không được rỗng");
+//            }
+//
+//            List<OrderDetail> orderDetails = new ArrayList<>();
+//
+//            for (OrderDTO orderDTO : orderDTOs) {
+//                Unit unit = orderDTO.getUnitDetail().getUnit();
+//                UnitDetail unitDetail
+//                        = unitDetailDAL.findByProductAndUnit(orderDTO.getProductId(), unit.getUnitId());
+//                Batch batch = batchDAL.findByNameAndProduct(orderDTO.getBatchName(), orderDTO.getProductId());
+//                Product product = productDAL.findById(orderDTO.getProductId())
+//                        .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+//                Promotion exsistPromotion = promotionBUS.getPromotionByProduct(product);
+//                double discount = exsistPromotion != null ? exsistPromotion.getDiscount() : 0;
+//                OrderDetail orderDetail = new OrderDetail(orderDTO.getQuantity(),
+//                        product.getSellingPrice() * unitDetail.getConversionRate(),
+//                        discount, batch, unitDetail);
+//                orderDetails.add(orderDetail);
+//                int stock = batch.getStock() - orderDTO.getQuantity() * unitDetail.getConversionRate();
+//                if (stock < 0) {
+//                    throw new RuntimeException("Số lượng không đủ với lô hàng: " + batch.getName());
+//                }
+//                batch.setStock(stock);
+//            }
+//            Order order;
+//            if (promotion != null) {
+//                if (!promotion.getPromotionType().equals(PromotionType.ORDER)) {
+//                    throw new RuntimeException("Không phải khuyến mãi trên hóa đơn");
+//                }
+//                if (promotion.getStartedDate().isAfter(LocalDate.now())) {
+//                    throw new RuntimeException("Chưa đến đợt khuyến mãi");
+//                }
+//                if (promotion.getEndedDate().isBefore(LocalDate.now())) {
+//                    throw new RuntimeException("Khuyến mãi đã hết hạn");
+//                }
+//                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, promotion, orderDetails);
+//            } else {
+//                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, null, orderDetails);
+//            }
+//
+//            orderDAL.insert(order);
+//            Map<String, List<OrderDetail>> map = orderDetails.stream()
+//                    .collect(Collectors.groupingBy(
+//                            orderDetail -> orderDetail.getUnitDetail().getProduct().getProductId(),
+//                            LinkedHashMap::new,
+//                            Collectors.toList()
+//                    ));
+//            map.forEach((key, value) -> {
+//                OrderDetail orderDetail = value.get(0);
+//                UnitDetail unitDetail = orderDetail.getUnitDetail();
+//                Product product = unitDetail.getProduct();
+//                int sumQuantity = value.stream()
+//                        .mapToInt(x -> x.getQuantity() * x.getUnitDetail().getConversionRate())
+//                        .sum();
+//                double costPrice = product.getPurchasePrice() * sumQuantity;
+//                double transactionPrice = value.stream()
+//                        .mapToDouble(OrderDetail::getLineTotal)
+//                        .sum();
+//                int finalStock = batchDAL.getFinalStockByProduct(product.getProductId());
+//                ProductTransactionHistory productTransactionHistory
+//                        = new ProductTransactionHistory(order.getOrderId(), order.getOrderDate(),
+//                                "Bán hàng", order.getCustomer() == null ? "Khách vãng lai" : (order.getCustomer().getName()),
+//                                transactionPrice, costPrice, -sumQuantity, finalStock, product);
+//                productTransactionHistoryDAL.insert(productTransactionHistory);
+//
+//            });
+//
+//            generatePDF.GeneratePDF(order);
+//            transaction.commit();
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -148,7 +142,6 @@ public class OrderBUS {
         return orderDAL.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tồn tại hóa đơn này"));
     }
-
 
     public StatsPriceAndQuantityDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
         List<Order> orders = orderDAL.searchByDate(start, end);
@@ -175,14 +168,12 @@ public class OrderBUS {
             Double totalPrice = order.getTotalPrice();
             if (resultMap.containsKey(orderDate)) {
                 resultMap.put(orderDate, resultMap.get(orderDate) + totalPrice);
-            }
-            else {
+            } else {
                 resultMap.put(orderDate, totalPrice);
             }
             if (quantityMap.containsKey(orderDate)) {
                 quantityMap.put(orderDate, quantityMap.get(orderDate) + 1);
-            }
-            else{
+            } else {
                 quantityMap.put(orderDate, 1);
             }
         }
@@ -209,19 +200,17 @@ public class OrderBUS {
         List<Order> orders = orderDAL.statisByDate(startOfDay, endOfDay);
 
         // Lưu kết quả vào resultMap và quantityMap
-        for (Order order: orders) {
+        for (Order order : orders) {
             int hour = order.getOrderDate().toLocalTime().getHour();
             Double totalPrice = order.getTotalPrice();
             if (resultMap.containsKey(hour)) {
                 resultMap.put(hour, resultMap.get(hour) + totalPrice);
-            }
-            else {
+            } else {
                 resultMap.put(hour, totalPrice);
             }
             if (quantityMap.containsKey(hour)) {
                 quantityMap.put(hour, quantityMap.get(hour) + 1);
-            }
-            else{
+            } else {
                 quantityMap.put(hour, 1);
             }
         }
@@ -236,19 +225,19 @@ public class OrderBUS {
         return statsList;
     }
 
-    private List<Order> dataFilter(List<Order> orders,String productType, String paymentType, String promotion ){
+    private List<Order> dataFilter(List<Order> orders, String productType, String paymentType, String promotion) {
         if (StringUtils.isNotBlank(promotion)) {
             if ("Không khuyến mãi".equals(promotion)) {
                 orders = orders.stream()
-                        .filter(order -> order.getPromotion() == null &&
-                                order.getOrderDetails().stream()
-                                        .noneMatch(detail -> detail.getDiscount() != 0.0))
+                        .filter(order -> order.getPromotion() == null
+                        && order.getOrderDetails().stream()
+                                .noneMatch(detail -> detail.getDiscount() != 0.0))
                         .toList();
             } else if ("Có khuyến mãi".equals(promotion)) {
                 orders = orders.stream()
-                        .filter(order -> order.getPromotion() != null ||
-                                order.getOrderDetails().stream()
-                                        .anyMatch(detail -> detail.getDiscount() != 0.0))
+                        .filter(order -> order.getPromotion() != null
+                        || order.getOrderDetails().stream()
+                                .anyMatch(detail -> detail.getDiscount() != 0.0))
                         .toList();
             }
         }
@@ -272,14 +261,14 @@ public class OrderBUS {
                 case "Thuốc":
                     orders = orders.stream()
                             .filter(order -> order.getOrderDetails().stream()
-                                    .anyMatch(orderDetail -> orderDetail.getUnitDetail().getProduct().getProductType() == ProductType.MEDICINE))
+                            .anyMatch(orderDetail -> orderDetail.getBatch().getProduct().getProductType() == ProductType.MEDICINE))
                             .toList();
 
                     break;
                 case "Vật tư y tế":
                     orders = orders.stream()
                             .filter(order -> order.getOrderDetails().stream()
-                                    .anyMatch(orderDetail -> orderDetail.getUnitDetail().getProduct().getProductType() == ProductType.MEDICALSUPPLIES))
+                            .anyMatch(orderDetail -> orderDetail.getBatch().getProduct().getProductType() == ProductType.MEDICALSUPPLIES))
                             .toList();
                     break;
             }
@@ -288,7 +277,7 @@ public class OrderBUS {
     }
 
     public List<StatsOrderByDayDTO> searchStats(LocalDateTime start, LocalDateTime end, String productType,
-                                                String paymentType, String promotion) {
+            String paymentType, String promotion) {
         List<StatsOrderByDayDTO> statsList = new ArrayList<>();
         Map<LocalDate, Double> resultMap = new HashMap<>();
         Map<LocalDate, Integer> quantityMap = new HashMap<>();
@@ -300,18 +289,15 @@ public class OrderBUS {
             Double totalPrice = order.getTotalPrice();
             if (resultMap.containsKey(orderDate)) {
                 resultMap.put(orderDate, resultMap.get(orderDate) + totalPrice);
-            }
-            else {
+            } else {
                 resultMap.put(orderDate, totalPrice);
             }
             if (quantityMap.containsKey(orderDate)) {
                 quantityMap.put(orderDate, quantityMap.get(orderDate) + 1);
-            }
-            else{
+            } else {
                 quantityMap.put(orderDate, 1);
             }
         }
-
 
         for (LocalDate date = start.toLocalDate(); !date.isAfter(end.toLocalDate()); date = date.plusDays(1)) {
             Double sumPrice = resultMap.getOrDefault(date, 0.0);
@@ -322,7 +308,6 @@ public class OrderBUS {
 
         return statsList;
     }
-
 
     public List<StatsOrderByYearDTO> searchStatsByYear(LocalDateTime start, LocalDateTime end, String productType, String paymentType, String promotion) {
 
@@ -338,14 +323,12 @@ public class OrderBUS {
 
             if (resultMap.containsKey(year)) {
                 resultMap.put(year, resultMap.get(year) + totalPrice);
-            }
-            else {
+            } else {
                 resultMap.put(year, totalPrice);
             }
             if (quantityMap.containsKey(year)) {
                 quantityMap.put(year, quantityMap.get(year) + 1);
-            }
-            else{
+            } else {
                 quantityMap.put(year, 1);
             }
         }
@@ -370,47 +353,38 @@ public class OrderBUS {
             List<OrderDetail> lOd = order.getOrderDetails();
             for (OrderDetail odt : lOd) {
                 Optional<StatsProductDTO> existingStats = ans.stream()
-                        .filter(dto -> dto.getProductName().equals(odt.getUnitDetail().getProduct().getName()))
+                        .filter(dto -> dto.getProductName().equals(odt.getBatch().getProduct().getName()))
                         .findFirst();
 
                 if (existingStats.isPresent()) {
                     StatsProductDTO statsProductDTO = existingStats.get();
                     statsProductDTO.setSumPrice(statsProductDTO.getSumPrice() + odt.getLineTotal());
-                    if ( odt.getUnitDetail().isIsDefault() ){
-                        statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity());
-                    }
-                    else {
-                        statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity() * odt.getUnitDetail().getConversionRate());
-                    }
-                    
+                    statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity());
+
                 } else {
                     StatsProductDTO statsProductDTO = new StatsProductDTO();
-                    statsProductDTO.setProductName(odt.getUnitDetail().getProduct().getName());
+                    statsProductDTO.setProductName(odt.getBatch().getProduct().getName());
                     statsProductDTO.setTime(order.getOrderDate());
                     statsProductDTO.setSumPrice(odt.getLineTotal());
-                    statsProductDTO.setProductType(odt.getUnitDetail().getProduct().getProductType());
-                    if ( odt.getUnitDetail().isIsDefault() ){
-                        statsProductDTO.setQuantity(odt.getQuantity());
-                    }
-                    else {
-                        statsProductDTO.setQuantity(odt.getQuantity() * odt.getUnitDetail().getConversionRate());
-                    }
-                    
+                    statsProductDTO.setProductType(odt.getBatch().getProduct().getProductType());
+
+                    statsProductDTO.setQuantity(odt.getQuantity());
+
                     ans.add(statsProductDTO);
                 }
             }
         }
-       
-        if ( productType.equals("Tất cả")){
+
+        if (productType.equals("Tất cả")) {
             return ans;
         }
-        
-        ans = ans.stream().filter(x-> x.getProductType().getDescription().equals(productType))
+
+        ans = ans.stream().filter(x -> x.getProductType().getDescription().equals(productType))
                 .toList();
-        
+
         return ans;
     }
-    
+
     public List<StatsProductDTO> getStatisticProductByDate(LocalDateTime start, LocalDateTime end) {
         if (start.isAfter(end)) {
             throw new IllegalArgumentException("Start date must be before or equal to end date.");
@@ -421,39 +395,29 @@ public class OrderBUS {
             List<OrderDetail> lOd = order.getOrderDetails();
             for (OrderDetail odt : lOd) {
                 Optional<StatsProductDTO> existingStats = ans.stream()
-                        .filter(dto -> dto.getProductName().equals(odt.getUnitDetail().getProduct().getName()))
+                        .filter(dto -> dto.getProductName().equals(odt.getBatch().getProduct().getName()))
                         .findFirst();
 
                 if (existingStats.isPresent()) {
                     StatsProductDTO statsProductDTO = existingStats.get();
                     statsProductDTO.setSumPrice(statsProductDTO.getSumPrice() + odt.getLineTotal());
-                    if ( odt.getUnitDetail().isIsDefault() ){
-                        statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity());
-                    }
-                    else {
-                        statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity() * odt.getUnitDetail().getConversionRate());
-                    }
-                    
+                    statsProductDTO.setQuantity(statsProductDTO.getQuantity() + odt.getQuantity());
+
                 } else {
                     StatsProductDTO statsProductDTO = new StatsProductDTO();
-                    statsProductDTO.setProductName(odt.getUnitDetail().getProduct().getName());
+                    statsProductDTO.setProductName(odt.getBatch().getProduct().getName());
                     statsProductDTO.setTime(order.getOrderDate());
                     statsProductDTO.setSumPrice(odt.getLineTotal());
-                    statsProductDTO.setProductType(odt.getUnitDetail().getProduct().getProductType());
-                    if ( odt.getUnitDetail().isIsDefault() ){
-                        statsProductDTO.setQuantity(odt.getQuantity());
-                    }
-                    else {
-                        statsProductDTO.setQuantity(odt.getQuantity() * odt.getUnitDetail().getConversionRate());
-                    }
-                    
+                    statsProductDTO.setProductType(odt.getBatch().getProduct().getProductType());
+                    statsProductDTO.setQuantity(odt.getQuantity());
+
                     ans.add(statsProductDTO);
                 }
             }
         }
         return ans;
     }
-    
+
     public List<Order> getOrderByDateAndEmp(LocalDateTime start, LocalDateTime end, String employeeID) {
         return orderDAL.findOrderByDateAndEmp(start, end, employeeID);
     }

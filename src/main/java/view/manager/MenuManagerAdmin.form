@@ -72,7 +72,6 @@
                               <Component id="menuReport" min="-2" max="-2" attributes="0"/>
                               <Component id="menuProduct" min="-2" max="-2" attributes="0"/>
                               <Component id="menuUnit" min="-2" max="-2" attributes="0"/>
-                              <Component id="menuPrescription" min="-2" max="-2" attributes="0"/>
                               <Component id="menuStaff" min="-2" max="-2" attributes="0"/>
                               <Component id="menuCustomer" min="-2" max="-2" attributes="0"/>
                               <Component id="menuSupplier" min="-2" max="-2" attributes="0"/>
@@ -103,8 +102,6 @@
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="menuUnit" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuPrescription" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="menuStaff" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="menuCustomer" min="-2" max="-2" attributes="0"/>
@@ -122,7 +119,7 @@
                       <Component id="menuPromotion" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="menuExit" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="109" max="32767" attributes="0"/>
+                      <EmptySpace pref="178" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -135,8 +132,6 @@
             <Component class="view.common.MenuChoice" name="menuProduct">
             </Component>
             <Component class="view.common.MenuChoice" name="menuUnit">
-            </Component>
-            <Component class="view.common.MenuChoice" name="menuPrescription">
             </Component>
             <Component class="view.common.MenuChoice" name="menuStaff">
             </Component>

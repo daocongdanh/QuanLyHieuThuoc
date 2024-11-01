@@ -6,7 +6,6 @@ package bus;
 
 import dal.BatchDAL;
 import dal.DamageItemDAL;
-import dal.ProductTransactionHistoryDAL;
 import entity.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -22,13 +21,11 @@ import java.util.stream.Collectors;
  */
 public class DamageItemBUS {
     private DamageItemDAL damageItemDAL;
-    private ProductTransactionHistoryDAL productTransactionHistoryDAL;
     private BatchDAL batchDAL;
     private EntityTransaction transaction;
     
     public DamageItemBUS(EntityManager entityManager){
         this.damageItemDAL = new DamageItemDAL(entityManager);
-        this.productTransactionHistoryDAL = new ProductTransactionHistoryDAL(entityManager);
         this.batchDAL = new BatchDAL(entityManager);
         this.transaction = entityManager.getTransaction();
     }
@@ -37,40 +34,40 @@ public class DamageItemBUS {
         try{
             transaction.begin();
             
-            DamageItem damageItem = new DamageItem(null, LocalDateTime.now(), employee, damageItemDetails);
-            damageItemDAL.insert(damageItem);
-            
-            for(DamageItemDetail damageItemDetail : damageItemDetails){
-                Batch batch = damageItemDetail.getBatch();
-                batch.setStatus(false);
-                batchDAL.update(batch);
-            }
-            Map<String, List<DamageItemDetail>> map = damageItemDetails.stream()
-                    .collect(Collectors.groupingBy(
-                            damageItemDetail -> damageItemDetail.getUnitDetail().getProduct().getProductId(),
-                            LinkedHashMap::new,
-                            Collectors.toList()
-                    ));
-            map.forEach((key, value) -> {
-                DamageItemDetail damageItemDetail = value.get(0);
-                UnitDetail unitDetail = damageItemDetail.getUnitDetail();
-                Product product = unitDetail.getProduct();
-                int sumQuantity = value.stream()
-                        .mapToInt(x -> x.getQuantity() * x.getUnitDetail().getConversionRate())
-                        .sum();
-                double costPrice = product.getPurchasePrice() * sumQuantity;
-                double transactionPrice = value.stream()
-                        .mapToDouble(DamageItemDetail::getLineTotal)
-                        .sum();
-                int finalStock = batchDAL.getFinalStockByProduct(product.getProductId());
-                
-                ProductTransactionHistory productTransactionHistory
-                        = new ProductTransactionHistory(damageItem.getDamageItemId(), damageItem.getOrderDate(),
-                                "Hủy hàng hóa", "",
-                                transactionPrice, costPrice, -sumQuantity, finalStock, product);
-                productTransactionHistoryDAL.insert(productTransactionHistory);
-
-            });
+//            DamageItem damageItem = new DamageItem(null, LocalDateTime.now(), employee, damageItemDetails);
+//            damageItemDAL.insert(damageItem);
+//            
+//            for(DamageItemDetail damageItemDetail : damageItemDetails){
+//                Batch batch = damageItemDetail.getBatch();
+//                batch.setStatus(false);
+//                batchDAL.update(batch);
+//            }
+//            Map<String, List<DamageItemDetail>> map = damageItemDetails.stream()
+//                    .collect(Collectors.groupingBy(
+//                            damageItemDetail -> damageItemDetail.getUnitDetail().getProduct().getProductId(),
+//                            LinkedHashMap::new,
+//                            Collectors.toList()
+//                    ));
+//            map.forEach((key, value) -> {
+//                DamageItemDetail damageItemDetail = value.get(0);
+//                UnitDetail unitDetail = damageItemDetail.getUnitDetail();
+//                Product product = unitDetail.getProduct();
+//                int sumQuantity = value.stream()
+//                        .mapToInt(x -> x.getQuantity() * x.getUnitDetail().getConversionRate())
+//                        .sum();
+//                double costPrice = product.getPurchasePrice() * sumQuantity;
+//                double transactionPrice = value.stream()
+//                        .mapToDouble(DamageItemDetail::getLineTotal)
+//                        .sum();
+//                int finalStock = batchDAL.getFinalStockByProduct(product.getProductId());
+//                
+//                ProductTransactionHistory productTransactionHistory
+//                        = new ProductTransactionHistory(damageItem.getDamageItemId(), damageItem.getOrderDate(),
+//                                "Hủy hàng hóa", "",
+//                                transactionPrice, costPrice, -sumQuantity, finalStock, product);
+//                productTransactionHistoryDAL.insert(productTransactionHistory);
+//
+//            });
             
             transaction.commit();
             return true;

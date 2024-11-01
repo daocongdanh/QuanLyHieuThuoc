@@ -5,6 +5,7 @@
 package dal;
 
 import entity.ReturnOrder;
+import entity.ReturnOrderDetail;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import java.time.LocalDateTime;
@@ -106,6 +107,21 @@ public class ReturnOrderDAL implements BaseDAL<ReturnOrder, String> {
         query.setParameter(2, end);
         query.setParameter(3, empID);
         return query.getResultList();
+    }
+
+    public ReturnOrderDetail findByReturnOrderIdAndProductId(String returnOrderId, String productId) {
+
+            TypedQuery<ReturnOrderDetail> query =
+                    entityManager.createQuery("select rod from ReturnOrderDetail rod where rod.returnOrder.returnOrderId = ?1 " +
+                            " and rod.product.productId = ?2", ReturnOrderDetail.class);
+            query.setParameter(1, returnOrderId);
+            query.setParameter(2, productId);
+            try {
+                return query.getSingleResult();
+            } catch (Exception e) {
+                return null;
+            }
+
     }
 
 }

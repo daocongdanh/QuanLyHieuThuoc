@@ -93,8 +93,27 @@ public class BatchDAL implements BaseDAL<Batch, String>{
         } catch (Exception e) {
             return null;
         }
-    } 
-    
+    }
+
+    public Batch findBatchNearExpirationHaveProductId(String productId) {
+        TypedQuery<Batch> query = entityManager.createQuery(
+                "SELECT b FROM Batch b " +
+                        "WHERE b.product.productId = :productId " +
+                        "AND b.expirationDate > CURRENT_DATE " +
+                        "AND b.status = true " +
+                        "ORDER BY b.expirationDate ASC",
+                Batch.class);
+        query.setParameter("productId", productId);
+        query.setMaxResults(1);  // Chỉ lấy một kết quả gần hết hạn nhất
+
+        try {
+            return query.getSingleResult();
+        } catch (Exception e) {
+            return null; // Trả về null nếu không tìm thấy
+        }
+    }
+
+
 
     public List<Batch> findAll1() {
         return entityManager.createQuery("select b from Batch b", Batch.class).getResultList();

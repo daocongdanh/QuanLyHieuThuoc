@@ -49,7 +49,7 @@ public class TabDamageItem extends javax.swing.JPanel {
         this.damageItemBUS = new DamageItemBUS(ConnectDB.getEntityManager());
         this.batchBUS = new BatchBUS(ConnectDB.getEntityManager());
         initComponents();
-        fillContent();
+//        fillContent();
     }
 
     @SuppressWarnings("unchecked")
@@ -208,20 +208,20 @@ public class TabDamageItem extends javax.swing.JPanel {
         add(headerPanel, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fillContent() {
-        Employee employee = CurrentEmployee.getEmployee();
-        txtEmpName.setText(employee.getName());
-        Map<UnitDetail, List<Batch>> map = batchBUS.getListBatchExpiration();
-        map.forEach((key, value) -> {
-            PnDamageItemDetail pnDamageItemDetail = new PnDamageItemDetail(key, value, this);
-            pnContent.add(pnDamageItemDetail);
-        });
-        changeTongTienHoaDon();
-        pnContent.revalidate();
-        pnContent.repaint();
-        
-        changeTongTienHoaDon();
-    }
+//    private void fillContent() {
+//        Employee employee = CurrentEmployee.getEmployee();
+//        txtEmpName.setText(employee.getName());
+//        Map<UnitDetail, List<Batch>> map = batchBUS.getListBatchExpiration();
+//        map.forEach((key, value) -> {
+//            PnDamageItemDetail pnDamageItemDetail = new PnDamageItemDetail(key, value, this);
+//            pnContent.add(pnDamageItemDetail);
+//        });
+//        changeTongTienHoaDon();
+//        pnContent.revalidate();
+//        pnContent.repaint();
+//        
+//        changeTongTienHoaDon();
+//    }
     
     private static CellStyle createStyleForHeader(Sheet sheet) {
         // Tạo font chữ
@@ -240,127 +240,127 @@ public class TabDamageItem extends javax.swing.JPanel {
     }
 
     private void btnTaoPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoPhieuActionPerformed
-        List<DamageItemDetail> damageItemDetails = createListDamageItemDetail();
-        if(damageItemDetails.isEmpty()){
-            MessageDialog.warning(null, "Không có sản phẩm");
-            return;
-        }
-        try {
-            Employee employee = CurrentEmployee.getEmployee();
-            if (MessageDialog.confirm(null, "Bạn có chắc chắn muốn xuất hủy không?", "Xác nhận xuất hủy")) {
-                if (damageItemBUS.createDamageItem(employee, damageItemDetails)) {
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setDialogTitle("Chọn đường dẫn lưu file Excel");
-                    FileNameExtensionFilter filter = new FileNameExtensionFilter("XLSX files", "xlsx");
-                    fileChooser.setFileFilter(filter);
-                    fileChooser.setAcceptAllFileFilterUsed(false);
-
-                    int userChoice = fileChooser.showSaveDialog(null);
-                    if (userChoice == JFileChooser.APPROVE_OPTION) {
-                        try {
-                            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-                            if (!filePath.toLowerCase().endsWith(".xlsx")) {
-                                filePath += ".xlsx";
-                            }
-
-                            Workbook workbook;
-
-                            // Khởi tạo workbook cho định dạng xlsx
-                            if (filePath.endsWith(".xlsx")) {
-                                workbook = new XSSFWorkbook();
-                            } else {
-                                workbook = new HSSFWorkbook();
-                            }
-
-                            Sheet sheet = workbook.createSheet("Sheet1");
-
-                            // Tạo dòng tiêu đề
-                            CellStyle cellStyle = createStyleForHeader(sheet);
-                            Row headerRow = sheet.createRow(0);
-                            Cell headerCell1 = headerRow.createCell(0);
-                            Cell headerCell2 = headerRow.createCell(1);
-                            Cell headerCell3 = headerRow.createCell(2);
-                            Cell headerCell4 = headerRow.createCell(3);
-                            Cell headerCell5 = headerRow.createCell(4);
-                            Cell headerCell6 = headerRow.createCell(5);
-                            Cell headerCell7 = headerRow.createCell(6);
-                            
-                            headerCell1.setCellValue("Mã sản phẩm");
-                            headerCell2.setCellValue("Tên sản phẩm");
-                            headerCell3.setCellValue("Số lô");
-                            headerCell4.setCellValue("Hạn sử dụng");
-                            headerCell5.setCellValue("Đơn vị tính");
-                            headerCell6.setCellValue("Số lượng");
-                            headerCell7.setCellValue("Giá trị hủy");
-                            
-                            headerCell1.setCellStyle(cellStyle);
-                            headerCell2.setCellStyle(cellStyle);
-                            headerCell3.setCellStyle(cellStyle);
-                            headerCell4.setCellStyle(cellStyle);
-                            headerCell5.setCellStyle(cellStyle);
-                            headerCell6.setCellStyle(cellStyle);
-                            headerCell7.setCellStyle(cellStyle);
-                            
-                            int r = 0;
-                            double t = 0.0;
-                            // Tạo dòng dữ liệu
-                            for (DamageItemDetail damageItemDetail : damageItemDetails) {
-                                Row dataRow = sheet.createRow(r + 1);
-                                Cell dataCell1 = dataRow.createCell(0);
-                                Cell dataCell2 = dataRow.createCell(1);
-                                Cell dataCell3 = dataRow.createCell(2);
-                                Cell dataCell4 = dataRow.createCell(3);
-                                Cell dataCell5 = dataRow.createCell(4);
-                                Cell dataCell6 = dataRow.createCell(5);
-                                Cell dataCell7 = dataRow.createCell(6);
-                                dataCell1.setCellValue(damageItemDetail.getUnitDetail().getProduct().getProductId());
-                                dataCell2.setCellValue(damageItemDetail.getUnitDetail().getProduct().getName());
-                                dataCell3.setCellValue(damageItemDetail.getBatch().getName());
-                                dataCell4.setCellValue(damageItemDetail.getBatch().getExpirationDate().toString());
-                                dataCell5.setCellValue(damageItemDetail.getUnitDetail().getUnit().getName());
-                                dataCell6.setCellValue(damageItemDetail.getQuantity());
-                                dataCell7.setCellValue(damageItemDetail.getLineTotal());
-                                t += damageItemDetail.getLineTotal();
-                                r++;
-                            }
-
-                            Row dataRowNV = sheet.createRow(r + 1);
-                            Cell dataCellNV = dataRowNV.createCell(0);
-                            Cell dataCellNV1 = dataRowNV.createCell(1);
-                            dataCellNV.setCellValue("Nhân viên lập đơn:");
-                            dataCellNV1.setCellValue(CurrentEmployee.getEmployee().getName() + "_" + CurrentEmployee.getEmployee().getEmployeeId());
-                            
-                            Row dataRowTGT = sheet.createRow(r + 2);
-                            Cell dataCellTGT = dataRowTGT.createCell(0);
-                            Cell dataCellTGT1 = dataRowTGT.createCell(1);
-                            dataCellTGT.setCellValue("Tổng giá trị hủy:");
-                            dataCellTGT1.setCellValue(t);
-
-                            // Điều chỉnh kích thước cột
-                            for (int i = 0; i < 6; i++) {
-                                sheet.autoSizeColumn(i);
-                            }
-
-                            // Ghi dữ liệu ra file
-                            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
-                                workbook.write(fileOut);
-                            }
-
-                            openFile(filePath);
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, "Lỗi đọc file!", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thành công.");
-                    clearPnOrderDetail();
-                    fillContent();
-                } else {
-                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thất bại.");
-                }
-            }
-        } catch (Exception e) {
-            MessageDialog.error(null, "Lỗi hệ thống !!!");
-        }
+//        List<DamageItemDetail> damageItemDetails = createListDamageItemDetail();
+//        if(damageItemDetails.isEmpty()){
+//            MessageDialog.warning(null, "Không có sản phẩm");
+//            return;
+//        }
+//        try {
+//            Employee employee = CurrentEmployee.getEmployee();
+//            if (MessageDialog.confirm(null, "Bạn có chắc chắn muốn xuất hủy không?", "Xác nhận xuất hủy")) {
+//                if (damageItemBUS.createDamageItem(employee, damageItemDetails)) {
+//                    JFileChooser fileChooser = new JFileChooser();
+//                    fileChooser.setDialogTitle("Chọn đường dẫn lưu file Excel");
+//                    FileNameExtensionFilter filter = new FileNameExtensionFilter("XLSX files", "xlsx");
+//                    fileChooser.setFileFilter(filter);
+//                    fileChooser.setAcceptAllFileFilterUsed(false);
+//
+//                    int userChoice = fileChooser.showSaveDialog(null);
+//                    if (userChoice == JFileChooser.APPROVE_OPTION) {
+//                        try {
+//                            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+//                            if (!filePath.toLowerCase().endsWith(".xlsx")) {
+//                                filePath += ".xlsx";
+//                            }
+//
+//                            Workbook workbook;
+//
+//                            // Khởi tạo workbook cho định dạng xlsx
+//                            if (filePath.endsWith(".xlsx")) {
+//                                workbook = new XSSFWorkbook();
+//                            } else {
+//                                workbook = new HSSFWorkbook();
+//                            }
+//
+//                            Sheet sheet = workbook.createSheet("Sheet1");
+//
+//                            // Tạo dòng tiêu đề
+//                            CellStyle cellStyle = createStyleForHeader(sheet);
+//                            Row headerRow = sheet.createRow(0);
+//                            Cell headerCell1 = headerRow.createCell(0);
+//                            Cell headerCell2 = headerRow.createCell(1);
+//                            Cell headerCell3 = headerRow.createCell(2);
+//                            Cell headerCell4 = headerRow.createCell(3);
+//                            Cell headerCell5 = headerRow.createCell(4);
+//                            Cell headerCell6 = headerRow.createCell(5);
+//                            Cell headerCell7 = headerRow.createCell(6);
+//                            
+//                            headerCell1.setCellValue("Mã sản phẩm");
+//                            headerCell2.setCellValue("Tên sản phẩm");
+//                            headerCell3.setCellValue("Số lô");
+//                            headerCell4.setCellValue("Hạn sử dụng");
+//                            headerCell5.setCellValue("Đơn vị tính");
+//                            headerCell6.setCellValue("Số lượng");
+//                            headerCell7.setCellValue("Giá trị hủy");
+//                            
+//                            headerCell1.setCellStyle(cellStyle);
+//                            headerCell2.setCellStyle(cellStyle);
+//                            headerCell3.setCellStyle(cellStyle);
+//                            headerCell4.setCellStyle(cellStyle);
+//                            headerCell5.setCellStyle(cellStyle);
+//                            headerCell6.setCellStyle(cellStyle);
+//                            headerCell7.setCellStyle(cellStyle);
+//                            
+//                            int r = 0;
+//                            double t = 0.0;
+//                            // Tạo dòng dữ liệu
+//                            for (DamageItemDetail damageItemDetail : damageItemDetails) {
+//                                Row dataRow = sheet.createRow(r + 1);
+//                                Cell dataCell1 = dataRow.createCell(0);
+//                                Cell dataCell2 = dataRow.createCell(1);
+//                                Cell dataCell3 = dataRow.createCell(2);
+//                                Cell dataCell4 = dataRow.createCell(3);
+//                                Cell dataCell5 = dataRow.createCell(4);
+//                                Cell dataCell6 = dataRow.createCell(5);
+//                                Cell dataCell7 = dataRow.createCell(6);
+//                                dataCell1.setCellValue(damageItemDetail.getUnitDetail().getProduct().getProductId());
+//                                dataCell2.setCellValue(damageItemDetail.getUnitDetail().getProduct().getName());
+//                                dataCell3.setCellValue(damageItemDetail.getBatch().getName());
+//                                dataCell4.setCellValue(damageItemDetail.getBatch().getExpirationDate().toString());
+//                                dataCell5.setCellValue(damageItemDetail.getUnitDetail().getUnit().getName());
+//                                dataCell6.setCellValue(damageItemDetail.getQuantity());
+//                                dataCell7.setCellValue(damageItemDetail.getLineTotal());
+//                                t += damageItemDetail.getLineTotal();
+//                                r++;
+//                            }
+//
+//                            Row dataRowNV = sheet.createRow(r + 1);
+//                            Cell dataCellNV = dataRowNV.createCell(0);
+//                            Cell dataCellNV1 = dataRowNV.createCell(1);
+//                            dataCellNV.setCellValue("Nhân viên lập đơn:");
+//                            dataCellNV1.setCellValue(CurrentEmployee.getEmployee().getName() + "_" + CurrentEmployee.getEmployee().getEmployeeId());
+//                            
+//                            Row dataRowTGT = sheet.createRow(r + 2);
+//                            Cell dataCellTGT = dataRowTGT.createCell(0);
+//                            Cell dataCellTGT1 = dataRowTGT.createCell(1);
+//                            dataCellTGT.setCellValue("Tổng giá trị hủy:");
+//                            dataCellTGT1.setCellValue(t);
+//
+//                            // Điều chỉnh kích thước cột
+//                            for (int i = 0; i < 6; i++) {
+//                                sheet.autoSizeColumn(i);
+//                            }
+//
+//                            // Ghi dữ liệu ra file
+//                            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+//                                workbook.write(fileOut);
+//                            }
+//
+//                            openFile(filePath);
+//                        } catch (IOException ex) {
+//                            JOptionPane.showMessageDialog(null, "Lỗi đọc file!", "Error", JOptionPane.ERROR_MESSAGE);
+//                        }
+//                    }
+//                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thành công.");
+//                    clearPnOrderDetail();
+//                    fillContent();
+//                } else {
+//                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thất bại.");
+//                }
+//            }
+//        } catch (Exception e) {
+//            MessageDialog.error(null, "Lỗi hệ thống !!!");
+//        }
     }//GEN-LAST:event_btnTaoPhieuActionPerformed
 
     private void setTxtEmpty(JLabel... labels) {
@@ -383,13 +383,13 @@ public class TabDamageItem extends javax.swing.JPanel {
             MessageDialog.warning(null, "Không có sản phẩm !!!");
         } else {
             for (PnDamageItemDetail pnDamageItemDetail : list) {
-                List<Batch> batchs = pnDamageItemDetail.getBatchs();
-                UnitDetail unitDetail = pnDamageItemDetail.getUnitDetail();
-                Product product = unitDetail.getProduct();
-                for (Batch batch : batchs) {
-                    DamageItemDetail damageItemDetail = new DamageItemDetail(batch.getStock(), product.getPurchasePrice(), batch, unitDetail);
-                    damageItemDetails.add(damageItemDetail);
-                }
+//                List<Batch> batchs = pnDamageItemDetail.getBatchs();
+//                UnitDetail unitDetail = pnDamageItemDetail.getUnitDetail();
+//                Product product = unitDetail.getProduct();
+//                for (Batch batch : batchs) {
+//                    DamageItemDetail damageItemDetail = new DamageItemDetail(batch.getStock(), product.getPurchasePrice(), batch, unitDetail);
+//                    damageItemDetails.add(damageItemDetail);
+//                }
             }
         }
         return damageItemDetails;
@@ -411,7 +411,7 @@ public class TabDamageItem extends javax.swing.JPanel {
         double tongTien = 0;
         List<PnDamageItemDetail> listPanel = getAllPnDamageItemDetail();
         for (PnDamageItemDetail x : listPanel) {
-            tongTien += x.getLineTotal();
+//            tongTien += x.getLineTotal();
         }
         txtTongTien.setText(FormatNumber.formatToVND(tongTien));
     }
