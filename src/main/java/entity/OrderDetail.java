@@ -36,7 +36,6 @@ public class OrderDetail {
     @JoinColumn(name = "batch_id")
     @Id
     private Batch batch;
-
     
     @ManyToOne
     @JoinColumn(name = "order_id")
