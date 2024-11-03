@@ -5,10 +5,16 @@
 package view.login;
 
 import bus.*;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import connectDB.ConnectDB;
 import jakarta.persistence.EntityManager;
 import util.ResizeImage;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -101,9 +107,10 @@ public class LoadApplication extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        FlatLightLaf.setup();
-        /* Create and display the form */
-
+        FlatRobotoFont.install();
+        FlatLaf.registerCustomDefaultsSource("gui.theme");
+        UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
+        FlatIntelliJLaf.setup();
         LoadApplication load = new LoadApplication();
         load.setVisible(true);
         try {
@@ -133,8 +140,7 @@ public class LoadApplication extends javax.swing.JFrame {
 //                load.progressLoading.setForeground(Color.orange);
             }
             load.setVisible(false);
-            LoginForm loginForm = new LoginForm();
-            loginForm.setVisible(true);
+            new LoginForm().setVisible(true);
         } catch (Exception ex) {
             throw new RuntimeException("Chạy bị lỗi");
         }

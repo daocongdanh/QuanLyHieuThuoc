@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import gui.application.Application;
 import util.MessageDialog;
 import entity.*;
 import util.CurrentEmployee;
@@ -191,10 +193,12 @@ public class LoginForm extends javax.swing.JFrame {
                 CurrentEmployee.setEmployee(employee);
                 setVisible(false);
                 if(employee.getRole().equals("Nhân viên")){
-                    new MenuManagerStaff().setVisible(true);
+                    Application.app = new Application(1);
+                    Application.app.setVisible(true);
                 }
                 else if(employee.getRole().equals("Quản lý")){
-                    new MenuManagerAdmin().setVisible(true);
+                    Application.app = new Application(2);
+                    Application.app.setVisible(true);
                 }
             }
         }

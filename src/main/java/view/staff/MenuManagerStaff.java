@@ -6,30 +6,9 @@ package view.staff;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
-import connectDB.ConnectDB;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import view.common.MenuChoice;
-import static view.common.MenuChoice.menuSwitch;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
-import util.ResizeImage;
-import view.login.LoginForm;
-import view.manager.TABCustomer;
-import view.manager.TABProduct;
-import view.manager.TABStats;
-import view.manager.TABSupplier;
-import view.staff.damageItem.TabDamageItem;
 
 /**
  *
@@ -42,93 +21,9 @@ public class MenuManagerStaff extends javax.swing.JFrame {
     public MenuManagerStaff() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setTitleMenu();
-        addMenuClick();
+  
     }
 
-    private void setTitleMenu() {
-        menuReport.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/baoCaoIcon.svg"))));
-        menuReport.setTitleMenu("Thống kê cá nhân");
-        menuCustomer.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/customerIcon.svg"))));
-        menuCustomer.setTitleMenu("Quản Lý Khách Hàng");
-        menuDamaged.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/damageIcon.svg"))));
-        menuDamaged.setTitleMenu("Phiếu Xuất Hủy");
-        menuProduct.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/productIcon.svg"))));
-        menuProduct.setTitleMenu("Quản Lý Sản Phẩm");
-        menuPurchase.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/purchaseIcon.svg"))));
-        menuPurchase.setTitleMenu("Phiếu Nhập Hàng");
-        menuReturn.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/returnProductIcon.svg"))));
-        menuReturn.setTitleMenu("Phiếu Trả Hàng");
-        menuSupplier.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/supplierIcon.svg"))));
-        menuSupplier.setTitleMenu("Quản Lý Nhà Cung Cấp");
-        menuSell.setTitleMenu("Bán Hàng");
-        menuSell.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/sellIcon.svg"))));
-        menuExit.setTitleMenu("Đăng xuất");
-        menuExit.setTitleMenu("Đăng xuất");
-        menuExit.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/exiticon.svg"))));
-        menuExit.setDefault();
-        lblIcon.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.jpg")), 68, 68));
-
-    }
-
-    private void addMenuClick() {
-
-        JPanel loadingPanel = new JPanel();
-        loadingPanel.setLayout(new GridBagLayout());
-        JLabel loadingLabel = new JLabel("Đang tải...");
-        loadingLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.CENTER;
-        loadingPanel.add(loadingLabel, gbc);
-
-        List<MenuChoice> menuList = Arrays.asList(
-                menuReport, menuCustomer, menuDamaged, menuProduct, menuPurchase,
-                menuReturn, menuSupplier, menuSell
-        );
-        Map<MenuChoice, Supplier<JPanel>> menuPanelMap = new HashMap<>();
-        menuPanelMap.put(menuReport, () -> new TABIndividualReport());
-        menuPanelMap.put(menuCustomer, () -> new TABCustomer());
-        menuPanelMap.put(menuDamaged, () -> new TabDamageItem());
-        menuPanelMap.put(menuProduct, () -> new TABProduct());
-        menuPanelMap.put(menuPurchase, () -> new TABPurchase());
-        menuPanelMap.put(menuReturn, () -> new TABReturnOrder());
-        menuPanelMap.put(menuSupplier, () -> new TABSupplier());
-        menuPanelMap.put(menuSell, () -> new TABSell());
-        menuSwitch(new TABSell(), menuSell, mainContent, menuList, currentPanel);
-
-        for (MenuChoice menu : menuList) {
-            menu.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    // Hiển thị Loading Panel trước
-                    menuSwitch(loadingPanel, menu, mainContent, menuList, currentPanel);
-
-                    // Dùng SwingWorker để xử lý panel mới trong nền
-                    new SwingWorker<JPanel, Void>() {
-                        @Override
-                        protected JPanel doInBackground() {
-                            // Khởi tạo panel mới trong nền
-                            return menuPanelMap.get(menu).get();
-                        }
-
-                        @Override
-                        protected void done() {
-                            try {
-                                // Khi hoàn tất, lấy panel mới và hiển thị
-                                JPanel newPanel = get();
-                                if (newPanel != null) {
-                                    menuSwitch(newPanel, menu, mainContent, menuList, currentPanel);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.execute();
-                }
-            });
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -141,15 +36,6 @@ public class MenuManagerStaff extends javax.swing.JFrame {
 
         Box = new javax.swing.JPanel();
         pnLeft = new javax.swing.JPanel();
-        menuSell = new view.common.MenuChoice();
-        menuProduct = new view.common.MenuChoice();
-        menuReport = new view.common.MenuChoice();
-        menuCustomer = new view.common.MenuChoice();
-        menuSupplier = new view.common.MenuChoice();
-        menuPurchase = new view.common.MenuChoice();
-        menuReturn = new view.common.MenuChoice();
-        menuDamaged = new view.common.MenuChoice();
-        menuExit = new view.common.MenuChoice();
         lblIcon = new javax.swing.JLabel();
         mainContent = new javax.swing.JPanel();
 
@@ -162,56 +48,20 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         pnLeft.setBackground(new java.awt.Color(211, 237, 187));
         pnLeft.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 232, 232), 2));
 
-        menuExit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuExitMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnLeftLayout = new javax.swing.GroupLayout(pnLeft);
         pnLeft.setLayout(pnLeftLayout);
         pnLeftLayout.setHorizontalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
-                .addGroup(pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuSell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuDamaged, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 6, Short.MAX_VALUE))
-            .addGroup(pnLeftLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(203, Short.MAX_VALUE))
         );
         pnLeftLayout.setVerticalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
                 .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(menuSell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuDamaged, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addContainerGap(945, Short.MAX_VALUE))
         );
 
         Box.add(pnLeft, java.awt.BorderLayout.WEST);
@@ -224,7 +74,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Box, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+            .addComponent(Box, javax.swing.GroupLayout.DEFAULT_SIZE, 1266, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,23 +84,13 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuExitMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-        LoginForm login = new LoginForm();
-        login.setLocationRelativeTo(null);
-        login.setVisible(true);
-    }//GEN-LAST:event_menuExitMouseClicked
-
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         FlatRobotoFont.install();
-        FlatLaf.setPreferredFontFamily(FlatRobotoFont.FAMILY);
-        FlatLaf.setPreferredLightFontFamily(FlatRobotoFont.FAMILY_LIGHT);
-        FlatLaf.setPreferredSemiboldFontFamily(FlatRobotoFont.FAMILY_SEMIBOLD);
         FlatLaf.registerCustomDefaultsSource("style");
+        UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
         FlatIntelliJLaf.setup();
 
         /* Create and display the form */
@@ -265,15 +105,6 @@ public class MenuManagerStaff extends javax.swing.JFrame {
     private javax.swing.JPanel Box;
     private javax.swing.JLabel lblIcon;
     private javax.swing.JPanel mainContent;
-    private view.common.MenuChoice menuCustomer;
-    private view.common.MenuChoice menuDamaged;
-    private view.common.MenuChoice menuExit;
-    private view.common.MenuChoice menuProduct;
-    private view.common.MenuChoice menuPurchase;
-    private view.common.MenuChoice menuReport;
-    private view.common.MenuChoice menuReturn;
-    private view.common.MenuChoice menuSell;
-    private view.common.MenuChoice menuSupplier;
     private javax.swing.JPanel pnLeft;
     // End of variables declaration//GEN-END:variables
 }

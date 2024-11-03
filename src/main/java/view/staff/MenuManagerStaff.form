@@ -24,7 +24,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="Box" alignment="0" pref="310" max="32767" attributes="0"/>
+          <Component id="Box" alignment="0" pref="1266" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -65,24 +65,10 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="menuExit" min="-2" max="-2" attributes="0"/>
-                          <Component id="menuReport" min="-2" max="-2" attributes="0"/>
-                          <Component id="menuSell" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="menuProduct" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="menuCustomer" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="menuSupplier" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="menuPurchase" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="menuReturn" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="menuDamaged" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblIcon" min="-2" pref="85" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="203" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -90,51 +76,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblIcon" min="-2" pref="68" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="menuSell" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuProduct" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuCustomer" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuSupplier" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuPurchase" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuDamaged" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuReturn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuReport" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuExit" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="318" max="32767" attributes="0"/>
+                      <EmptySpace pref="945" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="view.common.MenuChoice" name="menuSell">
-            </Component>
-            <Component class="view.common.MenuChoice" name="menuProduct">
-            </Component>
-            <Component class="view.common.MenuChoice" name="menuReport">
-            </Component>
-            <Component class="view.common.MenuChoice" name="menuCustomer">
-            </Component>
-            <Component class="view.common.MenuChoice" name="menuSupplier">
-            </Component>
-            <Component class="view.common.MenuChoice" name="menuPurchase">
-            </Component>
-            <Component class="view.common.MenuChoice" name="menuReturn">
-            </Component>
-            <Component class="view.common.MenuChoice" name="menuDamaged">
-            </Component>
-            <Component class="view.common.MenuChoice" name="menuExit">
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuExitMouseClicked"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JLabel" name="lblIcon">
             </Component>
           </SubComponents>
