@@ -34,6 +34,9 @@ import entity.Promotion;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import view.common.CustomDashedLineSeparator;
 
 public class GeneratePDF {
@@ -158,29 +161,50 @@ public class GeneratePDF {
             productTable.addCell(unitPricePHeader);
             productTable.addCell(totalPriceHeader2);
 
-            // Sample product data
-            for (OrderDetail item : listOrders) {
-                Product product = item.getBatch().getProduct();
-                PdfPCell productNameCell = new PdfPCell(new Phrase(product.getName()));
+            
+            Map<String, Object[]> productMap = new LinkedHashMap<>();
+            for (OrderDetail orderDetail : listOrders) {
+                Product product = orderDetail.getBatch().getProduct();
+                String productId = product.getProductId();
+                String productName = product.getName();
+                String unitName = product.getUnit().getName();               
+                int quantity = orderDetail.getQuantity();
+                double price = orderDetail.getPrice() * (product.getVAT() + 1);
+                double lineTotal = orderDetail.getLineTotal();
+
+                if (productMap.containsKey(productId)) {
+                    // Nếu sản phẩm đã tồn tại trong Map, cộng dồn số lượng và tổng giá trị
+                    Object[] existingData = productMap.get(productId);
+                    existingData[3] = (int) existingData[3] + quantity; // Cộng dồn số lượng
+                    existingData[5] = (double) existingData[5] + lineTotal; // Cộng dồn tổng giá trị
+                    productMap.put(productId, existingData);
+                } else {
+                    // Nếu sản phẩm chưa tồn tại trong Map, thêm mới vào Map
+                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, lineTotal});
+                }
+            }
+            productMap.forEach((key, value) -> {
+                PdfPCell productNameCell = new PdfPCell(new Phrase((String) value[1]));
                 productNameCell.setBorder(Rectangle.NO_BORDER);
                 productTable.addCell(productNameCell);
                 
-                PdfPCell unitCell = new PdfPCell(new Phrase( item.getBatch().getProduct().getUnit().getName()));
+                PdfPCell unitCell = new PdfPCell(new Phrase( (String) value[2]));
                 unitCell.setBorder(Rectangle.NO_BORDER);
                 productTable.addCell(unitCell);
-
-                PdfPCell quantityCell = new PdfPCell(new Phrase(item.getQuantity() + "", normalFont));
+                
+                PdfPCell quantityCell = new PdfPCell(new Phrase(value[3].toString()));
                 quantityCell.setBorder(Rectangle.NO_BORDER);
                 productTable.addCell(quantityCell);
 
-                PdfPCell unitPriceCell = new PdfPCell(new Phrase(decimal.format(product.getSellingPrice()) + "", normalFont));
+                PdfPCell unitPriceCell = new PdfPCell(new Phrase(decimal.format((double) value[4]) + "", normalFont));
                 unitPriceCell.setBorder(Rectangle.NO_BORDER);
                 productTable.addCell(unitPriceCell);
 
-                PdfPCell totalPriceCell = new PdfPCell(new Phrase(decimal.format(item.getLineTotal()) + "", normalFont));
+                PdfPCell totalPriceCell = new PdfPCell(new Phrase(decimal.format((double) value[5]) + "", normalFont));
                 totalPriceCell.setBorder(Rectangle.NO_BORDER);
                 productTable.addCell(totalPriceCell);
-            }
+            });
+            
             document.add(productTable);
             document.add(Chunk.NEWLINE);
             document.add(dotLine);

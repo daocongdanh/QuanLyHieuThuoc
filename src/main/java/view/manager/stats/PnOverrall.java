@@ -339,9 +339,9 @@ public class PnOverrall extends javax.swing.JPanel {
         changeDateSelect();
     }//GEN-LAST:event_comboDateItemStateChanged
     private void initHeader() {
-        lblIconReturn.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/returnProductIcon.svg")), 55, 55));
-        lblIconOrder.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/orderIcon.svg")), 55, 55));
-        lblIconCompare.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/purchaseIcon.svg")), 55, 55));
+        lblIconReturn.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/8.svg")), 55, 55));
+        lblIconOrder.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/10.svg")), 55, 55));
+        lblIconCompare.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/7.svg")), 55, 55));
         LocalDate localDateStart = LocalDate.now();
         LocalDate localDateEnd = LocalDate.now();
 

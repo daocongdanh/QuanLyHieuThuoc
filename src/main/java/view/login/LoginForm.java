@@ -6,25 +6,20 @@ package view.login;
 
 import bus.AccountBUS;
 import com.formdev.flatlaf.FlatLightLaf;
-import connectDB.ConnectDB;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import gui.application.Application;
 import util.MessageDialog;
 import entity.*;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import util.CurrentEmployee;
-import util.ResizeImage;
-import view.manager.MenuManagerAdmin;
-import view.staff.MenuManagerStaff;
 
 /**
  *
@@ -36,6 +31,8 @@ public class LoginForm extends javax.swing.JFrame {
     public LoginForm() {
         this.accountBUS = LoadApplication.accountBUS;
         initComponents();
+        usernameTxt.setText("NV00001");
+        passwordTxt.setText("123");
     }
 
     /**
@@ -258,10 +255,12 @@ public class LoginForm extends javax.swing.JFrame {
                 CurrentEmployee.setEmployee(employee);
                 setVisible(false);
                 if(employee.getRole().equals("Nhân viên")){
-                    new MenuManagerStaff().setVisible(true);
+                    Application.app = new Application(1);
+                    Application.app.setVisible(true);
                 }
                 else if(employee.getRole().equals("Quản lý")){
-                    new MenuManagerAdmin().setVisible(true);
+                    Application.app = new Application(2);
+                    Application.app.setVisible(true);
                 }
             }
         }

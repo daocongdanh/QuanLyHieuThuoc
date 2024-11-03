@@ -32,6 +32,7 @@ public class PnOrderDetail extends javax.swing.JPanel {
     private List<Batch> batchs;
     private Promotion promotion;
     private PnTabOrder tabHoaDon;
+    private int oldValue;
 
     public PnOrderDetail() {
         initComponents();
@@ -42,6 +43,7 @@ public class PnOrderDetail extends javax.swing.JPanel {
         this.product = product;
         this.promotion = promotion;
         this.tabHoaDon = tabHoaDon;
+        oldValue = 1;
         initComponents();
         fillFirst();
     }
@@ -60,7 +62,13 @@ public class PnOrderDetail extends javax.swing.JPanel {
                 + product.getImage())), 82, 82));
         txtDVT.setText(product.getUnit().getName());
         spinnerSoLuong.setValue(1);
-
+        
+        pnListBatch.removeAll();
+        PnSelectBatch pnSelectBatch = new PnSelectBatch(batchs.get(0), 1);
+        pnListBatch.add(pnSelectBatch);
+        pnListBatch.revalidate();
+        pnListBatch.repaint();
+        
         if (promotion != null) {
             DecimalFormat df = new DecimalFormat("- #.00 %");
             txtDiscount.setText(df.format(promotion.getDiscount()));
@@ -71,7 +79,6 @@ public class PnOrderDetail extends javax.swing.JPanel {
         }
         int value = (Integer) spinnerSoLuong.getValue();
         txtTongTien.setText(FormatNumber.formatToVND(product.getPrice() * value));
-
     }
 
     public void fillQuantity(int quantity) {
@@ -311,10 +318,11 @@ public class PnOrderDetail extends javax.swing.JPanel {
                 .sum();
         if (quantity > stock) {
             MessageDialog.warning(null, "Không đủ số lượng !!!");
-            spinnerSoLuong.setValue(quantity - 1);
+            spinnerSoLuong.setValue(oldValue);
             return;
         }
         pnListBatch.removeAll();
+        oldValue = quantity;
         setLineTotal();
         for (Batch batch : batchs) {
             if (batch.getStock() >= quantity) {

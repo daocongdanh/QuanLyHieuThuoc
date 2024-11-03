@@ -54,7 +54,7 @@ public class TABUnit extends javax.swing.JPanel {
     private void addIconFeature() {
         btnAdd.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/addBtn.svg")), 35, 35));
         btnUpdate.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/editBtn.svg")), 35, 35));
-        btnImport.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/import.svg")), 35, 35));
+     
     }
 
     private void fillContent(List<Unit> units) {
@@ -96,7 +96,6 @@ public class TABUnit extends javax.swing.JPanel {
         actionPanel = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnImport = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         scrollTable = new javax.swing.JScrollPane();
 
@@ -349,22 +348,6 @@ public class TABUnit extends javax.swing.JPanel {
         });
         actionPanel.add(btnUpdate);
 
-        btnImport.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnImport.setText("IMPORT");
-        btnImport.setBorder(null);
-        btnImport.setBorderPainted(false);
-        btnImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnImport.setFocusPainted(false);
-        btnImport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnImport.setPreferredSize(new java.awt.Dimension(100, 90));
-        btnImport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnImport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportActionPerformed(evt);
-            }
-        });
-        actionPanel.add(btnImport);
-
         headerPanel.add(actionPanel, java.awt.BorderLayout.WEST);
 
         pnAll.add(headerPanel, java.awt.BorderLayout.NORTH);
@@ -463,14 +446,6 @@ public class TABUnit extends javax.swing.JPanel {
         fillContent(units);
     }//GEN-LAST:event_btnOpenModalAddUnitActionPerformed
 
-    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        if (unitBUS.importExcel()) {
-            MessageDialog.info(null, "Import file thành công");
-            List<Unit> units = unitBUS.getAllUnits();
-            fillContent(units);
-        };
-    }//GEN-LAST:event_btnImportActionPerformed
-
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         int selectedRow = tableDesign.getTable().getSelectedRow();
@@ -510,7 +485,6 @@ public class TABUnit extends javax.swing.JPanel {
     private javax.swing.JButton btnEditUnit;
     private javax.swing.JButton btnExitModalAdd;
     private javax.swing.JButton btnExitModalEdit;
-    private javax.swing.JButton btnImport;
     private javax.swing.JButton btnOpenModalAddUnit;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JPanel headerPanel;
