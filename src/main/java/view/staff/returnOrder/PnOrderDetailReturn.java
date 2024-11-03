@@ -150,15 +150,17 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
         txtAreaReason = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         btnExitModalAdd = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        btnXoaOderDetail = new javax.swing.JLabel();
+        btnXoaOderDetail.setIcon( ResizeImage.resizeImage( new javax.swing.ImageIcon(getClass().getResource("/img/delete.jpg")) , 25, 25));
+        pnHinh = new javax.swing.JLabel();
         txtTenSP = new javax.swing.JLabel();
+        txtDvt = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         spinnerSoLuong = new javax.swing.JSpinner();
         txtDonGia = new javax.swing.JLabel();
         txtTongTien = new javax.swing.JLabel();
-        pnHinh = new javax.swing.JLabel();
         lblIcon = new javax.swing.JLabel();
-        txtDvt = new javax.swing.JLabel();
-        btnXoaOderDetail = new javax.swing.JLabel();
-        btnXoaOderDetail.setIcon( ResizeImage.resizeImage( new javax.swing.ImageIcon(getClass().getResource("/img/delete.jpg")) , 25, 25));
 
         modalGhiChu.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         modalGhiChu.setTitle("Lý do trả hàng");
@@ -239,13 +241,47 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(232, 232, 232)));
-        setMaximumSize(new java.awt.Dimension(1139, 140));
-        setMinimumSize(new java.awt.Dimension(1139, 140));
-        setPreferredSize(new java.awt.Dimension(1139, 140));
+        setMaximumSize(new java.awt.Dimension(111111111, 140));
+        setMinimumSize(new java.awt.Dimension(1129, 140));
+        setPreferredSize(new java.awt.Dimension(1129, 147));
         setRequestFocusEnabled(false);
+        setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        java.awt.FlowLayout flowLayout2 = new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 22, 26);
+        flowLayout2.setAlignOnBaseline(true);
+        jPanel2.setLayout(flowLayout2);
+
+        btnXoaOderDetail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaOderDetailMouseClicked(evt);
+            }
+        });
+        jPanel2.add(btnXoaOderDetail);
+
+        pnHinh.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.add(pnHinh);
 
         txtTenSP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtTenSP.setText("jLabel1");
+        txtTenSP.setMaximumSize(new java.awt.Dimension(300, 1111111111));
+        txtTenSP.setMinimumSize(new java.awt.Dimension(300, 25));
+        txtTenSP.setName(""); // NOI18N
+        txtTenSP.setPreferredSize(new java.awt.Dimension(200, 25));
+        jPanel2.add(txtTenSP);
+
+        txtDvt.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtDvt.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        txtDvt.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel2.add(txtDvt);
+
+        add(jPanel2, java.awt.BorderLayout.WEST);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setMinimumSize(new java.awt.Dimension(517, 144));
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING, 40, 50);
+        flowLayout1.setAlignOnBaseline(true);
+        jPanel3.setLayout(flowLayout1);
 
         spinnerSoLuong.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         spinnerSoLuong.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
@@ -255,19 +291,20 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
                 spinnerSoLuongStateChanged(evt);
             }
         });
+        jPanel3.add(spinnerSoLuong);
 
         txtDonGia.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtDonGia.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         txtDonGia.setText("0 đ");
         txtDonGia.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         txtDonGia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        jPanel3.add(txtDonGia);
 
         txtTongTien.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtTongTien.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         txtTongTien.setText("0 đ");
         txtTongTien.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-
-        pnHinh.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.add(txtTongTien);
 
         lblIcon.setText("Ghi chú");
         lblIcon.setMaximumSize(new java.awt.Dimension(38, 38));
@@ -278,69 +315,9 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
                 lblIconMouseClicked(evt);
             }
         });
+        jPanel3.add(lblIcon);
 
-        txtDvt.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtDvt.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        txtDvt.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-
-        btnXoaOderDetail.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnXoaOderDetailMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(btnXoaOderDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(46, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDvt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(45, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(pnHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(btnXoaOderDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        add(jPanel3, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     public Double getLineTotal() {
@@ -407,6 +384,8 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIcon;
     private javax.swing.JDialog modalGhiChu;

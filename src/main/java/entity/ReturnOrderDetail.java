@@ -41,6 +41,7 @@ public class ReturnOrderDetail {
     private ReturnOrderDetailStatus returnOrderDetailStatus;
 
     @Column(name = "final_reason")
+    @Nationalized
     private String finalReason;
 
     @ManyToOne
