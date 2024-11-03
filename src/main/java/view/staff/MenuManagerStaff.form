@@ -66,8 +66,14 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblIcon" min="-2" pref="85" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="menuExit" min="-2" max="-2" attributes="0"/>
+                          <Component id="menuPersonalInfor" min="-2" max="-2" attributes="0"/>
                           <Component id="menuReport" min="-2" max="-2" attributes="0"/>
                           <Component id="menuSell" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="menuProduct" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -77,12 +83,7 @@
                           <Component id="menuReturn" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="menuDamaged" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblIcon" min="-2" pref="85" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -107,8 +108,10 @@
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="menuReport" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="menuPersonalInfor" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="menuExit" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="318" max="32767" attributes="0"/>
+                      <EmptySpace pref="249" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -129,6 +132,8 @@
             <Component class="view.common.MenuChoice" name="menuReturn">
             </Component>
             <Component class="view.common.MenuChoice" name="menuDamaged">
+            </Component>
+            <Component class="view.common.MenuChoice" name="menuPersonalInfor">
             </Component>
             <Component class="view.common.MenuChoice" name="menuExit">
               <Events>

@@ -27,6 +27,7 @@ import util.ResizeImage;
 import view.login.LoginForm;
 import view.manager.TABCustomer;
 import view.manager.TABProduct;
+import view.manager.TABPersonalInformation;
 import view.manager.TABStats;
 import view.manager.TABSupplier;
 import view.staff.damageItem.TabDamageItem;
@@ -63,6 +64,8 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         menuSupplier.setTitleMenu("Quản Lý Nhà Cung Cấp");
         menuSell.setTitleMenu("Bán Hàng");
         menuSell.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/sellIcon.svg"))));
+        menuPersonalInfor.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/personal.svg"))));
+        menuPersonalInfor.setTitleMenu("Thông tin cá nhân");
         menuExit.setTitleMenu("Đăng xuất");
         menuExit.setTitleMenu("Đăng xuất");
         menuExit.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/exiticon.svg"))));
@@ -85,7 +88,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
 
         List<MenuChoice> menuList = Arrays.asList(
                 menuReport, menuCustomer, menuDamaged, menuProduct, menuPurchase,
-                menuReturn, menuSupplier, menuSell
+                menuReturn, menuSupplier, menuSell, menuPersonalInfor
         );
         Map<MenuChoice, Supplier<JPanel>> menuPanelMap = new HashMap<>();
         menuPanelMap.put(menuReport, () -> new TABIndividualReport());
@@ -96,6 +99,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         menuPanelMap.put(menuReturn, () -> new TABReturnOrder());
         menuPanelMap.put(menuSupplier, () -> new TABSupplier());
         menuPanelMap.put(menuSell, () -> new TABSell());
+        menuPanelMap.put(menuPersonalInfor, () -> new TABPersonalInformation());
         menuSwitch(new TABSell(), menuSell, mainContent, menuList, currentPanel);
 
         for (MenuChoice menu : menuList) {
@@ -149,6 +153,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         menuPurchase = new view.common.MenuChoice();
         menuReturn = new view.common.MenuChoice();
         menuDamaged = new view.common.MenuChoice();
+        menuPersonalInfor = new view.common.MenuChoice();
         menuExit = new view.common.MenuChoice();
         lblIcon = new javax.swing.JLabel();
         mainContent = new javax.swing.JPanel();
@@ -173,8 +178,13 @@ public class MenuManagerStaff extends javax.swing.JFrame {
         pnLeftLayout.setHorizontalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnLeftLayout.createSequentialGroup()
                 .addGroup(pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuPersonalInfor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(menuReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(menuSell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(menuProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,11 +193,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
                     .addComponent(menuPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(menuReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(menuDamaged, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 6, Short.MAX_VALUE))
-            .addGroup(pnLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnLeftLayout.setVerticalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,8 +216,10 @@ public class MenuManagerStaff extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(menuReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
+                .addComponent(menuPersonalInfor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addContainerGap(249, Short.MAX_VALUE))
         );
 
         Box.add(pnLeft, java.awt.BorderLayout.WEST);
@@ -268,6 +276,7 @@ public class MenuManagerStaff extends javax.swing.JFrame {
     private view.common.MenuChoice menuCustomer;
     private view.common.MenuChoice menuDamaged;
     private view.common.MenuChoice menuExit;
+    private view.common.MenuChoice menuPersonalInfor;
     private view.common.MenuChoice menuProduct;
     private view.common.MenuChoice menuPurchase;
     private view.common.MenuChoice menuReport;

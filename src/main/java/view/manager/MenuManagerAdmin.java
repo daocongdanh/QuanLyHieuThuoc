@@ -55,7 +55,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         List<MenuChoice> menuList = Arrays.asList(
                 menuStatistical, menuReport, menuCustomer, menuDamaged, menuOrder,
                 menuProduct, menuPromotion, menuPurchase,
-                menuReturn, menuStaff, menuSupplier, menuUnit
+                menuReturn, menuStaff, menuSupplier, menuUnit, menuPersonalInfor
         );
         Map<MenuChoice, Supplier<JPanel>> menuPanelMap = new HashMap<>();
 
@@ -84,6 +84,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuPanelMap.put(menuUnit, () -> new TABUnit());
         menuPanelMap.put(menuPromotion, () -> new TABPromotion());
         menuPanelMap.put(menuReport, () -> new TABReport());
+        menuPanelMap.put(menuPersonalInfor, () -> new TABPersonalInformation());
         menuSwitch(new TABStats(), menuStatistical, mainContent, menuList, currentPanel);
 
         for (MenuChoice menu : menuList) {
@@ -143,6 +144,8 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuSupplier.setTitleMenu("Quản Lý Nhà Cung Cấp");
         menuUnit.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/unitIcon.svg"))));
         menuUnit.setTitleMenu("Quản Lý Đơn Vị Tính");
+        menuPersonalInfor.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/personal.svg"))));
+        menuPersonalInfor.setTitleMenu("Thông tin cá nhân");
         menuExit.setTitleMenu("Đăng xuất");
         menuExit.setIconMenu((new FlatSVGIcon(getClass().getResource("/img/exiticon.svg"))));
         menuExit.setDefault();
@@ -172,6 +175,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         menuDamaged = new view.common.MenuChoice();
         menuOrder = new view.common.MenuChoice();
         menuPromotion = new view.common.MenuChoice();
+        menuPersonalInfor = new view.common.MenuChoice();
         menuExit = new view.common.MenuChoice();
         lblIcon = new javax.swing.JLabel();
         mainContent = new javax.swing.JPanel();
@@ -211,8 +215,9 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
                         .addComponent(menuOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(menuPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuPersonalInfor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         pnLeftLayout.setVerticalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,8 +249,10 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(menuPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
+                .addComponent(menuPersonalInfor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(menuExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         Box.add(pnLeft, java.awt.BorderLayout.WEST);
@@ -258,7 +265,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Box, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Box, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,6 +310,7 @@ public final class MenuManagerAdmin extends javax.swing.JFrame {
     private view.common.MenuChoice menuDamaged;
     private view.common.MenuChoice menuExit;
     private view.common.MenuChoice menuOrder;
+    private view.common.MenuChoice menuPersonalInfor;
     private view.common.MenuChoice menuProduct;
     private view.common.MenuChoice menuPromotion;
     private view.common.MenuChoice menuPurchase;
