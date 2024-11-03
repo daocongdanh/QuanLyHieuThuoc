@@ -27,9 +27,11 @@ public class LoadApplication extends javax.swing.JFrame {
     public static ReturnOrderBUS returnOrderBUS;
     public static AccountBUS accountBUS;
     public static DamageItemBUS damageItemBUS;
+    public static DamageItemDetailBUS damageItemDetailBUS;
     public static EmployeeBUS employeeBUS;
     public static ProductBUS productBUS;
     public static PurchaseOrderBUS purchaseOrderBUS;
+    public static PurchaseOrderDetailBUS purchaseOrderDetailBUS;
     public static UnitBUS unitBUS;
     public static ReturnOrderDetailBUS returnOrderDetailBUS;
     public static SupplierBUS supplierBUS;
@@ -122,9 +124,11 @@ public class LoadApplication extends javax.swing.JFrame {
                     returnOrderBUS = new ReturnOrderBUS(em);
                     accountBUS = new AccountBUS(em);
                     damageItemBUS = new DamageItemBUS(em);
+                    damageItemDetailBUS = new DamageItemDetailBUS(em);
                     employeeBUS = new EmployeeBUS(em);
                     productBUS = new ProductBUS(em);
                     purchaseOrderBUS = new PurchaseOrderBUS(em);
+                    purchaseOrderDetailBUS = new PurchaseOrderDetailBUS(em);
                     unitBUS = new UnitBUS(em);
                     returnOrderDetailBUS = new ReturnOrderDetailBUS(em);
                     supplierBUS = new SupplierBUS(em);

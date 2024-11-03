@@ -6,7 +6,9 @@ package view.manager;
 
 import bus.OrderBUS;
 import bus.PurchaseOrderBUS;
+import bus.PurchaseOrderDetailBUS;
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +20,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import util.*;
 import view.login.LoadApplication;
@@ -29,10 +34,12 @@ import view.login.LoadApplication;
 public class TABPurchaseOrder extends javax.swing.JPanel {
 
     private final PurchaseOrderBUS purchaseOrderBUS;
+    private final PurchaseOrderDetailBUS purchaseOrderDetailBUS;
     private TableDesign tableDesign;
 
     public TABPurchaseOrder() {
         purchaseOrderBUS = LoadApplication.purchaseOrderBUS;
+        purchaseOrderDetailBUS = LoadApplication.purchaseOrderDetailBUS;
         initComponents();
         setUIManager();
         fillTable();
@@ -43,6 +50,7 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
         UIManager.put("Button.arc", 10);
         jDateFrom.setDate(Date.valueOf(LocalDate.now()));
         jDateTo.setDate(Date.valueOf(LocalDate.now()));
+        btnView.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/View.svg")), 35, 35));
     }
 
     private void fillTable() {
@@ -74,6 +82,9 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        modalPurchaseOrderDetail = new javax.swing.JDialog();
+        jPanel1 = new javax.swing.JPanel();
+        scrollTableDetail = new javax.swing.JScrollPane();
         pnAll = new javax.swing.JPanel();
         headerPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -83,8 +94,30 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
         jDateFrom = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         txtOrder = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         scrollTable = new javax.swing.JScrollPane();
+
+        modalPurchaseOrderDetail.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        modalPurchaseOrderDetail.setTitle("Chi tiết phiếu nhập hàng");
+        modalPurchaseOrderDetail.setMinimumSize(new java.awt.Dimension(960, 512));
+        modalPurchaseOrderDetail.setModal(true);
+        modalPurchaseOrderDetail.setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel1.add(scrollTableDetail);
+
+        javax.swing.GroupLayout modalPurchaseOrderDetailLayout = new javax.swing.GroupLayout(modalPurchaseOrderDetail.getContentPane());
+        modalPurchaseOrderDetail.getContentPane().setLayout(modalPurchaseOrderDetailLayout);
+        modalPurchaseOrderDetailLayout.setHorizontalGroup(
+            modalPurchaseOrderDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        modalPurchaseOrderDetailLayout.setVerticalGroup(
+            modalPurchaseOrderDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         setBackground(new java.awt.Color(204, 204, 0));
         setMinimumSize(new java.awt.Dimension(1226, 278));
@@ -148,12 +181,29 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
             }
         });
 
+        btnView.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnView.setText("XEM CHI TIẾT");
+        btnView.setBorder(null);
+        btnView.setBorderPainted(false);
+        btnView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnView.setFocusPainted(false);
+        btnView.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnView.setPreferredSize(new java.awt.Dimension(100, 90));
+        btnView.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(34, 34, 34)
+                .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
                 .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
@@ -163,7 +213,7 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
                 .addComponent(txtEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 351, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
                 .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -181,7 +231,11 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         headerPanel.add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -224,17 +278,75 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
         JTableExporter.exportJTableToExcel(tableDesign.getTable());
     }//GEN-LAST:event_txtOrderActionPerformed
 
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        JTable table = tableDesign.getTable();
+        int selectedRow = table.getSelectedRow();
+        if(selectedRow < 0) {
+            MessageDialog.warning(null, "Hãy chọn phiếu nhập hàng cần xem chi tiết!");
+        } else {
+            String maPN = (String) table.getValueAt(selectedRow, 0);
+
+            String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá nhập", "Tổng giá trị"};
+            List<Integer> tableWidths = Arrays.asList(150, 200, 120, 120, 200, 200);
+            TableDesign tableDetail = new TableDesign(headers, tableWidths);
+            scrollTableDetail.setViewportView(tableDetail.getTable());
+            scrollTableDetail.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
+
+            PurchaseOrder po = purchaseOrderBUS.getByID(maPN);
+            List<PurchaseOrderDetail> purchaseOrderDetails = purchaseOrderDetailBUS.getListPurchaseOrderDetailsByPurchaseOrder(po);
+
+            // Sử dụng Map để cộng dồn các sản phẩm cùng mã
+            Map<String, Object[]> productMap = new HashMap<>();
+
+            for (PurchaseOrderDetail purchaseOrderDetail : purchaseOrderDetails) {
+                String productId = purchaseOrderDetail.getBatch().getProduct().getProductId();
+                String productName = purchaseOrderDetail.getBatch().getProduct().getName();
+                String unitName = purchaseOrderDetail.getBatch().getProduct().getUnit().getName();
+                int quantity = purchaseOrderDetail.getQuantity();
+                double price = purchaseOrderDetail.getPrice()*1.1;
+                double lineTotal = purchaseOrderDetail.getLineTotal();
+
+                if (productMap.containsKey(productId)) {
+                    // Nếu sản phẩm đã tồn tại trong Map, cộng dồn số lượng và tổng giá trị
+                    Object[] existingData = productMap.get(productId);
+                    existingData[3] = (int) existingData[3] + quantity; // Cộng dồn số lượng
+                    existingData[5] = (double) existingData[5] + lineTotal; // Cộng dồn tổng giá trị
+                } else {
+                    // Nếu sản phẩm chưa tồn tại trong Map, thêm mới vào Map
+                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, lineTotal});
+                }
+            }
+
+            // Xóa dữ liệu cũ trong bảng
+            tableDetail.getModelTable().setRowCount(0);
+
+            // Thêm các sản phẩm đã cộng dồn vào bảng
+            for (Object[] productData : productMap.values()) {
+                productData[4] = FormatNumber.formatToVND((double) productData[4]);
+                productData[5] = FormatNumber.formatToVND((double) productData[5]);
+                tableDetail.getModelTable().addRow(productData);
+            }
+
+            modalPurchaseOrderDetail.setLocationRelativeTo(null);
+            modalPurchaseOrderDetail.setVisible(true);
+        }
+    }//GEN-LAST:event_btnViewActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnView;
     private javax.swing.JPanel headerPanel;
     private com.toedter.calendar.JDateChooser jDateFrom;
     private com.toedter.calendar.JDateChooser jDateTo;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JDialog modalPurchaseOrderDetail;
     private javax.swing.JPanel pnAll;
     private javax.swing.JScrollPane scrollTable;
+    private javax.swing.JScrollPane scrollTableDetail;
     private javax.swing.JTextField txtEmp;
     private javax.swing.JButton txtOrder;
     // End of variables declaration//GEN-END:variables

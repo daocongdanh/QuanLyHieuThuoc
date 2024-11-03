@@ -7,7 +7,9 @@ package view.manager;
 import bus.ReturnOrderBUS;
 import bus.ReturnOrderDetailBUS;
 import bus.UnitBUS;
+import enums.ReturnOrderDetailStatus;
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
@@ -19,6 +21,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.Map;
 
 import util.*;
 import view.common.TableActionCellEditorOneAction;
@@ -63,6 +67,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         UIManager.put("Button.arc", 10);
         jDateFrom.setDate(Date.valueOf(LocalDate.now()));
         jDateTo.setDate(Date.valueOf(LocalDate.now()));
+        btnView.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/View.svg")), 35, 35));
     }
 
     private void fillTable() {
@@ -244,6 +249,9 @@ public class TABReturnOrder extends javax.swing.JPanel {
         jPanel11 = new javax.swing.JPanel();
         scrollTableView = new javax.swing.JScrollPane();
         jButton2 = new javax.swing.JButton();
+        modalReturnOrderDetail = new javax.swing.JDialog();
+        jPanel8 = new javax.swing.JPanel();
+        scrollTableDetail = new javax.swing.JScrollPane();
         pnAll = new javax.swing.JPanel();
         headerPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -255,6 +263,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         txtOrder = new javax.swing.JButton();
         optionStatus = new javax.swing.JComboBox<>();
         txtEmpName = new javax.swing.JTextField();
+        btnView = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         scrollTable = new javax.swing.JScrollPane();
 
@@ -469,6 +478,27 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         modalReturnOrderView.getContentPane().add(jPanel1);
 
+        modalReturnOrderDetail.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        modalReturnOrderDetail.setTitle("Chi tiết phiếu trả hàng");
+        modalReturnOrderDetail.setMinimumSize(new java.awt.Dimension(1311, 700));
+        modalReturnOrderDetail.setModal(true);
+        modalReturnOrderDetail.setResizable(false);
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel8.add(scrollTableDetail);
+
+        javax.swing.GroupLayout modalReturnOrderDetailLayout = new javax.swing.GroupLayout(modalReturnOrderDetail.getContentPane());
+        modalReturnOrderDetail.getContentPane().setLayout(modalReturnOrderDetailLayout);
+        modalReturnOrderDetailLayout.setHorizontalGroup(
+            modalReturnOrderDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        modalReturnOrderDetailLayout.setVerticalGroup(
+            modalReturnOrderDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setBackground(new java.awt.Color(204, 204, 0));
         setMinimumSize(new java.awt.Dimension(1226, 278));
         setPreferredSize(new java.awt.Dimension(1226, 278));
@@ -544,47 +574,70 @@ public class TABReturnOrder extends javax.swing.JPanel {
         txtEmpName.setMinimumSize(new java.awt.Dimension(300, 40));
         txtEmpName.setPreferredSize(new java.awt.Dimension(300, 40));
 
+        btnView.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnView.setText("XEM CHI TIẾT");
+        btnView.setBorder(null);
+        btnView.setBorderPainted(false);
+        btnView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnView.setFocusPainted(false);
+        btnView.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnView.setPreferredSize(new java.awt.Dimension(100, 90));
+        btnView.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jDateFrom, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                    .addComponent(txtOrderIdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(56, 56, 56)
+                .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtOrderIdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(optionStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
                 .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtOrderIdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(optionStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                    .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtOrderIdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(optionStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(39, 39, 39))
         );
 
         headerPanel.add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -650,9 +703,69 @@ public class TABReturnOrder extends javax.swing.JPanel {
         modalReturnOrderView.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        JTable table = tableDesign.getTable();
+        int selectedRow = table.getSelectedRow();
+        if(selectedRow < 0) {
+            MessageDialog.warning(null, "Hãy chọn phiếu trả hàng cần xem chi tiết!");
+        } else {
+            String maPT = (String) table.getValueAt(selectedRow, 0);
+
+            String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng trả", "Đơn giá", "Tổng giá trị", "Lý do trả", "Trạng thái", "Lý do nhập lại/hủy"};
+            List<Integer> tableWidths = Arrays.asList(150, 200, 120, 120, 200, 200, 200, 150, 200);
+            TableDesign tableDetail = new TableDesign(headers, tableWidths);
+            scrollTableDetail.setViewportView(tableDetail.getTable());
+            scrollTableDetail.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
+
+            ReturnOrder ro = returnOrderBUS.findById(maPT);
+            List<ReturnOrderDetail> returnOrderDetails = returnOrderDetailBUS.getListReturnOrderDetailsByReturnOrder(ro);
+
+            // Sử dụng Map để cộng dồn các sản phẩm cùng mã
+            Map<String, Object[]> productMap = new HashMap<>();
+
+            for (ReturnOrderDetail returnOrderDetail : returnOrderDetails) {
+                String productId = returnOrderDetail.getProduct().getProductId();
+                String productName = returnOrderDetail.getProduct().getName();
+                String unitName = returnOrderDetail.getProduct().getUnit().getName();
+                int quantity = returnOrderDetail.getQuantity();
+                double price = returnOrderDetail.getPrice()*1.1;
+                double lineTotal = returnOrderDetail.getLineTotal();
+                String lyDoTra = returnOrderDetail.getReason();
+                String trangThai = "Đang chờ"; 
+                if(returnOrderDetail.getReturnOrderDetailStatus() == ReturnOrderDetailStatus.DAMAGED) trangThai = "Xuất hủy";
+                if(returnOrderDetail.getReturnOrderDetailStatus() == ReturnOrderDetailStatus.RETURNED) trangThai = "Bán tiếp";
+                String fR = returnOrderDetail.getFinalReason();
+
+                if (productMap.containsKey(productId)) {
+                    // Nếu sản phẩm đã tồn tại trong Map, cộng dồn số lượng và tổng giá trị
+                    Object[] existingData = productMap.get(productId);
+                    existingData[3] = (int) existingData[3] + quantity; // Cộng dồn số lượng
+                    existingData[5] = (double) existingData[5] + lineTotal; // Cộng dồn tổng giá trị
+                } else {
+                    // Nếu sản phẩm chưa tồn tại trong Map, thêm mới vào Map
+                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, lineTotal, lyDoTra, trangThai, fR});
+                }
+            }
+
+            // Xóa dữ liệu cũ trong bảng
+            tableDetail.getModelTable().setRowCount(0);
+
+            // Thêm các sản phẩm đã cộng dồn vào bảng
+            for (Object[] productData : productMap.values()) {
+                productData[4] = FormatNumber.formatToVND((double) productData[4]);
+                productData[5] = FormatNumber.formatToVND((double) productData[5]);
+                tableDetail.getModelTable().addRow(productData);
+            }
+
+            modalReturnOrderDetail.setLocationRelativeTo(null);
+            modalReturnOrderDetail.setVisible(true);
+        }
+    }//GEN-LAST:event_btnViewActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnView;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JButton jButton2;
     private com.toedter.calendar.JDateChooser jDateFrom;
@@ -672,10 +785,13 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JDialog modalReturnOrderDetail;
     private javax.swing.JDialog modalReturnOrderView;
     private javax.swing.JComboBox<String> optionStatus;
     private javax.swing.JPanel pnAll;
     private javax.swing.JScrollPane scrollTable;
+    private javax.swing.JScrollPane scrollTableDetail;
     private javax.swing.JScrollPane scrollTableView;
     private javax.swing.JLabel txtEmp;
     private javax.swing.JTextField txtEmpName;

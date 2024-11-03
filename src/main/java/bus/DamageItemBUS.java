@@ -122,4 +122,8 @@ public class DamageItemBUS {
     public List<DamageItem> getByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID){
         return damageItemDAL.findByDateAndEmp(start, end, empID);
     }
+    
+    public DamageItem getByID(String Id) {
+        return damageItemDAL.findById(Id).orElseThrow(() -> new RuntimeException("Không tồn tại phiếu xuất hủy này"));
+    }
 }

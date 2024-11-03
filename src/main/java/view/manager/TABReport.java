@@ -5,8 +5,16 @@
 package view.manager;
 
 import bus.OrderBUS;
+import bus.PurchaseOrderBUS;
+import bus.ReturnOrderBUS;
+import bus.DamageItemBUS;
+import bus.OrderDetailBUS;
+import bus.PurchaseOrderDetailBUS;
+import bus.ReturnOrderDetailBUS;
+import bus.DamageItemDetailBUS;
 import bus.ReportBUS;
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import dto.Report;
 import java.util.Arrays;
@@ -15,14 +23,18 @@ import javax.swing.BorderFactory;
 import view.common.TableDesign;
 import entity.*;
 import enums.PaymentMethod;
+import enums.ReturnOrderDetailStatus;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
@@ -46,10 +58,26 @@ import view.login.LoadApplication;
 public class TABReport extends javax.swing.JPanel {
 
     private final ReportBUS reportBUS;
+    private final OrderBUS orderBUS;
+    private final PurchaseOrderBUS purchaseOrderBUS;
+    private final ReturnOrderBUS returnOrderBUS;
+    private final DamageItemBUS damageItemBUS;
+    private final OrderDetailBUS orderDetailBUS;
+    private final PurchaseOrderDetailBUS purchaseOrderDetailBUS;
+    private final ReturnOrderDetailBUS returnOrderDetailBUS;
+    private final DamageItemDetailBUS damageItemDetailBUS;
     private TableDesign tableDesign;
 
     public TABReport() {
         reportBUS = LoadApplication.reportBUS;
+        orderBUS = LoadApplication.orderBUS;
+        purchaseOrderBUS = LoadApplication.purchaseOrderBUS;
+        returnOrderBUS = LoadApplication.returnOrderBUS;
+        damageItemBUS = LoadApplication.damageItemBUS;
+        orderDetailBUS = LoadApplication.orderDetailBUS;
+        purchaseOrderDetailBUS = LoadApplication.purchaseOrderDetailBUS;
+        returnOrderDetailBUS = LoadApplication.returnOrderDetailBUS;
+        damageItemDetailBUS = LoadApplication.damageItemDetailBUS;
         initComponents();
         setUIManager();
         fillTable();
@@ -60,6 +88,7 @@ public class TABReport extends javax.swing.JPanel {
         UIManager.put("Button.arc", 10);
         jDateFrom.setDate(Date.valueOf(LocalDate.now()));
         jDateTo.setDate(Date.valueOf(LocalDate.now()));
+        btnView.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/View.svg")), 35, 35));
     }
 
     private void fillTable() {
@@ -127,6 +156,9 @@ public class TABReport extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        modalDetail = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        scrollTableDetail = new javax.swing.JScrollPane();
         pnAll = new javax.swing.JPanel();
         headerPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -136,6 +168,7 @@ public class TABReport extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtOrder = new javax.swing.JButton();
         comboboxType = new javax.swing.JComboBox<>();
+        btnView = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         scrollTable = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
@@ -175,6 +208,27 @@ public class TABReport extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 238, Short.MAX_VALUE)
+        );
+
+        modalDetail.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        modalDetail.setTitle("Chi tiết phiếu nhập hàng");
+        modalDetail.setMinimumSize(new java.awt.Dimension(1311, 700));
+        modalDetail.setModal(true);
+        modalDetail.setResizable(false);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel3.add(scrollTableDetail);
+
+        javax.swing.GroupLayout modalDetailLayout = new javax.swing.GroupLayout(modalDetail.getContentPane());
+        modalDetail.getContentPane().setLayout(modalDetailLayout);
+        modalDetailLayout.setHorizontalGroup(
+            modalDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        modalDetailLayout.setVerticalGroup(
+            modalDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setBackground(new java.awt.Color(204, 204, 0));
@@ -238,22 +292,39 @@ public class TABReport extends javax.swing.JPanel {
         comboboxType.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         comboboxType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Bán hàng", "Trả hàng", "Nhập hàng", "Xuất hủy" }));
 
+        btnView.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnView.setText("XEM CHI TIẾT");
+        btnView.setBorder(null);
+        btnView.setBorderPainted(false);
+        btnView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnView.setFocusPainted(false);
+        btnView.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnView.setPreferredSize(new java.awt.Dimension(100, 90));
+        btnView.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(58, 58, 58)
+                .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addGap(34, 34, 34)
                 .addComponent(comboboxType, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(91, 91, 91)
+                .addGap(62, 62, 62)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGap(172, 172, 172)
                 .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -261,17 +332,23 @@ public class TABReport extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(comboboxType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGap(39, 39, 39))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         headerPanel.add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -406,7 +483,7 @@ public class TABReport extends javax.swing.JPanel {
                                         .addComponent(jLabel8)
                                         .addGap(18, 18, 18)
                                         .addComponent(purchasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel17)
@@ -622,9 +699,202 @@ public class TABReport extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtOrderActionPerformed
 
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        JTable table = tableDesign.getTable();
+        int selectedRow = table.getSelectedRow();
+        if(selectedRow < 0) {
+            MessageDialog.warning(null, "Hãy chọn phiếu cần xem chi tiết!");
+            return;
+        }
+        String loaiPhieu = (String) table.getValueAt(selectedRow, 2);
+        String maPhieu = (String) table.getValueAt(selectedRow, 0);
+
+        if(loaiPhieu.equalsIgnoreCase("Bán hàng")) {
+            String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Đơn giá", "Khuyến mãi", "Tổng giá trị"};
+            List<Integer> tableWidths = Arrays.asList(170, 200, 150, 150, 200, 170, 150);
+            TableDesign tableDetail = new TableDesign(headers, tableWidths);
+            scrollTableDetail.setViewportView(tableDetail.getTable());
+            scrollTableDetail.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
+
+            Order o = orderBUS.findById(maPhieu);
+            List<OrderDetail> orderDetails = orderDetailBUS.getListOrderDetailByOrder(o);
+
+            // Sử dụng Map để cộng dồn các sản phẩm cùng mã
+            Map<String, Object[]> productMap = new HashMap<>();
+
+            for (OrderDetail orderDetail : orderDetails) {
+                String productId = orderDetail.getBatch().getProduct().getProductId();
+                String productName = orderDetail.getBatch().getProduct().getName();
+                String unitName = orderDetail.getBatch().getProduct().getUnit().getName();
+                int quantity = orderDetail.getQuantity();
+                double price = orderDetail.getPrice()*1.1;
+                String km = ((int)orderDetail.getDiscount()*100) +"%";
+                double lineTotal = orderDetail.getLineTotal();
+
+                if (productMap.containsKey(productId)) {
+                    // Nếu sản phẩm đã tồn tại trong Map, cộng dồn số lượng và tổng giá trị
+                    Object[] existingData = productMap.get(productId);
+                    existingData[3] = (int) existingData[3] + quantity; // Cộng dồn số lượng
+                    existingData[6] = (double) existingData[6] + lineTotal; // Cộng dồn tổng giá trị
+                } else {
+                    // Nếu sản phẩm chưa tồn tại trong Map, thêm mới vào Map
+                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, km, lineTotal});
+                }
+            }
+
+            // Xóa dữ liệu cũ trong bảng
+            tableDetail.getModelTable().setRowCount(0);
+
+            // Thêm các sản phẩm đã cộng dồn vào bảng
+            for (Object[] productData : productMap.values()) {
+                productData[4] = FormatNumber.formatToVND((double) productData[4]);
+                productData[6] = FormatNumber.formatToVND((double) productData[6]);
+                tableDetail.getModelTable().addRow(productData);
+            }
+        }
+
+        if(loaiPhieu.equalsIgnoreCase("Trả hàng")) {
+            String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng trả", "Đơn giá", "Tổng giá trị", "Lý do trả", "Trạng thái", "Lý do nhập lại/hủy"};
+            List<Integer> tableWidths = Arrays.asList(150, 200, 120, 120, 200, 200, 200, 150, 200);
+            TableDesign tableDetail = new TableDesign(headers, tableWidths);
+            scrollTableDetail.setViewportView(tableDetail.getTable());
+            scrollTableDetail.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
+
+            ReturnOrder ro = returnOrderBUS.findById(maPhieu);
+            List<ReturnOrderDetail> returnOrderDetails = returnOrderDetailBUS.getListReturnOrderDetailsByReturnOrder(ro);
+
+            // Sử dụng Map để cộng dồn các sản phẩm cùng mã
+            Map<String, Object[]> productMap = new HashMap<>();
+
+            for (ReturnOrderDetail returnOrderDetail : returnOrderDetails) {
+                String productId = returnOrderDetail.getProduct().getProductId();
+                String productName = returnOrderDetail.getProduct().getName();
+                String unitName = returnOrderDetail.getProduct().getUnit().getName();
+                int quantity = returnOrderDetail.getQuantity();
+                double price = returnOrderDetail.getPrice()*1.1;
+                double lineTotal = returnOrderDetail.getLineTotal();
+                String lyDoTra = returnOrderDetail.getReason();
+                String trangThai = "Đang chờ";
+                if(returnOrderDetail.getReturnOrderDetailStatus() == ReturnOrderDetailStatus.DAMAGED) trangThai = "Xuất hủy";
+                if(returnOrderDetail.getReturnOrderDetailStatus() == ReturnOrderDetailStatus.RETURNED) trangThai = "Bán tiếp";
+                String fR = returnOrderDetail.getFinalReason();
+
+                if (productMap.containsKey(productId)) {
+                    // Nếu sản phẩm đã tồn tại trong Map, cộng dồn số lượng và tổng giá trị
+                    Object[] existingData = productMap.get(productId);
+                    existingData[3] = (int) existingData[3] + quantity; // Cộng dồn số lượng
+                    existingData[5] = (double) existingData[5] + lineTotal; // Cộng dồn tổng giá trị
+                } else {
+                    // Nếu sản phẩm chưa tồn tại trong Map, thêm mới vào Map
+                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, lineTotal, lyDoTra, trangThai, fR});
+                }
+            }
+
+            // Xóa dữ liệu cũ trong bảng
+            tableDetail.getModelTable().setRowCount(0);
+
+            // Thêm các sản phẩm đã cộng dồn vào bảng
+            for (Object[] productData : productMap.values()) {
+                productData[4] = FormatNumber.formatToVND((double) productData[4]);
+                productData[5] = FormatNumber.formatToVND((double) productData[5]);
+                tableDetail.getModelTable().addRow(productData);
+            }
+        }
+
+        if(loaiPhieu.equalsIgnoreCase("Nhập hàng")) {
+            String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá nhập", "Tổng giá trị"};
+            List<Integer> tableWidths = Arrays.asList(150, 200, 120, 120, 200, 200);
+            TableDesign tableDetail = new TableDesign(headers, tableWidths);
+            scrollTableDetail.setViewportView(tableDetail.getTable());
+            scrollTableDetail.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
+
+            PurchaseOrder po = purchaseOrderBUS.getByID(maPhieu);
+            List<PurchaseOrderDetail> purchaseOrderDetails = purchaseOrderDetailBUS.getListPurchaseOrderDetailsByPurchaseOrder(po);
+
+            // Sử dụng Map để cộng dồn các sản phẩm cùng mã
+            Map<String, Object[]> productMap = new HashMap<>();
+
+            for (PurchaseOrderDetail purchaseOrderDetail : purchaseOrderDetails) {
+                String productId = purchaseOrderDetail.getBatch().getProduct().getProductId();
+                String productName = purchaseOrderDetail.getBatch().getProduct().getName();
+                String unitName = purchaseOrderDetail.getBatch().getProduct().getUnit().getName();
+                int quantity = purchaseOrderDetail.getQuantity();
+                double price = purchaseOrderDetail.getPrice()*1.1;
+                double lineTotal = purchaseOrderDetail.getLineTotal();
+
+                if (productMap.containsKey(productId)) {
+                    // Nếu sản phẩm đã tồn tại trong Map, cộng dồn số lượng và tổng giá trị
+                    Object[] existingData = productMap.get(productId);
+                    existingData[3] = (int) existingData[3] + quantity; // Cộng dồn số lượng
+                    existingData[5] = (double) existingData[5] + lineTotal; // Cộng dồn tổng giá trị
+                } else {
+                    // Nếu sản phẩm chưa tồn tại trong Map, thêm mới vào Map
+                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, lineTotal});
+                }
+            }
+
+            // Xóa dữ liệu cũ trong bảng
+            tableDetail.getModelTable().setRowCount(0);
+
+            // Thêm các sản phẩm đã cộng dồn vào bảng
+            for (Object[] productData : productMap.values()) {
+                productData[4] = FormatNumber.formatToVND((double) productData[4]);
+                productData[5] = FormatNumber.formatToVND((double) productData[5]);
+                tableDetail.getModelTable().addRow(productData);
+            }
+        }
+
+        if(loaiPhieu.equalsIgnoreCase("Xuất hủy")) {
+            String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá nhập", "Tổng giá trị hủy"};
+            List<Integer> tableWidths = Arrays.asList(150, 200, 120, 120, 200, 200);
+            TableDesign tableDetail = new TableDesign(headers, tableWidths);
+            scrollTableDetail.setViewportView(tableDetail.getTable());
+            scrollTableDetail.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
+
+            DamageItem d = damageItemBUS.getByID(maPhieu);
+            List<DamageItemDetail> damageItemDetails = damageItemDetailBUS.getListDamageItemDetailByDamageItem(d);
+
+            // Sử dụng Map để cộng dồn các sản phẩm cùng mã
+            Map<String, Object[]> productMap = new HashMap<>();
+
+            for (DamageItemDetail damageItemDetail : damageItemDetails) {
+                String productId = damageItemDetail.getBatch().getProduct().getProductId();
+                String productName = damageItemDetail.getBatch().getProduct().getName();
+                String unitName = damageItemDetail.getBatch().getProduct().getUnit().getName();
+                int quantity = damageItemDetail.getQuantity();
+                double price = damageItemDetail.getPrice()*1.1;
+                double lineTotal = damageItemDetail.getLineTotal();
+
+                if (productMap.containsKey(productId)) {
+                    // Nếu sản phẩm đã tồn tại trong Map, cộng dồn số lượng và tổng giá trị
+                    Object[] existingData = productMap.get(productId);
+                    existingData[3] = (int) existingData[3] + quantity; // Cộng dồn số lượng
+                    existingData[5] = (double) existingData[5] + lineTotal; // Cộng dồn tổng giá trị
+                } else {
+                    // Nếu sản phẩm chưa tồn tại trong Map, thêm mới vào Map
+                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, lineTotal});
+                }
+            }
+
+            // Xóa dữ liệu cũ trong bảng
+            tableDetail.getModelTable().setRowCount(0);
+
+            // Thêm các sản phẩm đã cộng dồn vào bảng
+            for (Object[] productData : productMap.values()) {
+                productData[4] = FormatNumber.formatToVND((double) productData[4]);
+                productData[5] = FormatNumber.formatToVND((double) productData[5]);
+                tableDetail.getModelTable().addRow(productData);
+            }
+        }
+
+        modalDetail.setLocationRelativeTo(null);
+        modalDetail.setVisible(true);
+    }//GEN-LAST:event_btnViewActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnView;
     private javax.swing.JComboBox<String> comboboxType;
     private javax.swing.JLabel damagePrice;
     private javax.swing.JLabel damageQty;
@@ -651,8 +921,10 @@ public class TABReport extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JDialog modalDetail;
     private javax.swing.JLabel orderPrice;
     private javax.swing.JLabel orderQty;
     private javax.swing.JPanel pnAll;
@@ -662,6 +934,7 @@ public class TABReport extends javax.swing.JPanel {
     private javax.swing.JLabel returnPrice;
     private javax.swing.JLabel returnQty;
     private javax.swing.JScrollPane scrollTable;
+    private javax.swing.JScrollPane scrollTableDetail;
     private javax.swing.JButton txtOrder;
     // End of variables declaration//GEN-END:variables
 

@@ -10,6 +10,7 @@ import jakarta.persistence.EntityManager;
 import entity.ReturnOrderDetail;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import java.util.List;
 
 /**
  *
@@ -44,5 +45,12 @@ public class ReturnOrderDetailDAL {
         catch(NoResultException e){
             return null;
         }
+    }
+    
+    public List<ReturnOrderDetail> getListReturnOrderDetailsByReturnOrder(ReturnOrder returnOrder) {
+        TypedQuery<ReturnOrderDetail> query
+                = entityManager.createQuery("select rod from ReturnOrderDetail rod where rod.returnOrder = ?1 ", ReturnOrderDetail.class);
+        query.setParameter(1, returnOrder);
+        return query.getResultList();
     }
 }

@@ -37,7 +37,6 @@ import util.MessageDialog;
 public class PnPurchaseOrderDetail extends javax.swing.JPanel {
 
     private Product product;
-//    private List<UnitDetail> unitDetails;
     private List<Batch> batchs;
     private TABPurchase tabPurchase;
 
@@ -45,71 +44,42 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         initComponents();
     }
 
-//    public PnPurchaseOrderDetail(Product product, List<UnitDetail> unitDetails, List<Batch> batchs,
-//            TABPurchase tabPurchase) {
-//        this.unitDetails = unitDetails;
-//        this.batchs = batchs;
-//        this.product = product;
-//        this.tabPurchase = tabPurchase;
-//        initComponents();
-//        customUI();
-//        fillFirst();
-//    }
+    public PnPurchaseOrderDetail(Product product, List<Batch> batchs, TABPurchase tabPurchase) {
+        this.batchs = batchs;
+        this.product = product;
+        this.tabPurchase = tabPurchase;
+        initComponents();
+        customUI();
+        fillFirst();
+    }
 
     public Product getProduct() {
         return product;
     }
 
-//    public UnitDetail getSelectedUnitDetail() {
-//        return (UnitDetail) comboChonDvt.getSelectedItem();
-//    }
-//
-//    public int getSoLuong() {
-//        return (int) spinnerSoLuong.getValue();
-//    }
-//
-//    public void setUnitDetails(List<UnitDetail> unitDetails) {
-//        this.unitDetails = unitDetails;
-//    }
-//
-//    public List<UnitDetail> getUnitDetails() {
-//        return unitDetails;
-//    }
-//
-//    public JComboBox<UnitDetail> getComboChonDvt() {
-//        return comboChonDvt;
-//    }
+    public int getSoLuong() {
+        return (int) spinnerSoLuong.getValue();
+    }
 
     private void customUI() {
         txtNameNewBatch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập tên lô mới");
     }
 
-//    private void fillFirst() {
-//        // fill unit
-//        comboChonDvt.removeAllItems();
-//
-//        for (UnitDetail unitDetail : unitDetails) {
-//            comboChonDvt.addItem(unitDetail);
-//        }
-//
-//        txtTenSP.setText(product.getName());
-//        pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
-//                + product.getImage())), 82, 82));
-//        spinnerSoLuong.setValue(0);
-//        UnitDetail unitDetail = getSelectedUnitDetail();
-//        txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * product.getPurchasePriceVAT()));
-//        int value = (Integer) spinnerSoLuong.getValue();
-//        txtTongTien.setText(FormatNumber.formatToVND(product.getPurchasePriceVAT() * value));
-//    }
-//
-//    public void fillQuantity(int quantity) {
-//        spinnerSoLuong.setValue(quantity);
-//    }
-//
-//    public void updateUnitDetails(UnitDetail unitDetailTmp) {
-//        unitDetails.remove(unitDetailTmp);
-//        comboChonDvt.removeItem(unitDetailTmp);
-//    }
+    private void fillFirst() {
+        txtTenSP.setText(product.getName());
+        pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
+                + product.getImage())), 82, 82));
+        txtDVT.setText(product.getUnit().getName());
+        spinnerSoLuong.setValue(0);
+
+        txtDonGia.setText(FormatNumber.formatToVND(product.getPurchasePriceVAT()));
+        int value = (Integer) spinnerSoLuong.getValue();
+        txtTongTien.setText(FormatNumber.formatToVND(product.getPurchasePriceVAT() * value));
+    }
+
+    public void fillQuantity(int quantity) {
+        spinnerSoLuong.setValue(quantity);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -139,6 +109,7 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         pnHinh = new javax.swing.JLabel();
         pnListBatch = new javax.swing.JPanel();
         btnChonLo = new javax.swing.JButton();
+        txtDVT = new javax.swing.JLabel();
 
         dialogChonLo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dialogChonLo.setTitle("Chọn Lô");
@@ -340,6 +311,10 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
             }
         });
 
+        txtDVT.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtDVT.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        txtDVT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -357,7 +332,9 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(145, 145, 145)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDVT, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
                         .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -372,16 +349,18 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtDVT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,63 +378,57 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-//    public Double getLineTotal() {
-//        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-//        if (unitDetail != null) {
-//            int quantity = (Integer) spinnerSoLuong.getValue();
-//            return unitDetail.getConversionRate() * quantity * product.getPurchasePriceVAT();
-//        }
-//        return 0.0;
-//    }
-//
-//    public void setLineTotal() {
-//        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-//        int quantity = (int) spinnerSoLuong.getValue();
-//        txtDonGia.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * product.getPurchasePriceVAT()));
-//        txtTongTien.setText(FormatNumber.formatToVND(unitDetail.getConversionRate() * quantity * product.getPurchasePriceVAT()));
-//    }
-//
-//    private void fillBatch() {
-//        pnChuaLo.removeAll();
-//        for (Batch batch : batchs) {
-//            UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-//            PnChonLoNhap chonLo = new PnChonLoNhap(batch, unitDetail);
-//            chonLo.setAlignmentX(Component.LEFT_ALIGNMENT);
-//
-//            JSpinner spinnerModal = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
-//            spinnerModal.setFont(new Font("Arial", Font.PLAIN, 16));
-//            Dimension spinnerSize = new Dimension(80, 50); // Chiều rộng 80, chiều cao 30
-//            spinnerModal.setPreferredSize(spinnerSize);
-//            spinnerModal.setEnabled(false);
-//
-//            JPanel panelContainer = new JPanel();
-//            panelContainer.setBackground(Color.white);
-//            panelContainer.setLayout(new FlowLayout(FlowLayout.LEFT));
-//
-//            panelContainer.add(chonLo);
-//            panelContainer.add(Box.createRigidArea(new Dimension(20, 0)));
-//            panelContainer.add(spinnerModal);
-//
-//            pnChuaLo.add(panelContainer);
-//
-//            for (Component component : pnListBatch.getComponents()) {
-//                if (component instanceof PnPurchaseSelectBatch) {
-//                    PnPurchaseSelectBatch pnPurchaseSelectBatch = (PnPurchaseSelectBatch) component;
-//                    if (chonLo.getBatch().getName().equals(pnPurchaseSelectBatch.getBatchDTO().getName())) {
-//                        chonLo.getBtnTenLo().setEnabled(false);
-//                    }
-//                }
-//            }
-//        }
-//    }
+    public Double getLineTotal() {
+        int quantity = (Integer) spinnerSoLuong.getValue();
+        return quantity * product.getPurchasePriceVAT();
+    }
+
+    public void setLineTotal() {
+        int quantity = (int) spinnerSoLuong.getValue();
+        txtDonGia.setText(FormatNumber.formatToVND(product.getPurchasePriceVAT()));
+        txtTongTien.setText(FormatNumber.formatToVND(quantity * product.getPurchasePriceVAT()));
+    }
+
+    private void fillBatch() {
+        pnChuaLo.removeAll();
+        for (Batch batch : batchs) {
+            PnChonLoNhap chonLo = new PnChonLoNhap(batch);
+            chonLo.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            JSpinner spinnerModal = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
+            spinnerModal.setFont(new Font("Arial", Font.PLAIN, 16));
+            Dimension spinnerSize = new Dimension(80, 50); // Chiều rộng 80, chiều cao 30
+            spinnerModal.setPreferredSize(spinnerSize);
+            spinnerModal.setEnabled(false);
+
+            JPanel panelContainer = new JPanel();
+            panelContainer.setBackground(Color.white);
+            panelContainer.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+            panelContainer.add(chonLo);
+            panelContainer.add(Box.createRigidArea(new Dimension(20, 0)));
+            panelContainer.add(spinnerModal);
+
+            pnChuaLo.add(panelContainer);
+
+            for (Component component : pnListBatch.getComponents()) {
+                if (component instanceof PnPurchaseSelectBatch) {
+                    PnPurchaseSelectBatch pnPurchaseSelectBatch = (PnPurchaseSelectBatch) component;
+                    if (chonLo.getBatch().getName().equals(pnPurchaseSelectBatch.getBatchDTO().getName())) {
+                        chonLo.getBtnTenLo().setEnabled(false);
+                    }
+                }
+            }
+        }
+    }
 
     private void spinnerSoLuongStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerSoLuongStateChanged
-//        setLineTotal();
-//        tabPurchase.changeTongTienHoaDon();
+        setLineTotal();
+        tabPurchase.changeTongTienHoaDon();
     }//GEN-LAST:event_spinnerSoLuongStateChanged
 
     private void btnChonLoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonLoActionPerformed
-//        fillBatch();
+        fillBatch();
         txtTimLo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên lô, hạn sử dụng");
 
         dialogChonLo.setVisible(true);
@@ -483,45 +456,33 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
     }
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
-//        List<BatchDTO> batchDTOs = getSelectedBatchDTO();
-//        UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-//        for (BatchDTO batchDTO : batchDTOs) {
-//            pnListBatch.add(new PnPurchaseSelectBatch(batchDTO, unitDetail, spinnerSoLuong));
-//        }
-//        pnListBatch.revalidate();
-//        pnListBatch.repaint();
-//        dialogChonLo.dispose();
-//
-//        int value = 0;
-//        for (Component component : pnListBatch.getComponents()) {
-//            if (component instanceof PnPurchaseSelectBatch) {
-//                PnPurchaseSelectBatch pnPurchaseSelectBatch = (PnPurchaseSelectBatch) component;
-//                value += pnPurchaseSelectBatch.getBatchDTO().getQuantity();
-//            }
-//        }
-//        spinnerSoLuong.setValue(value);
+        List<BatchDTO> batchDTOs = getSelectedBatchDTO();
+
+        for (BatchDTO batchDTO : batchDTOs) {
+            pnListBatch.add(new PnPurchaseSelectBatch(batchDTO, spinnerSoLuong));
+        }
+        pnListBatch.revalidate();
+        pnListBatch.repaint();
+        dialogChonLo.dispose();
+
+        int value = 0;
+        for (Component component : pnListBatch.getComponents()) {
+            if (component instanceof PnPurchaseSelectBatch) {
+                PnPurchaseSelectBatch pnPurchaseSelectBatch = (PnPurchaseSelectBatch) component;
+                value += pnPurchaseSelectBatch.getBatchDTO().getQuantity();
+            }
+        }
+        spinnerSoLuong.setValue(value);
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void btnXoaPurchaseOderDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaPurchaseOderDetailMouseClicked
-        // TODO add your handling code here:
-//        Container parent = this.getParent();
-//        if (parent != null) {
-//            parent.remove(this);
-//            UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-//            for (Component component : parent.getComponents()) {
-//                if (component instanceof PnPurchaseOrderDetail pnPurchaseOrderDetail) {
-//                    if (pnPurchaseOrderDetail.getProduct().equals(product)) {
-//                        List<UnitDetail> details = pnPurchaseOrderDetail.getUnitDetails();
-//                        details.add(unitDetail);
-//                        pnPurchaseOrderDetail.setUnitDetails(details);
-//                        pnPurchaseOrderDetail.getComboChonDvt().addItem(unitDetail);
-//                    }
-//                }
-//            }
-//            parent.revalidate();
-//            parent.repaint();
-//        }
-//        tabPurchase.changeTongTienHoaDon();
+        Container parent = this.getParent();
+        if (parent != null) {
+            parent.remove(this);
+            parent.revalidate();
+            parent.repaint();
+        }
+        tabPurchase.changeTongTienHoaDon();
     }//GEN-LAST:event_btnXoaPurchaseOderDetailMouseClicked
 
     private void txtTimLoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimLoActionPerformed
@@ -529,48 +490,47 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTimLoActionPerformed
 
     private void btnConfirmCreateNewBatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmCreateNewBatchActionPerformed
-//        String nameNewBatch = txtNameNewBatch.getText().trim();
-//        try {
-//            spinnerQuantityNewBatch.commitEdit();
-//        } catch (ParseException ex) {
-//            return;
-//        }
-//
-//        if (nameNewBatch.equals("")) {
-//            MessageDialog.error(null, "Tên lô mới không được rỗng!");
-//            return;
-//        }
-//        int stockNewBatch = (int) spinnerQuantityNewBatch.getValue();
-//        int quantityNewBatch = stockNewBatch;
-//        try {
-//            Date date = ExperationDateNewBatch.getDate();
-//            LocalDate expDateNewBatch = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//            if (!(expDateNewBatch.isAfter(LocalDate.now()))) {
-//                MessageDialog.error(null, "Ngày hết hạn phải sau ngày hiện tại!");
-//                return;
-//            }
-//            BatchDTO b = new BatchDTO(nameNewBatch, stockNewBatch, expDateNewBatch, quantityNewBatch);
-//            UnitDetail unitDetail = (UnitDetail) comboChonDvt.getSelectedItem();
-//
-//            pnListBatch.add(new PnPurchaseSelectBatch(b, unitDetail, spinnerSoLuong));
-//            pnListBatch.revalidate();
-//            pnListBatch.repaint();
-//            txtNameNewBatch.setText("");
-//            ExperationDateNewBatch.setDate(null);
-//            spinnerQuantityNewBatch.setValue(1);
-//            dialogChonLo.dispose();
-//        } catch (Exception e) {
-//            MessageDialog.error(null, "Ngày hết hạn không hợp lệ!");
-//        }
-//
-//        int value = 0;
-//        for (Component component : pnListBatch.getComponents()) {
-//            if (component instanceof PnPurchaseSelectBatch) {
-//                PnPurchaseSelectBatch pnPurchaseSelectBatch = (PnPurchaseSelectBatch) component;
-//                value += pnPurchaseSelectBatch.getBatchDTO().getQuantity();
-//            }
-//        }
-//        spinnerSoLuong.setValue(value);
+        String nameNewBatch = txtNameNewBatch.getText().trim();
+        try {
+            spinnerQuantityNewBatch.commitEdit();
+        } catch (ParseException ex) {
+            return;
+        }
+
+        if (nameNewBatch.equals("")) {
+            MessageDialog.error(null, "Tên lô mới không được rỗng!");
+            return;
+        }
+        int stockNewBatch = (int) spinnerQuantityNewBatch.getValue();
+        int quantityNewBatch = stockNewBatch;
+        try {
+            Date date = ExperationDateNewBatch.getDate();
+            LocalDate expDateNewBatch = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (!(expDateNewBatch.isAfter(LocalDate.now()))) {
+                MessageDialog.error(null, "Ngày hết hạn phải sau ngày hiện tại!");
+                return;
+            }
+            BatchDTO b = new BatchDTO(nameNewBatch, stockNewBatch, expDateNewBatch, quantityNewBatch);
+
+            pnListBatch.add(new PnPurchaseSelectBatch(b, spinnerSoLuong));
+            pnListBatch.revalidate();
+            pnListBatch.repaint();
+            txtNameNewBatch.setText("");
+            ExperationDateNewBatch.setDate(null);
+            spinnerQuantityNewBatch.setValue(1);
+            dialogChonLo.dispose();
+        } catch (Exception e) {
+            MessageDialog.error(null, "Ngày hết hạn không hợp lệ!");
+        }
+
+        int value = 0;
+        for (Component component : pnListBatch.getComponents()) {
+            if (component instanceof PnPurchaseSelectBatch) {
+                PnPurchaseSelectBatch pnPurchaseSelectBatch = (PnPurchaseSelectBatch) component;
+                value += pnPurchaseSelectBatch.getBatchDTO().getQuantity();
+            }
+        }
+        spinnerSoLuong.setValue(value);
     }//GEN-LAST:event_btnConfirmCreateNewBatchActionPerformed
 
     public List<BatchDTO> getSelectedBatchDTO() {
@@ -623,6 +583,7 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JSpinner spinnerQuantityNewBatch;
     private javax.swing.JSpinner spinnerSoLuong;
+    private javax.swing.JLabel txtDVT;
     private javax.swing.JLabel txtDonGia;
     private javax.swing.JTextField txtNameNewBatch;
     private javax.swing.JLabel txtTenSP;
