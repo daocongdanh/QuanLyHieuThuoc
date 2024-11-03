@@ -5,6 +5,7 @@
 package util;
 
 import dal.ProductPromotionDetailDAL;
+import entity.Account;
 import entity.ProductPromotionDetail;
 import entity.Promotion;
 import jakarta.persistence.EntityManager;
@@ -93,6 +94,25 @@ public class MailTemplate {
                 + "      </div>\n"
                 + "    </div>\n"
                 + "  </div>";
+        return html;
+    }
+    
+        public String mailPassword(Account acc) {
+        String html = "";
+
+        html += "<div marginwidth=\"0\" marginheight=\"0\"\n"
+                + "    style=\"font-size:16px;line-height:24px!important;font-family:arial;background:#D2ECF5;padding:50px; color: #606060;\">\n"
+                + "    <div style=\"max-width: 600px; margin: auto; margin-left: auto;\">\n"
+                + "      <img src=\"https://cdnv2.tgdd.vn/mwg-static/ankhang/News/Thumb/1571386/25-10-31-10-elevit-dong-san-pham-cho-me-bau-giam-10-phan-tram-thumb638652897710923812.jpg\" alt=\"\"\n"
+                + "        style=\"width: 100%; height: 300px; object-fit: cover;\">\n"
+                + "      <div style=\"background-color: #ffffff; padding: 20px; margin-top: -5px;\">\n"
+                + "        <p>Tuyệt đối không cung cấp mật khẩu cho ngưởi khác, tránh bị kẻ gian lợi dụng!</p>\n"
+                + "        <p>Mật khẩu của bạn là: <b>" +acc.getPassword() + "</b></p>\n"
+                + "        <p>Nhà Thuốc Tây Á</p>\n"
+                + "      </div>\n"
+                + "    </div>\n"
+                + "  </div>";
+
         return html;
     }
 }
