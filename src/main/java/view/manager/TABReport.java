@@ -754,7 +754,8 @@ public class TABReport extends javax.swing.JPanel {
         }
 
         if(loaiPhieu.equalsIgnoreCase("Trả hàng")) {
-            String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng trả", "Đơn giá", "Tổng giá trị", "Lý do trả", "Trạng thái", "Lý do nhập lại/hủy"};
+            String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng trả", "Đơn giá", "Tổng giá trị", "Lý do trả"
+                    , "Trạng thái", "Lý do nhập lại/hủy"};
             List<Integer> tableWidths = Arrays.asList(150, 200, 120, 120, 200, 200, 200, 150, 200);
             TableDesign tableDetail = new TableDesign(headers, tableWidths);
             scrollTableDetail.setViewportView(tableDetail.getTable());
