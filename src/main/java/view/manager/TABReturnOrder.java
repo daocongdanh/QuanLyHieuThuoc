@@ -82,11 +82,11 @@ public class TABReturnOrder extends javax.swing.JPanel {
     }
 
     private void fillTableModal() {
-        String[] headers = {"Mã hàng", "Tên hàng", "Đơn vị tính", "Số lượng", "Giá trả hàng","Lý do trả", "Thao tác"};
-        List<Integer> tableWidths = Arrays.asList(100, 200, 100 , 70, 140,200, 130);
-        tableDesignView = new TableDesign(headers, tableWidths, List.of(false, false,false, false,false , false, true));
+        String[] headers = {"Mã hàng", "Tên hàng", "Đơn vị tính", "Số lượng", "Giá trả hàng","Lý do trả", "Lý do xử lý" ,"Thao tác"};
+        List<Integer> tableWidths = Arrays.asList(85, 200, 70 , 70, 140,200,200, 130);
+        tableDesignView = new TableDesign(headers, tableWidths, List.of(false, false,false, false, false,false , true, true));
         scrollTableView.setViewportView(tableDesignView.getTable());
-        scrollTableView.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
+        scrollTableView.setBorder(BorderFactory.createEmptyBorder(15, 10, 20, 10));
         tableDesignView.setTableHeaderFontSize(14);
     }
 
@@ -104,6 +104,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                         returnOrderDetail.getQuantity(),
                         FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
                         returnOrderDetail.getReason(),
+                        returnOrderDetail.getFinalReason(),
                         null
                 });
             } else if ( returnOrderDetail.getReturnOrderDetailStatus().equals(ReturnOrderDetailStatus.RETURNED)){
@@ -114,6 +115,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                         returnOrderDetail.getQuantity(),
                         FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
                         returnOrderDetail.getReason(),
+                        returnOrderDetail.getFinalReason(),
                         "Đã Thêm Lại"
                 });
             }
@@ -125,6 +127,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                         returnOrderDetail.getQuantity(),
                         FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
                         returnOrderDetail.getReason(),
+                        returnOrderDetail.getFinalReason(),
                         "Đã Xuất Hủy"
                 });
             }
@@ -143,6 +146,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 if ( MessageDialog.confirm(null, "Bạn muốn thêm lại sản phẩm " + productName + " vào hệ thống", "Xác nhận") ){
                     ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndProductId(returnOrderId,productId);
                     returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.RETURNED);
+                    returnOrderDetail.setFinalReason((String) table.getValueAt(row,6));
                     if ( returnOrderDetailBUS.updateReturnOrderDetailToReturn(returnOrderDetail) ){
                         MessageDialog.info(null, "Sản phẩm đã thêm lại hệ thống.");
                         fillModal(returnOrderBUS.findById(txtReturnOrderId.getText().trim()));
@@ -162,7 +166,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 String productName = (String) table.getValueAt(row,1);
                 if ( MessageDialog.confirm(null, "Bạn muốn loại bỏ sản phẩm " + productName, "Xác nhận") ){
                     ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndProductId(returnOrderId,productId);
-                    returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.DAMAGED);
+                    returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.PENDING_DAMAGED);
+                    returnOrderDetail.setFinalReason((String) table.getValueAt(row,6));
                     if ( returnOrderDetailBUS.updateReturnOrderDetailToDamage(returnOrderDetail) ){
                         MessageDialog.info(null, "Sản phẩm loại bỏ.");
                         fillModal(returnOrderBUS.findById(txtReturnOrderId.getText().trim()));
@@ -178,7 +183,6 @@ public class TABReturnOrder extends javax.swing.JPanel {
 //            Object value = table.getValueAt(row, table.getColumnCount() - 1);
                 table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderReturnManage());
                 table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorReturnManage(event));
-
         }
         table.revalidate();
         table.repaint();

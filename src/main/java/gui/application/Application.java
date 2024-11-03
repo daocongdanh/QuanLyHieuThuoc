@@ -10,8 +10,8 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
+
 import view.login.LoginForm;
 import gui.application.form.MainForm;
 import view.login.LoadApplication;
@@ -24,29 +24,19 @@ public class Application extends javax.swing.JFrame {
 
     public static Application app;
     private final MainForm mainForm;
-    
-    public Application( int type ) {
+
+    public Application(int type) {
         initComponents();
-        setSize(new Dimension(1366, 768));
         setLocationRelativeTo(null);
         mainForm = new MainForm(type);
         setContentPane(mainForm);
         getRootPane().putClientProperty(FlatClientProperties.FULL_WINDOW_CONTENT, true);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     public static void showForm(Component component) {
         component.applyComponentOrientation(app.getComponentOrientation());
         app.mainForm.showForm(component);
-    }
-
-    public static void login() {
-        FlatAnimatedLafChange.showSnapshot();
-        app.setContentPane(app.mainForm);
-        app.mainForm.applyComponentOrientation(app.getComponentOrientation());
-        setSelectedMenu(0, 0);
-        app.mainForm.hideMenu();
-        SwingUtilities.updateComponentTreeUI(app.mainForm);
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
     public static void logout() {

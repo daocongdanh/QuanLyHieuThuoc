@@ -21,6 +21,7 @@ import gui.application.form.other.FormInbox;
 import gui.application.form.other.FormRead;
 import gui.menu.Menu;
 import gui.menu.MenuAction;
+import javax.swing.JFrame;
 import view.manager.*;
 import view.staff.TABIndividualReport;
 import view.staff.TABPurchase;
@@ -35,10 +36,11 @@ public class MainForm extends JLayeredPane {
 
     //1 quan ly, 2 nhan vien
     private int type;
-    
+
     public MainForm(int type) {
         this.type = type;
         init();
+
     }
 
     private void init() {
@@ -79,7 +81,7 @@ public class MainForm extends JLayeredPane {
     private void initMenuEvent() {
         menu.addMenuEvent((int index, int subIndex, MenuAction action) -> {
             // Application.mainForm.showForm(new DefaultForm("Form : " + index + " " + subIndex));
-            if ( type == 1 ){
+            if (type == 1) {
                 if (index == 0) {
                     Application.showForm(new TABStats());
                 } else if (index == 1) {
@@ -100,17 +102,16 @@ public class MainForm extends JLayeredPane {
                     Application.showForm(new TABReturnOrder());
                 } else if (index == 9) {
                     Application.showForm(new TABDamageItem());
-                }else if (index == 10) {
+                } else if (index == 10) {
                     Application.showForm(new TABOrder());
                 } else if (index == 11) {
                     Application.showForm(new TABPromotion());
-                }else if (index == 12) {
+                } else if (index == 12) {
                     Application.logout();
-                }   else {
+                } else {
                     action.cancel();
                 }
-            }
-            else if ( type == 2 ){
+            } else if (type == 2) {
                 if (index == 20) {
                     Application.showForm(new TABSell());
                 } else if (index == 21) {
@@ -127,9 +128,9 @@ public class MainForm extends JLayeredPane {
                     Application.showForm(new TabDamageItem());
                 } else if (index == 27) {
                     Application.showForm(new TABIndividualReport());
-                }else if (index == 28) {
+                } else if (index == 28) {
                     Application.logout();
-                }   else {
+                } else {
                     action.cancel();
                 }
             }

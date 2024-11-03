@@ -20,6 +20,8 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import util.CurrentEmployee;
+import view.manager.TABStats;
+import view.staff.TABSell;
 
 /**
  *
@@ -255,11 +257,13 @@ public class LoginForm extends javax.swing.JFrame {
                 CurrentEmployee.setEmployee(employee);
                 setVisible(false);
                 if(employee.getRole().equals("Nhân viên")){
-                    Application.app = new Application(1);
+                    Application.app = new Application(2);
+                        Application.showForm(new TABSell());
                     Application.app.setVisible(true);
                 }
                 else if(employee.getRole().equals("Quản lý")){
-                    Application.app = new Application(2);
+                    Application.app = new Application(1);
+                    Application.showForm(new TABStats());
                     Application.app.setVisible(true);
                 }
             }
