@@ -19,8 +19,6 @@ import javax.swing.*;
 import util.FormatNumber;
 import util.MessageDialog;
 import entity.*;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import javax.swing.JToggleButton;
 import util.CurrentEmployee;
 import view.common.SuggestPriceButton;
@@ -54,6 +52,11 @@ public class PnTabOrder extends javax.swing.JPanel {
     }
 
     public void addSanPham(Product product) {
+        int stock = batchBUS.getFinalStockByProduct(product.getProductId());
+        if(stock <= 0){
+            MessageDialog.warning(null, String.format("Sản phẩm '%s' không đủ số lượng", product.getName()));
+            return;
+        }
         List<PnOrderDetail> listPanel = getAllPnOrderDetailThuoc();
         PnOrderDetail pnOrderDetailExists = listPanel.stream()
                 .filter(x -> x.getProduct().getProductId().equals(product.getProductId()))
@@ -65,6 +68,7 @@ public class PnTabOrder extends javax.swing.JPanel {
             pnOrderDetailExists.getSpinnerSoLuong().setValue(qty + 1);
             return;
         }
+        
         
         List<Batch> batchs = batchBUS.getListBatchEnable(product);
         Promotion promotion = promotionBUS.getPromotionByProduct(product);
@@ -87,10 +91,16 @@ public class PnTabOrder extends javax.swing.JPanel {
                 .sum();
         txtDiscountProduct.setText(FormatNumber.formatToVND(discountProduct));
         promotionOrder = promotionBUS.getPromotionByOrder();
-
+        promotionProduct = promotionBUS.getPromotionByProduct();
+        
         discountOrder = 0;
         if (promotionOrder != null) {
             discountOrder = (tongTienHang - discountProduct) * promotionOrder.getDiscount();
+            txtPromotionO.setText(String.format("( %s - %.0f%% )", promotionOrder.getName(), promotionOrder.getDiscount() * 100));
+        }
+        
+        if (promotionProduct != null) {
+            txtPromotionP.setText(String.format("( %s - %.0f%% )", promotionProduct.getName(), promotionProduct.getDiscount() * 100));
         }
         txtDiscountOrder.setText(FormatNumber.formatToVND(discountOrder));
 
@@ -191,6 +201,8 @@ public class PnTabOrder extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtTenKhachHang = new javax.swing.JLabel();
+        txtPromotionO = new javax.swing.JLabel();
+        txtPromotionP = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -209,7 +221,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         );
         pnMidLayout.setVerticalGroup(
             pnMidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
         );
 
         add(pnMid, java.awt.BorderLayout.CENTER);
@@ -469,6 +481,12 @@ public class PnTabOrder extends javax.swing.JPanel {
                 .addGap(0, 0, 0))
         );
 
+        txtPromotionO.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        txtPromotionO.setForeground(new java.awt.Color(255, 0, 0));
+
+        txtPromotionP.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        txtPromotionP.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout pnLeftLayout = new javax.swing.GroupLayout(pnLeft);
         pnLeft.setLayout(pnLeftLayout);
         pnLeftLayout.setHorizontalGroup(
@@ -485,7 +503,9 @@ public class PnTabOrder extends javax.swing.JPanel {
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnPriceSuggest, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(pnPriceSuggest, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(txtPromotionO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtPromotionP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         pnLeftLayout.setVerticalGroup(
@@ -499,19 +519,23 @@ public class PnTabOrder extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
+                .addComponent(txtPromotionP, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
+                .addComponent(txtPromotionO, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addComponent(pnPriceSuggest, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(37, 37, 37))
         );
 
         pnPriceSuggest.getAccessibleContext().setAccessibleName("");
@@ -537,37 +561,18 @@ public class PnTabOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTimKhachHangActionPerformed
 
     private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
-//        List<OrderDTO> orderDTOs = createListOrderDetail();
-//
-//        Map<List, Integer> map = new LinkedHashMap<>();
-//        if (orderDTOs != null) {
-//            for (OrderDTO o : orderDTOs) {
-//                System.out.println(o);
-//                List<String> productBatch = new ArrayList<>();
-//                productBatch.add(o.getBatchName());
-//                productBatch.add(o.getProductId());
-//                if (map.containsKey(productBatch)) {
-//                    map.put(productBatch, map.get(productBatch) + (o.getQuantity() * o.getUnitDetail().getConversionRate()));
-//                } else {
-//                    map.put(productBatch, o.getQuantity() * o.getUnitDetail().getConversionRate());
-//                }
-//            }
-//        }
-//        map.forEach((key, value) -> {
-//            Batch batch = batchBUS.getBatchByNameAndProduct((String) key.get(0), (String) key.get(1));
-//            if (batch.getStock() < value) {
-//                MessageDialog.warning(null, String.format("Lô hàng '%s' của sản phẩm '%s' không đủ số lượng",
-//                        (String) key.get(0), (String) key.get(1)));
-//                return;
-//            }
-//        });
-//        try {
-//            if (orderBUS.createOrder(CurrentEmployee.getEmployee(), customer, promotionOrder, orderDTOs)) {
-//                lapHoaDonForm.removeAndAddNewTab(this);
-//            }
-//        } catch (Exception e) {
-//            MessageDialog.error(null, e.getMessage());
-//        }
+        List<OrderDTO> orderDTOs = createListOrderDetail();
+        try {
+            if (orderBUS.createOrder(CurrentEmployee.getEmployee(), customer, promotionOrder, orderDTOs)) {
+                lapHoaDonForm.removeAndAddNewTab(this);
+                MessageDialog.info(null, "Lập hóa đơn thành công");
+            }
+            else{
+                MessageDialog.info(null, "Lập hóa đơn thất bại");
+            }
+        } catch (Exception e) {
+            MessageDialog.error(null, e.getMessage());
+        }
 
     }//GEN-LAST:event_btnBanHangActionPerformed
 
@@ -608,6 +613,7 @@ public class PnTabOrder extends javax.swing.JPanel {
     private double discountProduct;
     private double discountOrder;
     private Promotion promotionOrder;
+    private Promotion promotionProduct;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBanHang;
     private javax.swing.JLabel jLabel1;
@@ -631,6 +637,8 @@ public class PnTabOrder extends javax.swing.JPanel {
     private javax.swing.JPanel pnPriceSuggest;
     private javax.swing.JLabel txtDiscountOrder;
     private javax.swing.JLabel txtDiscountProduct;
+    private javax.swing.JLabel txtPromotionO;
+    private javax.swing.JLabel txtPromotionP;
     private javax.swing.JLabel txtTenKhachHang;
     private javax.swing.JTextField txtTienKhachDua;
     private javax.swing.JLabel txtTienTraKhach;

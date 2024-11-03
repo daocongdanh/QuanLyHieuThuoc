@@ -73,6 +73,7 @@ public class OrderBUS {
                     throw new RuntimeException("Số lượng không đủ với lô hàng: " + batch.getName());
                 }
                 batch.setStock(stock);
+                batchDAL.update(batch);
             }
             Order order;
             if (promotion != null) {

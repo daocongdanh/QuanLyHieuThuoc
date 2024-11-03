@@ -71,7 +71,8 @@ public class BatchDAL implements BaseDAL<Batch, String>{
     public int getFinalStockByProduct(String productId) {
         TypedQuery<Long> query = entityManager.createQuery(
                 "select sum(b.stock) from Batch b "
-                        + "where b.product.productId = ?1 and b.expirationDate > CURRENT_DATE group by b.product.productId",
+                        + "where b.product.productId = ?1 and b.expirationDate > CURRENT_DATE and b.status = true "
+                        + " group by b.product.productId",
                 Long.class
         );
         query.setParameter(1, productId);

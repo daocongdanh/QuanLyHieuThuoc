@@ -36,6 +36,8 @@ public class LoginForm extends javax.swing.JFrame {
     public LoginForm() {
         this.accountBUS = LoadApplication.accountBUS;
         initComponents();
+        usernameTxt.setText("NV00001");
+        passwordTxt.setText("123");
     }
 
     /**
