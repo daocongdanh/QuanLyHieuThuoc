@@ -7,7 +7,6 @@
 //import bus.CustomerBUS;
 //import bus.EmployeeBUS;
 //import bus.OrderBUS;
-//import bus.PrescriptionBUS;
 //import bus.ProductBUS;
 //import bus.PromotionBUS;
 //import bus.PurchaseOrderBUS;
@@ -26,12 +25,18 @@
 //import enums.PaymentMethod;
 //import enums.ProductType;
 //import enums.PromotionType;
+//import java.awt.image.BufferedImage;
+//import java.io.File;
 //import java.time.LocalDate;
 //import java.time.LocalDateTime;
 //import java.time.Month;
 //import java.util.List;
 //import java.util.Optional;
-//import util.GenerateBarcode;
+//import java.awt.image.BufferedImage;
+//import java.io.File;
+//import javax.imageio.ImageIO;
+//import org.krysalis.barcode4j.impl.code128.Code128Bean;
+//import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 //
 ///**
 // *
@@ -40,19 +45,18 @@
 //public class Main {
 //
 //    public static void main(String[] args) {
-//        ConnectDB.connect();
-//        UnitBUS unitBUS = new UnitBUS(ConnectDB.getEntityManager());
-//        ProductBUS productBUS = new ProductBUS(ConnectDB.getEntityManager());
-//        PrescriptionBUS prescriptionBUS = new PrescriptionBUS(ConnectDB.getEntityManager());
-//        BatchDAL batchDAL = new BatchDAL(ConnectDB.getEntityManager());
-//        PurchaseOrderBUS purchaseOrderBUS = new PurchaseOrderBUS(ConnectDB.getEntityManager());
-//        SupplierBUS supplierBUS = new SupplierBUS(ConnectDB.getEntityManager());
-//        EmployeeBUS employeeBUS = new EmployeeBUS(ConnectDB.getEntityManager());
-//        OrderDAL orderDAL = new OrderDAL(ConnectDB.getEntityManager());
-//        PromotionBUS promotionBUS = new PromotionBUS(ConnectDB.getEntityManager());
-//        PromotionDAL promotionDAL = new PromotionDAL(ConnectDB.getEntityManager());
-//        OrderBUS orderBUS = new OrderBUS(ConnectDB.getEntityManager());
-//        CustomerBUS customerBUS = new CustomerBUS(ConnectDB.getEntityManager());
+////        ConnectDB.connect();
+////        UnitBUS unitBUS = new UnitBUS(ConnectDB.getEntityManager());
+////        ProductBUS productBUS = new ProductBUS(ConnectDB.getEntityManager());
+////        BatchDAL batchDAL = new BatchDAL(ConnectDB.getEntityManager());
+////        PurchaseOrderBUS purchaseOrderBUS = new PurchaseOrderBUS(ConnectDB.getEntityManager());
+////        SupplierBUS supplierBUS = new SupplierBUS(ConnectDB.getEntityManager());
+////        EmployeeBUS employeeBUS = new EmployeeBUS(ConnectDB.getEntityManager());
+////        OrderDAL orderDAL = new OrderDAL(ConnectDB.getEntityManager());
+////        PromotionBUS promotionBUS = new PromotionBUS(ConnectDB.getEntityManager());
+////        PromotionDAL promotionDAL = new PromotionDAL(ConnectDB.getEntityManager());
+////        OrderBUS orderBUS = new OrderBUS(ConnectDB.getEntityManager());
+////        CustomerBUS customerBUS = new CustomerBUS(ConnectDB.getEntityManager());
 ////        Product product = new Product("SP001", "A", "B", "C", "D", "C", 
 ////                "E", "F", 0, 0, true, 0, ProductType.MEDICINE);
 ////        List<UnitDTO> unitDTOs = List.of(
@@ -60,7 +64,7 @@
 ////                new UnitDTO("Vĩ", 10, false),
 ////                new UnitDTO("Viên", 100, false)
 ////        );
-//        
+//
 ////        productBUS.createProduct(product, unitDTOs);
 ////        for(Product p : productBUS.searchProductByKeyword("B", "Số đăng ký", "Tất cả", true)){
 ////            System.out.println(p);
@@ -70,7 +74,6 @@
 ////                new PrescriptionDTO("SP001", "Hộp", 10, "Ngày dùng 2 lần")
 ////        );
 ////        prescriptionBUS.createPrescription(prescription, prescriptionDTOs);
-//
 ////        Batch batch = batchDAL.findByNameAndProduct("oo", "SP001");
 ////            List<PurchaseOrderDTO> purchaseOrderDTOs = List.of(
 ////                    new PurchaseOrderDTO("SP001", "Viên", 10000, 20, "LO003", LocalDate.now())
@@ -160,14 +163,40 @@
 ////            System.out.println("hehe :" + e.getMessage());
 ////        }
 ////        System.out.println(orderDAL.findById("HD2024092312330001").get());
-//        List<Batch> batchs = batchDAL.getAllBatchExpiration();
-//        for(Batch batch : batchs){
-//            System.out.println(batch);
-//        }
-//        
+////        List<Batch> batchs = batchDAL.getAllBatchExpiration();
+////        for (Batch batch : batchs) {
+////            System.out.println(batch);
+////        }
+//
 ////        GenerateBarcode barcode = new GenerateBarcode();
 ////        barcode.generate("VD-9957-10", "sp1.png");
 ////        barcode.generate("VN-20514-17", "sp2.png");
 ////        barcode.generate("VN-20467-17", "sp3.png");
+//         try {
+//            // Create the barcode bean
+//            Code128Bean barcodeGenerator = new Code128Bean();
+//
+//            // Set barcode properties
+//            final int dpi = 300; // Higher DPI for better image quality when resized
+//            barcodeGenerator.setModuleWidth(0.4); // Adjust module width as needed
+//            barcodeGenerator.doQuietZone(true);
+//
+//            // Output to an image file
+//            File outputFile = new File("barcode3.png");
+//            BitmapCanvasProvider canvasProvider = new BitmapCanvasProvider(
+//                    dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+//
+//            // Generate the barcode
+//            String code128Text = "VN-20467-17"; // Alphanumeric code
+//            barcodeGenerator.generateBarcode(canvasProvider, code128Text);
+//
+//            // Finish the generation and write to file
+//            BufferedImage barcodeImage = canvasProvider.getBufferedImage();
+//            ImageIO.write(barcodeImage, "png", outputFile);
+//            System.out.println("Barcode generated successfully!");
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 //    }
 //}

@@ -107,13 +107,13 @@ public class TABReport extends javax.swing.JPanel {
                     "Bán hàng", order.getEmployee().getName(), FormatNumber.formatToVND(order.getTotalPrice())});
             } else if (obj instanceof ReturnOrder returnOrder) {
                 tableDesign.getModelTable().addRow(new Object[]{returnOrder.getReturnOrderId(), FormatDate.formatDate(returnOrder.getOrderDate()),
-                    "Trả hàng", returnOrder.getEmployee().getName(), FormatNumber.formatToVND(returnOrder.getTotalPrice())});
+                    "Trả hàng", returnOrder.getEmployee().getName(),"-" + FormatNumber.formatToVND(returnOrder.getTotalPrice())});
             } else if (obj instanceof PurchaseOrder purchaseOrder) {
                 tableDesign.getModelTable().addRow(new Object[]{purchaseOrder.getPurchaseOrderId(), FormatDate.formatDate(purchaseOrder.getOrderDate()),
-                    "Nhập hàng", purchaseOrder.getEmployee().getName(), FormatNumber.formatToVND(purchaseOrder.getTotalPrice())});
+                    "Nhập hàng", purchaseOrder.getEmployee().getName(),"-" + FormatNumber.formatToVND(purchaseOrder.getTotalPrice())});
             } else if (obj instanceof DamageItem damageItem) {
                 tableDesign.getModelTable().addRow(new Object[]{damageItem.getDamageItemId(), FormatDate.formatDate(damageItem.getOrderDate()),
-                    "Xuất hủy", damageItem.getEmployee().getName(), FormatNumber.formatToVND(damageItem.getTotalPrice())});
+                    "Xuất hủy", damageItem.getEmployee().getName(),"-" + FormatNumber.formatToVND(damageItem.getTotalPrice())});
             }
         });
 
