@@ -179,6 +179,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
         jDateFrom = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         btnView = new javax.swing.JButton();
+        comboboxType = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         scrollTable = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -207,7 +208,6 @@ public class TABIndividualReport extends javax.swing.JPanel {
         modalDetail.setTitle("Chi tiết phiếu nhập hàng");
         modalDetail.setMinimumSize(new java.awt.Dimension(1311, 700));
         modalDetail.setModal(true);
-        modalDetail.setPreferredSize(new java.awt.Dimension(1311, 700));
         modalDetail.setResizable(false);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -285,6 +285,9 @@ public class TABIndividualReport extends javax.swing.JPanel {
             }
         });
 
+        comboboxType.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        comboboxType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Hóa đơn bán hàng", "Phiếu nhập hàng", "Phiếu trả hàng", "Phiếu xuất hủy" }));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -298,9 +301,11 @@ public class TABIndividualReport extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(31, 31, 31)
+                .addComponent(comboboxType, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(724, Short.MAX_VALUE))
+                .addContainerGap(496, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,10 +317,12 @@ public class TABIndividualReport extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
+                                .addGap(29, 29, 29)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(comboboxType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
@@ -533,12 +540,21 @@ public class TABIndividualReport extends javax.swing.JPanel {
             MessageDialog.warning(null, "Ngày bắt đầu phải trước ngày kết thúc");
             return;
         }
-
-        List<Order> orders = orderBUS.getOrderByDateAndEmp(start, end, CurrentEmployee.getEmployee().getEmployeeId());
-        List<PurchaseOrder> purchaseOrders = purchaseOrderBUS.getByDateAndEmp(start, end, CurrentEmployee.getEmployee().getEmployeeId());
-        List<ReturnOrder> returnOrders = returnOrderBUS.getByDateAndEmp(start, end, CurrentEmployee.getEmployee().getEmployeeId());
-        List<DamageItem> damageItems = damageItemBUS.getByDateAndEmp(start, end, CurrentEmployee.getEmployee().getEmployeeId());
-        fillContent(orders, purchaseOrders, returnOrders, damageItems);
+        
+        if(comboboxType.getSelectedIndex() == 0) {
+            List<Order> orders = orderBUS.getOrderByDateAndEmp(start, end, CurrentEmployee.getEmployee().getEmployeeId());
+            List<PurchaseOrder> purchaseOrders = purchaseOrderBUS.getByDateAndEmp(start, end, CurrentEmployee.getEmployee().getEmployeeId());
+            List<ReturnOrder> returnOrders = returnOrderBUS.getByDateAndEmp(start, end, CurrentEmployee.getEmployee().getEmployeeId());
+            List<DamageItem> damageItems = damageItemBUS.getByDateAndEmp(start, end, CurrentEmployee.getEmployee().getEmployeeId());
+            fillContent(orders, purchaseOrders, returnOrders, damageItems);
+        }
+        
+        if(comboboxType.getSelectedIndex() == 1) {
+            List<Order> orders = orderBUS.getOrderByDateAndEmp(start, end, CurrentEmployee.getEmployee().getEmployeeId());
+            fillContent(orders, null, null, null);
+        }
+        
+        
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -570,7 +586,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
                 String unitName = orderDetail.getBatch().getProduct().getUnit().getName();               
                 int quantity = orderDetail.getQuantity();
                 double price = orderDetail.getPrice()*1.1;
-                String km = ((int)orderDetail.getDiscount()*100) +"%";
+                double km = (orderDetail.getDiscount()*100);
                 double lineTotal = orderDetail.getLineTotal();
 
                 if (productMap.containsKey(productId)) {
@@ -580,7 +596,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
                     existingData[6] = (double) existingData[6] + lineTotal; // Cộng dồn tổng giá trị
                 } else {
                     // Nếu sản phẩm chưa tồn tại trong Map, thêm mới vào Map
-                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, km, lineTotal});
+                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, (int)km + "%", lineTotal});
                 }
             }
 
@@ -737,6 +753,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnView;
+    private javax.swing.JComboBox<String> comboboxType;
     private javax.swing.JPanel headerPanel;
     private com.toedter.calendar.JDateChooser jDateFrom;
     private com.toedter.calendar.JDateChooser jDateTo;
