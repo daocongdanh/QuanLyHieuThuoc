@@ -135,11 +135,11 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getStyle() | java.awt.Font.BOLD, 14));
-        jLabel3.setText("Số điện thoại khách:");
+        jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getStyle() | java.awt.Font.BOLD, jLabel3.getFont().getSize()+2));
+        jLabel3.setText("Số điện thoại:");
 
         txtCusPhone.setEditable(false);
-        txtCusPhone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCusPhone.setFont(txtCusPhone.getFont().deriveFont(txtCusPhone.getFont().getSize()+3f));
         txtCusPhone.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -147,8 +147,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCusPhone))
         );
         jPanel1Layout.setVerticalGroup(
@@ -164,11 +164,11 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel9.setFont(jLabel9.getFont().deriveFont(jLabel9.getFont().getStyle() | java.awt.Font.BOLD, 14));
+        jLabel9.setFont(jLabel9.getFont().deriveFont(jLabel9.getFont().getStyle() | java.awt.Font.BOLD, jLabel9.getFont().getSize()+2));
         jLabel9.setText("Cần trả khách:");
 
         txtReturnTotal.setEditable(false);
-        txtReturnTotal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtReturnTotal.setFont(txtReturnTotal.getFont().deriveFont(txtReturnTotal.getFont().getSize()+3f));
         txtReturnTotal.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -207,7 +207,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getStyle() | java.awt.Font.BOLD, 14));
+        jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getStyle() | java.awt.Font.BOLD, jLabel2.getFont().getSize()+2));
         jLabel2.setText("Tên khách hàng:");
         jLabel2.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -220,7 +220,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         });
 
         txtCusName.setEditable(false);
-        txtCusName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCusName.setFont(txtCusName.getFont().deriveFont(txtCusName.getFont().getSize()+3f));
         txtCusName.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -246,7 +246,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setFont(jLabel4.getFont().deriveFont(jLabel4.getFont().getStyle() | java.awt.Font.BOLD, 14));
+        jLabel4.setFont(jLabel4.getFont().deriveFont(jLabel4.getFont().getStyle() | java.awt.Font.BOLD, jLabel4.getFont().getSize()+2));
         jLabel4.setText("Mã hóa đơn:");
         jLabel4.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -259,7 +259,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         });
 
         txtOrderId.setEditable(false);
-        txtOrderId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtOrderId.setFont(txtOrderId.getFont().deriveFont(txtOrderId.getFont().getSize()+3f));
         txtOrderId.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -284,7 +284,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setFont(jLabel5.getFont().deriveFont(jLabel5.getFont().getStyle() | java.awt.Font.BOLD, 14));
+        jLabel5.setFont(jLabel5.getFont().deriveFont(jLabel5.getFont().getStyle() | java.awt.Font.BOLD, jLabel5.getFont().getSize()+2));
         jLabel5.setText("Tên nhân viên lập:");
         jLabel5.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -297,7 +297,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         });
 
         txtEmpName.setEditable(false);
-        txtEmpName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtEmpName.setFont(txtEmpName.getFont().deriveFont(txtEmpName.getFont().getSize()+3f));
         txtEmpName.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -392,7 +392,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(150, 150, 150)
                 .addComponent(txtSearchOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(btnOpenModalAddUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -118,8 +118,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                         returnOrderDetail.getFinalReason(),
                         "Đã Thêm Lại"
                 });
-            }
-            else {
+            } else if ( returnOrderDetail.getReturnOrderDetailStatus().equals(ReturnOrderDetailStatus.PENDING_DAMAGED)){
                 tableDesignView.getModelTable().addRow(new Object[]{
                         returnOrderDetail.getProduct().getProductId(),
                         returnOrderDetail.getProduct().getName(),
@@ -128,7 +127,18 @@ public class TABReturnOrder extends javax.swing.JPanel {
                         FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
                         returnOrderDetail.getReason(),
                         returnOrderDetail.getFinalReason(),
-                        "Đã Xuất Hủy"
+                        "Đợi Hủy"
+                });
+            }else {
+                tableDesignView.getModelTable().addRow(new Object[]{
+                        returnOrderDetail.getProduct().getProductId(),
+                        returnOrderDetail.getProduct().getName(),
+                        returnOrderDetail.getProduct().getUnit().getName(),
+                        returnOrderDetail.getQuantity(),
+                        FormatNumber.formatToVND(returnOrderDetail.getLineTotal()),
+                        returnOrderDetail.getReason(),
+                        returnOrderDetail.getFinalReason(),
+                        "Đã Hủy"
                 });
             }
         }

@@ -235,6 +235,8 @@ public class PnOrderDetail extends javax.swing.JPanel {
         txtTongTien.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         txtTongTien.setText("0 đ");
         txtTongTien.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        txtTongTien.setMinimumSize(new java.awt.Dimension(100, 22));
+        txtTongTien.setPreferredSize(new java.awt.Dimension(100, 22));
         jPanel3.add(txtTongTien);
 
         add(jPanel3, java.awt.BorderLayout.CENTER);

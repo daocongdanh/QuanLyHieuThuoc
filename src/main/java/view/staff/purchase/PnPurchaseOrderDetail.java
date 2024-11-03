@@ -106,8 +106,8 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         btnXoaPurchaseOderDetail.setIcon( ResizeImage.resizeImage( new javax.swing.ImageIcon(getClass().getResource("/img/delete.jpg")) , 25, 25));
         pnHinh = new javax.swing.JLabel();
         txtTenSP = new javax.swing.JLabel();
-        txtDVT = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        txtDVT = new javax.swing.JLabel();
         spinnerSoLuong = new javax.swing.JSpinner();
         txtDonGia = new javax.swing.JLabel();
         txtTongTien = new javax.swing.JLabel();
@@ -296,17 +296,19 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         txtTenSP.setText("jLabel1");
         jPanel5.add(txtTenSP);
 
-        txtDVT.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtDVT.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtDVT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        jPanel5.add(txtDVT);
-
         jPanel2.add(jPanel5, java.awt.BorderLayout.WEST);
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         java.awt.FlowLayout flowLayout2 = new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING, 40, 50);
         flowLayout2.setAlignOnBaseline(true);
         jPanel6.setLayout(flowLayout2);
+
+        txtDVT.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtDVT.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        txtDVT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        txtDVT.setMinimumSize(new java.awt.Dimension(100, 1));
+        txtDVT.setPreferredSize(new java.awt.Dimension(100, 1));
+        jPanel6.add(txtDVT);
 
         spinnerSoLuong.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         spinnerSoLuong.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));

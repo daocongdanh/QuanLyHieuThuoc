@@ -71,7 +71,6 @@ public class TABProduct extends javax.swing.JPanel {
     }
 
     private void fillTable() {
-//        String[] headers = {"Mã sản phẩm", "VAT", "Active", "Hoạt Chất", "Xuất xứ", "Liều lượng", "Nhà sản xuất", "Tên", "Bao bì", "Loại sản phẩm", "Giá mua", "Số đăng kí", "Giá bán", "Ảnh"};
         String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính" ,"Số đăng kí", "Xuất xứ", "Loại sản phẩm", "Giá mua", "Giá bán", "Trạng thái"};
         List<Integer> tableWidths = Arrays.asList(120, 300, 100 ,120, 100, 110, 80, 80, 120);
         tableDesign = new TableDesign(headers, tableWidths);
@@ -141,10 +140,10 @@ public class TABProduct extends javax.swing.JPanel {
             if (bufferImage != null) {
                 imageProductEdit = new ImageIcon(bufferImage);
                 imageProductEdit.setDescription(product.getImage());
-                Image imagePro = imageProductEdit.getImage().getScaledInstance(265, 269, Image.SCALE_SMOOTH);
-                ImageIcon img = new ImageIcon(imagePro);
-                lblImageEdit.setIcon(img);
+
             }
+            lblImageEdit.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
+                    + product.getImage())), 265, 269));
 
             if (table.getCellEditor() != null) {
                 table.getCellEditor().stopCellEditing();
@@ -159,11 +158,11 @@ public class TABProduct extends javax.swing.JPanel {
     private void updateTabQuantity() {
         // Tiêu đề cột cho bảng batch
         String[] headers = {
-            "Mã lô", "Ngày hết hạn", "Tên sản phẩm", "Tồn kho"
+            "Mã lô", "Ngày hết hạn", "Tên sản phẩm", "Tồn kho", "Trạng thái"
         };
 
         // Độ rộng cho các cột
-        List<Integer> tableWidths = Arrays.asList(30, 30, 30, 30);
+        List<Integer> tableWidths = Arrays.asList(70, 120, 150, 100, 50);
         tablleDesignTab3 = new TableDesign(headers, tableWidths);
 
         // Thiết lập ScrollPane cho Tab 3
@@ -172,7 +171,7 @@ public class TABProduct extends javax.swing.JPanel {
 
         // Lấy danh sách các lô và điền dữ liệu vào bảng
         List<Batch> batches = batchBUS.getListBatchByProduct(productEdit);
-        batches.sort((o1, o2) -> o2.getExpirationDate().compareTo(o1.getExpirationDate()));
+        batches.sort((o1, o2) -> o1.getExpirationDate().compareTo(o2.getExpirationDate()));
         fillTab3Content(batches);
     }
 
@@ -186,7 +185,7 @@ public class TABProduct extends javax.swing.JPanel {
                 FormatDate.formatLocalDate(batch.getExpirationDate()),
                 batch.getName(),
                 batch.getStock(),
-                batch.getProduct().getProductId()
+                    batch.isStatus() ? "Đang bán" : "Không bán"
             });
         }
     }

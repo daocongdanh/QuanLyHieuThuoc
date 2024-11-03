@@ -247,7 +247,7 @@ public class PnTabOrder extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+2));
         jLabel1.setText("Tổng giảm giá hóa đơn:");
         jLabel1.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -260,7 +260,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         });
 
         txtDiscountOrder.setEditable(false);
-        txtDiscountOrder.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtDiscountOrder.setFont(txtDiscountOrder.getFont().deriveFont(txtDiscountOrder.getFont().getSize()+3f));
         txtDiscountOrder.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtDiscountOrder.setRequestFocusEnabled(false);
 
@@ -286,11 +286,11 @@ public class PnTabOrder extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getStyle() | java.awt.Font.BOLD, jLabel3.getFont().getSize()+2));
         jLabel3.setText("Tổng tiền hàng:");
 
         txtTongTienHang.setEditable(false);
-        txtTongTienHang.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtTongTienHang.setFont(txtTongTienHang.getFont().deriveFont(txtTongTienHang.getFont().getSize()+3f));
         txtTongTienHang.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTongTienHang.setRequestFocusEnabled(false);
 
@@ -315,10 +315,10 @@ public class PnTabOrder extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel7.setFont(jLabel7.getFont().deriveFont(jLabel7.getFont().getStyle() | java.awt.Font.BOLD, jLabel7.getFont().getSize()+2));
         jLabel7.setText("Tiền khách đưa:");
 
-        txtTienKhachDua.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtTienKhachDua.setFont(txtTienKhachDua.getFont().deriveFont(txtTienKhachDua.getFont().getSize()+3f));
         txtTienKhachDua.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTienKhachDua.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -345,11 +345,11 @@ public class PnTabOrder extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel9.setFont(jLabel9.getFont().deriveFont(jLabel9.getFont().getStyle() | java.awt.Font.BOLD, jLabel9.getFont().getSize()+2));
         jLabel9.setText("Tổng hóa đơn:");
 
         txtTongHoaDon.setEditable(false);
-        txtTongHoaDon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtTongHoaDon.setFont(txtTongHoaDon.getFont().deriveFont(txtTongHoaDon.getFont().getSize()+3f));
         txtTongHoaDon.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTongHoaDon.setRequestFocusEnabled(false);
 
@@ -375,11 +375,11 @@ public class PnTabOrder extends javax.swing.JPanel {
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel11.setFont(jLabel11.getFont().deriveFont(jLabel11.getFont().getStyle() | java.awt.Font.BOLD, jLabel11.getFont().getSize()+2));
         jLabel11.setText("Tiền trả khách:");
 
         txtTienTraKhach.setEditable(false);
-        txtTienTraKhach.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtTienTraKhach.setFont(txtTienTraKhach.getFont().deriveFont(txtTienTraKhach.getFont().getSize()+3f));
         txtTienTraKhach.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTienTraKhach.setRequestFocusEnabled(false);
 
@@ -411,11 +411,11 @@ public class PnTabOrder extends javax.swing.JPanel {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel14.setFont(jLabel14.getFont().deriveFont(jLabel14.getFont().getStyle() | java.awt.Font.BOLD, jLabel14.getFont().getSize()+2));
         jLabel14.setText("Tổng giảm giá sản phẩm:");
 
         txtDiscountProduct.setEditable(false);
-        txtDiscountProduct.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtDiscountProduct.setFont(txtDiscountProduct.getFont().deriveFont(txtDiscountProduct.getFont().getSize()+3f));
         txtDiscountProduct.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtDiscountProduct.setRequestFocusEnabled(false);
 
@@ -440,7 +440,7 @@ public class PnTabOrder extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getStyle() | java.awt.Font.BOLD, jLabel2.getFont().getSize()+2));
         jLabel2.setText("Tên khách hàng:");
         jLabel2.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -453,7 +453,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         });
 
         txtTenKhachHang.setEditable(false);
-        txtTenKhachHang.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtTenKhachHang.setFont(txtTenKhachHang.getFont().deriveFont(txtTenKhachHang.getFont().getSize()+3f));
         txtTenKhachHang.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTenKhachHang.setText("Vãng lai");
         txtTenKhachHang.setRequestFocusEnabled(false);

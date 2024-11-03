@@ -87,10 +87,10 @@ public class PurchaseOrder {
     }
 
     public void setOrderDate(LocalDateTime orderDate) {
-        LocalDateTime currentDate = LocalDateTime.now();
-        if(!orderDate.isEqual(currentDate)){
-            throw new RuntimeException("Ngày lập đơn nhập hàng không hợp lệ");
-        }
+//        LocalDateTime currentDate = LocalDateTime.now();
+//        if(!orderDate.isEqual(currentDate)){
+//            throw new RuntimeException("Ngày lập đơn nhập hàng không hợp lệ");
+//        }
         this.orderDate = orderDate;
     }
 
