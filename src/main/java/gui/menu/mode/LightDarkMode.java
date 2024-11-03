@@ -1,9 +1,7 @@
 package gui.menu.mode;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
@@ -81,7 +79,7 @@ public class LightDarkMode extends JPanel {
             if (dark) {
                 EventQueue.invokeLater(() -> {
                     FlatAnimatedLafChange.showSnapshot();
-                    FlatDarkLaf.setup();
+                    FlatMacDarkLaf.setup();
                     FlatLaf.updateUI();
                     checkStyle();
                     FlatAnimatedLafChange.hideSnapshotWithAnimation();
@@ -89,7 +87,7 @@ public class LightDarkMode extends JPanel {
             } else {
                 EventQueue.invokeLater(() -> {
                     FlatAnimatedLafChange.showSnapshot();
-                    FlatLightLaf.setup();
+                    FlatMacLightLaf.setup();
                     FlatLaf.updateUI();
                     checkStyle();
                     FlatAnimatedLafChange.hideSnapshotWithAnimation();

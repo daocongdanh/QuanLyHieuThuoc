@@ -22,6 +22,10 @@ import gui.application.form.other.FormRead;
 import gui.menu.Menu;
 import gui.menu.MenuAction;
 import view.manager.*;
+import view.staff.TABIndividualReport;
+import view.staff.TABPurchase;
+import view.staff.TABSell;
+import view.staff.damageItem.TabDamageItem;
 
 /**
  *
@@ -101,6 +105,29 @@ public class MainForm extends JLayeredPane {
                 } else if (index == 11) {
                     Application.showForm(new TABPromotion());
                 }else if (index == 12) {
+                    Application.logout();
+                }   else {
+                    action.cancel();
+                }
+            }
+            else if ( type == 2 ){
+                if (index == 20) {
+                    Application.showForm(new TABSell());
+                } else if (index == 21) {
+                    Application.showForm(new TABProduct());
+                } else if (index == 22) {
+                    Application.showForm(new TABCustomer());
+                } else if (index == 23) {
+                    Application.showForm(new TABSupplier());
+                } else if (index == 24) {
+                    Application.showForm(new TABPurchase());
+                } else if (index == 25) {
+                    Application.showForm(new view.staff.TABReturnOrder());
+                } else if (index == 26) {
+                    Application.showForm(new TabDamageItem());
+                } else if (index == 27) {
+                    Application.showForm(new TABIndividualReport());
+                }else if (index == 28) {
                     Application.logout();
                 }   else {
                     action.cancel();

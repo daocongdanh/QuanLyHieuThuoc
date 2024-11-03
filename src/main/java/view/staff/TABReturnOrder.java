@@ -135,11 +135,12 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(jLabel3.getFont().deriveFont((jLabel3.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, jLabel3.getFont().getSize()+2));
+        jLabel3.setFont(jLabel3.getFont().deriveFont((jLabel3.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
         jLabel3.setText("Số điện thoại khách:");
 
         txtCusPhone.setEditable(false);
-        txtCusPhone.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtCusPhone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCusPhone.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -163,11 +164,12 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel9.setFont(jLabel9.getFont().deriveFont((jLabel9.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, jLabel9.getFont().getSize()+2));
+        jLabel9.setFont(jLabel9.getFont().deriveFont((jLabel9.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
         jLabel9.setText("Cần trả khách:");
 
         txtReturnTotal.setEditable(false);
-        txtReturnTotal.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtReturnTotal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtReturnTotal.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -205,7 +207,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(jLabel2.getFont().deriveFont((jLabel2.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, jLabel2.getFont().getSize()+2));
+        jLabel2.setFont(jLabel2.getFont().deriveFont((jLabel2.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
         jLabel2.setText("Tên khách hàng:");
         jLabel2.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -218,7 +220,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
         });
 
         txtCusName.setEditable(false);
-        txtCusName.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtCusName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCusName.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -243,7 +246,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setFont(jLabel4.getFont().deriveFont((jLabel4.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, jLabel4.getFont().getSize()+2));
+        jLabel4.setFont(jLabel4.getFont().deriveFont((jLabel4.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
         jLabel4.setText("Mã hóa đơn:");
         jLabel4.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -256,7 +259,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
         });
 
         txtOrderId.setEditable(false);
-        txtOrderId.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtOrderId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtOrderId.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -279,7 +283,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setFont(jLabel5.getFont().deriveFont((jLabel5.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, jLabel5.getFont().getSize()+2));
+        jLabel5.setFont(jLabel5.getFont().deriveFont((jLabel5.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
         jLabel5.setText("Tên nhân viên lập:");
         jLabel5.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -292,7 +296,8 @@ public class TABReturnOrder extends javax.swing.JPanel {
         });
 
         txtEmpName.setEditable(false);
-        txtEmpName.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtEmpName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtEmpName.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);

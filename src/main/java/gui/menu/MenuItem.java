@@ -54,7 +54,7 @@ public class MenuItem extends JPanel {
     private final Menu menu;
     private final String menus[];
     private final int menuIndex;
-    private final int menuItemHeight = 38;
+    private final int menuItemHeight = 45;
     private final int subMenuItemHeight = 35;
     private final int subMenuLeftGap = 34;
     private final int firstGap = 5;
@@ -79,14 +79,15 @@ public class MenuItem extends JPanel {
         FlatSVGIcon.ColorFilter f = new FlatSVGIcon.ColorFilter();
         f.add(Color.decode("#969696"), lightColor, darkColor);
         icon.setColorFilter(f);
-        return ResizeImage.resizeImage(icon,30,30);
+        return ResizeImage.resizeImage(icon,34,34);
     }
 
     private void init() {
         setLayout(new MenuLayout());
         putClientProperty(FlatClientProperties.STYLE, ""
                 + "background:$Menu.background;"
-                + "foreground:$Menu.lineColor");
+                + "foreground:$Menu.lineColor; "
+                + "font:Roboto-Bold");
         for (int i = 0; i < menus.length; i++) {
             JButton menuItem = createButtonItem(menus[i]);
             menuItem.setHorizontalAlignment(menuItem.getComponentOrientation().isLeftToRight() ? JButton.LEADING : JButton.TRAILING);
@@ -143,7 +144,6 @@ public class MenuItem extends JPanel {
                 + "arc:10;"
                 + "iconTextGap:10;"
                 + "margin:3,11,3,11");
-        button.setPreferredSize(new Dimension(button.getPreferredSize().width, 150));
         return button;
     }
 

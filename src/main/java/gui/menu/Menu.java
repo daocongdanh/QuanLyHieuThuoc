@@ -25,7 +25,7 @@ import gui.menu.mode.ToolBarAccentColor;
 public class Menu extends JPanel {
 
     private final String menuItemsManager[][] = {
-        {"Thống kê", "Tổng quan", "Thống kê doanh thu theo ngày", "Thống kê sản phẩm theo ngày"},
+        {"Thống kê"},
         {"Báo cáo thu chi"},
         {"Quản lý sản phẩm"},
         {"Quản lý đơn vị tính"},
@@ -76,12 +76,12 @@ public class Menu extends JPanel {
 
     private final List<MenuEvent> events = new ArrayList<>();
     private boolean menuFull = true;
-    private final String headerName = "Raven Channel";
+    private final String headerName = "Thanh Tiến";
 
     protected final boolean hideMenuTitleOnMinimum = true;
     protected final int menuTitleLeftInset = 5;
     protected final int menuTitleVgap = 5;
-    protected final int menuMaxWidth = 250;
+    protected final int menuMaxWidth = 230;
     protected final int menuMinWidth = 60;
     protected final int headerFullHgap = 5;
     //type = 1 -> quan ly, type = 2 -> nhan vien
@@ -123,7 +123,7 @@ public class Menu extends JPanel {
         toolBarAccentColor.setVisible(FlatUIUtils.getUIBoolean("AccentControl.show", false));
         add(header);
         add(scroll);
-        add(lightDarkMode);
+//        add(lightDarkMode);
         add(toolBarAccentColor);
     }
 
@@ -145,7 +145,7 @@ public class Menu extends JPanel {
                 if (menuName.startsWith("~") && menuName.endsWith("~")) {
                     panelMenu.add(createTitle(menuName));
                 } else {
-                    MenuItem menuItem = new MenuItem(this, menuItemsStaff[i], index++, events);
+                    MenuItem menuItem = new MenuItem(this, menuItemsStaff[i], 20 + index++, events);
                     panelMenu.add(menuItem);
                 }
             }
