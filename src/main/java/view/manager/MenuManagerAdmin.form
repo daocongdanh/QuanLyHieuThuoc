@@ -24,7 +24,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="Box" alignment="0" max="32767" attributes="0"/>
+          <Component id="Box" alignment="0" pref="292" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -83,8 +83,9 @@
                           </Group>
                           <Component id="menuExit" min="-2" max="-2" attributes="0"/>
                           <Component id="lblIcon" min="-2" pref="79" max="-2" attributes="0"/>
+                          <Component id="menuPersonalInfor" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -118,8 +119,10 @@
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="menuPromotion" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="menuPersonalInfor" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="menuExit" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="178" max="32767" attributes="0"/>
+                      <EmptySpace pref="109" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -148,6 +151,8 @@
             <Component class="view.common.MenuChoice" name="menuOrder">
             </Component>
             <Component class="view.common.MenuChoice" name="menuPromotion">
+            </Component>
+            <Component class="view.common.MenuChoice" name="menuPersonalInfor">
             </Component>
             <Component class="view.common.MenuChoice" name="menuExit">
               <Events>
