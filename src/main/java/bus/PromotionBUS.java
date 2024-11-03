@@ -83,6 +83,14 @@ public class PromotionBUS {
         }
         return null;
     }
+    
+    public Promotion getPromotionByProduct(){
+        List<Promotion> promotions = promotionDAL.findAllByCurrentDate(PromotionType.PRODUCT);
+        for(Promotion promotion : promotions){
+            return promotion;
+        }
+        return null;
+    }
 
     public List<Promotion> getAllPromotions() {
         return promotionDAL.findAll();

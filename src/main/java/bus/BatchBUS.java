@@ -10,9 +10,6 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 import entity.Product;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Comparator;
 
 /**
@@ -27,49 +24,33 @@ public class BatchBUS {
         this.batchDAL = new BatchDAL(entityManager);
     }
 
-    public List<Batch> getListBatchEnable(Product product){
+    public List<Batch> getListBatchEnable(Product product) {
         return batchDAL.findByProduct(product)
                 .stream()
-                .filter(batch -> batch.getExpirationDate().isAfter(LocalDate.now()))
+                .filter(batch -> (batch.getExpirationDate().isAfter(LocalDate.now())
+                    && batch.getStock() > 0 && batch.isStatus() == true))
                 .sorted(Comparator.comparing(Batch::getExpirationDate))
                 .toList();
     }
-    
-    public int getFinalStockByProduct(String productId){
+
+    public int getFinalStockByProduct(String productId) {
         return batchDAL.getFinalStockByProduct(productId);
     }
-    
-    public Batch getBatchByNameAndProduct(String batchName, String productId){
+
+    public Batch getBatchByNameAndProduct(String batchName, String productId) {
         return batchDAL.findByNameAndProduct(batchName, productId);
     }
-    public List<Batch> getAllBatch(){
+
+    public List<Batch> getAllBatch() {
         return batchDAL.findAll1();
     }
-    
-    public List<Batch> getListBatchByProduct(String productId){
+
+    public List<Batch> getListBatchByProduct(String productId) {
         return batchDAL.findByProductId(productId);
     }
-    
-//    public Map<UnitDetail, List<Batch>> getListBatchExpiration(){
-//        List<Batch> batchs = batchDAL.getAllBatchExpiration();
-//        Map<UnitDetail, List<Batch>> map = new LinkedHashMap<>();
-//        for(Batch batch : batchs){
-//            UnitDetail unitDetail = unitDetailDAL.findUnitDefaultByProduct(batch.getProduct());
-//            if(map.containsKey(unitDetail)){
-//                map.get(unitDetail).add(batch);
-//            }
-//            else{
-//                List<Batch> list = new ArrayList<>();
-//                list.add(batch);
-//                map.put(unitDetail, list);
-//            }
-//        }
-//        return map;
-//    }
-    
-    
+
     public Batch getBatchByName(String batchName) {
         return batchDAL.findByName(batchName);
     }
-      
+
 }

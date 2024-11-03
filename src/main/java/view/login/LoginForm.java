@@ -6,7 +6,6 @@ package view.login;
 
 import bus.AccountBUS;
 import com.formdev.flatlaf.FlatLightLaf;
-import connectDB.ConnectDB;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -17,16 +16,10 @@ import util.MessageDialog;
 import entity.*;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import util.CurrentEmployee;
-import util.ResizeImage;
-import view.manager.MenuManagerAdmin;
-import view.staff.MenuManagerStaff;
 
 /**
  *
@@ -38,6 +31,8 @@ public class LoginForm extends javax.swing.JFrame {
     public LoginForm() {
         this.accountBUS = LoadApplication.accountBUS;
         initComponents();
+        usernameTxt.setText("NV00001");
+        passwordTxt.setText("123");
     }
 
     /**
