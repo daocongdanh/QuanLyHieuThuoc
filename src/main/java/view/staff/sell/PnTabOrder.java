@@ -54,13 +54,25 @@ public class PnTabOrder extends javax.swing.JPanel {
     }
 
     public void addSanPham(Product product) {
-
+        List<PnOrderDetail> listPanel = getAllPnOrderDetailThuoc();
+        PnOrderDetail pnOrderDetailExists = listPanel.stream()
+                .filter(x -> x.getProduct().getProductId().equals(product.getProductId()))
+                .findFirst()
+                .orElse(null);
+        
+        if(pnOrderDetailExists != null){
+            int qty = (int) pnOrderDetailExists.getSpinnerSoLuong().getValue();
+            pnOrderDetailExists.getSpinnerSoLuong().setValue(qty + 1);
+            return;
+        }
+        
         List<Batch> batchs = batchBUS.getListBatchEnable(product);
         Promotion promotion = promotionBUS.getPromotionByProduct(product);
         PnOrderDetail pnOrderDetail = new PnOrderDetail(product, batchs, promotion, this);
         pnContent.add(pnOrderDetail);
         pnContent.revalidate();
         pnContent.repaint();
+        changeTongTienHoaDon();
     }
     public void changeTongTienHoaDon() {
         tongTienHang = 0.0;

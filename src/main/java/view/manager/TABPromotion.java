@@ -68,8 +68,9 @@ public class TABPromotion extends javax.swing.JPanel {
     }
 
     private void fillTable() {
-        String[] headers = {"Mã khuyến mãi", "Ngày bắt đầu", "Ngày kết thúc", "Giảm giá", "Loại khuyến mãi", "Trạng thái"};
-        List<Integer> tableWidths = Arrays.asList(200, 200, 200, 200, 200, 200);
+        String[] headers = {"Mã khuyến mãi", "Chương trình khuyến mãi", "Ngày bắt đầu",
+            "Ngày kết thúc", "Giảm giá", "Loại khuyến mãi", "Trạng thái"};
+        List<Integer> tableWidths = Arrays.asList(100, 300, 200, 200, 100, 150, 150);
         tableDesign = new TableDesign(headers, tableWidths);
         scrollTable.setViewportView(tableDesign.getTable());
         scrollTable.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
@@ -91,9 +92,9 @@ public class TABPromotion extends javax.swing.JPanel {
     }
 
     private void fillTableModalUpdate() {
-        String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Giá bán", "Thao tác"};
-        List<Integer> tableWidths = Arrays.asList(150, 150, 150, 150);
-        tableDesignUpdate = new TableDesign(headers, tableWidths, List.of(false, false, false, true));
+        String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Giá bán", "Thao tác"};
+        List<Integer> tableWidths = Arrays.asList(150, 150, 100, 100, 100);
+        tableDesignUpdate = new TableDesign(headers, tableWidths, List.of(false, false, false, false, true));
         tableDesignUpdate.setTableHeaderFontSize(13);
         scrollTableDesPre1.setViewportView(tableDesignUpdate.getTable());
     }
@@ -107,7 +108,7 @@ public class TABPromotion extends javax.swing.JPanel {
 
         };
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOneAction(2));
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOneAction(event,2));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOneAction(event, 2));
     }
 
     private void addEventBtnRemoveUpdate() {
@@ -118,14 +119,14 @@ public class TABPromotion extends javax.swing.JPanel {
             tableDesignUpdate.getModelTable().removeRow(selectedRow);
         };
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellRenderer(new TableActionCellRenderOneAction(2));
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOneAction(event,2));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new TableActionCellEditorOneAction(event, 2));
     }
 
     private void fillContent(List<Promotion> promotions) {
         tableDesign.getModelTable().setRowCount(0);
         DecimalFormat df = new DecimalFormat("#%");
         for (Promotion promotion : promotions) {
-            tableDesign.getModelTable().addRow(new Object[]{promotion.getPromotionId(), promotion.getStartedDate(),
+            tableDesign.getModelTable().addRow(new Object[]{promotion.getPromotionId(), promotion.getName(), promotion.getStartedDate(),
                 promotion.getEndedDate(), df.format(promotion.getDiscount()),
                 promotion.getPromotionType().equals(PromotionType.PRODUCT) ? "Sản phẩm" : "Hóa đơn",
                 promotion.isStatus() == true ? "Đã phát hành" : "Chưa phát hành"});
@@ -153,6 +154,8 @@ public class TABPromotion extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        txtPromotionOrder = new javax.swing.JTextField();
         pnPromotionProduct = new javax.swing.JPanel();
         scrollTableDesPre = new javax.swing.JScrollPane();
         jButton1 = new javax.swing.JButton();
@@ -165,6 +168,8 @@ public class TABPromotion extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         searchProduct = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        txtPromotionProduct = new javax.swing.JTextField();
         modalUpdateProduct = new javax.swing.JDialog();
         pnPromotionProduct1 = new javax.swing.JPanel();
         scrollTableDesPre1 = new javax.swing.JScrollPane();
@@ -178,6 +183,8 @@ public class TABPromotion extends javax.swing.JPanel {
         jLabel17 = new javax.swing.JLabel();
         searchProduct1 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        txtPromotionProduct1 = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
         modalUpdateOrder = new javax.swing.JDialog();
         pnPromotionOrder1 = new javax.swing.JPanel();
         btnUpdateOrder = new javax.swing.JButton();
@@ -187,6 +194,8 @@ public class TABPromotion extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        txtPromotionOrder1 = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
         pnAll = new javax.swing.JPanel();
         headerPanel = new javax.swing.JPanel();
         btnUpdate = new javax.swing.JButton();
@@ -249,16 +258,23 @@ public class TABPromotion extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel6.setText("Giảm giá");
 
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel18.setText("Chương trình khuyến mãi");
+
+        txtPromotionOrder.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtPromotionOrder.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
         javax.swing.GroupLayout pnPromotionOrderLayout = new javax.swing.GroupLayout(pnPromotionOrder);
         pnPromotionOrder.setLayout(pnPromotionOrderLayout);
         pnPromotionOrderLayout.setHorizontalGroup(
             pnPromotionOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnPromotionOrderLayout.createSequentialGroup()
-                .addGap(182, 182, 182)
+                .addGap(160, 160, 160)
                 .addGroup(pnPromotionOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel18)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel2))
                 .addGroup(pnPromotionOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnPromotionOrderLayout.createSequentialGroup()
                         .addGap(90, 90, 90)
@@ -267,20 +283,25 @@ public class TABPromotion extends javax.swing.JPanel {
                         .addGap(88, 88, 88)
                         .addGroup(pnPromotionOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jDateTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jDateFrom, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))))
-                .addContainerGap(276, Short.MAX_VALUE))
+                            .addComponent(jDateFrom, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                            .addComponent(txtPromotionOrder))))
+                .addContainerGap(209, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPromotionOrderLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDTM, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+                .addGap(92, 92, 92))
         );
         pnPromotionOrderLayout.setVerticalGroup(
             pnPromotionOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPromotionOrderLayout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(78, 78, 78)
+                .addGroup(pnPromotionOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(txtPromotionOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
                 .addGroup(pnPromotionOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(50, 50, 50)
                 .addGroup(pnPromotionOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
@@ -289,9 +310,9 @@ public class TABPromotion extends javax.swing.JPanel {
                 .addGroup(pnPromotionOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(spinnerDiscount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(150, 150, 150)
+                .addGap(55, 55, 55)
                 .addComponent(btnDTM, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74))
+                .addGap(131, 131, 131))
         );
 
         tabbedPanePromotion.addTab("Khuyến mãi trên hóa đơn", pnPromotionOrder);
@@ -357,6 +378,12 @@ public class TABPromotion extends javax.swing.JPanel {
             }
         });
 
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel19.setText("Chương trình khuyến mãi");
+
+        txtPromotionProduct.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtPromotionProduct.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
         javax.swing.GroupLayout pnPromotionProductLayout = new javax.swing.GroupLayout(pnPromotionProduct);
         pnPromotionProduct.setLayout(pnPromotionProductLayout);
         pnPromotionProductLayout.setHorizontalGroup(
@@ -364,30 +391,33 @@ public class TABPromotion extends javax.swing.JPanel {
             .addGroup(pnPromotionProductLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnPromotionProductLayout.createSequentialGroup()
-                        .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jDateFromP, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70)
-                        .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jDateToP, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70)
-                        .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(spinnerDiscountP, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(255, 291, Short.MAX_VALUE))
-                    .addGroup(pnPromotionProductLayout.createSequentialGroup()
-                        .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(scrollTableDesPre, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(pnPromotionProductLayout.createSequentialGroup()
+                            .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnPromotionProductLayout.createSequentialGroup()
-                                    .addComponent(searchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 789, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel10))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(jLabel19)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(txtPromotionProduct))
+                            .addGap(18, 18, 18)
+                            .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7)
+                                .addComponent(jDateFromP, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(20, 20, 20)
+                            .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel8)
+                                .addComponent(jDateToP, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(20, 20, 20)
+                            .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel9)
+                                .addComponent(spinnerDiscountP, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(scrollTableDesPre, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnPromotionProductLayout.createSequentialGroup()
+                            .addComponent(searchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 789, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 57, Short.MAX_VALUE))
         );
         pnPromotionProductLayout.setVerticalGroup(
             pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,12 +426,14 @@ public class TABPromotion extends javax.swing.JPanel {
                 .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel9))
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel19))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateFromP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateToP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinnerDiscountP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnPromotionProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jDateFromP, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(jDateToP, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(spinnerDiscountP, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(txtPromotionProduct))
                 .addGap(20, 20, 20)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -511,6 +543,12 @@ public class TABPromotion extends javax.swing.JPanel {
             }
         });
 
+        txtPromotionProduct1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtPromotionProduct1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel20.setText("Chương trình khuyến mãi");
+
         javax.swing.GroupLayout pnPromotionProduct1Layout = new javax.swing.GroupLayout(pnPromotionProduct1);
         pnPromotionProduct1.setLayout(pnPromotionProduct1Layout);
         pnPromotionProduct1Layout.setHorizontalGroup(
@@ -518,44 +556,54 @@ public class TABPromotion extends javax.swing.JPanel {
             .addGroup(pnPromotionProduct1Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnPromotionProduct1Layout.createSequentialGroup()
-                        .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(jDateFromP1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70)
-                        .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addComponent(jDateToP1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70)
-                        .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(spinnerDiscountP1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(255, 291, Short.MAX_VALUE))
-                    .addGroup(pnPromotionProduct1Layout.createSequentialGroup()
-                        .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(scrollTableDesPre1, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17)
+                    .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(pnPromotionProduct1Layout.createSequentialGroup()
+                            .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnPromotionProduct1Layout.createSequentialGroup()
-                                    .addComponent(searchProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 789, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel17))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(jLabel20)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(txtPromotionProduct1))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel14)
+                                .addComponent(jDateFromP1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(20, 20, 20)
+                            .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel15)
+                                .addComponent(jDateToP1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(20, 20, 20)
+                            .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel16)
+                                .addComponent(spinnerDiscountP1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(scrollTableDesPre1, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnPromotionProduct1Layout.createSequentialGroup()
+                                .addComponent(searchProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 789, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 57, Short.MAX_VALUE))
         );
         pnPromotionProduct1Layout.setVerticalGroup(
             pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPromotionProduct1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateFromP1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateToP1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinnerDiscountP1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnPromotionProduct1Layout.createSequentialGroup()
+                        .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnPromotionProduct1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateFromP1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateToP1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spinnerDiscountP1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnPromotionProduct1Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPromotionProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -566,7 +614,7 @@ public class TABPromotion extends javax.swing.JPanel {
                 .addComponent(scrollTableDesPre1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout modalUpdateProductLayout = new javax.swing.GroupLayout(modalUpdateProduct.getContentPane());
@@ -582,13 +630,12 @@ public class TABPromotion extends javax.swing.JPanel {
 
         modalUpdateOrder.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         modalUpdateOrder.setTitle("Cập nhật chương trình khuyến mãi");
-        modalUpdateOrder.setMinimumSize(new java.awt.Dimension(650, 386));
-        modalUpdateOrder.setModal(true);
+        modalUpdateOrder.setMinimumSize(new java.awt.Dimension(752, 463));
 
         pnPromotionOrder1.setBackground(new java.awt.Color(255, 255, 255));
-        pnPromotionOrder1.setMaximumSize(new java.awt.Dimension(650, 386));
-        pnPromotionOrder1.setMinimumSize(new java.awt.Dimension(650, 386));
-        pnPromotionOrder1.setPreferredSize(new java.awt.Dimension(650, 386));
+        pnPromotionOrder1.setMaximumSize(new java.awt.Dimension(752, 463));
+        pnPromotionOrder1.setMinimumSize(new java.awt.Dimension(752, 463));
+        pnPromotionOrder1.setPreferredSize(new java.awt.Dimension(752, 463));
 
         btnUpdateOrder.setBackground(new java.awt.Color(116, 167, 72));
         btnUpdateOrder.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -625,34 +672,45 @@ public class TABPromotion extends javax.swing.JPanel {
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel13.setText("Giảm giá");
 
+        txtPromotionOrder1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtPromotionOrder1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel21.setText("Chương trình khuyến mãi");
+
         javax.swing.GroupLayout pnPromotionOrder1Layout = new javax.swing.GroupLayout(pnPromotionOrder1);
         pnPromotionOrder1.setLayout(pnPromotionOrder1Layout);
         pnPromotionOrder1Layout.setHorizontalGroup(
             pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnPromotionOrder1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(50, 50, 50)
                 .addGroup(pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnUpdateOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnPromotionOrder1Layout.createSequentialGroup()
                         .addGroup(pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel11))
+                            .addComponent(jLabel13)
                             .addGroup(pnPromotionOrder1Layout.createSequentialGroup()
-                                .addGroup(pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel11))
-                                .addGap(53, 53, 53))
-                            .addGroup(pnPromotionOrder1Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addGap(53, 53, 53)))
-                        .addGroup(pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateToUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateFromUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spinnerDiscountUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(68, Short.MAX_VALUE))
+                                .addComponent(jLabel21)
+                                .addGap(4, 4, 4)))
+                        .addGap(40, 40, 40)
+                        .addGroup(pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jDateToUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                            .addComponent(jDateFromUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spinnerDiscountUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPromotionOrder1))))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         pnPromotionOrder1Layout.setVerticalGroup(
             pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPromotionOrder1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(50, 50, 50)
+                .addGroup(pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtPromotionOrder1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21))
+                .addGap(40, 40, 40)
                 .addGroup(pnPromotionOrder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel11)
                     .addComponent(jDateFromUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -666,16 +724,14 @@ public class TABPromotion extends javax.swing.JPanel {
                     .addComponent(jLabel13))
                 .addGap(41, 41, 41)
                 .addComponent(btnUpdateOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout modalUpdateOrderLayout = new javax.swing.GroupLayout(modalUpdateOrder.getContentPane());
         modalUpdateOrder.getContentPane().setLayout(modalUpdateOrderLayout);
         modalUpdateOrderLayout.setHorizontalGroup(
             modalUpdateOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(modalUpdateOrderLayout.createSequentialGroup()
-                .addComponent(pnPromotionOrder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pnPromotionOrder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         modalUpdateOrderLayout.setVerticalGroup(
             modalUpdateOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -849,12 +905,12 @@ public class TABPromotion extends javax.swing.JPanel {
             MessageDialog.warning(null, "Hãy chọn khuyến mãi muốn cập nhật thông tin");
             return;
         }
-        String status = (String) tableDesign.getModelTable().getValueAt(selectedRow, 5);
+        String status = (String) tableDesign.getModelTable().getValueAt(selectedRow, 6);
         if (!status.equals("Chưa phát hành")) {
             MessageDialog.warning(null, "Chương trình khuyến mãi đã phát hành nên không thể chỉnh sửa");
             return;
         }
-        String type = (String) tableDesign.getModelTable().getValueAt(selectedRow, 4);
+        String type = (String) tableDesign.getModelTable().getValueAt(selectedRow, 5);
         if (type.equals("Hóa đơn")) {
             Optional<Promotion> promotionExists = promotionBUS.getPromotionById((String) tableDesign.getModelTable().getValueAt(selectedRow, 0));
             if (promotionExists.isEmpty()) {
@@ -865,6 +921,7 @@ public class TABPromotion extends javax.swing.JPanel {
             jDateFromUpdate.setDate(Date.valueOf(promotion.getStartedDate()));
             jDateToUpdate.setDate(Date.valueOf(promotion.getEndedDate()));
             spinnerDiscountUpdate.setValue((int) (promotion.getDiscount() * 100));
+            txtPromotionOrder1.setText(promotion.getName());
             modalUpdateOrder.setLocationRelativeTo(null);
             modalUpdateOrder.setVisible(true);
         } else {
@@ -877,10 +934,12 @@ public class TABPromotion extends javax.swing.JPanel {
             jDateFromP1.setDate(Date.valueOf(promotion.getStartedDate()));
             jDateToP1.setDate(Date.valueOf(promotion.getEndedDate()));
             spinnerDiscountP1.setValue((int) (promotion.getDiscount() * 100));
+            txtPromotionProduct1.setText(promotion.getName());
             List<Product> products = promotionBUS.getAllByPromotion(promotion);
             tableDesignUpdate.getModelTable().setRowCount(0);
             for (Product product : products) {
                 tableDesignUpdate.getModelTable().addRow(new Object[]{product.getProductId(), product.getName(),
+                    product.getUnit().getName(),
                     FormatNumber.formatToVND(product.getPrice()), null});
             }
             modalUpdateProduct.setLocationRelativeTo(null);
@@ -910,6 +969,7 @@ public class TABPromotion extends javax.swing.JPanel {
         LocalDate start = jdate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         java.util.Date jdate2 = jDateTo.getDate();
         LocalDate end = jdate2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String name = txtPromotionOrder.getText().trim();
         double discount = (int) spinnerDiscount.getValue() * 1.0 / 100;
         if (start.isBefore(LocalDate.now())) {
             MessageDialog.warning(null, "Ngày bắt đầu phải sau ngày hiện tại");
@@ -920,7 +980,7 @@ public class TABPromotion extends javax.swing.JPanel {
             return;
         }
         try {
-            Promotion promotion = new Promotion(null, start, end, discount, false, PromotionType.ORDER);
+            Promotion promotion = new Promotion(null, name, start, end, discount, false, PromotionType.ORDER);
             promotionBUS.createPromotion(promotion, null);
             MessageDialog.info(null, "Thêm chương trình khuyến mãi thành công");
             modalPromotion.dispose();
@@ -968,6 +1028,7 @@ public class TABPromotion extends javax.swing.JPanel {
         LocalDate start = jdate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         java.util.Date jdate2 = jDateToP.getDate();
         LocalDate end = jdate2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String name = txtPromotionProduct.getText().trim();
         double discount = (int) spinnerDiscountP.getValue() * 1.0 / 100;
         if (start.isBefore(LocalDate.now())) {
             MessageDialog.warning(null, "Ngày bắt đầu phải sau ngày hiện tại");
@@ -987,7 +1048,7 @@ public class TABPromotion extends javax.swing.JPanel {
             listProductIds.add((String) tableDesignAdd.getModelTable().getValueAt(i, 0));
         }
         try {
-            Promotion promotion = new Promotion(null, start, end, discount, false, PromotionType.PRODUCT);
+            Promotion promotion = new Promotion(null, name, start, end, discount, false, PromotionType.PRODUCT);
             promotionBUS.createPromotion(promotion, listProductIds);
             MessageDialog.info(null, "Thêm chương trình khuyến mãi thành công");
             modalPromotion.dispose();
@@ -1006,6 +1067,7 @@ public class TABPromotion extends javax.swing.JPanel {
         java.util.Date jdate2 = jDateToUpdate.getDate();
         LocalDate end = jdate2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         double discount = (int) spinnerDiscountUpdate.getValue() * 1.0 / 100;
+        String name  = txtPromotionOrder1.getText().trim();
         if (start.isBefore(LocalDate.now())) {
             MessageDialog.warning(null, "Ngày bắt đầu phải sau ngày hiện tại");
             return;
@@ -1016,7 +1078,7 @@ public class TABPromotion extends javax.swing.JPanel {
         }
         int selectedRow = tableDesign.getTable().getSelectedRow();
         String promotionId = (String) tableDesign.getModelTable().getValueAt(selectedRow, 0);
-        Promotion promotion = new Promotion(promotionId, start, end, discount, false, PromotionType.ORDER);
+        Promotion promotion = new Promotion(promotionId, name, start, end, discount, false, PromotionType.ORDER);
         if (promotionBUS.updatePromotion(promotion, null)) {
             MessageDialog.info(null, "Cập nhật chương trình khuyến mãi thành công");
             modalUpdateOrder.dispose();
@@ -1034,6 +1096,7 @@ public class TABPromotion extends javax.swing.JPanel {
         java.util.Date jdate2 = jDateToP1.getDate();
         LocalDate end = jdate2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         double discount = (int) spinnerDiscountP1.getValue() * 1.0 / 100;
+        String name = txtPromotionProduct1.getText().trim();
         if (start.isBefore(LocalDate.now())) {
             MessageDialog.warning(null, "Ngày bắt đầu phải sau ngày hiện tại");
             return;
@@ -1044,7 +1107,7 @@ public class TABPromotion extends javax.swing.JPanel {
         }
         int selectedRow = tableDesign.getTable().getSelectedRow();
         String promotionId = (String) tableDesign.getModelTable().getValueAt(selectedRow, 0);
-        Promotion promotion = new Promotion(promotionId, start, end, discount, false, PromotionType.PRODUCT);
+        Promotion promotion = new Promotion(promotionId, name, start, end, discount, false, PromotionType.PRODUCT);
         List<String> listProductIds = new ArrayList<>();
         int index = tableDesignUpdate.getModelTable().getRowCount();
         if (index == 0) {
@@ -1094,7 +1157,7 @@ public class TABPromotion extends javax.swing.JPanel {
             MessageDialog.warning(null, "Chương trình khuyến mãi đã phát hành");
             return;
         }
-        if(MessageDialog.confirm(null, "Bạn có chắc muốn phát hành chương trình khuyến mãi?", "Phát hành chương trình khuyến mãi")){
+        if (MessageDialog.confirm(null, "Bạn có chắc muốn phát hành chương trình khuyến mãi?", "Phát hành chương trình khuyến mãi")) {
             promotionBUS.sendMail(tableDesign.getTable().getValueAt(selectedRow, 0).toString());
             MessageDialog.info(null, "Gửi mail chương trình khuyến mãi đến khách hàng thành công");
             tableDesign.getTable().setValueAt("Đã phát hành", selectedRow, 5);
@@ -1141,7 +1204,11 @@ public class TABPromotion extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1169,5 +1236,9 @@ public class TABPromotion extends javax.swing.JPanel {
     private javax.swing.JSpinner spinnerDiscountP1;
     private javax.swing.JSpinner spinnerDiscountUpdate;
     private javax.swing.JTabbedPane tabbedPanePromotion;
+    private javax.swing.JTextField txtPromotionOrder;
+    private javax.swing.JTextField txtPromotionOrder1;
+    private javax.swing.JTextField txtPromotionProduct;
+    private javax.swing.JTextField txtPromotionProduct1;
     // End of variables declaration//GEN-END:variables
 }

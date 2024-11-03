@@ -12,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -25,6 +26,10 @@ public class Promotion {
     @Id
     @Column(name = "promotion_id")
     private String promotionId;
+    
+    @Column(name = "name")
+    @Nationalized
+    private String name;
     
     @Column(name = "started_date")
     private LocalDate startedDate;
@@ -46,8 +51,9 @@ public class Promotion {
         
     }
 
-    public Promotion(String promotionId, LocalDate startedDate, LocalDate endedDate, double discount, boolean status, PromotionType promotionType) {
+    public Promotion(String promotionId, String name,  LocalDate startedDate, LocalDate endedDate, double discount, boolean status, PromotionType promotionType) {
         this.promotionId = promotionId;
+        setName(name);
         setStartedDate(startedDate);
         setEndedDate(endedDate);
         setDiscount(discount);
@@ -62,6 +68,18 @@ public class Promotion {
         this.promotionId = promotionId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name.equals("")) {
+            throw new RuntimeException("Tên chương trình khuyến mãi không được rỗng!");
+        }
+        this.name = name;
+    }
+
+    
     public LocalDate getStartedDate() {
         return startedDate;
     }
@@ -80,7 +98,7 @@ public class Promotion {
 
     public void setEndedDate(LocalDate endedDate) {
         if(endedDate.isBefore(startedDate)){
-            throw new RuntimeException("NGày kết thúc không hợp lệ");
+            throw new RuntimeException("Ngày kết thúc không hợp lệ");
         }
         this.endedDate = endedDate;
     }
