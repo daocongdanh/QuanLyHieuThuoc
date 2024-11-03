@@ -50,78 +50,50 @@ public class OrderBUS {
     public boolean createOrder(Employee employee, Customer customer, Promotion promotion,
             List<OrderDTO> orderDTOs) {
         try {
-//            transaction.begin();
-//
-//            if (employee == null) {
-//                throw new RuntimeException("Nhân viên không được rỗng");
-//            }
-//
-//            List<OrderDetail> orderDetails = new ArrayList<>();
-//
-//            for (OrderDTO orderDTO : orderDTOs) {
-//                Unit unit = orderDTO.getUnitDetail().getUnit();
-//                UnitDetail unitDetail
-//                        = unitDetailDAL.findByProductAndUnit(orderDTO.getProductId(), unit.getUnitId());
-//                Batch batch = batchDAL.findByNameAndProduct(orderDTO.getBatchName(), orderDTO.getProductId());
-//                Product product = productDAL.findById(orderDTO.getProductId())
-//                        .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
-//                Promotion exsistPromotion = promotionBUS.getPromotionByProduct(product);
-//                double discount = exsistPromotion != null ? exsistPromotion.getDiscount() : 0;
-//                OrderDetail orderDetail = new OrderDetail(orderDTO.getQuantity(),
-//                        product.getSellingPrice() * unitDetail.getConversionRate(),
-//                        discount, batch, unitDetail);
-//                orderDetails.add(orderDetail);
-//                int stock = batch.getStock() - orderDTO.getQuantity() * unitDetail.getConversionRate();
-//                if (stock < 0) {
-//                    throw new RuntimeException("Số lượng không đủ với lô hàng: " + batch.getName());
-//                }
-//                batch.setStock(stock);
-//            }
-//            Order order;
-//            if (promotion != null) {
-//                if (!promotion.getPromotionType().equals(PromotionType.ORDER)) {
-//                    throw new RuntimeException("Không phải khuyến mãi trên hóa đơn");
-//                }
-//                if (promotion.getStartedDate().isAfter(LocalDate.now())) {
-//                    throw new RuntimeException("Chưa đến đợt khuyến mãi");
-//                }
-//                if (promotion.getEndedDate().isBefore(LocalDate.now())) {
-//                    throw new RuntimeException("Khuyến mãi đã hết hạn");
-//                }
-//                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, promotion, orderDetails);
-//            } else {
-//                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, null, orderDetails);
-//            }
-//
-//            orderDAL.insert(order);
-//            Map<String, List<OrderDetail>> map = orderDetails.stream()
-//                    .collect(Collectors.groupingBy(
-//                            orderDetail -> orderDetail.getUnitDetail().getProduct().getProductId(),
-//                            LinkedHashMap::new,
-//                            Collectors.toList()
-//                    ));
-//            map.forEach((key, value) -> {
-//                OrderDetail orderDetail = value.get(0);
-//                UnitDetail unitDetail = orderDetail.getUnitDetail();
-//                Product product = unitDetail.getProduct();
-//                int sumQuantity = value.stream()
-//                        .mapToInt(x -> x.getQuantity() * x.getUnitDetail().getConversionRate())
-//                        .sum();
-//                double costPrice = product.getPurchasePrice() * sumQuantity;
-//                double transactionPrice = value.stream()
-//                        .mapToDouble(OrderDetail::getLineTotal)
-//                        .sum();
-//                int finalStock = batchDAL.getFinalStockByProduct(product.getProductId());
-//                ProductTransactionHistory productTransactionHistory
-//                        = new ProductTransactionHistory(order.getOrderId(), order.getOrderDate(),
-//                                "Bán hàng", order.getCustomer() == null ? "Khách vãng lai" : (order.getCustomer().getName()),
-//                                transactionPrice, costPrice, -sumQuantity, finalStock, product);
-//                productTransactionHistoryDAL.insert(productTransactionHistory);
-//
-//            });
-//
-//            generatePDF.GeneratePDF(order);
-//            transaction.commit();
+            transaction.begin();
+
+            if (employee == null) {
+                throw new RuntimeException("Nhân viên không được rỗng");
+            }
+
+            List<OrderDetail> orderDetails = new ArrayList<>();
+
+            for (OrderDTO orderDTO : orderDTOs) {
+                Batch batch = batchDAL.findByNameAndProduct(orderDTO.getBatchName(), orderDTO.getProductId());
+                Product product = productDAL.findById(orderDTO.getProductId())
+                        .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+                Promotion exsistPromotion = promotionBUS.getPromotionByProduct(product);
+                double discount = exsistPromotion != null ? exsistPromotion.getDiscount() : 0;
+                OrderDetail orderDetail = new OrderDetail(orderDTO.getQuantity(),
+                        product.getSellingPrice(),
+                        discount, batch);
+                orderDetails.add(orderDetail);
+                int stock = batch.getStock() - orderDTO.getQuantity();
+                if (stock < 0) {
+                    throw new RuntimeException("Số lượng không đủ với lô hàng: " + batch.getName());
+                }
+                batch.setStock(stock);
+            }
+            Order order;
+            if (promotion != null) {
+                if (!promotion.getPromotionType().equals(PromotionType.ORDER)) {
+                    throw new RuntimeException("Không phải khuyến mãi trên hóa đơn");
+                }
+                if (promotion.getStartedDate().isAfter(LocalDate.now())) {
+                    throw new RuntimeException("Chưa đến đợt khuyến mãi");
+                }
+                if (promotion.getEndedDate().isBefore(LocalDate.now())) {
+                    throw new RuntimeException("Khuyến mãi đã hết hạn");
+                }
+                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, promotion, orderDetails);
+            } else {
+                order = new Order(null, LocalDateTime.now(), PaymentMethod.CASH, employee, customer, null, orderDetails);
+            }
+
+            orderDAL.insert(order);
+
+            generatePDF.GeneratePDF(order);
+            transaction.commit();
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

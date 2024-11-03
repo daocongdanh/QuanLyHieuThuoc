@@ -86,4 +86,8 @@ public class ReturnOrderDetailBUS {
         }
 
     }
+    
+    public List<ReturnOrderDetail> getListReturnOrderDetailsByReturnOrder(ReturnOrder returnOrder){
+        return returnOrderDetailDAL.getListReturnOrderDetailsByReturnOrder(returnOrder);
+    }
 }

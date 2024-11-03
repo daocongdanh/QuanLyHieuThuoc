@@ -317,46 +317,35 @@ public class TABPurchase extends javax.swing.JPanel {
         add(headerPanel, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-//    private void searchProduct(String textTim) {
-//        Product product = productBUS.getProductBySDK(textTim);
-//        if (product != null) {
-//            addSanPham(product);
-//            txtSearchProduct.setText("");
-//        } else {
-//            MessageDialog.warning(null, "Sản phẩm không tồn tại !!!");
-//        }
-//    }
+    private void searchProduct(String sdk) {
+        Product product = productBUS.getProductBySDK(sdk);
+        if (product != null) {
+            addSanPham(product);
+            txtSearchProduct.setText("");
+        } else {
+            MessageDialog.warning(null, "Sản phẩm không tồn tại !!!");
+        }
+    }
 
-//    private void addSanPham(Product product) {
-//
-//        List<UnitDetail> unitDetails = unitDetailBUS.getListUnitProduct(product);
-//        for (Component component : pnContent.getComponents()) {
-//            if (component instanceof PnPurchaseOrderDetail) {
-//                PnPurchaseOrderDetail existingDetail = (PnPurchaseOrderDetail) component;
-//
-//                if (existingDetail.getProduct().equals(product)) {
-//                    UnitDetail selectedUnit = existingDetail.getSelectedUnitDetail();
-//                    if (selectedUnit != null) {
-//                        unitDetails.remove(selectedUnit);
-//                    }
-//                }
-//            }
-//        }
-//
-//        if (unitDetails.isEmpty()) {
-//            MessageDialog.warning(null, "Sản phẩm đã tồn tại");
-//            return;
-//        }
-//
-//        List<Batch> batchs = batchBUS.getListBatchEnable(product);
-//        PnPurchaseOrderDetail pnPurchaseOrderDetail = new PnPurchaseOrderDetail(product, unitDetails, batchs, this);
-//        pnContent.add(pnPurchaseOrderDetail);
-//        pnContent.revalidate();
-//        pnContent.repaint();
-//
+    private void addSanPham(Product product) {
+
+        List<PnPurchaseOrderDetail> pnPurchaseOrderDetails = getAllPnPurchaseOrderDetailThuoc();
+        for (PnPurchaseOrderDetail pnPurchaseOrderDetail : pnPurchaseOrderDetails) {
+            if(pnPurchaseOrderDetail.getProduct().getProductId().equalsIgnoreCase(product.getProductId())) {
+                MessageDialog.warning(null, "Sản phẩm đã tồn tại!");
+                return;
+            }
+        }
+        
+        List<Batch> batchs = batchBUS.getListBatchEnable(product);
+        PnPurchaseOrderDetail pnPurchaseOrderDetail = new PnPurchaseOrderDetail(product, batchs, this);
+        pnContent.add(pnPurchaseOrderDetail);
+        pnContent.revalidate();
+        pnContent.repaint();
+
 //        updateUnitDetailsForProduct(product, unitDetails.get(0));
-//    }
-//
+    }
+
 //    private void updateUnitDetailsForProduct(Product product, UnitDetail unitDetailTmp) {
 //
 //        for (Component component : pnContent.getComponents()) {
@@ -372,30 +361,30 @@ public class TABPurchase extends javax.swing.JPanel {
 //        }
 //    }
 
-//    public void changeTongTienHoaDon() {
-//        tongTienHang = 0.0;
-//        List<PnPurchaseOrderDetail> listPanelPurchaseOrderDetails = getAllPnPurchaseOrderDetailThuoc();
-//        for (PnPurchaseOrderDetail x : listPanelPurchaseOrderDetails) {
-//            tongTienHang += x.getLineTotal();
-//        }
-//        txtTotalPrice.setText(FormatNumber.formatToVND(tongTienHang));
-//    }
-//
-//    private List<PnPurchaseOrderDetail> getAllPnPurchaseOrderDetailThuoc() {
-//        List<PnPurchaseOrderDetail> purchaseOrderDetails = new ArrayList<>();
-//        Component[] components = pnContent.getComponents();
-//
-//        for (Component component : components) {
-//            if (component instanceof PnPurchaseOrderDetail) {
-//                purchaseOrderDetails.add((PnPurchaseOrderDetail) component);
-//            }
-//        }
-//        return purchaseOrderDetails;
-//    }
+    public void changeTongTienHoaDon() {
+        tongTienHang = 0.0;
+        List<PnPurchaseOrderDetail> listPanelPurchaseOrderDetails = getAllPnPurchaseOrderDetailThuoc();
+        for (PnPurchaseOrderDetail x : listPanelPurchaseOrderDetails) {
+            tongTienHang += x.getLineTotal();
+        }
+        txtTotalPrice.setText(FormatNumber.formatToVND(tongTienHang));
+    }
+
+    private List<PnPurchaseOrderDetail> getAllPnPurchaseOrderDetailThuoc() {
+        List<PnPurchaseOrderDetail> purchaseOrderDetails = new ArrayList<>();
+        Component[] components = pnContent.getComponents();
+
+        for (Component component : components) {
+            if (component instanceof PnPurchaseOrderDetail) {
+                purchaseOrderDetails.add((PnPurchaseOrderDetail) component);
+            }
+        }
+        return purchaseOrderDetails;
+    }
 
     private void txtSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchProductActionPerformed
         String textTim = txtSearchProduct.getText();
-//        searchProduct(textTim);
+        searchProduct(textTim);
     }//GEN-LAST:event_txtSearchProductActionPerformed
 
     private void btnMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaActionPerformed
@@ -405,156 +394,131 @@ public class TABPurchase extends javax.swing.JPanel {
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         clearPnOrderDetail();
         try {
-//            JFileChooser chooserFile = new JFileChooser();
-//            chooserFile.setDialogTitle("Chọn file");
-//            FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
-//            chooserFile.setFileFilter(fnef);
-//            int result = chooserFile.showOpenDialog(null);
-//
-//            if (result == JFileChooser.APPROVE_OPTION) {
-//                File excelFile = chooserFile.getSelectedFile();
-//                FileInputStream excelFIS = new FileInputStream(excelFile);
-//                BufferedInputStream excelBIS = new BufferedInputStream(excelFIS);
-//                XSSFWorkbook excelImport = new XSSFWorkbook(excelBIS);
-//                XSSFSheet excelSheet = excelImport.getSheetAt(0);
-//                
-//                String phoneSupplier = excelSheet.getRow(3).getCell(1).getStringCellValue().trim();
-//                supplier = supplierBUS.getSupplierByPhone(phoneSupplier);
-//                if (supplier == null) {
-//                    MessageDialog.warning(null, "Nhà cung cấp không tồn tại !!!");
-//                    return;
-//                }
-//                txtSupplierId.setText(supplier.getSupplierId());
-//                txtSupplierName.setText(supplier.getName());
-//                txtSearchSupplier.setText("");
-//
-//                for (int row = 6; row <= excelSheet.getLastRowNum(); row++) {
-//                    PnPurchaseOrderDetail pnPurchaseOrderDetail;
-//                    
-//                    XSSFRow excelRow = excelSheet.getRow(row);
-//                    String regisNb = excelRow.getCell(1).getStringCellValue().trim();
-//                    String productName = excelRow.getCell(2).getStringCellValue().trim();
-//                    String batchName = excelRow.getCell(3).getStringCellValue().trim();
-//                    String experationDateStr = excelRow.getCell(4).getStringCellValue().trim();
-//                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-//                    LocalDate experationDate = LocalDate.parse(experationDateStr, formatter);
-//                    String unitName = excelRow.getCell(5).getStringCellValue().trim();
-//                    int quantity = (int) excelRow.getCell(6).getNumericCellValue();
-//                    
-//                    int check = 0; 
-//                    Product p = (Product) productBUS.getProductBySDK(regisNb);
-//                    if (p == null) {
-//                        MessageDialog.warning(null, "Sản phẩm không tồn tại: " + productName);
-//                        continue;
-//                    }
-//                    List<UnitDetail> unitDetails = unitDetailBUS.getListUnitProduct(p);
-//                    UnitDetail checkExists = unitDetails
-//                            .stream()
-//                            .filter(u -> u.getUnit().getName().equalsIgnoreCase(unitName)).findFirst().orElse(null);
-//                    if(checkExists == null){
-//                        MessageDialog.warning(null, "Đơn vị tính không tồn tại: " + productName);
-//                        continue;
-//                    }
-//                    
-//                    List<Batch> batchs = batchBUS.getListBatchEnable(p);
-//                    pnPurchaseOrderDetail = new PnPurchaseOrderDetail(p, unitDetails, batchs, this);
-//                    for (Component component : pnContent.getComponents()) {
-//                        if (component instanceof PnPurchaseOrderDetail) {
-//                            PnPurchaseOrderDetail existingDetail = (PnPurchaseOrderDetail) component;
-//                            if(p.getProductId().equalsIgnoreCase(existingDetail.getProduct().getProductId()) && unitName.equalsIgnoreCase(existingDetail.getComboChonDvt().getSelectedItem().toString().trim())) {
-//                                check = 1;
-//                                pnPurchaseOrderDetail = existingDetail;
-//                            }
-//                        }
-//                    }
-//
-//                    if (check == 1) {
-//                        BatchDTO batchDTO = new BatchDTO(batchName, quantity, experationDate, quantity);
-//                        UnitDetail unitDetail = (UnitDetail) pnPurchaseOrderDetail.getComboChonDvt().getSelectedItem();
-//                        pnPurchaseOrderDetail.getPnListBatch().add(new PnPurchaseSelectBatch(batchDTO, unitDetail, pnPurchaseOrderDetail.getSpinnerSoLuong()));
-//                        pnPurchaseOrderDetail.getPnListBatch().revalidate();
-//                        pnPurchaseOrderDetail.getPnListBatch().repaint();
-//                        
-//                        pnPurchaseOrderDetail.setQuantity();
-//                        
-//                        pnContent.add(pnPurchaseOrderDetail);
-//                        pnContent.revalidate();
-//                        pnContent.repaint();
-//
-//                        updateUnitDetailsForProduct(p, unitDetails.get(0));
-//                    } else {
-//                        for (Component component : pnContent.getComponents()) {
-//                            if (component instanceof PnPurchaseOrderDetail) {
-//                                PnPurchaseOrderDetail existingDetail = (PnPurchaseOrderDetail) component;
-//                                if (existingDetail.getProduct().getProductId().equalsIgnoreCase(p.getProductId())) {
-//                                    UnitDetail selectedUnit = existingDetail.getSelectedUnitDetail();
-//                                    if (selectedUnit != null) {
-//                                        unitDetails.remove(selectedUnit);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        
-//                        pnPurchaseOrderDetail = new PnPurchaseOrderDetail(p, unitDetails, batchs, this);
-//                        pnPurchaseOrderDetail.getComboChonDvt().setSelectedItem(unitName);
-//                        
-//                        Batch b = batchBUS.getBatchByName(batchName);
-//                        if(b != null) {
-//                            BatchDTO batchDTO = new BatchDTO(batchName, b.getStock(), b.getExpirationDate(), quantity);
-//                            UnitDetail unitDetail = (UnitDetail) pnPurchaseOrderDetail.getComboChonDvt().getSelectedItem();
-//                            pnPurchaseOrderDetail.getPnListBatch().add(new PnPurchaseSelectBatch(batchDTO, unitDetail, pnPurchaseOrderDetail.getSpinnerSoLuong()));
-//                        }
-//                        else {
-//                            BatchDTO batchDTO = new BatchDTO(batchName, quantity, experationDate, quantity);
-//                            UnitDetail unitDetail = (UnitDetail) pnPurchaseOrderDetail.getComboChonDvt().getSelectedItem();
-//                            pnPurchaseOrderDetail.getPnListBatch().add(new PnPurchaseSelectBatch(batchDTO, unitDetail, pnPurchaseOrderDetail.getSpinnerSoLuong())); 
-//                        }
-//                        
-//                        pnPurchaseOrderDetail.getPnListBatch().revalidate();
-//                        pnPurchaseOrderDetail.getPnListBatch().repaint();
-//                        
-//                        pnPurchaseOrderDetail.setQuantity();
-//                        pnContent.add(pnPurchaseOrderDetail);
-//                        pnContent.revalidate();
-//                        pnContent.repaint();
-//
-//                        updateUnitDetailsForProduct(p, unitDetails.get(0)); 
-//                    }                               
-//                }
-//            }
+            JFileChooser chooserFile = new JFileChooser();
+            chooserFile.setDialogTitle("Chọn file");
+            FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+            chooserFile.setFileFilter(fnef);
+            int result = chooserFile.showOpenDialog(null);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File excelFile = chooserFile.getSelectedFile();
+                FileInputStream excelFIS = new FileInputStream(excelFile);
+                BufferedInputStream excelBIS = new BufferedInputStream(excelFIS);
+                XSSFWorkbook excelImport = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelImport.getSheetAt(0);
+                
+                String phoneSupplier = excelSheet.getRow(3).getCell(1).getStringCellValue().trim();
+                supplier = supplierBUS.getSupplierByPhone(phoneSupplier);
+                if (supplier == null) {
+                    MessageDialog.warning(null, "Nhà cung cấp không tồn tại !!!");
+                    return;
+                }
+                txtSupplierId.setText(supplier.getSupplierId());
+                txtSupplierName.setText(supplier.getName());
+                txtSearchSupplier.setText("");
+
+                for (int row = 6; row <= excelSheet.getLastRowNum(); row++) {
+                    PnPurchaseOrderDetail pnPurchaseOrderDetail;
+                    
+                    XSSFRow excelRow = excelSheet.getRow(row);
+                    String regisNb = excelRow.getCell(1).getStringCellValue().trim();
+                    String productName = excelRow.getCell(2).getStringCellValue().trim();
+                    String batchName = excelRow.getCell(3).getStringCellValue().trim();
+                    String experationDateStr = excelRow.getCell(4).getStringCellValue().trim();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                    LocalDate experationDate = LocalDate.parse(experationDateStr, formatter);
+                    String unitName = excelRow.getCell(5).getStringCellValue().trim();
+                    int quantity = (int) excelRow.getCell(6).getNumericCellValue();
+                    
+                    int check = 0; 
+                    Product p = (Product) productBUS.getProductBySDK(regisNb);
+                    if (p == null) {
+                        MessageDialog.warning(null, "Sản phẩm không tồn tại: " + productName);
+                        continue;
+                    }
+                    
+                    List<Batch> batchs = batchBUS.getListBatchEnable(p);
+                    pnPurchaseOrderDetail = new PnPurchaseOrderDetail(p, batchs, this);
+                    for (Component component : pnContent.getComponents()) {
+                        if (component instanceof PnPurchaseOrderDetail) {
+                            PnPurchaseOrderDetail existingDetail = (PnPurchaseOrderDetail) component;
+                            if(p.getProductId().equalsIgnoreCase(existingDetail.getProduct().getProductId())) {
+                                check = 1;
+                                pnPurchaseOrderDetail = existingDetail;
+                            }
+                        }
+                    }
+
+                    if (check == 1) {
+                        BatchDTO batchDTO = new BatchDTO(batchName, quantity, experationDate, quantity);
+                        pnPurchaseOrderDetail.getPnListBatch().add(new PnPurchaseSelectBatch(batchDTO, pnPurchaseOrderDetail.getSpinnerSoLuong()));
+                        pnPurchaseOrderDetail.getPnListBatch().revalidate();
+                        pnPurchaseOrderDetail.getPnListBatch().repaint();
+                        
+                        pnPurchaseOrderDetail.setQuantity();
+                        
+                        pnContent.add(pnPurchaseOrderDetail);
+                        pnContent.revalidate();
+                        pnContent.repaint();
+                        
+                    } else {
+                        pnPurchaseOrderDetail = new PnPurchaseOrderDetail(p, batchs, this);
+                        
+                        Batch b = batchBUS.getBatchByName(batchName);
+                        if(b != null) {
+                            BatchDTO batchDTO = new BatchDTO(batchName, b.getStock(), b.getExpirationDate(), quantity);
+                            pnPurchaseOrderDetail.getPnListBatch().add(new PnPurchaseSelectBatch(batchDTO, pnPurchaseOrderDetail.getSpinnerSoLuong()));
+                        }
+                        else {
+                            BatchDTO batchDTO = new BatchDTO(batchName, quantity, experationDate, quantity);
+                            pnPurchaseOrderDetail.getPnListBatch().add(new PnPurchaseSelectBatch(batchDTO, pnPurchaseOrderDetail.getSpinnerSoLuong())); 
+                        }
+                        
+                        pnPurchaseOrderDetail.getPnListBatch().revalidate();
+                        pnPurchaseOrderDetail.getPnListBatch().repaint();
+                        
+                        pnPurchaseOrderDetail.setQuantity();
+                        pnContent.add(pnPurchaseOrderDetail);
+                        pnContent.revalidate();
+                        pnContent.repaint();
+
+                    }                               
+                }
+            }
         } catch (Exception e) {
             throw new RuntimeException("Import file bị lỗi");
         }
+        changeTongTienHoaDon();
     }//GEN-LAST:event_btnImportActionPerformed
 
-//    private List<PurchaseOrderDTO> createListPurchaseOrderDetail() {
-//        List<PurchaseOrderDTO> podtos = new ArrayList<>();
-//        List<PnPurchaseOrderDetail> listPurchasePnOrderDetail = getAllPnPurchaseOrderDetailThuoc();
-//        if (listPurchasePnOrderDetail == null) {
-//            MessageDialog.warning(null, "Chưa có chọn sản phẩm !!!");
-//        } else {
-//            for (PnPurchaseOrderDetail pnPurchaseOrderDetail : listPurchasePnOrderDetail) {
-//                if (pnPurchaseOrderDetail.getSoLuong() == 0) {
-//                    MessageDialog.warning(null, String.format("Sản phẩm '%s' chưa chọn lô", pnPurchaseOrderDetail.getProduct().getName()));
-//                    return null;
-//                } else {
-//                    JPanel pnListBatch = pnPurchaseOrderDetail.getPnListBatch();
-//                    for (Component component : pnListBatch.getComponents()) {
-//                        if (component instanceof PnPurchaseSelectBatch) {
-//                            PnPurchaseSelectBatch pnSelectBatch = (PnPurchaseSelectBatch) component;
-//                            int quantity = (int) pnSelectBatch.getSpinnerQuantity().getValue();
-//                            String batchName = pnSelectBatch.getBatchDTO().getName();
-//                            podtos.add(new PurchaseOrderDTO(pnPurchaseOrderDetail.getProduct().getProductId(),
-//                                    pnPurchaseOrderDetail.getSelectedUnitDetail().getUnit().getName(), quantity, batchName,
-//                                    pnSelectBatch.getBatchDTO().getExpirationDate()));
-//                        }
-//
-//                    }
-//                }
-//            }
-//        }
-//        return podtos;
-//    }
+    private List<PurchaseOrderDTO> createListPurchaseOrderDetail() {
+        List<PurchaseOrderDTO> podtos = new ArrayList<>();
+        List<PnPurchaseOrderDetail> listPurchasePnOrderDetail = getAllPnPurchaseOrderDetailThuoc();
+        if (listPurchasePnOrderDetail == null) {
+            MessageDialog.warning(null, "Chưa có sản phẩm !!!");
+        } else {
+            for (PnPurchaseOrderDetail pnPurchaseOrderDetail : listPurchasePnOrderDetail) {
+                if (pnPurchaseOrderDetail.getSoLuong() == 0) {
+                    MessageDialog.warning(null, String.format("Sản phẩm '%s' chưa chọn lô", pnPurchaseOrderDetail.getProduct().getName()));
+                    return null;
+                } else {
+                    JPanel pnListBatch = pnPurchaseOrderDetail.getPnListBatch();
+                    for (Component component : pnListBatch.getComponents()) {
+                        if (component instanceof PnPurchaseSelectBatch) {
+                            PnPurchaseSelectBatch pnSelectBatch = (PnPurchaseSelectBatch) component;
+                            int quantity = (int) pnSelectBatch.getSpinnerQuantity().getValue();
+                            String batchName = pnSelectBatch.getBatchDTO().getName();
+                            podtos.add(new PurchaseOrderDTO(pnPurchaseOrderDetail.getProduct().getProductId(),
+                                    pnPurchaseOrderDetail.getProduct().getUnit().getName(), quantity, batchName,
+                                    pnSelectBatch.getBatchDTO().getExpirationDate()));
+                        }
+
+                    }
+                }
+            }
+        }
+        return podtos;
+    }
 
     private void clearTxtEmpty(JLabel... jLabels) {
         for (JLabel x : jLabels) {
@@ -575,15 +539,15 @@ public class TABPurchase extends javax.swing.JPanel {
             MessageDialog.warning(null, "Chưa có nhà cung cấp!");
             return;
         }
-//        List<PurchaseOrderDTO> purchaseOrderDTOs = createListPurchaseOrderDetail();
-//        try {
-//            if (purchaseOrderBUS.createPurchaseOrder(CurrentEmployee.getEmployee(), supplier, purchaseOrderDTOs)) {
-//                MessageDialog.info(null, "Nhập hàng thành công!");
-//                clearPnOrderDetail();
-//            }
-//        } catch (Exception e) {
-//            MessageDialog.error(null, e.getMessage());
-//        }
+        List<PurchaseOrderDTO> purchaseOrderDTOs = createListPurchaseOrderDetail();
+        try {
+            if (purchaseOrderBUS.createPurchaseOrder(CurrentEmployee.getEmployee(), supplier, purchaseOrderDTOs)) {
+                MessageDialog.info(null, "Nhập hàng thành công!");
+                clearPnOrderDetail();
+            }
+        } catch (Exception e) {
+            MessageDialog.error(null, e.getMessage());
+        }
     }//GEN-LAST:event_btnConfirmPurchaseActionPerformed
 
     private void txtSearchSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchSupplierActionPerformed

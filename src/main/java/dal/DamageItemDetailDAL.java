@@ -4,8 +4,11 @@
  */
 package dal;
 import entity.DamageItemDetail;
+import entity.DamageItem;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+import java.util.List;
 
 /**
  *
@@ -23,6 +26,12 @@ public class DamageItemDetailDAL {
         return true;
     }
 
+    public List<DamageItemDetail> getListDamageItemDetailByDamageItem(DamageItem damageItem) {
+        TypedQuery<DamageItemDetail> query
+                = entityManager.createQuery("select did from DamageItemDetail did where did.damageItem = ?1 ", DamageItemDetail.class);
+        query.setParameter(1, damageItem);
+        return query.getResultList();
+    }
    
     
 }

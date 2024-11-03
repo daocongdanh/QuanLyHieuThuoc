@@ -8,6 +8,8 @@ import dal.AccountDAL;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import entity.Account;
+import util.SendMail;
+import util.MailTemplate;
 /**
  *
  * @author daoducdanh
@@ -16,10 +18,14 @@ public class AccountBUS {
     
     private AccountDAL accountDAL;
     private EntityTransaction transaction;
+    private SendMail sendMail;
+    private MailTemplate mailTemplate;
     
     public AccountBUS(EntityManager entityManager) {
         this.accountDAL = new AccountDAL(entityManager);
         this.transaction = entityManager.getTransaction();
+        this.sendMail = new SendMail();
+        this.mailTemplate = new MailTemplate(entityManager);
     }
     
     public boolean createAccount(Account account){
@@ -56,6 +62,14 @@ public class AccountBUS {
     
     public Account getByEmployeeID(String employeeId) {
         return accountDAL.findByEmployeeId(employeeId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy tài khoản"));
+                .orElse(null);
+    }
+    
+    public void sendMail(String employeeID){
+        Account acc = getByEmployeeID(employeeID);
+        
+        String body = mailTemplate.mailPassword(acc);
+        String subject = "Thư lấy lại mật khẩu";
+        sendMail.sendMail(acc.getEmployee().getEmail(), subject, body);
     }
 }

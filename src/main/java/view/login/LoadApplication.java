@@ -33,9 +33,11 @@ public class LoadApplication extends javax.swing.JFrame {
     public static ReturnOrderBUS returnOrderBUS;
     public static AccountBUS accountBUS;
     public static DamageItemBUS damageItemBUS;
+    public static DamageItemDetailBUS damageItemDetailBUS;
     public static EmployeeBUS employeeBUS;
     public static ProductBUS productBUS;
     public static PurchaseOrderBUS purchaseOrderBUS;
+    public static PurchaseOrderDetailBUS purchaseOrderDetailBUS;
     public static UnitBUS unitBUS;
     public static ReturnOrderDetailBUS returnOrderDetailBUS;
     public static SupplierBUS supplierBUS;
@@ -45,7 +47,7 @@ public class LoadApplication extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         lblImage.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().
-                getResource("/img/background.jpg")), 900, 500));
+                getResource("/img/bgrload.png")), 900, 500));
 
 //        lblIconDoctor.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().
 //                getResource("/img/doctor.png")), 667, 444));
@@ -74,12 +76,12 @@ public class LoadApplication extends javax.swing.JFrame {
         panelBackground.setPreferredSize(new java.awt.Dimension(900, 500));
         panelBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Loading...");
-        panelBackground.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 452, 100, 30));
+        jLabel3.setText("LOADING...");
+        panelBackground.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 452, 120, 30));
 
-        loadingValue.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        loadingValue.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         loadingValue.setForeground(new java.awt.Color(255, 255, 255));
         loadingValue.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         loadingValue.setText("0%");
@@ -129,9 +131,11 @@ public class LoadApplication extends javax.swing.JFrame {
                     returnOrderBUS = new ReturnOrderBUS(em);
                     accountBUS = new AccountBUS(em);
                     damageItemBUS = new DamageItemBUS(em);
+                    damageItemDetailBUS = new DamageItemDetailBUS(em);
                     employeeBUS = new EmployeeBUS(em);
                     productBUS = new ProductBUS(em);
                     purchaseOrderBUS = new PurchaseOrderBUS(em);
+                    purchaseOrderDetailBUS = new PurchaseOrderDetailBUS(em);
                     unitBUS = new UnitBUS(em);
                     returnOrderDetailBUS = new ReturnOrderDetailBUS(em);
                     supplierBUS = new SupplierBUS(em);

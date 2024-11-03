@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Comparator;
 
 /**
  *
@@ -30,6 +31,7 @@ public class BatchBUS {
         return batchDAL.findByProduct(product)
                 .stream()
                 .filter(batch -> batch.getExpirationDate().isAfter(LocalDate.now()))
+                .sorted(Comparator.comparing(Batch::getExpirationDate))
                 .toList();
     }
     
