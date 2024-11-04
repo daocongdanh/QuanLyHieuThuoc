@@ -100,16 +100,20 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         btnConfirmCreateNewBatch = new javax.swing.JButton();
         txtNameNewBatch = new javax.swing.JTextField();
         ExperationDateNewBatch = new com.toedter.calendar.JDateChooser();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         btnXoaPurchaseOderDetail = new javax.swing.JLabel();
         btnXoaPurchaseOderDetail.setIcon( ResizeImage.resizeImage( new javax.swing.ImageIcon(getClass().getResource("/img/delete.jpg")) , 25, 25));
+        pnHinh = new javax.swing.JLabel();
         txtTenSP = new javax.swing.JLabel();
+        txtDVT = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
         spinnerSoLuong = new javax.swing.JSpinner();
         txtDonGia = new javax.swing.JLabel();
         txtTongTien = new javax.swing.JLabel();
-        pnHinh = new javax.swing.JLabel();
-        pnListBatch = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         btnChonLo = new javax.swing.JButton();
-        txtDVT = new javax.swing.JLabel();
+        pnListBatch = new javax.swing.JPanel();
 
         dialogChonLo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dialogChonLo.setTitle("Chọn Lô");
@@ -264,19 +268,45 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(232, 232, 232)));
-        setMaximumSize(new java.awt.Dimension(1139, 170));
-        setMinimumSize(new java.awt.Dimension(1139, 170));
-        setPreferredSize(new java.awt.Dimension(1139, 170));
+        setMaximumSize(new java.awt.Dimension(111111111, 200));
+        setMinimumSize(new java.awt.Dimension(1139, 200));
+        setPreferredSize(new java.awt.Dimension(1139, 200));
         setRequestFocusEnabled(false);
+        setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 22, 26);
+        flowLayout1.setAlignOnBaseline(true);
+        jPanel5.setLayout(flowLayout1);
 
         btnXoaPurchaseOderDetail.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnXoaPurchaseOderDetailMouseClicked(evt);
             }
         });
+        jPanel5.add(btnXoaPurchaseOderDetail);
+
+        pnHinh.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel5.add(pnHinh);
 
         txtTenSP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtTenSP.setText("jLabel1");
+        jPanel5.add(txtTenSP);
+
+        txtDVT.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtDVT.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        txtDVT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        jPanel5.add(txtDVT);
+
+        jPanel2.add(jPanel5, java.awt.BorderLayout.WEST);
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        java.awt.FlowLayout flowLayout2 = new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING, 40, 50);
+        flowLayout2.setAlignOnBaseline(true);
+        jPanel6.setLayout(flowLayout2);
 
         spinnerSoLuong.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         spinnerSoLuong.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
@@ -286,22 +316,29 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
                 spinnerSoLuongStateChanged(evt);
             }
         });
+        jPanel6.add(spinnerSoLuong);
 
         txtDonGia.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtDonGia.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         txtDonGia.setText("0 đ");
         txtDonGia.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         txtDonGia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        jPanel6.add(txtDonGia);
 
         txtTongTien.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtTongTien.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         txtTongTien.setText("0 đ");
         txtTongTien.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel6.add(txtTongTien);
 
-        pnHinh.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.add(jPanel6, java.awt.BorderLayout.EAST);
 
-        pnListBatch.setBackground(new java.awt.Color(255, 255, 255));
-        pnListBatch.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 3));
+        add(jPanel2, java.awt.BorderLayout.NORTH);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        java.awt.FlowLayout flowLayout3 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 20, 0);
+        flowLayout3.setAlignOnBaseline(true);
+        jPanel3.setLayout(flowLayout3);
 
         btnChonLo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnChonLo.setText("Chọn Lô");
@@ -310,72 +347,17 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
                 btnChonLoActionPerformed(evt);
             }
         });
+        for (int i=1; i<=2; i++) {
+            JLabel space = new JLabel("\t");
+            jPanel3.add(space);
+        }
+        jPanel3.add(btnChonLo);
 
-        txtDVT.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtDVT.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtDVT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        pnListBatch.setBackground(new java.awt.Color(255, 255, 255));
+        pnListBatch.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 3));
+        jPanel3.add(pnListBatch);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnChonLo)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnXoaPurchaseOderDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(pnHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDVT, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnListBatch, javax.swing.GroupLayout.DEFAULT_SIZE, 904, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(spinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtDVT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(pnHinh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(btnXoaPurchaseOderDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnChonLo)
-                    .addComponent(pnListBatch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(85, 85, 85))
-        );
+        add(jPanel3, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     public Double getLineTotal() {
@@ -572,7 +554,11 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
     private javax.swing.JLabel btnXoaPurchaseOderDetail;
     private javax.swing.JDialog dialogChonLo;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblExpirationDate2;
     private javax.swing.JLabel lblName2;
