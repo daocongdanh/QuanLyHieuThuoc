@@ -7,7 +7,9 @@ package view.manager;
 import bus.EmployeeBUS;
 import entity.Employee;
 import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 import view.login.LoadApplication;
 import util.CurrentEmployee;
 
@@ -43,8 +45,10 @@ public class TABPersonalInformation extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         pnAll = new javax.swing.JPanel();
+        jLabel43 = new javax.swing.JLabel();
         pnRight = new javax.swing.JPanel();
         jLabel42 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
@@ -58,15 +62,23 @@ public class TABPersonalInformation extends javax.swing.JPanel {
         txtSDT = new javax.swing.JTextField();
         txtChucVu = new javax.swing.JTextField();
         txtDiaChi = new javax.swing.JTextField();
-        jLabel43 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         pnAll.setBackground(new java.awt.Color(255, 255, 255));
+        pnAll.setLayout(new java.awt.GridBagLayout());
+
+        jLabel43.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
+        jLabel43.setText("Thông tin cá nhân");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 300, 0, 0);
+        pnAll.add(jLabel43, gridBagConstraints);
 
         pnRight.setBackground(new java.awt.Color(255, 255, 255));
         pnRight.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pnRight.setMinimumSize(new java.awt.Dimension(1083, 765));
+        pnRight.setPreferredSize(new java.awt.Dimension(1083, 765));
         pnRight.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
@@ -123,32 +135,13 @@ public class TABPersonalInformation extends javax.swing.JPanel {
         txtDiaChi.setRequestFocusEnabled(false);
         pnRight.add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 420, 40));
 
-        jLabel43.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
-        jLabel43.setText("Thông tin cá nhân");
-
-        javax.swing.GroupLayout pnAllLayout = new javax.swing.GroupLayout(pnAll);
-        pnAll.setLayout(pnAllLayout);
-        pnAllLayout.setHorizontalGroup(
-            pnAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnAllLayout.createSequentialGroup()
-                .addGroup(pnAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnAllLayout.createSequentialGroup()
-                        .addGap(603, 603, 603)
-                        .addComponent(jLabel43))
-                    .addGroup(pnAllLayout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 1084, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(415, Short.MAX_VALUE))
-        );
-        pnAllLayout.setVerticalGroup(
-            pnAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnAllLayout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addComponent(jLabel43)
-                .addGap(66, 66, 66)
-                .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 300, 0, 0);
+        pnAll.add(pnRight, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
