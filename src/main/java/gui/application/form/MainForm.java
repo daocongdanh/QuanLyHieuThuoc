@@ -107,6 +107,8 @@ public class MainForm extends JLayeredPane {
                 } else if (index == 11) {
                     Application.showForm(new TABPromotion());
                 } else if (index == 12) {
+                    Application.showForm(new TABPersonalInformation());
+                } else if (index == 13) {
                     Application.logout();
                 } else {
                     action.cancel();
@@ -129,6 +131,8 @@ public class MainForm extends JLayeredPane {
                 } else if (index == 27) {
                     Application.showForm(new TABIndividualReport());
                 } else if (index == 28) {
+                    Application.showForm(new TABPersonalInformation());
+                } else if (index == 29) {
                     Application.logout();
                 } else {
                     action.cancel();

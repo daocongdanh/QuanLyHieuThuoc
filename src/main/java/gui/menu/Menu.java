@@ -37,6 +37,7 @@ public class Menu extends JPanel {
         {"Quản lý xuất hủy"},
         {"Quản lý đơn hàng"},
         {"Quản lý khuyến mãi"},
+        {"Thông tin cá nhân"},
         {"Đăng xuất"}
     };
 
@@ -49,6 +50,7 @@ public class Menu extends JPanel {
         {"Phiếu trả hàng"},
         {"Phiếu xuất hủy"},
         {"Thống kê cá nhân"},
+        {"Thông tin cá nhân"},
         {"Đăng xuất"}
     };
 
@@ -76,7 +78,7 @@ public class Menu extends JPanel {
 
     private final List<MenuEvent> events = new ArrayList<>();
     private boolean menuFull = true;
-    private final String headerName = "Thanh Tiến";
+    private final String headerName = "Tây Á";
 
     protected final boolean hideMenuTitleOnMinimum = true;
     protected final int menuTitleLeftInset = 5;
@@ -100,7 +102,7 @@ public class Menu extends JPanel {
                 + "background:$Menu.background;"
                 + "arc:10");
         header = new JLabel(headerName);
-        header.setIcon(new ImageIcon(getClass().getResource("/gui/icon/png/logo.png")));
+//        header.setIcon(new ImageIcon(getClass().getResource("/gui/icon/png/logo.png")));
         header.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:$Menu.header.font;"
                 + "foreground:$Menu.foreground");

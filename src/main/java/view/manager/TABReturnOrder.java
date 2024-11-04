@@ -145,7 +145,6 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 String productName = (String) table.getValueAt(row,1);
                 if ( MessageDialog.confirm(null, "Bạn muốn thêm lại sản phẩm " + productName + " vào hệ thống", "Xác nhận") ){
                     ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndProductId(returnOrderId,productId);
-                    returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.RETURNED);
                     returnOrderDetail.setFinalReason((String) table.getValueAt(row,6));
                     if ( returnOrderDetailBUS.updateReturnOrderDetailToReturn(returnOrderDetail) ){
                         MessageDialog.info(null, "Sản phẩm đã thêm lại hệ thống.");
@@ -166,7 +165,6 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 String productName = (String) table.getValueAt(row,1);
                 if ( MessageDialog.confirm(null, "Bạn muốn loại bỏ sản phẩm " + productName, "Xác nhận") ){
                     ReturnOrderDetail returnOrderDetail = returnOrderDetailBUS.findByReturnOrderIdAndProductId(returnOrderId,productId);
-                    returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.PENDING_DAMAGED);
                     returnOrderDetail.setFinalReason((String) table.getValueAt(row,6));
                     if ( returnOrderDetailBUS.updateReturnOrderDetailToDamage(returnOrderDetail) ){
                         MessageDialog.info(null, "Sản phẩm loại bỏ.");

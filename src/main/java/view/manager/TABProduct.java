@@ -72,8 +72,8 @@ public class TABProduct extends javax.swing.JPanel {
 
     private void fillTable() {
 //        String[] headers = {"Mã sản phẩm", "VAT", "Active", "Hoạt Chất", "Xuất xứ", "Liều lượng", "Nhà sản xuất", "Tên", "Bao bì", "Loại sản phẩm", "Giá mua", "Số đăng kí", "Giá bán", "Ảnh"};
-        String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Số đăng kí", "Xuất xứ", "Loại sản phẩm", "Giá mua", "Giá bán", "Trạng thái"};
-        List<Integer> tableWidths = Arrays.asList(120, 300, 120, 100, 110, 80, 80, 120);
+        String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính" ,"Số đăng kí", "Xuất xứ", "Loại sản phẩm", "Giá mua", "Giá bán", "Trạng thái"};
+        List<Integer> tableWidths = Arrays.asList(120, 300, 100 ,120, 100, 110, 80, 80, 120);
         tableDesign = new TableDesign(headers, tableWidths);
         ProductScrollPane.setViewportView(tableDesign.getTable());
         ProductScrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
@@ -92,6 +92,7 @@ public class TABProduct extends javax.swing.JPanel {
             tableDesign.getModelTable().addRow(new Object[]{
                 product.getProductId(),
                 product.getName(),
+                    product.getUnit().getName(),
                 product.getRegistrationNumber(),
                 product.getCountryOfOrigin(),
                 product.getProductType().getDescription(),

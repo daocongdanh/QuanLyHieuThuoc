@@ -728,7 +728,7 @@ public class TABReport extends javax.swing.JPanel {
                 String unitName = orderDetail.getBatch().getProduct().getUnit().getName();
                 int quantity = orderDetail.getQuantity();
                 double price = orderDetail.getPrice()*1.1;
-                String km = ((int)orderDetail.getDiscount()*100) +"%";
+                double km = (orderDetail.getDiscount()*100);
                 double lineTotal = orderDetail.getLineTotal();
 
                 if (productMap.containsKey(productId)) {
@@ -738,7 +738,7 @@ public class TABReport extends javax.swing.JPanel {
                     existingData[6] = (double) existingData[6] + lineTotal; // Cộng dồn tổng giá trị
                 } else {
                     // Nếu sản phẩm chưa tồn tại trong Map, thêm mới vào Map
-                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, km, lineTotal});
+                    productMap.put(productId, new Object[]{productId, productName, unitName, quantity, price, (int)km + "%", lineTotal});
                 }
             }
 

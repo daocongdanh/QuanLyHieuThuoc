@@ -111,7 +111,7 @@ public class LoadApplication extends javax.swing.JFrame {
     public static void main(String args[]) {
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("gui.theme");
-        UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 15));
+        UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.BOLD, 16));
         FlatIntelliJLaf.setup();
         LoadApplication load = new LoadApplication();
         load.setVisible(true);

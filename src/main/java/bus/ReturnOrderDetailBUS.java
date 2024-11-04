@@ -36,7 +36,7 @@ public class ReturnOrderDetailBUS {
             transaction.begin();
             ReturnOrderDetail reOld = returnOrderDetailDAL.findByReturnOrderIdAndProductId(returnOrderDetail.getReturnOrder().getReturnOrderId(),
                     returnOrderDetail.getProduct().getProductId());
-            reOld.setReturnOrderDetailStatus(returnOrderDetail.getReturnOrderDetailStatus());
+            reOld.setReturnOrderDetailStatus(ReturnOrderDetailStatus.RETURNED);
             returnOrderDetailDAL.update(reOld);
 
             ReturnOrder returnOrder = returnOrderDetail.getReturnOrder();
@@ -66,7 +66,7 @@ public class ReturnOrderDetailBUS {
             ReturnOrderDetail reOld = returnOrderDetailDAL.findByReturnOrderIdAndProductId(returnOrderDetail.getReturnOrder().getReturnOrderId(),
                     returnOrderDetail.getProduct().getProductId());
 
-            reOld.setReturnOrderDetailStatus(returnOrderDetail.getReturnOrderDetailStatus());
+            reOld.setReturnOrderDetailStatus(ReturnOrderDetailStatus.PENDING_DAMAGED);
             returnOrderDetailDAL.update(reOld);
 
             ReturnOrder returnOrder = returnOrderDetail.getReturnOrder();
