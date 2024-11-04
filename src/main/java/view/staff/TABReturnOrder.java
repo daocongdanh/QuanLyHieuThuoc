@@ -135,7 +135,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(jLabel3.getFont().deriveFont((jLabel3.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
+        jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getStyle() | java.awt.Font.BOLD, 14));
         jLabel3.setText("Số điện thoại khách:");
 
         txtCusPhone.setEditable(false);
@@ -164,7 +164,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel9.setFont(jLabel9.getFont().deriveFont((jLabel9.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
+        jLabel9.setFont(jLabel9.getFont().deriveFont(jLabel9.getFont().getStyle() | java.awt.Font.BOLD, 14));
         jLabel9.setText("Cần trả khách:");
 
         txtReturnTotal.setEditable(false);
@@ -207,7 +207,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(jLabel2.getFont().deriveFont((jLabel2.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
+        jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getStyle() | java.awt.Font.BOLD, 14));
         jLabel2.setText("Tên khách hàng:");
         jLabel2.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -246,7 +246,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setFont(jLabel4.getFont().deriveFont((jLabel4.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
+        jLabel4.setFont(jLabel4.getFont().deriveFont(jLabel4.getFont().getStyle() | java.awt.Font.BOLD, 14));
         jLabel4.setText("Mã hóa đơn:");
         jLabel4.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -284,7 +284,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setFont(jLabel5.getFont().deriveFont((jLabel5.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD));
+        jLabel5.setFont(jLabel5.getFont().deriveFont(jLabel5.getFont().getStyle() | java.awt.Font.BOLD, 14));
         jLabel5.setText("Tên nhân viên lập:");
         jLabel5.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {

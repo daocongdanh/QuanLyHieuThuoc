@@ -134,11 +134,11 @@ public class PieChart extends JComponent {
             g2.drawString(text, (float) textX, (float) textY);
             //  Draw label
             if (hoverIndex == i) {
-                double labelSize = size / 2;
+                double labelSize = size / 2 -100;
                 double labelX = centerX + cosX * labelSize;
                 double labelY = centerY + sinY * labelSize;
                 String detail = format.format(data.getValues()) + " (" + text + ")";
-                drawPopupLabel(g2, size, textAngle, labelX, labelY, data.getName(), detail);
+                drawPopupLabel(g2, size, textAngle, labelX + 20, labelY, data.getName(), detail);
             }
             drawAngle -= angle;
         }

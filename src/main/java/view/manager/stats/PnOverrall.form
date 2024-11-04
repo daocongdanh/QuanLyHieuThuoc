@@ -631,8 +631,11 @@
                             <StringItem index="4" value="Th&#xe1;ng tr&#x1b0;&#x1edb;c"/>
                           </StringArray>
                         </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[140, 26]"/>
+                        </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[120, 22]"/>
+                          <Dimension value="[140, 22]"/>
                         </Property>
                       </Properties>
                       <Events>
