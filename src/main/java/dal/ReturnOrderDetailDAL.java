@@ -8,6 +8,7 @@ import entity.ProductPromotionDetail;
 import entity.ReturnOrder;
 import jakarta.persistence.EntityManager;
 import entity.ReturnOrderDetail;
+import enums.ReturnOrderDetailStatus;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
@@ -51,6 +52,14 @@ public class ReturnOrderDetailDAL {
         TypedQuery<ReturnOrderDetail> query
                 = entityManager.createQuery("select rod from ReturnOrderDetail rod where rod.returnOrder = ?1 ", ReturnOrderDetail.class);
         query.setParameter(1, returnOrder);
+        return query.getResultList();
+    }
+    
+    
+    public List<ReturnOrderDetail> getALLByStatus(ReturnOrderDetailStatus returnOrderDetailStatus){
+        TypedQuery<ReturnOrderDetail> query
+                = entityManager.createQuery("select rod from ReturnOrderDetail rod where rod.returnOrderDetailStatus = ?1 ", ReturnOrderDetail.class);
+        query.setParameter(1, returnOrderDetailStatus);
         return query.getResultList();
     }
 }

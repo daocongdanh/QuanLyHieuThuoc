@@ -10,7 +10,10 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 import entity.Product;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
@@ -52,5 +55,29 @@ public class BatchBUS {
     public Batch getBatchByName(String batchName) {
         return batchDAL.findByName(batchName);
     }
-
+    
+    public Map<Product, List<Batch>> getListBatchExpiration(){
+        
+        List<Batch> batchs = batchDAL.getAllBatchExpiration();
+        Map<Product, List<Batch>> map = new LinkedHashMap<>();
+        
+        for(Batch batch : batchs){
+            Product product = batch.getProduct();
+            if(map.containsKey(product)){
+                map.get(product).add(batch);
+            }
+            else{
+                List<Batch> list = new ArrayList<>();
+                list.add(batch);
+                map.put(product, list);
+            }
+        }
+        return map;
+    }
+    
+    
+    public Batch getFirstByProduct(String productId){
+        return batchDAL.findByProductId(productId).get(0);
+    }
+    
 }

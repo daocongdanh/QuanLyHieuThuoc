@@ -7,6 +7,7 @@ package view.staff.damageItem;
 import bus.*;
 import connectDB.ConnectDB;
 import entity.*;
+import enums.ReturnOrderDetailStatus;
 import java.awt.Component;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import util.CurrentEmployee;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -44,12 +46,16 @@ public class TabDamageItem extends javax.swing.JPanel {
      */
     private DamageItemBUS damageItemBUS;
     private BatchBUS batchBUS;
+    private ReturnOrderDetailBUS returnOrderDetailBUS;
+    private ProductBUS productBUS;
 
     public TabDamageItem() {
         this.damageItemBUS = new DamageItemBUS(ConnectDB.getEntityManager());
         this.batchBUS = new BatchBUS(ConnectDB.getEntityManager());
+        this.returnOrderDetailBUS = new ReturnOrderDetailBUS(ConnectDB.getEntityManager());
+        this.productBUS = new ProductBUS(ConnectDB.getEntityManager());
         initComponents();
-//        fillContent();
+        fillContent();
     }
 
     @SuppressWarnings("unchecked")
@@ -63,12 +69,11 @@ public class TabDamageItem extends javax.swing.JPanel {
         btnTaoPhieu = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        txtTongTien = new javax.swing.JLabel();
+        txtTongTien = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        txtEmpName = new javax.swing.JLabel();
+        txtEmpName = new javax.swing.JTextField();
         headerPanel = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -87,7 +92,7 @@ public class TabDamageItem extends javax.swing.JPanel {
         );
         pnMidLayout.setVerticalGroup(
             pnMidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
         );
 
         add(pnMid, java.awt.BorderLayout.CENTER);
@@ -105,11 +110,13 @@ public class TabDamageItem extends javax.swing.JPanel {
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel11.setText("Tổng tiền:");
 
+        txtTongTien.setEditable(false);
         txtTongTien.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtTongTien.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        txtTongTien.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtTongTien.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -118,23 +125,23 @@ public class TabDamageItem extends javax.swing.JPanel {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                    .addComponent(txtTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel5.setText("Tên nhân viên lập:");
         jLabel5.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -146,8 +153,10 @@ public class TabDamageItem extends javax.swing.JPanel {
             }
         });
 
+        txtEmpName.setEditable(false);
         txtEmpName.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtEmpName.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        txtEmpName.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtEmpName.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -156,17 +165,17 @@ public class TabDamageItem extends javax.swing.JPanel {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 75, Short.MAX_VALUE)
-                .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtEmpName, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                    .addComponent(txtEmpName, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
 
@@ -189,7 +198,7 @@ public class TabDamageItem extends javax.swing.JPanel {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 517, Short.MAX_VALUE)
                 .addComponent(btnTaoPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
@@ -199,30 +208,32 @@ public class TabDamageItem extends javax.swing.JPanel {
         headerPanel.setBackground(new java.awt.Color(255, 255, 255));
         headerPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(232, 232, 232), 2, true));
         headerPanel.setLayout(new java.awt.BorderLayout());
-
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.setPreferredSize(new java.awt.Dimension(590, 100));
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 16, 24));
-        headerPanel.add(jPanel7, java.awt.BorderLayout.CENTER);
-
         add(headerPanel, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-//    private void fillContent() {
-//        Employee employee = CurrentEmployee.getEmployee();
-//        txtEmpName.setText(employee.getName());
-//        Map<UnitDetail, List<Batch>> map = batchBUS.getListBatchExpiration();
-//        map.forEach((key, value) -> {
-//            PnDamageItemDetail pnDamageItemDetail = new PnDamageItemDetail(key, value, this);
-//            pnContent.add(pnDamageItemDetail);
-//        });
-//        changeTongTienHoaDon();
-//        pnContent.revalidate();
-//        pnContent.repaint();
-//        
-//        changeTongTienHoaDon();
-//    }
-    
+    private void fillContent() {
+        Employee employee = CurrentEmployee.getEmployee();
+        txtEmpName.setText(employee.getName());
+        Map<Product, List<Batch>> map = batchBUS.getListBatchExpiration();
+        map.forEach((key, value) -> {
+            PnDamageItemDetail pnDamageItemDetail = new PnDamageItemDetail(key, value, "Hết hạn", null, this);
+            pnContent.add(pnDamageItemDetail);
+        });
+
+        List<ReturnOrderDetail> details = returnOrderDetailBUS.
+                getListReturnOrderDetailByType(ReturnOrderDetailStatus.PENDING_DAMAGED);
+        for (ReturnOrderDetail returnOrderDetail : details) {
+            PnDamageItemDetail pnDamageItemDetail = new PnDamageItemDetail(returnOrderDetail.getProduct(),
+                    null, "Hàng hư", returnOrderDetail, this);
+            pnContent.add(pnDamageItemDetail);
+        }
+        changeTongTienHoaDon();
+        pnContent.revalidate();
+        pnContent.repaint();
+
+        changeTongTienHoaDon();
+    }
+
     private static CellStyle createStyleForHeader(Sheet sheet) {
         // Tạo font chữ
         Font font = sheet.getWorkbook().createFont();
@@ -240,131 +251,133 @@ public class TabDamageItem extends javax.swing.JPanel {
     }
 
     private void btnTaoPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoPhieuActionPerformed
-//        List<DamageItemDetail> damageItemDetails = createListDamageItemDetail();
-//        if(damageItemDetails.isEmpty()){
-//            MessageDialog.warning(null, "Không có sản phẩm");
-//            return;
-//        }
-//        try {
-//            Employee employee = CurrentEmployee.getEmployee();
-//            if (MessageDialog.confirm(null, "Bạn có chắc chắn muốn xuất hủy không?", "Xác nhận xuất hủy")) {
-//                if (damageItemBUS.createDamageItem(employee, damageItemDetails)) {
-//                    JFileChooser fileChooser = new JFileChooser();
-//                    fileChooser.setDialogTitle("Chọn đường dẫn lưu file Excel");
-//                    FileNameExtensionFilter filter = new FileNameExtensionFilter("XLSX files", "xlsx");
-//                    fileChooser.setFileFilter(filter);
-//                    fileChooser.setAcceptAllFileFilterUsed(false);
-//
-//                    int userChoice = fileChooser.showSaveDialog(null);
-//                    if (userChoice == JFileChooser.APPROVE_OPTION) {
-//                        try {
-//                            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-//                            if (!filePath.toLowerCase().endsWith(".xlsx")) {
-//                                filePath += ".xlsx";
-//                            }
-//
-//                            Workbook workbook;
-//
-//                            // Khởi tạo workbook cho định dạng xlsx
-//                            if (filePath.endsWith(".xlsx")) {
-//                                workbook = new XSSFWorkbook();
-//                            } else {
-//                                workbook = new HSSFWorkbook();
-//                            }
-//
-//                            Sheet sheet = workbook.createSheet("Sheet1");
-//
-//                            // Tạo dòng tiêu đề
-//                            CellStyle cellStyle = createStyleForHeader(sheet);
-//                            Row headerRow = sheet.createRow(0);
-//                            Cell headerCell1 = headerRow.createCell(0);
-//                            Cell headerCell2 = headerRow.createCell(1);
-//                            Cell headerCell3 = headerRow.createCell(2);
-//                            Cell headerCell4 = headerRow.createCell(3);
-//                            Cell headerCell5 = headerRow.createCell(4);
-//                            Cell headerCell6 = headerRow.createCell(5);
-//                            Cell headerCell7 = headerRow.createCell(6);
-//                            
-//                            headerCell1.setCellValue("Mã sản phẩm");
-//                            headerCell2.setCellValue("Tên sản phẩm");
-//                            headerCell3.setCellValue("Số lô");
-//                            headerCell4.setCellValue("Hạn sử dụng");
-//                            headerCell5.setCellValue("Đơn vị tính");
-//                            headerCell6.setCellValue("Số lượng");
-//                            headerCell7.setCellValue("Giá trị hủy");
-//                            
-//                            headerCell1.setCellStyle(cellStyle);
-//                            headerCell2.setCellStyle(cellStyle);
-//                            headerCell3.setCellStyle(cellStyle);
-//                            headerCell4.setCellStyle(cellStyle);
-//                            headerCell5.setCellStyle(cellStyle);
-//                            headerCell6.setCellStyle(cellStyle);
-//                            headerCell7.setCellStyle(cellStyle);
-//                            
-//                            int r = 0;
-//                            double t = 0.0;
-//                            // Tạo dòng dữ liệu
-//                            for (DamageItemDetail damageItemDetail : damageItemDetails) {
-//                                Row dataRow = sheet.createRow(r + 1);
-//                                Cell dataCell1 = dataRow.createCell(0);
-//                                Cell dataCell2 = dataRow.createCell(1);
-//                                Cell dataCell3 = dataRow.createCell(2);
-//                                Cell dataCell4 = dataRow.createCell(3);
-//                                Cell dataCell5 = dataRow.createCell(4);
-//                                Cell dataCell6 = dataRow.createCell(5);
-//                                Cell dataCell7 = dataRow.createCell(6);
-//                                dataCell1.setCellValue(damageItemDetail.getUnitDetail().getProduct().getProductId());
-//                                dataCell2.setCellValue(damageItemDetail.getUnitDetail().getProduct().getName());
-//                                dataCell3.setCellValue(damageItemDetail.getBatch().getName());
-//                                dataCell4.setCellValue(damageItemDetail.getBatch().getExpirationDate().toString());
-//                                dataCell5.setCellValue(damageItemDetail.getUnitDetail().getUnit().getName());
-//                                dataCell6.setCellValue(damageItemDetail.getQuantity());
-//                                dataCell7.setCellValue(damageItemDetail.getLineTotal());
-//                                t += damageItemDetail.getLineTotal();
-//                                r++;
-//                            }
-//
-//                            Row dataRowNV = sheet.createRow(r + 1);
-//                            Cell dataCellNV = dataRowNV.createCell(0);
-//                            Cell dataCellNV1 = dataRowNV.createCell(1);
-//                            dataCellNV.setCellValue("Nhân viên lập đơn:");
-//                            dataCellNV1.setCellValue(CurrentEmployee.getEmployee().getName() + "_" + CurrentEmployee.getEmployee().getEmployeeId());
-//                            
-//                            Row dataRowTGT = sheet.createRow(r + 2);
-//                            Cell dataCellTGT = dataRowTGT.createCell(0);
-//                            Cell dataCellTGT1 = dataRowTGT.createCell(1);
-//                            dataCellTGT.setCellValue("Tổng giá trị hủy:");
-//                            dataCellTGT1.setCellValue(t);
-//
-//                            // Điều chỉnh kích thước cột
-//                            for (int i = 0; i < 6; i++) {
-//                                sheet.autoSizeColumn(i);
-//                            }
-//
-//                            // Ghi dữ liệu ra file
-//                            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
-//                                workbook.write(fileOut);
-//                            }
-//
-//                            openFile(filePath);
-//                        } catch (IOException ex) {
-//                            JOptionPane.showMessageDialog(null, "Lỗi đọc file!", "Error", JOptionPane.ERROR_MESSAGE);
-//                        }
-//                    }
-//                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thành công.");
-//                    clearPnOrderDetail();
-//                    fillContent();
-//                } else {
-//                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thất bại.");
-//                }
-//            }
-//        } catch (Exception e) {
-//            MessageDialog.error(null, "Lỗi hệ thống !!!");
-//        }
+        List<DamageItemDetail> damageItemDetails = createListDamageItemDetail();
+        if (damageItemDetails.isEmpty()) {
+            MessageDialog.warning(null, "Không có sản phẩm");
+            return;
+        }
+        try {
+            Employee employee = CurrentEmployee.getEmployee();
+            if (MessageDialog.confirm(null, "Bạn có chắc chắn muốn xuất hủy không?", "Xác nhận xuất hủy")) {
+                if (damageItemBUS.createDamageItem(employee, damageItemDetails)) {
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle("Chọn đường dẫn lưu file Excel");
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter("XLSX files", "xlsx");
+                    fileChooser.setFileFilter(filter);
+                    fileChooser.setAcceptAllFileFilterUsed(false);
+
+                    int userChoice = fileChooser.showSaveDialog(null);
+                    if (userChoice == JFileChooser.APPROVE_OPTION) {
+                        try {
+                            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+                            if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                                filePath += ".xlsx";
+                            }
+
+                            Workbook workbook;
+
+                            // Khởi tạo workbook cho định dạng xlsx
+                            if (filePath.endsWith(".xlsx")) {
+                                workbook = new XSSFWorkbook();
+                            } else {
+                                workbook = new HSSFWorkbook();
+                            }
+
+                            Sheet sheet = workbook.createSheet("Sheet1");
+
+                            // Tạo dòng tiêu đề
+                            CellStyle cellStyle = createStyleForHeader(sheet);
+                            Row headerRow = sheet.createRow(0);
+                            Cell headerCell1 = headerRow.createCell(0);
+                            Cell headerCell2 = headerRow.createCell(1);
+                            Cell headerCell3 = headerRow.createCell(2);
+                            Cell headerCell4 = headerRow.createCell(3);
+                            Cell headerCell5 = headerRow.createCell(4);
+                            Cell headerCell6 = headerRow.createCell(5);
+                            Cell headerCell7 = headerRow.createCell(6);
+
+                            headerCell1.setCellValue("Mã sản phẩm");
+                            headerCell2.setCellValue("Tên sản phẩm");
+                            headerCell3.setCellValue("Số lô");
+                            headerCell4.setCellValue("Hạn sử dụng");
+                            headerCell5.setCellValue("Đơn vị tính");
+                            headerCell6.setCellValue("Số lượng");
+                            headerCell7.setCellValue("Giá trị hủy");
+
+                            headerCell1.setCellStyle(cellStyle);
+                            headerCell2.setCellStyle(cellStyle);
+                            headerCell3.setCellStyle(cellStyle);
+                            headerCell4.setCellStyle(cellStyle);
+                            headerCell5.setCellStyle(cellStyle);
+                            headerCell6.setCellStyle(cellStyle);
+                            headerCell7.setCellStyle(cellStyle);
+
+                            int r = 0;
+                            double t = 0.0;
+                            // Tạo dòng dữ liệu
+                            for (DamageItemDetail damageItemDetail : damageItemDetails) {
+                                Row dataRow = sheet.createRow(r + 1);
+                                Cell dataCell1 = dataRow.createCell(0);
+                                Cell dataCell2 = dataRow.createCell(1);
+                                Cell dataCell3 = dataRow.createCell(2);
+                                Cell dataCell4 = dataRow.createCell(3);
+                                Cell dataCell5 = dataRow.createCell(4);
+                                Cell dataCell6 = dataRow.createCell(5);
+                                Cell dataCell7 = dataRow.createCell(6);
+                                dataCell1.setCellValue(damageItemDetail.getBatch().getProduct().getProductId());
+                                dataCell2.setCellValue(damageItemDetail.getBatch().getProduct().getName());
+                                
+                                
+                                dataCell3.setCellValue(damageItemDetail.getBatch().getName());
+                                dataCell4.setCellValue(damageItemDetail.getBatch().getExpirationDate().toString());
+                                dataCell5.setCellValue(damageItemDetail.getBatch().getProduct().getUnit().getName());
+                                dataCell6.setCellValue(damageItemDetail.getQuantity());
+                                dataCell7.setCellValue(damageItemDetail.getLineTotal());
+                                t += damageItemDetail.getLineTotal();
+                                r++;
+                            }
+
+                            Row dataRowNV = sheet.createRow(r + 1);
+                            Cell dataCellNV = dataRowNV.createCell(0);
+                            Cell dataCellNV1 = dataRowNV.createCell(1);
+                            dataCellNV.setCellValue("Nhân viên lập đơn:");
+                            dataCellNV1.setCellValue(CurrentEmployee.getEmployee().getName());
+
+                            Row dataRowTGT = sheet.createRow(r + 2);
+                            Cell dataCellTGT = dataRowTGT.createCell(0);
+                            Cell dataCellTGT1 = dataRowTGT.createCell(1);
+                            dataCellTGT.setCellValue("Tổng giá trị hủy:");
+                            dataCellTGT1.setCellValue(t);
+
+                            // Điều chỉnh kích thước cột
+                            for (int i = 0; i < 6; i++) {
+                                sheet.autoSizeColumn(i);
+                            }
+
+                            // Ghi dữ liệu ra file
+                            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                                workbook.write(fileOut);
+                            }
+
+                            openFile(filePath);
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Lỗi đọc file!", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thành công.");
+                    clearPnOrderDetail();
+                    fillContent();
+                } else {
+                    MessageDialog.warning(null, "Tạo phiếu xuất hủy hàng hóa thất bại.");
+                }
+            }
+        } catch (Exception e) {
+            MessageDialog.error(null, "Lỗi hệ thống !!!");
+        }
     }//GEN-LAST:event_btnTaoPhieuActionPerformed
 
-    private void setTxtEmpty(JLabel... labels) {
-        for (JLabel x : labels) {
+    private void setTxtEmpty(JTextField... labels) {
+        for (JTextField x : labels) {
             x.setText("");
         }
     }
@@ -383,13 +396,22 @@ public class TabDamageItem extends javax.swing.JPanel {
             MessageDialog.warning(null, "Không có sản phẩm !!!");
         } else {
             for (PnDamageItemDetail pnDamageItemDetail : list) {
-//                List<Batch> batchs = pnDamageItemDetail.getBatchs();
-//                UnitDetail unitDetail = pnDamageItemDetail.getUnitDetail();
-//                Product product = unitDetail.getProduct();
-//                for (Batch batch : batchs) {
-//                    DamageItemDetail damageItemDetail = new DamageItemDetail(batch.getStock(), product.getPurchasePrice(), batch, unitDetail);
-//                    damageItemDetails.add(damageItemDetail);
-//                }
+                List<Batch> batchs = pnDamageItemDetail.getBatchs();
+                if (batchs != null) {
+                    for (Batch batch : batchs) {
+                        Product product = batch.getProduct();
+                        DamageItemDetail damageItemDetail = new DamageItemDetail(batch.getStock(), product.getPurchasePrice(), batch);
+                        damageItemDetails.add(damageItemDetail);
+                    }
+                }
+                else{
+                    int qty = pnDamageItemDetail.getSoLuong();
+                    String productId = pnDamageItemDetail.getTxtProductId().getText();
+                    Product product = productBUS.getProductById(productId);
+                    DamageItemDetail damageItemDetail = new DamageItemDetail(qty, product.getPurchasePrice(), 
+                            batchBUS.getFirstByProduct(productId));
+                        damageItemDetails.add(damageItemDetail);
+                }
             }
         }
         return damageItemDetails;
@@ -411,7 +433,7 @@ public class TabDamageItem extends javax.swing.JPanel {
         double tongTien = 0;
         List<PnDamageItemDetail> listPanel = getAllPnDamageItemDetail();
         for (PnDamageItemDetail x : listPanel) {
-//            tongTien += x.getLineTotal();
+            tongTien += x.getLineTotal();
         }
         txtTongTien.setText(FormatNumber.formatToVND(tongTien));
     }
@@ -425,14 +447,13 @@ public class TabDamageItem extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnContent;
     private javax.swing.JPanel pnLeft;
     private javax.swing.JPanel pnMid;
-    private javax.swing.JLabel txtEmpName;
-    private javax.swing.JLabel txtTongTien;
+    private javax.swing.JTextField txtEmpName;
+    private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
 
 }

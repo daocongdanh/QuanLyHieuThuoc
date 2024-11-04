@@ -90,4 +90,8 @@ public class ReturnOrderDetailBUS {
     public List<ReturnOrderDetail> getListReturnOrderDetailsByReturnOrder(ReturnOrder returnOrder){
         return returnOrderDetailDAL.getListReturnOrderDetailsByReturnOrder(returnOrder);
     }
+    
+    public List<ReturnOrderDetail> getListReturnOrderDetailByType(ReturnOrderDetailStatus returnOrderDetailStatus){
+        return returnOrderDetailDAL.getALLByStatus(returnOrderDetailStatus);
+    }
 }

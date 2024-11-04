@@ -127,10 +127,9 @@ public class BatchDAL implements BaseDAL<Batch, String>{
     }
 
     public List<Batch> findByProductId(String productId) {
-         TypedQuery<Batch> query = 
+        TypedQuery<Batch> query = 
                 entityManager.createQuery("select b from Batch b where b.product.productId = ?1", Batch.class);
         query.setParameter(1, productId);
         return query.getResultList();
     }
-    
 }
