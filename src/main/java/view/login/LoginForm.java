@@ -78,14 +78,17 @@ public class LoginForm extends javax.swing.JFrame {
         jPanel1.setBackground(new Color(0,0,255,0));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Đăng nhập");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Mã nhân viên");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Mật khẩu:");
 
         usernameTxt.setFont(usernameTxt.getFont().deriveFont(usernameTxt.getFont().getSize()+4f));
@@ -129,6 +132,7 @@ public class LoginForm extends javax.swing.JFrame {
         });
 
         quenMk.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        quenMk.setForeground(new java.awt.Color(255, 255, 255));
         quenMk.setText("Quên mật khẩu?");
         quenMk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         quenMk.addMouseListener(new java.awt.event.MouseAdapter() {

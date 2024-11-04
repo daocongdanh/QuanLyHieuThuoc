@@ -316,7 +316,8 @@ public class PnOverrall extends javax.swing.JPanel {
 
         comboDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         comboDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7 ngày qua", "Hôm nay", "Hôm qua", "Tháng này", "Tháng trước" }));
-        comboDate.setPreferredSize(new java.awt.Dimension(120, 22));
+        comboDate.setMinimumSize(new java.awt.Dimension(140, 26));
+        comboDate.setPreferredSize(new java.awt.Dimension(140, 22));
         comboDate.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 comboDateItemStateChanged(evt);
