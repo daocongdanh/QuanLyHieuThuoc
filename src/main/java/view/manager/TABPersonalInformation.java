@@ -7,7 +7,9 @@ package view.manager;
 import bus.EmployeeBUS;
 import entity.Employee;
 import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 import view.login.LoadApplication;
 import util.CurrentEmployee;
 
@@ -43,41 +45,45 @@ public class TABPersonalInformation extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         pnAll = new javax.swing.JPanel();
+        jLabel43 = new javax.swing.JLabel();
         pnRight = new javax.swing.JPanel();
         jLabel42 = new javax.swing.JLabel();
-        txtTen = new javax.swing.JTextField();
         jLabel44 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
-        txtSDT = new javax.swing.JTextField();
-        txtChucVu = new javax.swing.JTextField();
         jLabel48 = new javax.swing.JLabel();
         jLabel61 = new javax.swing.JLabel();
-        txtMa = new javax.swing.JTextField();
         jLabel76 = new javax.swing.JLabel();
+        txtMa = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
+        txtTen = new javax.swing.JTextField();
+        txtSDT = new javax.swing.JTextField();
+        txtChucVu = new javax.swing.JTextField();
         txtDiaChi = new javax.swing.JTextField();
-        jLabel43 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         pnAll.setBackground(new java.awt.Color(255, 255, 255));
+        pnAll.setLayout(new java.awt.GridBagLayout());
+
+        jLabel43.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
+        jLabel43.setText("Thông tin cá nhân");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 300, 0, 0);
+        pnAll.add(jLabel43, gridBagConstraints);
 
         pnRight.setBackground(new java.awt.Color(255, 255, 255));
         pnRight.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pnRight.setMinimumSize(new java.awt.Dimension(1083, 765));
+        pnRight.setPreferredSize(new java.awt.Dimension(1083, 765));
         pnRight.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel42.setText("Họ và tên:");
         pnRight.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, -1));
-
-        txtTen.setEditable(false);
-        txtTen.setBackground(new java.awt.Color(255, 255, 255));
-        txtTen.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        txtTen.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-        pnRight.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 420, 40));
 
         jLabel44.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel44.setText("Số điện thoại:");
@@ -87,19 +93,6 @@ public class TABPersonalInformation extends javax.swing.JPanel {
         jLabel46.setText("Email:");
         pnRight.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, -1, -1));
 
-        txtSDT.setEditable(false);
-        txtSDT.setBackground(new java.awt.Color(255, 255, 255));
-        txtSDT.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        txtSDT.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-        pnRight.add(txtSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 310, 421, 40));
-
-        txtChucVu.setEditable(false);
-        txtChucVu.setBackground(new java.awt.Color(255, 255, 255));
-        txtChucVu.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        txtChucVu.setMaximumSize(new java.awt.Dimension(64, 33));
-        txtChucVu.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-        pnRight.add(txtChucVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 550, 421, 40));
-
         jLabel48.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel48.setText("Role:");
         pnRight.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 510, -1, -1));
@@ -108,54 +101,47 @@ public class TABPersonalInformation extends javax.swing.JPanel {
         jLabel61.setText("Mã nhân viên:");
         pnRight.add(jLabel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
 
-        txtMa.setEditable(false);
-        txtMa.setBackground(new java.awt.Color(255, 255, 255));
-        txtMa.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        txtMa.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-        pnRight.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 420, 40));
-
         jLabel76.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel76.setText("Địa chỉ");
         pnRight.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 510, -1, -1));
 
+        txtMa.setEditable(false);
+        txtMa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtMa.setRequestFocusEnabled(false);
+        pnRight.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 420, 40));
+
         txtEmail.setEditable(false);
-        txtEmail.setBackground(new java.awt.Color(255, 255, 255));
-        txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        txtEmail.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-        pnRight.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 421, 40));
+        txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtEmail.setRequestFocusEnabled(false);
+        pnRight.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 420, 40));
+
+        txtTen.setEditable(false);
+        txtTen.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtTen.setRequestFocusEnabled(false);
+        pnRight.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 420, 40));
+
+        txtSDT.setEditable(false);
+        txtSDT.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSDT.setRequestFocusEnabled(false);
+        pnRight.add(txtSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 310, 420, 40));
+
+        txtChucVu.setEditable(false);
+        txtChucVu.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtChucVu.setRequestFocusEnabled(false);
+        pnRight.add(txtChucVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 550, 420, 40));
 
         txtDiaChi.setEditable(false);
-        txtDiaChi.setBackground(new java.awt.Color(255, 255, 255));
-        txtDiaChi.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        txtDiaChi.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-        pnRight.add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 421, 40));
+        txtDiaChi.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtDiaChi.setRequestFocusEnabled(false);
+        pnRight.add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 420, 40));
 
-        jLabel43.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
-        jLabel43.setText("Thông tin cá nhân");
-
-        javax.swing.GroupLayout pnAllLayout = new javax.swing.GroupLayout(pnAll);
-        pnAll.setLayout(pnAllLayout);
-        pnAllLayout.setHorizontalGroup(
-            pnAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnAllLayout.createSequentialGroup()
-                .addGroup(pnAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnAllLayout.createSequentialGroup()
-                        .addGap(603, 603, 603)
-                        .addComponent(jLabel43))
-                    .addGroup(pnAllLayout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 1084, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(415, Short.MAX_VALUE))
-        );
-        pnAllLayout.setVerticalGroup(
-            pnAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnAllLayout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addComponent(jLabel43)
-                .addGap(66, 66, 66)
-                .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 300, 0, 0);
+        pnAll.add(pnRight, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
