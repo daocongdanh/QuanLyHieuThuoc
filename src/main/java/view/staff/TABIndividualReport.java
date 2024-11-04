@@ -125,13 +125,13 @@ public class TABIndividualReport extends javax.swing.JPanel {
                     "Hóa đơn bán hàng", FormatNumber.formatToVND(order.getTotalPrice())});
             } else if (obj instanceof ReturnOrder returnOrder) {
                 tableDesign.getModelTable().addRow(new Object[]{returnOrder.getReturnOrderId(), FormatDate.formatDate(returnOrder.getOrderDate()),
-                    "Phiếu trả hàng", FormatNumber.formatToVND(returnOrder.getTotalPrice())});
+                    "Phiếu trả hàng", "-" + FormatNumber.formatToVND(returnOrder.getTotalPrice())});
             } else if (obj instanceof PurchaseOrder purchaseOrder) {
                 tableDesign.getModelTable().addRow(new Object[]{purchaseOrder.getPurchaseOrderId(), FormatDate.formatDate(purchaseOrder.getOrderDate()),
-                    "Phiếu nhập hàng", FormatNumber.formatToVND(purchaseOrder.getTotalPrice())});
+                    "Phiếu nhập hàng", "-" + FormatNumber.formatToVND(purchaseOrder.getTotalPrice())});
             } else if (obj instanceof DamageItem damageItem) {
                 tableDesign.getModelTable().addRow(new Object[]{damageItem.getDamageItemId(), FormatDate.formatDate(damageItem.getOrderDate()),
-                    "Phiếu xuất hủy", FormatNumber.formatToVND(damageItem.getTotalPrice())});
+                    "Phiếu xuất hủy", "-" + FormatNumber.formatToVND(damageItem.getTotalPrice())});
             }
         });
 
