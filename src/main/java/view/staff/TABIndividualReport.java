@@ -275,6 +275,11 @@ public class TABIndividualReport extends javax.swing.JPanel {
 
         comboboxType.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         comboboxType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Hóa đơn bán hàng", "Phiếu nhập hàng", "Phiếu trả hàng", "Phiếu xuất hủy" }));
+        comboboxType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboboxTypeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -633,6 +638,10 @@ public class TABIndividualReport extends javax.swing.JPanel {
         modalDetail.setLocationRelativeTo(null);
         modalDetail.setVisible(true);
     }//GEN-LAST:event_btnViewActionPerformed
+
+    private void comboboxTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboboxTypeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

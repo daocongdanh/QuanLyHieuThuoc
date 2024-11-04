@@ -6,7 +6,6 @@ package bus;
 
 import connectDB.ConnectDB;
 import dal.DamageItemDetailDAL;
-import entity.Batch;
 import entity.DamageItem;
 import entity.DamageItemDetail;
 import jakarta.persistence.EntityManager;
