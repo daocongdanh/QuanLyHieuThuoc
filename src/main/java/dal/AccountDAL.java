@@ -47,11 +47,10 @@ public class AccountDAL implements BaseDAL<Account, String>{
     }
 
 
-    public Account login(String username, String password){
-        String jpql = "select a from Account a where a.employee.employeeId = ?1 and a.password = ?2";
+    public Account login(String username ){
+        String jpql = "select a from Account a where a.employee.employeeId = ?1 ";
         TypedQuery<Account> query = entityManager.createQuery(jpql, Account.class);
         query.setParameter(1, username);
-        query.setParameter(2, password);
         try {
             return query.getSingleResult();
         } catch (Exception e) {

@@ -22,6 +22,7 @@ import jakarta.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import util.GeneratePDF;
 
 /**
  *
@@ -32,6 +33,7 @@ public class ReturnOrderBUS {
     private BatchDAL batchDAL;
     private ReturnOrderDAL returnOrderDAL;
     private EntityTransaction transaction;
+    private final GeneratePDF generatePDF = new GeneratePDF();
 
     public ReturnOrderBUS(EntityManager entityManager) {
         this.returnOrderDAL = new ReturnOrderDAL(ConnectDB.getEntityManager());
@@ -56,7 +58,7 @@ public class ReturnOrderBUS {
                 if (detailDTO.getQuantityReturn() != 0) {
                     ReturnOrderDetail returnOrderDetail = new ReturnOrderDetail();
                     returnOrderDetail.setProduct(detailDTO.getProduct());
-                    returnOrderDetail.setQuantity(detailDTO.getQuantityReturn() );
+                    returnOrderDetail.setQuantity(detailDTO.getQuantityReturn());
 
                     returnOrderDetail.setPrice(detailDTO.getProduct().getSellingPrice());
                     returnOrderDetail.setReturnOrderDetailStatus(ReturnOrderDetailStatus.PENDING);
@@ -74,6 +76,8 @@ public class ReturnOrderBUS {
             ReturnOrder returnOrder = new ReturnOrder(null, LocalDateTime.now(), employee, order, returnOrderDetails, false);
             returnOrderDAL.insert(returnOrder);
             transaction.commit();
+            generatePDF.GeneratePDFReturn(returnOrder);
+
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -112,7 +116,7 @@ public class ReturnOrderBUS {
         }
         return new StatsPriceAndQuantityDTO(quantity, sumPrice);
     }
-    
+
     public List<ReturnOrder> getByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID) {
         return returnOrderDAL.searchByDateAndEmp(start, end, empID);
     }

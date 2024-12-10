@@ -1,5 +1,18 @@
 package gui.application.form;
 
+import gui.manager.TABSupplier;
+import gui.manager.TABEmployee;
+import gui.manager.TABOrder;
+import gui.manager.TABCustomer;
+import gui.manager.TABPersonalInformation;
+import gui.manager.TABDamageItem;
+import gui.manager.TABPurchaseOrder;
+import gui.manager.TABReturnOrder;
+import gui.manager.TABProduct;
+import gui.manager.TABReport;
+import gui.manager.TABStats;
+import gui.manager.TABPromotion;
+import gui.manager.TABUnit;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.util.UIScale;
@@ -22,11 +35,10 @@ import gui.application.form.other.FormRead;
 import gui.menu.Menu;
 import gui.menu.MenuAction;
 import javax.swing.JFrame;
-import view.manager.*;
-import view.staff.TABIndividualReport;
-import view.staff.TABPurchase;
-import view.staff.TABSell;
-import view.staff.damageItem.TabDamageItem;
+import gui.staff.TABIndividualReport;
+import gui.staff.TABPurchase;
+import gui.staff.TABSell;
+import gui.staff.damageItem.TabDamageItem;
 
 /**
  *
@@ -125,7 +137,7 @@ public class MainForm extends JLayeredPane {
                 } else if (index == 24) {
                     Application.showForm(new TABPurchase());
                 } else if (index == 25) {
-                    Application.showForm(new view.staff.TABReturnOrder());
+                    Application.showForm(new gui.staff.TABReturnOrder());
                 } else if (index == 26) {
                     Application.showForm(new TabDamageItem());
                 } else if (index == 27) {

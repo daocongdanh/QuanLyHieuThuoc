@@ -54,9 +54,6 @@ public class Account {
     }
 
     public void setPassword(String password) {
-        String regex = "^[A-Z][A-Za-z0-9.,@&*^]{7,}$";
-        if(!password.matches(regex))
-            throw new RuntimeException("Mật khẩu không hợp lệ");
         this.password = password;
     }
 

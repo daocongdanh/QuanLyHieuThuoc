@@ -136,7 +136,7 @@ public class ProductDAL implements BaseDAL<Product, String> {
         if (active != null) {
             jpql += " AND p.active = :active";
         }
-
+        
         Query query = entityManager.createQuery(jpql, Product.class);
 
         if (name != null && !name.isEmpty()) {

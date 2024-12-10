@@ -89,9 +89,9 @@ public class Order {
     }
 
     public void setOrderDate(LocalDateTime orderDate) {
-        if (!(orderDate.toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))) {
-            throw new RuntimeException("Ngày lập hóa đơn phải là ngày hiện tại!");
-        }
+//        if (!(orderDate.toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))) {
+//            throw new RuntimeException("Ngày lập hóa đơn phải là ngày hiện tại!");
+//        }
         this.orderDate = orderDate;
     }
 

@@ -8,6 +8,7 @@ import dal.AccountDAL;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import entity.Account;
+import util.PasswordUtil;
 import util.SendMail;
 import util.MailTemplate;
 /**
@@ -31,6 +32,7 @@ public class AccountBUS {
     public boolean createAccount(Account account){
         try{
             transaction.begin();
+
             accountDAL.insert(account);
             transaction.commit();
             return true;
@@ -57,7 +59,11 @@ public class AccountBUS {
     }
     
     public Account login(String username, String password){
-        return accountDAL.login(username, password);
+        Account account = accountDAL.login(username);
+        if ( PasswordUtil.verify( password, account.getPassword()) ){
+            return account;
+        }
+        return null;
     }
     
     public Account getByEmployeeID(String employeeId) {

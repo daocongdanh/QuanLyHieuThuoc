@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-	 viewBox="0 0 505 505" xml:space="preserve">
-<circle style="fill:#324A5E;" cx="252.5" cy="252.5" r="252.5"/>
-<polygon style="fill:#FFFFFF;" points="325.6,86.1 325.6,139.7 379.1,139.7 379.1,418.9 125.9,418.9 125.9,86.1 "/>
-<g>
-	<polygon style="fill:#E6E9EE;" points="325.6,86.1 379.1,139.7 325.6,139.7 	"/>
-	<rect x="155.7" y="110.4" style="fill:#E6E9EE;" width="90" height="11.4"/>
-	<rect x="155.7" y="138.8" style="fill:#E6E9EE;" width="62.5" height="11.4"/>
-</g>
-<polygon style="fill:#FF7058;" points="345.4,244 354.6,196 306.6,205.3 321.1,219.8 267,273.9 221.7,228.6 164.9,285.3 
-	174.7,295.2 221.7,248.3 267,293.6 330.9,229.6 "/>
-<circle style="fill:#324A5E;" cx="169.8" cy="290.3" r="18.7"/>
-<circle style="fill:#FFD05B;" cx="220.2" cy="239.8" r="18.7"/>
-<circle style="fill:#54C0EB;" cx="264.5" cy="284.1" r="18.7"/>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 432.59 432.59" xml:space="preserve">
+<path style="fill:#E2E0D0;" d="M432.59,51.735v221.36H0V51.735c0-6.67,5.41-12.08,12.08-12.08h408.43
+	C427.18,39.655,432.59,45.065,432.59,51.735z"/>
+  <path style="fill:#D3D1C1;" d="M420.51,39.655H280.185l-141.229,233.44H432.59V51.735C432.59,45.065,427.18,39.655,420.51,39.655z"
+  />
+  <polygon style="fill:#808080;" points="254.79,314.045 263.85,382.935 168.75,382.935 177.81,314.045 "/>
+  <path style="fill:#999999;" d="M432.59,273.095v28.86c0,6.68-5.41,12.09-12.08,12.09H254.79h-76.98H12.08
+	c-6.67,0-12.08-5.41-12.08-12.09v-28.86H432.59z"/>
+  <rect x="132.47" y="372.935" style="fill:#999999;" width="167.65" height="20"/>
+  <rect x="316.3" y="204.005" style="fill:#E59683;" width="40" height="29.55"/>
+  <rect x="236.3" y="145.615" style="fill:#E59683;" width="40" height="88.43"/>
+  <rect x="76.3" y="172.045" style="fill:#E59683;" width="40" height="62"/>
+  <rect x="156.3" y="115.245" style="fill:#E59683;" width="40" height="118.8"/>
 </svg>

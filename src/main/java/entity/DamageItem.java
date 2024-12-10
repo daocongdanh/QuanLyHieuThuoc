@@ -71,9 +71,9 @@ public class DamageItem {
     }
 
     public void setOrderDate(LocalDateTime orderDate) {
-        if (!(orderDate.isEqual(LocalDateTime.now()))) {
-            throw new RuntimeException("Ngày lập đơn phải là ngày hiện tại!");
-        }
+//        if (!(orderDate.isEqual(LocalDateTime.now()))) {
+//            throw new RuntimeException("Ngày lập đơn phải là ngày hiện tại!");
+//        }
         this.orderDate = orderDate;
     }
 

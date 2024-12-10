@@ -10,7 +10,10 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 import entity.Product;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
@@ -28,7 +31,7 @@ public class BatchBUS {
         return batchDAL.findByProduct(product)
                 .stream()
                 .filter(batch -> (batch.getExpirationDate().isAfter(LocalDate.now())
-                    && batch.getStock() > 0 && batch.isStatus() == true))
+                && batch.getStock() > 0 && batch.isStatus() == true))
                 .sorted(Comparator.comparing(Batch::getExpirationDate))
                 .toList();
     }
@@ -45,12 +48,41 @@ public class BatchBUS {
         return batchDAL.findAll1();
     }
 
-    public List<Batch> getListBatchByProduct(String productId) {
-        return batchDAL.findByProductId(productId);
+    public List<Batch> getListBatchByProductEnableAndOnDay(String productId) {
+        List<Batch> batchs = batchDAL.findByProductId(productId);
+
+        return batchs.stream()
+                .filter(batch -> (batch.getExpirationDate().isAfter(LocalDate.now())
+                && batch.isStatus() == true))
+                .sorted(Comparator.comparing(Batch::getExpirationDate))
+                .toList();
+
     }
 
     public Batch getBatchByName(String batchName) {
         return batchDAL.findByName(batchName);
+    }
+
+    public Map<Product, List<Batch>> getListBatchExpiration() {
+
+        List<Batch> batchs = batchDAL.getAllBatchExpiration();
+        Map<Product, List<Batch>> map = new LinkedHashMap<>();
+
+        for (Batch batch : batchs) {
+            Product product = batch.getProduct();
+            if (map.containsKey(product)) {
+                map.get(product).add(batch);
+            } else {
+                List<Batch> list = new ArrayList<>();
+                list.add(batch);
+                map.put(product, list);
+            }
+        }
+        return map;
+    }
+
+    public Batch getFirstByProduct(String productId) {
+        return batchDAL.findByProductId(productId).get(0);
     }
 
 }
