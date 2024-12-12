@@ -7,31 +7,34 @@ package bus;
 import dal.BatchDAL;
 import entity.Batch;
 import jakarta.persistence.EntityManager;
-import java.util.List;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
+
 import entity.Product;
+import jakarta.persistence.EntityTransaction;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
- *
  * @author Hoang
  */
 public class BatchBUS {
 
     private BatchDAL batchDAL;
+    private final EntityTransaction transaction;
 
     public BatchBUS(EntityManager entityManager) {
         this.batchDAL = new BatchDAL(entityManager);
+        this.transaction = entityManager.getTransaction();
     }
 
     public List<Batch> getListBatchEnable(Product product) {
         return batchDAL.findByProduct(product)
                 .stream()
                 .filter(batch -> (batch.getExpirationDate().isAfter(LocalDate.now())
-                && batch.getStock() > 0 && batch.isStatus() == true))
+                        && batch.getStock() > 0 && batch.isStatus() == true))
                 .sorted(Comparator.comparing(Batch::getExpirationDate))
                 .toList();
     }
@@ -53,7 +56,7 @@ public class BatchBUS {
 
         return batchs.stream()
                 .filter(batch -> (batch.getExpirationDate().isAfter(LocalDate.now())
-                && batch.isStatus() == true))
+                        && batch.isStatus() == true))
                 .sorted(Comparator.comparing(Batch::getExpirationDate))
                 .toList();
 
@@ -85,4 +88,5 @@ public class BatchBUS {
         return batchDAL.findByProductId(productId).get(0);
     }
 
-}
+
+    }

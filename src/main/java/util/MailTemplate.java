@@ -96,9 +96,11 @@ public class MailTemplate {
                 + "  </div>";
         return html;
     }
-    
-        public String mailPassword(Account acc) {
+
+
+    public String mailPassword(String newPass) {
         String html = "";
+
 
         html += "<div marginwidth=\"0\" marginheight=\"0\"\n"
                 + "    style=\"font-size:16px;line-height:24px!important;font-family:arial;background:#D2ECF5;padding:50px; color: #606060;\">\n"
@@ -107,8 +109,8 @@ public class MailTemplate {
                 + "        style=\"width: 100%; height: 300px; object-fit: cover;\">\n"
                 + "      <div style=\"background-color: #ffffff; padding: 20px; margin-top: -5px;\">\n"
                 + "        <p>Tuyệt đối không cung cấp mật khẩu cho ngưởi khác, tránh bị kẻ gian lợi dụng!</p>\n"
-                + "        <p>Mật khẩu của bạn là: <b>" +acc.getPassword() + "</b></p>\n"
-                + "        <p>Nhà Thuốc Tây Á</p>\n"
+                + "        <p>Mật khẩu của mới bạn là: <b>" + newPass + "</b></p>\n"
+                + "        <p>Nhà Thuốc Thanh Tiến</p>\n"
                 + "      </div>\n"
                 + "    </div>\n"
                 + "  </div>";

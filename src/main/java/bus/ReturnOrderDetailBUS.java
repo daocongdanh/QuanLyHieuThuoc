@@ -6,6 +6,10 @@ import entity.*;
 import enums.ReturnOrderDetailStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +21,7 @@ public class ReturnOrderDetailBUS {
     private final ReturnOrderDAL returnOrderDAL;
     private final ReturnOrderDetailDAL returnOrderDetailDAL;
     private final BatchDAL batchDAL;
+    private BatchBUS batchBUS;
     private final EntityTransaction transaction;
 
     public ReturnOrderDetailBUS(EntityManager entityManager) {
@@ -66,8 +71,16 @@ public class ReturnOrderDetailBUS {
             ReturnOrderDetail reOld = returnOrderDetailDAL.findByReturnOrderIdAndProductId(returnOrderDetail.getReturnOrder().getReturnOrderId(),
                     returnOrderDetail.getProduct().getProductId());
 
-            reOld.setReturnOrderDetailStatus(ReturnOrderDetailStatus.PENDING_DAMAGED);
+            reOld.setReturnOrderDetailStatus(ReturnOrderDetailStatus.DAMAGED);
             returnOrderDetailDAL.update(reOld);
+
+            Date now = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            String name = "TRAHANG" + dateFormat.format(now);
+            Batch newBatch = new Batch(null,
+                    name, LocalDate.now(),
+                    returnOrderDetail.getQuantity(), returnOrderDetail.getProduct(), true);
+            batchDAL.insert(newBatch);
 
             ReturnOrder returnOrder = returnOrderDetail.getReturnOrder();
             List<ReturnOrderDetail> detailList = returnOrder.getReturnOrderDetails();

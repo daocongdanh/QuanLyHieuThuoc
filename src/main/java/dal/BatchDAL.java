@@ -121,7 +121,7 @@ public class BatchDAL implements BaseDAL<Batch, String>{
     }
     
     public List<Batch> getAllBatchExpiration(){
-        TypedQuery<Batch> query = entityManager.createQuery("select b from Batch b where b.expirationDate < CURRENT_DATE and "
+        TypedQuery<Batch> query = entityManager.createQuery("select b from Batch b where b.expirationDate <= CURRENT_DATE and "
                 + "b.status = true", Batch.class);
         return query.getResultList();
     }

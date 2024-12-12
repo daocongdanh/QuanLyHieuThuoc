@@ -19,7 +19,8 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
 
     private Product product;
     private List<Batch> batchs;
-    private String type;
+    private int type;
+    private String reason;
     private TabDamageItem tabDamageItem;
     private ReturnOrderDetail returnOrderDetail;
 
@@ -27,11 +28,12 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
         initComponents();
     }
 
-    public PnDamageItemDetail(Product product, List<Batch> batchs, String type, ReturnOrderDetail returnOrderDetail,
-            TabDamageItem tabDamageItem) {
+    public PnDamageItemDetail(Product product, List<Batch> batchs, String reason, ReturnOrderDetail returnOrderDetail,
+            TabDamageItem tabDamageItem, int type) {
         this.product = product;
         this.batchs = batchs;
         this.type = type;
+        this.reason = reason;
         this.returnOrderDetail = returnOrderDetail;
         this.tabDamageItem = tabDamageItem;
         initComponents();
@@ -46,12 +48,12 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
     private void fillFirst() {
         txtProductId.setText(product.getProductId());
         txtProductId.setVisible(false);
-        if (type.equals("Hết hạn")) {
+        if (type == 1) {
             txtTenSP.setText(product.getName());
             pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
                     + product.getImage())), 82, 82));
             txtDVT.setText(product.getUnit().getName());
-            txtLoai.setText(type);
+            txtLoai.setText(reason);
             spinnerSoLuong.setValue(0);
             int value = (Integer) spinnerSoLuong.getValue();
             txtTongTien.setText(FormatNumber.formatToVND(product.getPrice() * value));
@@ -64,17 +66,17 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
             }
             spinnerSoLuong.setValue(qty);
             setLineTotal();
-        } else if (type.equals("Hàng hư")) {
+        } else if (type == 2) {
             Product p = returnOrderDetail.getProduct();
             txtTenSP.setText(p.getName());
             pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
                     + p.getImage())), 82, 82));
             txtDVT.setText(p.getUnit().getName());
-            txtLoai.setText(type);
+            txtLoai.setText(reason);
             spinnerSoLuong.setValue(0);
             int value = (Integer) spinnerSoLuong.getValue();
             txtTongTien.setText(FormatNumber.formatToVND(p.getPrice() * value));
-            
+
             spinnerSoLuong.setValue(returnOrderDetail.getQuantity());
             jLabel1.setVisible(false);
             pnListBatch.setVisible(false);
@@ -244,7 +246,6 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
     public JLabel getTxtProductId() {
         return txtProductId;
     }
-
 
 
     private void btnXoaOderDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaOderDetailMouseClicked

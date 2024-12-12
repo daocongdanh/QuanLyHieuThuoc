@@ -101,6 +101,4 @@ public class DamageItemDetail {
         }
         this.damageItem = damageItem;
     }
-
-    
 }

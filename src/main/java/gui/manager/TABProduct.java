@@ -141,9 +141,9 @@ public class TABProduct extends javax.swing.JPanel {
                 imageProductEdit = new ImageIcon(bufferImage);
                 imageProductEdit.setDescription(product.getImage());
 
+
             }
-            lblImageEdit.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
-                    + product.getImage())), 265, 269));
+            lblImageEdit.setIcon(ResizeImage.resizeImage(imageProductEdit, 265, 269));
 
             if (table.getCellEditor() != null) {
                 table.getCellEditor().stopCellEditing();
@@ -1302,20 +1302,22 @@ public class TABProduct extends javax.swing.JPanel {
             Unit unit = unitBUS.getUnitByName(comboUnitEdit.getSelectedItem().toString());
             product.setUnit(unit);
 
-            if (productBUS.searchBySDKAndUnitId(registrationNumber, unit.getUnitId()) == null) {
-                if (productBUS.updateProduct(product)) {
-                    MessageDialog.info(null, "Sửa thông tin sản phẩm thành công");
-                    clearDataModelAdd();
-                    if (!checkImage) {
-                        ImageUtil.saveImageIcon(imageProductEdit, removeExtension(image));
-                    }
 
-                    modelEditProduct.dispose();
-                    fillContent(productBUS.getAllProducts());
-                };
-            } else {
-                MessageDialog.info(null, "Sản phẩm đã có đơn vị tính này");
+            Product existingProduct = productBUS.searchBySDKAndUnitId(registrationNumber, unit.getUnitId());
+
+            if (existingProduct != null && !existingProduct.getProductId().equals(product.getProductId())) {
+                MessageDialog.warning(null, "Sản phẩm đã có đơn vị tính này");
                 return;
+            }
+
+            if (productBUS.updateProduct(product)) {
+                MessageDialog.info(null, "Sửa thông tin sản phẩm thành công");
+                if (!checkImage) {
+                    ImageUtil.saveImageIcon(imageProductEdit, removeExtension(image));
+                }
+                fillContent(productBUS.getAllProducts());
+            } else {
+                MessageDialog.error(null, "Cập nhật thông tin sản phẩm thất bại");
             }
 
         } catch (NumberFormatException e) {

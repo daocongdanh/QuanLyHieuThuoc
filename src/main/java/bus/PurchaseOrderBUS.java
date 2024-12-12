@@ -21,13 +21,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import util.GeneratePDF;
 
 /**
  *
  * @author daoducdanh
  */
 public class PurchaseOrderBUS {
-
+    
     private PurchaseOrderDAL purchaseOrderDAL;
     private EntityTransaction transaction;
     private BatchDAL batchDAL;
@@ -35,7 +36,8 @@ public class PurchaseOrderBUS {
     private ProductDAL productDAL;
     private EmployeeDAL employeeDAL;
     private SupplierDAL supplierDAL;
-
+    private final GeneratePDF generatePDF = new GeneratePDF();
+    
     public PurchaseOrderBUS(EntityManager entityManager) {
         this.purchaseOrderDAL = new PurchaseOrderDAL(entityManager);
         this.transaction = entityManager.getTransaction();
@@ -45,9 +47,9 @@ public class PurchaseOrderBUS {
         this.employeeDAL = new EmployeeDAL(entityManager);
         this.supplierDAL = new SupplierDAL(entityManager);
     }
-
+    
     public boolean createPurchaseOrder(Employee employee, Supplier supplier,
-        List<PurchaseOrderDTO> purchaseOrderDTOs) {
+            List<PurchaseOrderDTO> purchaseOrderDTOs) {
         try {
             transaction.begin();
             
@@ -57,13 +59,13 @@ public class PurchaseOrderBUS {
             if (supplier == null) {
                 throw new RuntimeException("Nhà cung cấp không được rỗng");
             }
-
+            
             List<PurchaseOrderDetail> purchaseOrderDetails = new ArrayList<>();
-
+            
             for (PurchaseOrderDTO purchaseOrderDTO : purchaseOrderDTOs) {
                 Product product = productDAL.findById(purchaseOrderDTO.getProductId())
                         .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
-
+                
                 Batch batch = batchDAL.findByNameAndProduct(purchaseOrderDTO.getBatchName(), purchaseOrderDTO.getProductId());
                 
                 PurchaseOrderDetail purchaseOrderDetail;
@@ -72,41 +74,42 @@ public class PurchaseOrderBUS {
                             purchaseOrderDTO.getBatchName(), purchaseOrderDTO.getExpirationDate(),
                             purchaseOrderDTO.getQuantity(), product, true);
                     batchDAL.insert(newBatch);
-
+                    
                     purchaseOrderDetail = new PurchaseOrderDetail(purchaseOrderDTO.getQuantity(),
                             product.getPurchasePrice(), newBatch);
                 } else {
                     batch.setStock(batch.getStock() + purchaseOrderDTO.getQuantity());
                     batchDAL.update(batch);
-
+                    
                     purchaseOrderDetail = new PurchaseOrderDetail(purchaseOrderDTO.getQuantity(),
                             product.getPurchasePrice(), batch);
                 }
                 purchaseOrderDetails.add(purchaseOrderDetail);
             }
-
+            
             PurchaseOrder purchaseOrder = new PurchaseOrder(null, LocalDateTime.now(), employee, supplier, purchaseOrderDetails);
             purchaseOrderDAL.insert(purchaseOrder);
-
+            
+            generatePDF.GeneratePDFPurchase(purchaseOrder);
             transaction.commit();
             return true;
-
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
             transaction.rollback();
             return false;
         }
-
+        
     }
-
+    
     public List<PurchaseOrder> getAllPurchaseOrders() {
         return purchaseOrderDAL.findAll();
     }
-
+    
     public List<PurchaseOrder> search(LocalDateTime start, LocalDateTime end, String txtEmployee) {
         return purchaseOrderDAL.search(start, end, txtEmployee);
     }
-
+    
     public StatsPriceAndQuantityDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) {
         List<PurchaseOrder> purchaseOrders = purchaseOrderDAL.searchByDate(start, end);
         Integer quantity = purchaseOrders.size();

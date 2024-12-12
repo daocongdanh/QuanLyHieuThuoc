@@ -33,15 +33,16 @@ public class DamageItemBUS {
     public boolean createDamageItem(Employee employee, List<DamageItemDetail> damageItemDetails){
         try{
             transaction.begin();
-            
+
             DamageItem damageItem = new DamageItem(null, LocalDateTime.now(), employee, damageItemDetails);
             damageItemDAL.insert(damageItem);
-            
+
             for(DamageItemDetail damageItemDetail : damageItemDetails){
                 Batch batch = damageItemDetail.getBatch();
                 batch.setStatus(false);
                 batchDAL.update(batch);
             }
+            
             transaction.commit();
             return true;
         }

@@ -18,6 +18,8 @@ import entity.*;
 import javax.swing.JTextField;
 import gui.login.LoadApplication;
 import gui.staff.returnOrder.PnOrderDetailReturn;
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 import util.CurrentEmployee;
 
 /**
@@ -130,6 +132,11 @@ public class TABReturnOrder extends javax.swing.JPanel {
         btnTaoPhieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTaoPhieuActionPerformed(evt);
+            }
+        });
+        btnTaoPhieu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnTaoPhieuKeyPressed(evt);
             }
         });
 
@@ -413,6 +420,10 @@ public class TABReturnOrder extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTaoPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoPhieuActionPerformed
+        createOrder();
+    }//GEN-LAST:event_btnTaoPhieuActionPerformed
+
+    private void createOrder() {
         List<ReturnOrderDetailDTO> listReturnOrderDetailDTOs = createListReturnOrderDetail();
         try {
             if (returnOrderBUS.createReturnOrder(CurrentEmployee.getEmployee(), customer, order, listReturnOrderDetailDTOs)) {
@@ -424,7 +435,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         } catch (Exception e) {
             MessageDialog.error(null, "Chưa nhập lý do!!!");
         }
-    }//GEN-LAST:event_btnTaoPhieuActionPerformed
+    }
 
     private void setTxtEmpty(JTextField... textFields) {
         for (JTextField x : textFields) {
@@ -451,9 +462,9 @@ public class TABReturnOrder extends javax.swing.JPanel {
         } else {
             for (PnOrderDetailReturn pnOrderDetailReturn : listPnOrderDetailReturn) {
                 int quantity = (int) pnOrderDetailReturn.getSoLuong();
-             
-                returnOrderDetailDTOs.add(new ReturnOrderDetailDTO(pnOrderDetailReturn.getProduct()
-                        , quantity, pnOrderDetailReturn.getReason()));
+
+                returnOrderDetailDTOs.add(new ReturnOrderDetailDTO(pnOrderDetailReturn.getProduct(),
+                        quantity, pnOrderDetailReturn.getReason()));
             }
         }
         return returnOrderDetailDTOs;
@@ -574,7 +585,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         try {
             clearPnOrderDetail();
             order = orderBUS.findById(orderId);
-            if ( order.getPromotion() != null ){
+            if (order.getPromotion() != null) {
                 MessageDialog.info(null, "Hóa đơn được tạo trong kì khuyến mãi");
                 return;
             }
@@ -610,6 +621,16 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private void jLabel5AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel5AncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel5AncestorAdded
+
+    private void btnTaoPhieuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnTaoPhieuKeyPressed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Bạn đã nhấn phím!");
+        if (evt.getKeyCode() == KeyEvent.VK_F8) {
+            JOptionPane.showMessageDialog(null, "Bạn đã nhấn phím F8!");
+            createOrder();
+        }
+
+    }//GEN-LAST:event_btnTaoPhieuKeyPressed
     private double tongTienHang;
     private Customer customer;
     private Order order;

@@ -130,6 +130,11 @@ public class TABPurchase extends javax.swing.JPanel {
                 btnConfirmPurchaseActionPerformed(evt);
             }
         });
+        btnConfirmPurchase.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnConfirmPurchaseKeyPressed(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -524,6 +529,10 @@ public class TABPurchase extends javax.swing.JPanel {
                             PnPurchaseSelectBatch pnSelectBatch = (PnPurchaseSelectBatch) component;
                             int quantity = (int) pnSelectBatch.getSpinnerQuantity().getValue();
                             String batchName = pnSelectBatch.getBatchDTO().getName();
+                            if (pnSelectBatch.getBatchDTO().getExpirationDate().isBefore(LocalDate.now())) {
+                                MessageDialog.warning(null, "Lô hàng " + batchName + " có ngày hết hạn không hợp lệ");
+                                return null;
+                            }
                             podtos.add(new PurchaseOrderDTO(pnPurchaseOrderDetail.getProduct().getProductId(),
                                     pnPurchaseOrderDetail.getProduct().getUnit().getName(), quantity, batchName,
                                     pnSelectBatch.getBatchDTO().getExpirationDate()));
@@ -550,12 +559,15 @@ public class TABPurchase extends javax.swing.JPanel {
         pnContent.repaint();
     }
 
-    private void btnConfirmPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmPurchaseActionPerformed
+    private void createOrder() {
         if (txtSupplierId.getText().trim().equals("") || txtSupplierName.getText().trim().equals("")) {
             MessageDialog.warning(null, "Chưa có nhà cung cấp!");
             return;
         }
         List<PurchaseOrderDTO> purchaseOrderDTOs = createListPurchaseOrderDetail();
+        if (purchaseOrderDTOs == null) {
+            return;
+        }
         try {
             if (purchaseOrderBUS.createPurchaseOrder(CurrentEmployee.getEmployee(), supplier, purchaseOrderDTOs)) {
                 MessageDialog.info(null, "Nhập hàng thành công!");
@@ -564,6 +576,10 @@ public class TABPurchase extends javax.swing.JPanel {
         } catch (Exception e) {
             MessageDialog.error(null, e.getMessage());
         }
+    }
+
+    private void btnConfirmPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmPurchaseActionPerformed
+        createOrder();
     }//GEN-LAST:event_btnConfirmPurchaseActionPerformed
 
     private void txtSearchSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchSupplierActionPerformed
@@ -592,6 +608,12 @@ public class TABPurchase extends javax.swing.JPanel {
             txtSearchProduct.requestFocus();
         }
     }//GEN-LAST:event_txtSearchProductKeyPressed
+
+    private void btnConfirmPurchaseKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnConfirmPurchaseKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_F8) {
+            createOrder();
+        }
+    }//GEN-LAST:event_btnConfirmPurchaseKeyPressed
     private double tongTienHang;
     private Supplier supplier;
     // Variables declaration - do not modify//GEN-BEGIN:variables

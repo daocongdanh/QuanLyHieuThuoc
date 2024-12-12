@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import util.CurrentEmployee;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -214,19 +216,42 @@ public class TabDamageItem extends javax.swing.JPanel {
     private void fillContent() {
         Employee employee = CurrentEmployee.getEmployee();
         txtEmpName.setText(employee.getName());
+        List<ReturnOrderDetail> details = returnOrderDetailBUS.getListReturnOrderDetailByType(ReturnOrderDetailStatus.DAMAGED);
         Map<Product, List<Batch>> map = batchBUS.getListBatchExpiration();
-        map.forEach((key, value) -> {
-            PnDamageItemDetail pnDamageItemDetail = new PnDamageItemDetail(key, value, "Hết hạn", null, this);
-            pnContent.add(pnDamageItemDetail);
-        });
+        List<Batch> listBatchExpiration = new ArrayList<>();
+        List<Batch> listBatchReturn = new ArrayList<>();
 
-        List<ReturnOrderDetail> details = returnOrderDetailBUS.
-                getListReturnOrderDetailByType(ReturnOrderDetailStatus.PENDING_DAMAGED);
-        for (ReturnOrderDetail returnOrderDetail : details) {
-            PnDamageItemDetail pnDamageItemDetail = new PnDamageItemDetail(returnOrderDetail.getProduct(),
-                    null, "Hàng hư", returnOrderDetail, this);
-            pnContent.add(pnDamageItemDetail);
-        }
+        map.forEach((product, batches) -> {
+            Optional<ReturnOrderDetail> matchedDetail = details.stream()
+                    .filter(detail -> detail.getProduct().equals(product))
+                    .findFirst();
+
+            String reason = matchedDetail.map(ReturnOrderDetail::getFinalReason).orElse("Hết hạn");
+
+            batches.forEach(batch -> {
+                if ( batch.getName().contains("TRAHANG")){
+                    listBatchReturn.add(batch);
+                }
+                else {
+                    listBatchExpiration.add(batch);
+                }
+            });
+            if ( !listBatchReturn.isEmpty()){
+                PnDamageItemDetail pnDamageItemDetailReturn = new PnDamageItemDetail(product, listBatchReturn, reason, null, this, 1);
+                pnContent.add(pnDamageItemDetailReturn);
+            }
+
+            if ( !listBatchExpiration.isEmpty()){
+                PnDamageItemDetail pnDamageItemDetailExpiration = new PnDamageItemDetail(product, listBatchExpiration, "Hết hạn", null, this, 1);
+                pnContent.add(pnDamageItemDetailExpiration);
+            }
+
+        });
+//        for (ReturnOrderDetail returnOrderDetail : details) {
+//            PnDamageItemDetail pnDamageItemDetail = new PnDamageItemDetail(returnOrderDetail.getProduct(),
+//                    null, returnOrderDetail.getFinalReason(), returnOrderDetail, this, 2);
+//            pnContent.add(pnDamageItemDetail);
+//        }
         changeTongTienHoaDon();
         pnContent.revalidate();
         pnContent.repaint();
@@ -259,7 +284,7 @@ public class TabDamageItem extends javax.swing.JPanel {
         try {
             Employee employee = CurrentEmployee.getEmployee();
             if (MessageDialog.confirm(null, "Bạn có chắc chắn muốn xuất hủy không?", "Xác nhận xuất hủy")) {
-                if (damageItemBUS.createDamageItem(employee, damageItemDetails)) {
+                if (damageItemBUS.createDamageItem(employee, damageItemDetails) ) {
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setDialogTitle("Chọn đường dẫn lưu file Excel");
                     FileNameExtensionFilter filter = new FileNameExtensionFilter("XLSX files", "xlsx");
@@ -326,8 +351,7 @@ public class TabDamageItem extends javax.swing.JPanel {
                                 Cell dataCell7 = dataRow.createCell(6);
                                 dataCell1.setCellValue(damageItemDetail.getBatch().getProduct().getProductId());
                                 dataCell2.setCellValue(damageItemDetail.getBatch().getProduct().getName());
-                                
-                                
+
                                 dataCell3.setCellValue(damageItemDetail.getBatch().getName());
                                 dataCell4.setCellValue(damageItemDetail.getBatch().getExpirationDate().toString());
                                 dataCell5.setCellValue(damageItemDetail.getBatch().getProduct().getUnit().getName());
@@ -403,14 +427,6 @@ public class TabDamageItem extends javax.swing.JPanel {
                         DamageItemDetail damageItemDetail = new DamageItemDetail(batch.getStock(), product.getPurchasePrice(), batch);
                         damageItemDetails.add(damageItemDetail);
                     }
-                }
-                else{
-                    int qty = pnDamageItemDetail.getSoLuong();
-                    String productId = pnDamageItemDetail.getTxtProductId().getText();
-                    Product product = productBUS.getProductById(productId);
-                    DamageItemDetail damageItemDetail = new DamageItemDetail(qty, product.getPurchasePrice(), 
-                            batchBUS.getFirstByProduct(productId));
-                        damageItemDetails.add(damageItemDetail);
                 }
             }
         }

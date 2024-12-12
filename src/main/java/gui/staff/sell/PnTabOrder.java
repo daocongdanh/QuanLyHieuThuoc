@@ -24,6 +24,7 @@ import util.CurrentEmployee;
 import gui.common.SuggestPriceButton;
 import gui.login.LoadApplication;
 import gui.staff.TABSell;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -55,7 +56,7 @@ public class PnTabOrder extends javax.swing.JPanel {
 
     public void addSanPham(Product product) {
         int stock = batchBUS.getFinalStockByProduct(product.getProductId());
-        if(stock <= 0){
+        if (stock <= 0) {
             MessageDialog.warning(null, String.format("Sản phẩm '%s' không đủ số lượng", product.getName()));
             return;
         }
@@ -64,14 +65,13 @@ public class PnTabOrder extends javax.swing.JPanel {
                 .filter(x -> x.getProduct().getProductId().equals(product.getProductId()))
                 .findFirst()
                 .orElse(null);
-        
-        if(pnOrderDetailExists != null){
+
+        if (pnOrderDetailExists != null) {
             int qty = (int) pnOrderDetailExists.getSpinnerSoLuong().getValue();
             pnOrderDetailExists.getSpinnerSoLuong().setValue(qty + 1);
             return;
         }
-        
-        
+
         List<Batch> batchs = batchBUS.getListBatchEnable(product);
         Promotion promotion = promotionBUS.getPromotionByProduct(product);
         PnOrderDetail pnOrderDetail = new PnOrderDetail(product, batchs, promotion, this);
@@ -80,6 +80,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         pnContent.repaint();
         changeTongTienHoaDon();
     }
+
     public void changeTongTienHoaDon() {
         tongTienHang = 0.0;
         List<PnOrderDetail> listPanel = getAllPnOrderDetailThuoc();
@@ -94,13 +95,13 @@ public class PnTabOrder extends javax.swing.JPanel {
         txtDiscountProduct.setText(FormatNumber.formatToVND(discountProduct));
         promotionOrder = promotionBUS.getPromotionByOrder();
         promotionProduct = promotionBUS.getPromotionByProduct();
-        
+
         discountOrder = 0;
         if (promotionOrder != null) {
             discountOrder = (tongTienHang - discountProduct) * promotionOrder.getDiscount();
             txtPromotionO.setText(String.format("( %s - %.0f%% )", promotionOrder.getName(), promotionOrder.getDiscount() * 100));
         }
-        
+
         if (promotionProduct != null) {
             txtPromotionP.setText(String.format("( %s - %.0f%% )", promotionProduct.getName(), promotionProduct.getDiscount() * 100));
         }
@@ -242,6 +243,11 @@ public class PnTabOrder extends javax.swing.JPanel {
         btnBanHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBanHangActionPerformed(evt);
+            }
+        });
+        btnBanHang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBanHangKeyPressed(evt);
             }
         });
 
@@ -554,19 +560,22 @@ public class PnTabOrder extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtTimKhachHangActionPerformed
 
-    private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
+    private void createOrder() {
         List<OrderDTO> orderDTOs = createListOrderDetail();
         try {
             if (orderBUS.createOrder(CurrentEmployee.getEmployee(), customer, promotionOrder, orderDTOs)) {
                 lapHoaDonForm.removeAndAddNewTab(this);
                 MessageDialog.info(null, "Lập hóa đơn thành công");
-            }
-            else{
+            } else {
                 MessageDialog.info(null, "Lập hóa đơn thất bại");
             }
         } catch (Exception e) {
             MessageDialog.error(null, e.getMessage());
         }
+    }
+
+    private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
+        createOrder();
 
     }//GEN-LAST:event_btnBanHangActionPerformed
 
@@ -598,6 +607,12 @@ public class PnTabOrder extends javax.swing.JPanel {
         // TODO add your handling code here:
         tinhTienTraKhach();
     }//GEN-LAST:event_txtTienKhachDuaKeyPressed
+
+    private void btnBanHangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBanHangKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_F8) {
+            createOrder();
+        }
+    }//GEN-LAST:event_btnBanHangKeyPressed
 
     private Customer customer;
     private double tongTienHang;
