@@ -60,6 +60,8 @@ public class AccountBUS {
     
     public Account login(String username, String password){
         Account account = accountDAL.login(username);
+        if(account == null)
+            return null;
         if ( PasswordUtil.verify( password, account.getPassword()) ){
             return account;
         }

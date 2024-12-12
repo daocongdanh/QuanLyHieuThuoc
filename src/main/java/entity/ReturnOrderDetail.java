@@ -58,7 +58,7 @@ public class ReturnOrderDetail {
 
     }
 
-    public ReturnOrderDetail(int quantity, double price, Batch batch, ReturnOrderDetailStatus returnOrderDetailStatus, String reason, String finalReason) {
+    public ReturnOrderDetail(int quantity, double price, String reason, ReturnOrderDetailStatus returnOrderDetailStatus,  String finalReason) {
         setQuantity(quantity);
         setPrice(price);
         this.product = product;
