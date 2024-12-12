@@ -23,7 +23,7 @@ import java.awt.*;
 public class LoadApplication extends javax.swing.JFrame {
 
     /**
-     * Creates new form LoadApplication
+     * Creates new form LoadApplicationv 
      */
     public static OrderBUS orderBUS;
     public static CustomerBUS customerBUS;
