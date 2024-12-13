@@ -39,6 +39,7 @@ import gui.staff.TABIndividualReport;
 import gui.staff.TABPurchase;
 import gui.staff.TABSell;
 import gui.staff.damageItem.TabDamageItem;
+import util.ViewPdfPanel;
 
 /**
  *
@@ -121,8 +122,10 @@ public class MainForm extends JLayeredPane {
                 } else if (index == 12) {
                     Application.showForm(new TABPersonalInformation());
                 } else if (index == 13) {
+                    Application.showForm(new ViewPdfPanel(1));
+                } else if ( index ==14 ){
                     Application.logout();
-                } else {
+                }else {
                     action.cancel();
                 }
             } else if (type == 2) {
@@ -145,6 +148,8 @@ public class MainForm extends JLayeredPane {
                 } else if (index == 28) {
                     Application.showForm(new TABPersonalInformation());
                 } else if (index == 29) {
+                    Application.showForm(new ViewPdfPanel(2));
+                } else if (index == 30) {
                     Application.logout();
                 } else {
                     action.cancel();

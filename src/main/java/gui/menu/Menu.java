@@ -38,7 +38,9 @@ public class Menu extends JPanel {
         {"Quản lý đơn hàng"},
         {"Quản lý khuyến mãi"},
         {"Thông tin cá nhân"},
+        {"Hướng dẫn sử dụng"},
         {"Đăng xuất"}
+
     };
 
     private final String menuItemsStaff[][] = {
@@ -51,8 +53,8 @@ public class Menu extends JPanel {
         {"Phiếu xuất hủy"},
         {"Thống kê cá nhân"},
         {"Thông tin cá nhân"},
-        {"Đăng xuất"}
-    };
+        {"Hướng dẫn sử dụng"},
+        {"Đăng xuất"}};
 
     public boolean isMenuFull() {
         return menuFull;
