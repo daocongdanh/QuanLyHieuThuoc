@@ -49,6 +49,7 @@ public class MainForm extends JLayeredPane {
 
     //1 quan ly, 2 nhan vien
     private int type;
+    private TABSell tabSell = new TABSell();
 
     public MainForm(int type) {
         this.type = type;
@@ -123,14 +124,14 @@ public class MainForm extends JLayeredPane {
                     Application.showForm(new TABPersonalInformation());
                 } else if (index == 13) {
                     Application.showForm(new ViewPdfPanel(1));
-                } else if ( index ==14 ){
+                } else if (index == 14) {
                     Application.logout();
-                }else {
+                } else {
                     action.cancel();
                 }
             } else if (type == 2) {
                 if (index == 20) {
-                    Application.showForm(new TABSell());
+                    Application.showForm(tabSell);
                 } else if (index == 21) {
                     Application.showForm(new TABProduct());
                 } else if (index == 22) {

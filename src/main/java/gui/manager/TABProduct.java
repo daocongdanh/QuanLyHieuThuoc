@@ -26,6 +26,8 @@ import util.FormatDate;
 import util.FormatNumber;
 import util.ImageUtil;
 import gui.login.LoadApplication;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -71,8 +73,8 @@ public class TABProduct extends javax.swing.JPanel {
     }
 
     private void fillTable() {
-        String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính" ,"Số đăng kí", "Xuất xứ", "Loại sản phẩm", "Giá mua", "Giá bán", "Trạng thái"};
-        List<Integer> tableWidths = Arrays.asList(120, 300, 100 ,120, 100, 110, 80, 80, 120);
+        String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số đăng kí", "Xuất xứ", "Loại sản phẩm", "Giá mua", "Giá bán", "Trạng thái"};
+        List<Integer> tableWidths = Arrays.asList(120, 300, 100, 120, 100, 110, 80, 80, 120);
         tableDesign = new TableDesign(headers, tableWidths);
         ProductScrollPane.setViewportView(tableDesign.getTable());
         ProductScrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
@@ -91,7 +93,7 @@ public class TABProduct extends javax.swing.JPanel {
             tableDesign.getModelTable().addRow(new Object[]{
                 product.getProductId(),
                 product.getName(),
-                    product.getUnit().getName(),
+                product.getUnit().getName(),
                 product.getRegistrationNumber(),
                 product.getCountryOfOrigin(),
                 product.getProductType().getDescription(),
@@ -141,7 +143,6 @@ public class TABProduct extends javax.swing.JPanel {
                 imageProductEdit = new ImageIcon(bufferImage);
                 imageProductEdit.setDescription(product.getImage());
 
-
             }
             lblImageEdit.setIcon(ResizeImage.resizeImage(imageProductEdit, 265, 269));
 
@@ -184,7 +185,7 @@ public class TABProduct extends javax.swing.JPanel {
                 FormatDate.formatLocalDate(batch.getExpirationDate()),
                 batch.getName(),
                 batch.getStock(),
-                    batch.isStatus() ? "Đang bán" : "Không bán"
+                batch.isStatus() ? "Đang bán" : "Không bán"
             });
         }
     }
@@ -1174,7 +1175,10 @@ public class TABProduct extends javax.swing.JPanel {
             product.setPurchasePrice(purchasePrice);
             product.setSellingPrice(sellingPrice);
             product.setActive(true);
-            product.setImage(image);
+            Date now = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            String nameImage = removeExtension(image) + dateFormat.format(now);
+            product.setImage(nameImage);
             product.setProductType(productType);
 
             Unit unit = unitBUS.getUnitByName(comboUnitAdd.getSelectedItem().toString());
@@ -1184,7 +1188,8 @@ public class TABProduct extends javax.swing.JPanel {
                 if (productBUS.createProduct(product)) {
                     MessageDialog.info(null, "Thêm mới sản phẩm thành công");
                     clearDataModelAdd();
-                    ImageUtil.saveImageIcon(imageProductAdd, removeExtension(image));
+
+                    ImageUtil.saveImageIcon(imageProductAdd, nameImage);
                     modelProductAdd.dispose();
                     fillContent(productBUS.getAllProducts());
                 };
@@ -1301,7 +1306,6 @@ public class TABProduct extends javax.swing.JPanel {
 
             Unit unit = unitBUS.getUnitByName(comboUnitEdit.getSelectedItem().toString());
             product.setUnit(unit);
-
 
             Product existingProduct = productBUS.searchBySDKAndUnitId(registrationNumber, unit.getUnitId());
 
