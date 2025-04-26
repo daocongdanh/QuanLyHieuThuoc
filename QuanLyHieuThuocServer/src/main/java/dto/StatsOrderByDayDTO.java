@@ -4,6 +4,7 @@
  */
 package dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
  *
  * @author Hoang
  */
-public class StatsOrderByDayDTO {
+public class StatsOrderByDayDTO implements Serializable {
     
     private double sumPrice;
     private LocalDateTime time;

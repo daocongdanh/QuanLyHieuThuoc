@@ -4,11 +4,13 @@
  */
 package dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Hoang
  */
-public class StatsPriceAndQuantityDTO {
+public class StatsPriceAndQuantityDTO implements Serializable {
     private int quantity;
     private double sumPrice;
 

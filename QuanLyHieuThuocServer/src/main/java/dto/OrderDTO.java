@@ -5,11 +5,13 @@
 package dto;
 
 
+import java.io.Serializable;
+
 /**
  *
  * @author daoducdanh
  */
-public class OrderDTO {
+public class OrderDTO implements Serializable {
 //
     private String productId;
     private int quantity;

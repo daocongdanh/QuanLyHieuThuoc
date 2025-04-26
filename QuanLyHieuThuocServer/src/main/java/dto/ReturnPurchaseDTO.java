@@ -4,11 +4,13 @@
  */
 package dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author daoducdanh
  */
-public class ReturnPurchaseDTO {
+public class ReturnPurchaseDTO implements Serializable {
     private String productId;
     private String unitName;
     private int quantity;

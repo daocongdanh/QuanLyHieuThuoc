@@ -9,6 +9,12 @@ import entity.*;
 import enums.ProductType;
 import jakarta.persistence.EntityTransaction;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
@@ -75,7 +81,9 @@ public class ProductBUSImpl extends UnicastRemoteObject implements ProductBUS {
 
     @Override
     public List<Product> getAllProducts() throws RemoteException {
-        return productDAL.findAll();
+        List<Product> p = productDAL.findAll();
+
+        return p;
     }
 
     @Override
@@ -116,5 +124,18 @@ public class ProductBUSImpl extends UnicastRemoteObject implements ProductBUS {
     @Override
     public List<Product> searchProductsBy4Field(String name, String registrationNumber, ProductType productType, Boolean active) throws RemoteException {
         return productDAL.searchProductsBy4Field(name, registrationNumber, productType, active);
+    }
+
+    @Override
+    public byte[] getImageForProduct(String imageLink) throws RemoteException {
+        try (InputStream is = getClass().getResourceAsStream("/img/"+imageLink)) {
+            if (is == null) {
+                throw new FileNotFoundException("Không tìm thấy ảnh: " + imageLink);
+            }
+            return is.readAllBytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

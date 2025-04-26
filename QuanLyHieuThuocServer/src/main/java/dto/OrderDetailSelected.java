@@ -4,13 +4,14 @@
  */
 package dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author daoducdanh
  */
-public class OrderDetailSelected {
+public class OrderDetailSelected implements Serializable {
     private List<BatchDTO> batchDTOs;
     
     public OrderDetailSelected(){

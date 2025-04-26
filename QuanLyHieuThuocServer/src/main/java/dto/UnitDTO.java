@@ -4,11 +4,13 @@
  */
 package dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author daoducdanh
  */
-public class UnitDTO {
+public class UnitDTO implements Serializable {
     private String name;
     private int conversionRate;
     private boolean isDefault;

@@ -4,6 +4,7 @@
  */
 package dto;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import java.util.Map;
  *
  * @author daoducdanh
  */
-public class Report {
+public class Report implements Serializable {
     private List<Object> reports;
     private Map<String, Map<Integer, Double>> orderType;
     private double profit;

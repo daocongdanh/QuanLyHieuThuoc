@@ -2,11 +2,13 @@ package dto;
 
 import entity.Product;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Hoang
  */
-public class ReturnOrderDetailDTO {
+public class ReturnOrderDetailDTO implements Serializable {
 
     private Product product;
     private int quantityReturn;

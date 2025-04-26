@@ -53,8 +53,6 @@ public class Server {
         context.bind("rmi://CYBER:9090/supplierService", supplierBUS);
         context.bind("rmi://CYBER:9090/unitService", unitBUS);
 
-
-
         System.out.println("Server is ready !!");
     }
 }

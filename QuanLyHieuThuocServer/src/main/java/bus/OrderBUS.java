@@ -40,5 +40,5 @@ public interface OrderBUS extends Remote {
     List<StatsProductDTO> getStatisticProductByDateAndType(LocalDateTime start, LocalDateTime end, String productType) throws RemoteException;
 
     List<StatsProductDTO> getStatisticProductByDate(LocalDateTime start, LocalDateTime end) throws RemoteException;
-
+    List<Order> getOrderByDateAndEmp(LocalDateTime start, LocalDateTime end, String employeeID) throws RemoteException;
 }

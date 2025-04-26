@@ -2,9 +2,10 @@ package dto;
 
 import enums.ProductType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class StatsProductDTO {
+public class StatsProductDTO implements Serializable {
 
     private String productName;
     private Integer quantity;
