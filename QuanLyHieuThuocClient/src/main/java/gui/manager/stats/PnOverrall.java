@@ -13,6 +13,7 @@ import dto.StatsOrderByDayDTO;
 import dto.StatsProductDTO;
 import gui.barchart.ModelChart;
 import java.awt.Color;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
@@ -34,7 +35,7 @@ public class PnOverrall extends javax.swing.JPanel {
     private final PurchaseOrderBUS purchaseOrderBUS;
     private final ReturnOrderBUS returnOrderBUS;
 
-    public PnOverrall() {
+    public PnOverrall() throws RemoteException {
         orderBUS = LoadApplication.orderBUS;
         returnOrderBUS = LoadApplication.returnOrderBUS;
         purchaseOrderBUS = LoadApplication.purchaseOrderBUS;
@@ -320,7 +321,11 @@ public class PnOverrall extends javax.swing.JPanel {
         comboDate.setPreferredSize(new java.awt.Dimension(140, 22));
         comboDate.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboDateItemStateChanged(evt);
+                try {
+                    comboDateItemStateChanged(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel15.add(comboDate, java.awt.BorderLayout.EAST);
@@ -335,11 +340,11 @@ public class PnOverrall extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboDateItemStateChanged
+    private void comboDateItemStateChanged(java.awt.event.ItemEvent evt) throws RemoteException {//GEN-FIRST:event_comboDateItemStateChanged
         // TODO add your handling code here:
         changeDateSelect();
     }//GEN-LAST:event_comboDateItemStateChanged
-    private void initHeader() {
+    private void initHeader() throws RemoteException {
         lblIconReturn.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/8.svg")), 55, 55));
         lblIconOrder.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/10.svg")), 55, 55));
         lblIconCompare.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/7.svg")), 55, 55));
@@ -367,7 +372,7 @@ public class PnOverrall extends javax.swing.JPanel {
         txtSumPricePurchase.setText(FormatNumber.formatToVND(quantityAndSumPricePurchase.getSumPrice()));
     }
 
-    private void initChart() {
+    private void initChart() throws RemoteException {
         lblChart.setText("thống kê doanh thu 7 ngày gần nhất ( THEO NGÀY )".toUpperCase());
         chart.addLegend("Doanh thu", new Color(135, 189, 245));
 //        chart1.addLegend("Số lượng", new Color(135, 189, 245));
@@ -404,7 +409,7 @@ public class PnOverrall extends javax.swing.JPanel {
         chart.start();
     }
     
-    private void changeDateSelect() {
+    private void changeDateSelect() throws RemoteException {
 //        7 ngày qua, Hôm nay, Hôm qua, Tháng này, Tháng trước
         LocalDateTime now = LocalDateTime.now();
         List<StatsOrderByDayDTO> listStats = new ArrayList<>();

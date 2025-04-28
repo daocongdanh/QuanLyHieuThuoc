@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import gui.common.TableDesign;
@@ -88,7 +89,11 @@ public class TABSell extends javax.swing.JPanel {
         txtTimSanPham.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtTimSanPham.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtTimSanPhamKeyPressed(evt);
+                try {
+                    txtTimSanPhamKeyPressed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -98,7 +103,11 @@ public class TABSell extends javax.swing.JPanel {
         btnMa.setText("Mã");
         btnMa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMaActionPerformed(evt);
+                try {
+                    btnMaActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -169,7 +178,7 @@ public class TABSell extends javax.swing.JPanel {
         add(pnMi, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaActionPerformed
+    private void btnMaActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnMaActionPerformed
         // TODO add your handling code here:
         String sdk = txtTimSanPham.getText().trim();
         searchProduct(sdk);
@@ -183,7 +192,7 @@ public class TABSell extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnThemHDActionPerformed
 
-    private void txtTimSanPhamKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimSanPhamKeyPressed
+    private void txtTimSanPhamKeyPressed(java.awt.event.KeyEvent evt) throws RemoteException {//GEN-FIRST:event_txtTimSanPhamKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             String sdk = txtTimSanPham.getText().trim();
@@ -235,7 +244,7 @@ public class TABSell extends javax.swing.JPanel {
         return panel;
     }
 
-    private void searchProduct(String sdk) {
+    private void searchProduct(String sdk) throws RemoteException {
         Product product = productBUS.getProductBySDK(sdk);
         if (product != null) {
             PnTabOrder tabHoaDon = (PnTabOrder) tabbedPane.getSelectedComponent();

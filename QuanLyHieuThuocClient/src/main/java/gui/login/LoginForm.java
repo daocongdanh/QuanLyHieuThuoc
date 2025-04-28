@@ -6,6 +6,8 @@ package gui.login;
 
 import bus.AccountBUS;
 import com.formdev.flatlaf.FlatLightLaf;
+
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -127,7 +129,11 @@ public class LoginForm extends javax.swing.JFrame {
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                try {
+                    btnLoginActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -137,7 +143,11 @@ public class LoginForm extends javax.swing.JFrame {
         quenMk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         quenMk.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                quenMkMouseClicked(evt);
+                try {
+                    quenMkMouseClicked(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -238,7 +248,7 @@ public class LoginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameTxtActionPerformed
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnLoginActionPerformed
         String username = usernameTxt.getText().trim();
         String password = String.valueOf(passwordTxt.getPassword());
         if(username.equals("")){
@@ -270,7 +280,7 @@ public class LoginForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void quenMkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quenMkMouseClicked
+    private void quenMkMouseClicked(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_quenMkMouseClicked
         String maNV = usernameTxt.getText().trim();
         if (maNV.equals("")) {
             MessageDialog.warning(null, "Hãy nhập mã nhân viên trước!");

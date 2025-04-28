@@ -10,6 +10,8 @@ import bus.UnitBUS;
 import enums.ReturnOrderDetailStatus;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
@@ -50,7 +52,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private TableDesign tableDesignView;
     private TableDesign tableDesignEdit;
 
-    public TABReturnOrder() {
+    public TABReturnOrder() throws RemoteException {
         returnOrderBUS = LoadApplication.returnOrderBUS;
         returnOrderDetailBUS = LoadApplication.returnOrderDetailBUS;
         unitBUS = LoadApplication.unitBUS;
@@ -70,7 +72,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         btnView.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/View.svg")), 35, 35));
     }
 
-    private void fillTable() {
+    private void fillTable() throws RemoteException {
         String[] headers = {"Mã trả hàng", "Thời gian", "Nhân viên", "Tổng tiền",  "Trạng thái", "Thao tác"};
         List<Integer> tableWidths = Arrays.asList(200, 150, 200, 150, 150, 150);
         tableDesign = new TableDesign(headers, tableWidths, List.of(false, false, false, false, false, true));
@@ -138,7 +140,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         JTable table = tableDesignView.getTable();
         TableActionEventReturnManage event = new TableActionEventReturnManage() {
             @Override
-            public void onReturned(int row) {
+            public void onReturned(int row) throws RemoteException {
                 String returnOrderId = txtReturnOrderId.getText();
                 String productId = (String) table.getValueAt(row,0);
                 String productName = (String) table.getValueAt(row,1);
@@ -158,7 +160,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
             }
 
             @Override
-            public void onDamaged(int row) {
+            public void onDamaged(int row) throws RemoteException {
                 String returnOrderId = txtReturnOrderId.getText();
                 String productId = (String) table.getValueAt(row,0);
                 String productName = (String) table.getValueAt(row,1);
@@ -527,7 +529,11 @@ public class TABReturnOrder extends javax.swing.JPanel {
         btnSearch.setPreferredSize(new java.awt.Dimension(150, 40));
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                try {
+                    btnSearchActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -586,7 +592,11 @@ public class TABReturnOrder extends javax.swing.JPanel {
         btnView.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
+                try {
+                    btnViewActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -658,7 +668,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         add(pnAll);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void searchByOption(){
+    private void searchByOption() throws RemoteException {
         java.util.Date date1 = jDateFrom.getDate();
         java.util.Date date2 = jDateTo.getDate();
 
@@ -687,7 +697,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         fillContent(returnOrders);
     }
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         searchByOption();
 
@@ -706,7 +716,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         modalReturnOrderView.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnViewActionPerformed
         JTable table = tableDesign.getTable();
         int selectedRow = table.getSelectedRow();
         if(selectedRow < 0) {

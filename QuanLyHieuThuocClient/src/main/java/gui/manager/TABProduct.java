@@ -10,9 +10,13 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import entity.*;
 
 import java.awt.Image;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -44,7 +48,7 @@ public class TABProduct extends javax.swing.JPanel {
     private ImageIcon imageProductAdd;
     private ImageIcon imageProductEdit;
 
-    public TABProduct() {
+    public TABProduct() throws RemoteException {
         productBUS = LoadApplication.productBUS;
         batchBUS = LoadApplication.batchBUS;
         unitBUS = LoadApplication.unitBUS;
@@ -70,7 +74,7 @@ public class TABProduct extends javax.swing.JPanel {
         UIManager.put("Button.arc", 10);
     }
 
-    private void fillTable() {
+    private void fillTable() throws RemoteException {
         String[] headers = {"Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính" ,"Số đăng kí", "Xuất xứ", "Loại sản phẩm", "Giá mua", "Giá bán", "Trạng thái"};
         List<Integer> tableWidths = Arrays.asList(120, 300, 100 ,120, 100, 110, 80, 80, 120);
         tableDesign = new TableDesign(headers, tableWidths);
@@ -78,6 +82,7 @@ public class TABProduct extends javax.swing.JPanel {
         ProductScrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 20, 20));
         //addEventBtnEditInTable();
         List<Product> products = productBUS.getAllProducts();
+        System.out.println(products);
         fillContent(products);
 
     }
@@ -101,7 +106,7 @@ public class TABProduct extends javax.swing.JPanel {
         }
     }
 
-    private void fillUnit(JComboBox combo) {
+    private void fillUnit(JComboBox combo) throws RemoteException {
         combo.removeAllItems();
         List<Unit> listUnit = unitBUS.getAllUnits();
         for (Unit x : listUnit) {
@@ -111,7 +116,7 @@ public class TABProduct extends javax.swing.JPanel {
 
     int c = 0;
 
-    private void updateTabDetailProduct() {
+    private void updateTabDetailProduct() throws RemoteException {
         JTable table = tableDesign.getTable();
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
@@ -135,13 +140,18 @@ public class TABProduct extends javax.swing.JPanel {
             fillUnit(comboUnitEdit);
             comboUnitEdit.setSelectedItem(product.getUnit().getName());
 
-            BufferedImage bufferImage = ImageUtil.getImage(removeExtension(product.getImage()));
+            byte[] imageBytes = productBUS.getImageForProduct(product.getImage());
 
-            if (bufferImage != null) {
-                imageProductEdit = new ImageIcon(bufferImage);
-                imageProductEdit.setDescription(product.getImage());
-
-
+            if (imageBytes != null) {
+                try {
+                    BufferedImage bufferImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
+                    if (bufferImage != null) {
+                        imageProductEdit = new ImageIcon(bufferImage);
+                        imageProductEdit.setDescription(product.getImage());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             lblImageEdit.setIcon(ResizeImage.resizeImage(imageProductEdit, 265, 269));
 
@@ -155,7 +165,7 @@ public class TABProduct extends javax.swing.JPanel {
         }
     }
 
-    private void updateTabQuantity() {
+    private void updateTabQuantity() throws RemoteException {
         // Tiêu đề cột cho bảng batch
         String[] headers = {
             "Mã lô", "Ngày hết hạn", "Tên sản phẩm", "Tồn kho", "Trạng thái"
@@ -694,7 +704,11 @@ public class TABProduct extends javax.swing.JPanel {
         btnAddProduct.setText("Thêm");
         btnAddProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddProductActionPerformed(evt);
+                try {
+                    btnAddProductActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -903,7 +917,11 @@ public class TABProduct extends javax.swing.JPanel {
         btnOpenModalAddSup.setPreferredSize(new java.awt.Dimension(150, 40));
         btnOpenModalAddSup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpenModalAddSupActionPerformed(evt);
+                try {
+                    btnOpenModalAddSupActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel6.add(btnOpenModalAddSup);
@@ -927,7 +945,11 @@ public class TABProduct extends javax.swing.JPanel {
         btnAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                try {
+                    btnAddActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         actionPanel.add(btnAdd);
@@ -943,7 +965,11 @@ public class TABProduct extends javax.swing.JPanel {
         btnUpdate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                try {
+                    btnUpdateActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         actionPanel.add(btnUpdate);
@@ -983,7 +1009,7 @@ public class TABProduct extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOpenModalAddSupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenModalAddSupActionPerformed
+    private void btnOpenModalAddSupActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnOpenModalAddSupActionPerformed
         String name = txtSearchNamePD.getText().trim();
         String sdk = txtSearchSDKPD.getText().trim();
         ProductType productType = null;
@@ -1021,7 +1047,7 @@ public class TABProduct extends javax.swing.JPanel {
 
     }//GEN-LAST:event_txtSearchNamePDActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnUpdateActionPerformed
 
         clearDataModelEdit();
         updateTabDetailProduct();
@@ -1035,7 +1061,7 @@ public class TABProduct extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnAddActionPerformed
         clearDataModelAdd();
         BufferedImage bufferImage = ImageUtil.getImage("default");
 
@@ -1140,7 +1166,7 @@ public class TABProduct extends javax.swing.JPanel {
     }
 
 
-    private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
+    private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnAddProductActionPerformed
         // TODO add your handling code here:
         String name = txtProductName.getText().trim();
         String manufacturer = txtProductManufacturer.getText().trim();

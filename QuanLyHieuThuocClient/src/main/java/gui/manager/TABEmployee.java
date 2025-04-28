@@ -11,6 +11,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import entity.Account;
 import entity.Employee;
+
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -33,7 +35,7 @@ public class TABEmployee extends javax.swing.JPanel {
     private final AccountBUS accountBUS;
     private TableDesign tableDesign;
 
-    public TABEmployee() {
+    public TABEmployee() throws RemoteException {
         employeeBUS = LoadApplication.employeeBUS;
         accountBUS = LoadApplication.accountBUS;
         initComponents();
@@ -61,7 +63,7 @@ public class TABEmployee extends javax.swing.JPanel {
         UIManager.put("Button.arc", 10);
     }
 
-    private void fillTable() {
+    private void fillTable() throws RemoteException {
         String[] headers = {"Mã nhân viên", "Tên nhân viên", "Email", "Số điện thoại", "Địa chỉ"};
         List<Integer> tableWidths = Arrays.asList(50, 100, 200, 50, 150, 50);
         tableDesign = new TableDesign(headers, tableWidths);
@@ -424,7 +426,11 @@ public class TABEmployee extends javax.swing.JPanel {
         btnCofirmResetPassword.setText("Xác nhận");
         btnCofirmResetPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCofirmResetPasswordActionPerformed(evt);
+                try {
+                    btnCofirmResetPasswordActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -542,7 +548,11 @@ public class TABEmployee extends javax.swing.JPanel {
         btnSearchEmployee.setPreferredSize(new java.awt.Dimension(150, 40));
         btnSearchEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchEmployeeActionPerformed(evt);
+                try {
+                    btnSearchEmployeeActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         panelActionSearch.add(btnSearchEmployee);
@@ -641,7 +651,7 @@ public class TABEmployee extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSearchEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchEmployeeActionPerformed
+    private void btnSearchEmployeeActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnSearchEmployeeActionPerformed
         String keyword = txtSearchEmployee.getText().trim();
         
         List<Employee> employees = employeeBUS.getEmployeeByKeyword(keyword);
@@ -801,7 +811,7 @@ public class TABEmployee extends javax.swing.JPanel {
         }  
     }//GEN-LAST:event_btnResetPasswordActionPerformed
 
-    private void btnCofirmResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCofirmResetPasswordActionPerformed
+    private void btnCofirmResetPasswordActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnCofirmResetPasswordActionPerformed
         String newPass = new String(txtResetPassword.getPassword());
         
         if(newPass.equals("")) {

@@ -6,6 +6,7 @@ package gui.staff.sell;
 
 import entity.Product;
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.List;
 import entity.*;
 import java.awt.Container;
@@ -14,6 +15,8 @@ import javax.swing.*;
 import util.FormatNumber;
 import util.MessageDialog;
 import util.ResizeImage;
+
+import static gui.login.LoadApplication.productBUS;
 
 /**
  *
@@ -31,7 +34,7 @@ public class PnOrderDetail extends javax.swing.JPanel {
         initComponents();
     }
 
-    public PnOrderDetail(Product product, List<Batch> batchs, Promotion promotion, PnTabOrder tabHoaDon) {
+    public PnOrderDetail(Product product, List<Batch> batchs, Promotion promotion, PnTabOrder tabHoaDon) throws RemoteException {
         this.batchs = batchs;
         this.product = product;
         this.promotion = promotion;
@@ -49,10 +52,18 @@ public class PnOrderDetail extends javax.swing.JPanel {
         return (int) spinnerSoLuong.getValue();
     }
 
-    private void fillFirst() {
+    private void fillFirst() throws RemoteException {
         txtTenSP.setText(product.getName());
-        pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
-                + product.getImage())), 82, 82));
+        byte[] imageBytes = productBUS.getImageForProduct(product.getImage()); // <<< Byte ảnh đã lấy từ server
+
+        if (imageBytes != null) {
+            try {
+                ImageIcon icon = new ImageIcon(imageBytes);
+                pnHinh.setIcon(ResizeImage.resizeImage(icon, 82, 82));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         txtDVT.setText(product.getUnit().getName());
         spinnerSoLuong.setValue(1);
         
@@ -178,7 +189,11 @@ public class PnOrderDetail extends javax.swing.JPanel {
 
         btnXoaOderDetail.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnXoaOderDetailMouseClicked(evt);
+                try {
+                    btnXoaOderDetailMouseClicked(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel2.add(btnXoaOderDetail);
@@ -208,7 +223,11 @@ public class PnOrderDetail extends javax.swing.JPanel {
         spinnerSoLuong.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000, 1));
         spinnerSoLuong.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                spinnerSoLuongStateChanged(evt);
+                try {
+                    spinnerSoLuongStateChanged(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel3.add(spinnerSoLuong);
@@ -284,7 +303,7 @@ public class PnOrderDetail extends javax.swing.JPanel {
         }
     }
 
-    private void spinnerSoLuongStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerSoLuongStateChanged
+    private void spinnerSoLuongStateChanged(javax.swing.event.ChangeEvent evt) throws RemoteException {//GEN-FIRST:event_spinnerSoLuongStateChanged
         int quantity = (int) spinnerSoLuong.getValue();
         int stock = batchs.stream()
                 .mapToInt(Batch::getStock)
@@ -352,7 +371,7 @@ public class PnOrderDetail extends javax.swing.JPanel {
 //        spinnerSoLuong.setValue(value);
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
-    private void btnXoaOderDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaOderDetailMouseClicked
+    private void btnXoaOderDetailMouseClicked(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_btnXoaOderDetailMouseClicked
         // TODO add your handling code here:
         Container parent = this.getParent();
         if (parent != null) {

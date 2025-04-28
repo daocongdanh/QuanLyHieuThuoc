@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReturnOrderBUS extends Remote {
-    boolean createReturnOrder(Employee employee, Customer customer, Order order, List<ReturnOrderDetailDTO> returnOrderDetailDTOs) throws RemoteException;
+    ReturnOrder createReturnOrder(Employee employee, Customer customer, Order order, List<ReturnOrderDetailDTO> returnOrderDetailDTOs) throws RemoteException;
     List<ReturnOrder> getAllReturnOrders() throws RemoteException;
     List<ReturnOrder> search(LocalDateTime start, LocalDateTime end, String txtEmployee, String orderId, Boolean status) throws RemoteException;
     ReturnOrder findById(String id) throws RemoteException;

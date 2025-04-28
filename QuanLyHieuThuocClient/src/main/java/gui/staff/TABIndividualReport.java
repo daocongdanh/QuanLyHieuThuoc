@@ -13,6 +13,8 @@ import bus.PurchaseOrderDetailBUS;
 import bus.ReturnOrderDetailBUS;
 import bus.DamageItemDetailBUS;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -49,7 +51,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
     private final DamageItemDetailBUS damageItemDetailBUS;
     private TableDesign tableDesign;
 
-    public TABIndividualReport() {
+    public TABIndividualReport() throws RemoteException {
         orderBUS = LoadApplication.orderBUS;
         purchaseOrderBUS = LoadApplication.purchaseOrderBUS;
         returnOrderBUS = LoadApplication.returnOrderBUS;
@@ -70,7 +72,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
         btnView.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/View.svg")), 35, 35));
     }
 
-    private void fillTable() {
+    private void fillTable() throws RemoteException {
         String[] headers = {"Mã phiếu", "Ngày tạo", "Loại phiếu", "Giá trị"};
         List<Integer> tableWidths = Arrays.asList(200, 200, 200, 200);
         tableDesign = new TableDesign(headers, tableWidths);
@@ -239,7 +241,11 @@ public class TABIndividualReport extends javax.swing.JPanel {
         btnSearch.setPreferredSize(new java.awt.Dimension(150, 40));
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                try {
+                    btnSearchActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -269,7 +275,11 @@ public class TABIndividualReport extends javax.swing.JPanel {
         btnView.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
+                try {
+                    btnViewActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -378,7 +388,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
         add(pnAll);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         java.util.Date date1 = jDateFrom.getDate();
         java.util.Date date2 = jDateTo.getDate();
@@ -447,7 +457,7 @@ public class TABIndividualReport extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnViewActionPerformed
         JTable table = tableDesign.getTable();
         int selectedRow = table.getSelectedRow();
         if(selectedRow < 0) {

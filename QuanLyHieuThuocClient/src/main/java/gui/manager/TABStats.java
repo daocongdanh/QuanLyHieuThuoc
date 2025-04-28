@@ -5,13 +5,15 @@ import gui.manager.stats.PnOverrall;
 import gui.manager.stats.PnProductStats;
 import gui.manager.stats.PnStatsByTime;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author Hoang
  */
 public class TABStats extends javax.swing.JPanel {
 
-    public TABStats() {
+    public TABStats() throws RemoteException {
         UIManager.put("TabbedPane.tabHeight", 40);
         initComponents();
         tabbedStats.add("Tổng quan", new PnOverrall());

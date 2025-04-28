@@ -10,6 +10,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import javax.swing.*;
 
 import gui.login.LoginForm;
@@ -44,7 +45,7 @@ public class Application extends javax.swing.JFrame {
         new LoginForm().setVisible(true);
     }
 
-    public static void setSelectedMenu(int index, int subIndex) {
+    public static void setSelectedMenu(int index, int subIndex) throws RemoteException {
         app.mainForm.setSelectedMenu(index, subIndex);
     }
 

@@ -11,11 +11,14 @@ import entity.Product;
 import entity.*;
 import java.awt.Component;
 import java.awt.Container;
+import java.rmi.RemoteException;
 import java.util.Objects;
 import javax.swing.*;
 import util.ResizeImage;
 import util.FormatNumber;
 import gui.staff.TABReturnOrder;
+
+import static gui.login.LoadApplication.productBUS;
 
 /**
  *
@@ -36,7 +39,7 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
     }
 
     public PnOrderDetailReturn(OrderDetail orderDetail, OrderDetailSelected orderDetailSelected,
-            TABReturnOrder tabTraHang, int type) {
+            TABReturnOrder tabTraHang, int type) throws RemoteException {
         this.product = orderDetail.getBatch().getProduct();
         this.tabTraHang = tabTraHang;
         this.orderDetailSelected = orderDetailSelected;
@@ -122,11 +125,19 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
         return (int) spinnerSoLuong.getValue();
     }
 
-    private void fillFirst() {
+    private void fillFirst() throws RemoteException {
         txtDvt.setText(product.getUnit().getName());
         txtTenSP.setText(product.getName());
-        pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
-                + product.getImage())), 82, 82));
+        byte[] imageBytes = productBUS.getImageForProduct(product.getImage()); // <<< Byte ảnh đã lấy từ server
+
+        if (imageBytes != null) {
+            try {
+                ImageIcon icon = new ImageIcon(imageBytes);
+                pnHinh.setIcon(ResizeImage.resizeImage(icon, 82, 82));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         maxQuantity = 0;
         for (BatchDTO x : orderDetailSelected.getBatchDTOs()) {
             maxQuantity += x.getQuantity();
@@ -312,7 +323,11 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
         lblIcon.setPreferredSize(new java.awt.Dimension(38, 38));
         lblIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblIconMouseClicked(evt);
+                try {
+                    lblIconMouseClicked(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel3.add(lblIcon);
@@ -337,7 +352,7 @@ public class PnOrderDetailReturn extends javax.swing.JPanel {
         tabTraHang.changeTongTienHoaDon();
     }//GEN-LAST:event_spinnerSoLuongStateChanged
 
-    private void lblIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconMouseClicked
+    private void lblIconMouseClicked(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_lblIconMouseClicked
         if (type == 2) {
             txtAreaReason.setText(reason);
             modalGhiChu.setLocationRelativeTo(null);

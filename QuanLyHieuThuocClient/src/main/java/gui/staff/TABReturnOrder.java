@@ -11,7 +11,10 @@ import dto.OrderDetailSelected;
 import dto.ReturnOrderDetailDTO;
 import entity.Customer;
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.*;
+
+import gui.utils.PDFImageViewer;
 import util.FormatNumber;
 import util.MessageDialog;
 import entity.*;
@@ -37,6 +40,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private final PromotionBUS promotionBUS;
     private final OrderDetailBUS orderDetailBUS;
     private final ReturnOrderBUS returnOrderBUS;
+    private final PDFBUS pdfBUS;
 
     public TABReturnOrder() {
         initComponents();
@@ -46,6 +50,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         promotionBUS = LoadApplication.promotionBUS;
         orderDetailBUS = LoadApplication.orderDetailBUS;
         returnOrderBUS = LoadApplication.returnOrderBUS;
+        pdfBUS= LoadApplication.pdfBUS;
 
         txtSearchOrder.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mã hóa đơn");
 
@@ -426,7 +431,10 @@ public class TABReturnOrder extends javax.swing.JPanel {
     private void createOrder() {
         List<ReturnOrderDetailDTO> listReturnOrderDetailDTOs = createListReturnOrderDetail();
         try {
-            if (returnOrderBUS.createReturnOrder(CurrentEmployee.getEmployee(), customer, order, listReturnOrderDetailDTOs)) {
+            ReturnOrder returnOrder = returnOrderBUS.createReturnOrder(CurrentEmployee.getEmployee(), customer, order, listReturnOrderDetailDTOs);
+            if (returnOrder != null) {
+                byte[] pdf = pdfBUS.generatePDFReturn(returnOrder);
+                new PDFImageViewer(pdf);
                 MessageDialog.info(null, "Tạo phiếu trả hàng thành công.");
                 clearPnOrderDetail();
             } else {
@@ -475,7 +483,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel2AncestorAdded
 
-    private void fillOneOrder(Order order) {
+    private void fillOneOrder(Order order) throws RemoteException {
         if (order.getCustomer() != null) {
             txtCusName.setText(order.getCustomer().getName());
             txtCusPhone.setText(order.getCustomer().getPhone());
@@ -531,7 +539,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
         changeTongTienHoaDon();
     }
 
-    public void addOrderDetailToReturn(PnOrderDetailReturn pnOd) {
+    public void addOrderDetailToReturn(PnOrderDetailReturn pnOd) throws RemoteException {
         PnOrderDetailReturn pn = new PnOrderDetailReturn(pnOd.getOrderDetail(),
                 pnOd.getOrderDetailSelected(), this, 2);
         boolean exists = false;

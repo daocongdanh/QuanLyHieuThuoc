@@ -9,6 +9,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import dto.BatchDTO;
 import entity.Product;
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.List;
 import entity.*;
 import java.awt.Color;
@@ -30,6 +31,8 @@ import util.ResizeImage;
 import util.FormatNumber;
 import util.MessageDialog;
 
+import static gui.login.LoadApplication.productBUS;
+
 /**
  *
  * @author Hoang
@@ -44,7 +47,7 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         initComponents();
     }
 
-    public PnPurchaseOrderDetail(Product product, List<Batch> batchs, TABPurchase tabPurchase) {
+    public PnPurchaseOrderDetail(Product product, List<Batch> batchs, TABPurchase tabPurchase) throws RemoteException {
         this.batchs = batchs;
         this.product = product;
         this.tabPurchase = tabPurchase;
@@ -65,10 +68,18 @@ public class PnPurchaseOrderDetail extends javax.swing.JPanel {
         txtNameNewBatch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập tên lô mới");
     }
 
-    private void fillFirst() {
+    private void fillFirst() throws RemoteException {
         txtTenSP.setText(product.getName());
-        pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
-                + product.getImage())), 82, 82));
+        byte[] imageBytes = productBUS.getImageForProduct(product.getImage()); // <<< Byte ảnh đã lấy từ server
+
+        if (imageBytes != null) {
+            try {
+                ImageIcon icon = new ImageIcon(imageBytes);
+                pnHinh.setIcon(ResizeImage.resizeImage(icon, 82, 82));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         spinnerSoLuong.setValue(0);
 

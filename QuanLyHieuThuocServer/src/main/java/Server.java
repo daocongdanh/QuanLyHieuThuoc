@@ -33,6 +33,7 @@ public class Server {
         ReturnOrderDetailBUS returnOrderDetailBUS = new ReturnOrderDetailBUSImpl(em);
         SupplierBUS supplierBUS = new SupplierBUSImpl(em);
         UnitBUS unitBUS = new UnitBUSImpl(em);
+        PDFBUS pdfBus = new PDFBUSImpl();
 
         LocateRegistry.createRegistry(9090);
         context.bind("rmi://CYBER:9090/accountService", accountBUS);
@@ -52,6 +53,7 @@ public class Server {
         context.bind("rmi://CYBER:9090/returnOrderDetailService", returnOrderDetailBUS);
         context.bind("rmi://CYBER:9090/supplierService", supplierBUS);
         context.bind("rmi://CYBER:9090/unitService", unitBUS);
+        context.bind("rmi://CYBER:9090/pdfService", pdfBus);
 
         System.out.println("Server is ready !!");
     }

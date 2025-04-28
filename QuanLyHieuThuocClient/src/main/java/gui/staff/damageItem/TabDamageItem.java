@@ -11,11 +11,13 @@ import enums.ReturnOrderDetailStatus;
 import java.awt.Component;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import gui.login.LoadApplication;
 import util.CurrentEmployee;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -51,11 +53,11 @@ public class TabDamageItem extends javax.swing.JPanel {
     private ReturnOrderDetailBUS returnOrderDetailBUS;
     private ProductBUS productBUS;
 
-    public TabDamageItem() {
-        this.damageItemBUS = new DamageItemBUS(ConnectDB.getEntityManager());
-        this.batchBUS = new BatchBUS(ConnectDB.getEntityManager());
-        this.returnOrderDetailBUS = new ReturnOrderDetailBUS(ConnectDB.getEntityManager());
-        this.productBUS = new ProductBUS(ConnectDB.getEntityManager());
+    public TabDamageItem() throws RemoteException {
+        this.damageItemBUS = LoadApplication.damageItemBUS;
+        this.batchBUS = LoadApplication.batchBUS;
+        this.returnOrderDetailBUS = LoadApplication.returnOrderDetailBUS;
+        this.productBUS = LoadApplication.productBUS;
         initComponents();
         fillContent();
     }
@@ -213,7 +215,7 @@ public class TabDamageItem extends javax.swing.JPanel {
         add(headerPanel, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fillContent() {
+    private void fillContent() throws RemoteException {
         Employee employee = CurrentEmployee.getEmployee();
         txtEmpName.setText(employee.getName());
         List<ReturnOrderDetail> details = returnOrderDetailBUS.getListReturnOrderDetailByType(ReturnOrderDetailStatus.DAMAGED);
@@ -237,12 +239,22 @@ public class TabDamageItem extends javax.swing.JPanel {
                 }
             });
             if ( !listBatchReturn.isEmpty()){
-                PnDamageItemDetail pnDamageItemDetailReturn = new PnDamageItemDetail(product, listBatchReturn, reason, null, this, 1);
+                PnDamageItemDetail pnDamageItemDetailReturn = null;
+                try {
+                    pnDamageItemDetailReturn = new PnDamageItemDetail(product, listBatchReturn, reason, null, this, 1);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
                 pnContent.add(pnDamageItemDetailReturn);
             }
 
             if ( !listBatchExpiration.isEmpty()){
-                PnDamageItemDetail pnDamageItemDetailExpiration = new PnDamageItemDetail(product, listBatchExpiration, "Hết hạn", null, this, 1);
+                PnDamageItemDetail pnDamageItemDetailExpiration = null;
+                try {
+                    pnDamageItemDetailExpiration = new PnDamageItemDetail(product, listBatchExpiration, "Hết hạn", null, this, 1);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
                 pnContent.add(pnDamageItemDetailExpiration);
             }
 

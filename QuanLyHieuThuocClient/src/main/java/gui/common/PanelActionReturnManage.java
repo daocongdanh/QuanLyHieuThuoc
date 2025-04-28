@@ -8,6 +8,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+
 import util.ResizeImage;
 
 /**
@@ -27,11 +29,19 @@ public class PanelActionReturnManage extends javax.swing.JPanel {
 
     public void initEvent(TableActionEventReturnManage event, int row) {
         returned.addActionListener((ActionEvent ae) -> {
-            event.onReturned(row);
+            try {
+                event.onReturned(row);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         damaged.addActionListener((ActionEvent ae) -> {
-            event.onDamaged(row);
+            try {
+                event.onDamaged(row);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 

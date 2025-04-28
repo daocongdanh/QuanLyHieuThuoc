@@ -11,6 +11,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import entity.Promotion;
 import enums.PromotionType;
+
+import java.rmi.RemoteException;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -19,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.UIManager;
+
+import gui.login.LoadApplication;
 import util.MessageDialog;
 import util.ResizeImage;
 import gui.common.TableDesign;
@@ -43,9 +47,9 @@ public class TABPromotion extends javax.swing.JPanel {
     private TableDesign tableDesignUpdate;
     private ProductBUS productBUS;
 
-    public TABPromotion() {
-        promotionBUS = new PromotionBUS(ConnectDB.getEntityManager());
-        productBUS = new ProductBUS(ConnectDB.getEntityManager());
+    public TABPromotion() throws RemoteException {
+        promotionBUS = LoadApplication.promotionBUS;
+        productBUS = LoadApplication.productBUS;
         initComponents();
         setUIManager();
         fillTable();
@@ -67,7 +71,7 @@ public class TABPromotion extends javax.swing.JPanel {
         UIManager.put("Button.arc", 10);
     }
 
-    private void fillTable() {
+    private void fillTable() throws RemoteException {
         String[] headers = {"Mã khuyến mãi", "Chương trình khuyến mãi", "Ngày bắt đầu",
             "Ngày kết thúc", "Giảm giá", "Loại khuyến mãi", "Trạng thái"};
         List<Integer> tableWidths = Arrays.asList(100, 300, 200, 200, 100, 150, 150);
@@ -374,7 +378,11 @@ public class TABPromotion extends javax.swing.JPanel {
         jButton2.setPreferredSize(new java.awt.Dimension(95, 42));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                try {
+                    jButton2ActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -498,7 +506,11 @@ public class TABPromotion extends javax.swing.JPanel {
         jButton3.setPreferredSize(new java.awt.Dimension(95, 42));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                try {
+                    jButton3ActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -539,7 +551,11 @@ public class TABPromotion extends javax.swing.JPanel {
         jButton4.setPreferredSize(new java.awt.Dimension(95, 42));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                try {
+                    jButton4ActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -643,7 +659,11 @@ public class TABPromotion extends javax.swing.JPanel {
         btnUpdateOrder.setText("Cập nhật");
         btnUpdateOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateOrderActionPerformed(evt);
+                try {
+                    btnUpdateOrderActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -759,7 +779,11 @@ public class TABPromotion extends javax.swing.JPanel {
         btnUpdate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                try {
+                    btnUpdateActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -803,7 +827,11 @@ public class TABPromotion extends javax.swing.JPanel {
         btnSearch.setPreferredSize(new java.awt.Dimension(150, 40));
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                try {
+                    btnSearchActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -816,7 +844,11 @@ public class TABPromotion extends javax.swing.JPanel {
         btnEmail.setPreferredSize(new java.awt.Dimension(150, 40));
         btnEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEmailActionPerformed(evt);
+                try {
+                    btnEmailActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -899,7 +931,7 @@ public class TABPromotion extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnUpdateActionPerformed
         int selectedRow = tableDesign.getTable().getSelectedRow();
         if (selectedRow < 0) {
             MessageDialog.warning(null, "Hãy chọn khuyến mãi muốn cập nhật thông tin");
@@ -954,7 +986,7 @@ public class TABPromotion extends javax.swing.JPanel {
         modalPromotion.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         java.util.Date jdate = jDate.getDate();
         LocalDate date = jdate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -992,7 +1024,7 @@ public class TABPromotion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDTMActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String productId = searchProduct.getText().trim();
         if (!checkExist(productId, tableDesignAdd)) {
@@ -1060,7 +1092,7 @@ public class TABPromotion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnUpdateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateOrderActionPerformed
+    private void btnUpdateOrderActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnUpdateOrderActionPerformed
         // TODO add your handling code here:
         java.util.Date jdate1 = jDateFromUpdate.getDate();
         LocalDate start = jdate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -1089,7 +1121,7 @@ public class TABPromotion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpdateOrderActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         java.util.Date jdate1 = jDateFromP1.getDate();
         LocalDate start = jdate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -1127,7 +1159,7 @@ public class TABPromotion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         String productId = searchProduct1.getText().trim();
         if (!checkExist(productId, tableDesignUpdate)) {
@@ -1145,7 +1177,7 @@ public class TABPromotion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void btnEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmailActionPerformed
+    private void btnEmailActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnEmailActionPerformed
         // TODO add your handling code here:
         int selectedRow = tableDesign.getTable().getSelectedRow();
         if (selectedRow < 0) {

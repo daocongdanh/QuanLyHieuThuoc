@@ -1,12 +1,12 @@
 package bus.impl;
 
+import bus.PDFBUS;
 import bus.ReturnOrderBUS;
 import connectDB.ConnectDB;
 import dal.BatchDAL;
 import dal.ReturnOrderDAL;
 import dto.ReturnOrderDetailDTO;
 import dto.StatsPriceAndQuantityDTO;
-import entity.Batch;
 import entity.Customer;
 import entity.Employee;
 import entity.Order;
@@ -21,14 +21,13 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import util.GeneratePDF;
 
 public class ReturnOrderBUSImpl extends UnicastRemoteObject implements ReturnOrderBUS {
 
     private BatchDAL batchDAL;
     private ReturnOrderDAL returnOrderDAL;
     private EntityTransaction transaction;
-    private final GeneratePDF generatePDF = new GeneratePDF();
+    private final PDFBUS pdfBUS = new PDFBUSImpl();
 
     public ReturnOrderBUSImpl(EntityManager entityManager) throws RemoteException {
         this.returnOrderDAL = new ReturnOrderDAL(ConnectDB.getEntityManager());
@@ -37,7 +36,7 @@ public class ReturnOrderBUSImpl extends UnicastRemoteObject implements ReturnOrd
     }
 
     @Override
-    public boolean createReturnOrder(Employee employee, Customer customer, Order order,
+    public ReturnOrder createReturnOrder(Employee employee, Customer customer, Order order,
                                      List<ReturnOrderDetailDTO> returnOrderDetailDTOs)  throws RemoteException {
         try {
             transaction.begin();
@@ -65,19 +64,19 @@ public class ReturnOrderBUSImpl extends UnicastRemoteObject implements ReturnOrd
             }
 
             if (returnOrderDetails.isEmpty()) {
-                return false;
+                return null;
             }
 
             ReturnOrder returnOrder = new ReturnOrder(null, LocalDateTime.now(), employee, order, returnOrderDetails, false);
             returnOrderDAL.insert(returnOrder);
             transaction.commit();
-            generatePDF.GeneratePDFReturn(returnOrder);
+//            pdfBUS.generatePDFReturn(returnOrder);
 
-            return true;
+            return returnOrder;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             transaction.rollback();
-            return false;
+            return null;
         }
     }
 

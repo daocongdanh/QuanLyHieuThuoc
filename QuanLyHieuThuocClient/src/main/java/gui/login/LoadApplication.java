@@ -7,14 +7,15 @@ package gui.login;
 import bus.*;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
-import connectDB.ConnectDB;
-import jakarta.persistence.EntityManager;
 import util.ResizeImage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 /**
  *
@@ -42,6 +43,7 @@ public class LoadApplication extends javax.swing.JFrame {
     public static ReturnOrderDetailBUS returnOrderDetailBUS;
     public static SupplierBUS supplierBUS;
     public static ReportBUS reportBUS;
+    public static PDFBUS pdfBUS;
 
     public LoadApplication() {
         initComponents();
@@ -108,7 +110,7 @@ public class LoadApplication extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws MalformedURLException, NotBoundException, RemoteException {
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("gui.theme");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.BOLD, 15));
@@ -121,25 +123,25 @@ public class LoadApplication extends javax.swing.JFrame {
                 load.loadingValue.setText(i + " %");
                 load.progressLoading.setValue(i);
                 if (i == 60) {
-                    ConnectDB.connect();
-                    EntityManager em = ConnectDB.getEntityManager();
-                    orderBUS = new OrderBUS(em);
-                    customerBUS = new CustomerBUS(em);
-                    batchBUS = new BatchBUS(em);
-                    promotionBUS = new PromotionBUS(em);
-                    orderDetailBUS = new OrderDetailBUS(em);
-                    returnOrderBUS = new ReturnOrderBUS(em);
-                    accountBUS = new AccountBUS(em);
-                    damageItemBUS = new DamageItemBUS(em);
-                    damageItemDetailBUS = new DamageItemDetailBUS(em);
-                    employeeBUS = new EmployeeBUS(em);
-                    productBUS = new ProductBUS(em);
-                    purchaseOrderBUS = new PurchaseOrderBUS(em);
-                    purchaseOrderDetailBUS = new PurchaseOrderDetailBUS(em);
-                    unitBUS = new UnitBUS(em);
-                    returnOrderDetailBUS = new ReturnOrderDetailBUS(em);
-                    supplierBUS = new SupplierBUS(em);
-                    reportBUS = new ReportBUS(em);
+                    accountBUS = (AccountBUS) Naming.lookup("rmi://CYBER:9090/accountService");
+                    batchBUS = (BatchBUS) Naming.lookup("rmi://CYBER:9090/batchService");
+                    customerBUS = (CustomerBUS) Naming.lookup("rmi://CYBER:9090/customerService");
+                    damageItemBUS = (DamageItemBUS) Naming.lookup("rmi://CYBER:9090/damageItemService");
+                    damageItemDetailBUS = (DamageItemDetailBUS) Naming.lookup("rmi://CYBER:9090/damageItemDetailService");
+                    employeeBUS = (EmployeeBUS) Naming.lookup("rmi://CYBER:9090/employeeService");
+                    orderBUS = (OrderBUS) Naming.lookup("rmi://CYBER:9090/orderService");
+                    orderDetailBUS = (OrderDetailBUS) Naming.lookup("rmi://CYBER:9090/orderDetailService");
+                    productBUS = (ProductBUS) Naming.lookup("rmi://CYBER:9090/productService");
+                    promotionBUS = (PromotionBUS) Naming.lookup("rmi://CYBER:9090/promotionService");
+                    purchaseOrderBUS = (PurchaseOrderBUS) Naming.lookup("rmi://CYBER:9090/purchaseOrderService");
+                    purchaseOrderDetailBUS = (PurchaseOrderDetailBUS) Naming.lookup("rmi://CYBER:9090/purchaseOrderDetailService");
+                    reportBUS = (ReportBUS) Naming.lookup("rmi://CYBER:9090/reportService");
+                    returnOrderBUS = (ReturnOrderBUS) Naming.lookup("rmi://CYBER:9090/returnOrderService");
+                    returnOrderDetailBUS = (ReturnOrderDetailBUS) Naming.lookup("rmi://CYBER:9090/returnOrderDetailService");
+                    supplierBUS = (SupplierBUS) Naming.lookup("rmi://CYBER:9090/supplierService");
+                    unitBUS = (UnitBUS) Naming.lookup("rmi://CYBER:9090/unitService");
+                    pdfBUS = (PDFBUS) Naming.lookup("rmi://CYBER:9090/pdfService");
+
                 }
 //                load.progressLoading.setForeground(Color.orange);
             }

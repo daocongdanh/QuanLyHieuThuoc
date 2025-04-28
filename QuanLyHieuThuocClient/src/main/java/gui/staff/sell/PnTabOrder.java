@@ -4,18 +4,18 @@
  */
 package gui.staff.sell;
 
-import bus.BatchBUS;
-import bus.CustomerBUS;
-import bus.OrderBUS;
-import bus.PromotionBUS;
+import bus.*;
 import com.formdev.flatlaf.FlatClientProperties;
 import dto.OrderDTO;
 import entity.Customer;
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+
+import gui.utils.PDFImageViewer;
 import util.FormatNumber;
 import util.MessageDialog;
 import entity.*;
@@ -24,6 +24,7 @@ import util.CurrentEmployee;
 import gui.common.SuggestPriceButton;
 import gui.login.LoadApplication;
 import gui.staff.TABSell;
+
 import java.awt.event.KeyEvent;
 
 /**
@@ -40,6 +41,7 @@ public class PnTabOrder extends javax.swing.JPanel {
     private BatchBUS batchBUS;
     private PromotionBUS promotionBUS;
     private TABSell lapHoaDonForm;
+    private PDFBUS pdfBUS;
 
     public PnTabOrder(TABSell lapHoaDonForm) {
         this.lapHoaDonForm = lapHoaDonForm;
@@ -47,6 +49,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         this.customerBUS = LoadApplication.customerBUS;
         this.batchBUS = LoadApplication.batchBUS;
         this.promotionBUS = LoadApplication.promotionBUS;
+        this.pdfBUS = LoadApplication.pdfBUS;
         initComponents();
         txtTienKhachDua.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "0 đ");
         txtTimKhachHang.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại khách hàng");
@@ -54,7 +57,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         txtTienKhachDua.setEnabled(true);
     }
 
-    public void addSanPham(Product product) {
+    public void addSanPham(Product product) throws RemoteException {
         int stock = batchBUS.getFinalStockByProduct(product.getProductId());
         if (stock <= 0) {
             MessageDialog.warning(null, String.format("Sản phẩm '%s' không đủ số lượng", product.getName()));
@@ -81,7 +84,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         changeTongTienHoaDon();
     }
 
-    public void changeTongTienHoaDon() {
+    public void changeTongTienHoaDon() throws RemoteException {
         tongTienHang = 0.0;
         List<PnOrderDetail> listPanel = getAllPnOrderDetailThuoc();
         for (PnOrderDetail x : listPanel) {
@@ -94,7 +97,7 @@ public class PnTabOrder extends javax.swing.JPanel {
                 .sum();
         txtDiscountProduct.setText(FormatNumber.formatToVND(discountProduct));
         promotionOrder = promotionBUS.getPromotionByOrder();
-        promotionProduct = promotionBUS.getPromotionByProduct();
+        promotionProduct = promotionBUS.getPromotionByProduct(null);
 
         discountOrder = 0;
         if (promotionOrder != null) {
@@ -234,7 +237,11 @@ public class PnTabOrder extends javax.swing.JPanel {
         txtTimKhachHang.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtTimKhachHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimKhachHangActionPerformed(evt);
+                try {
+                    txtTimKhachHangActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -543,7 +550,7 @@ public class PnTabOrder extends javax.swing.JPanel {
         add(pnLeft, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTimKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKhachHangActionPerformed
+    private void txtTimKhachHangActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_txtTimKhachHangActionPerformed
         String txtTim = txtTimKhachHang.getText().trim();
         if (txtTim == null) {
             MessageDialog.warning(null, "Chưa nhập số điện thoại khách muốn tìm !!!");
@@ -563,7 +570,10 @@ public class PnTabOrder extends javax.swing.JPanel {
     private void createOrder() {
         List<OrderDTO> orderDTOs = createListOrderDetail();
         try {
-            if (orderBUS.createOrder(CurrentEmployee.getEmployee(), customer, promotionOrder, orderDTOs)) {
+            Order order = orderBUS.createOrder(CurrentEmployee.getEmployee(), customer, promotionOrder, orderDTOs);
+            if (order != null) {
+                byte[] pdfBytes =pdfBUS.generatePDF(order);
+                new PDFImageViewer(pdfBytes);
                 lapHoaDonForm.removeAndAddNewTab(this);
                 MessageDialog.info(null, "Lập hóa đơn thành công");
             } else {

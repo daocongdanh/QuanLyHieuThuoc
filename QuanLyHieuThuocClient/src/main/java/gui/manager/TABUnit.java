@@ -8,6 +8,8 @@ import bus.UnitBUS;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import entity.Unit;
+
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -26,7 +28,7 @@ public class TABUnit extends javax.swing.JPanel {
     private final UnitBUS unitBUS;
     private TableDesign tableDesign;
 
-    public TABUnit() {
+    public TABUnit() throws RemoteException {
         unitBUS = LoadApplication.unitBUS;
         initComponents();
         setUIManager();
@@ -41,7 +43,7 @@ public class TABUnit extends javax.swing.JPanel {
         UIManager.put("Button.arc", 10);
     }
 
-    private void fillTable() {
+    private void fillTable() throws RemoteException {
         String[] headers = {"Mã đơn vị tính", "Tên"};
         List<Integer> tableWidths = Arrays.asList(50, 750);
         tableDesign = new TableDesign(headers, tableWidths);
@@ -124,7 +126,11 @@ public class TABUnit extends javax.swing.JPanel {
         btnAddUnit.setText("Thêm");
         btnAddUnit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddUnitActionPerformed(evt);
+                try {
+                    btnAddUnitActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -207,7 +213,11 @@ public class TABUnit extends javax.swing.JPanel {
         btnEditUnit.setText("Sửa");
         btnEditUnit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditUnitActionPerformed(evt);
+                try {
+                    btnEditUnitActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -289,7 +299,11 @@ public class TABUnit extends javax.swing.JPanel {
         txtSearchUnit.setPreferredSize(new java.awt.Dimension(300, 40));
         txtSearchUnit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchUnitActionPerformed(evt);
+                try {
+                    txtSearchUnitActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel6.add(txtSearchUnit);
@@ -303,7 +317,11 @@ public class TABUnit extends javax.swing.JPanel {
         btnOpenModalAddUnit.setPreferredSize(new java.awt.Dimension(150, 40));
         btnOpenModalAddUnit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpenModalAddUnitActionPerformed(evt);
+                try {
+                    btnOpenModalAddUnitActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel6.add(btnOpenModalAddUnit);
@@ -388,7 +406,7 @@ public class TABUnit extends javax.swing.JPanel {
         modalAddUnit.dispose();
     }//GEN-LAST:event_btnExitModalAddActionPerformed
 
-    private void btnAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUnitActionPerformed
+    private void btnAddUnitActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnAddUnitActionPerformed
         String name = txtNameUnitAdd.getText().trim();
         if (!name.equals("")) {
             if (unitBUS.getUnitByName(name) != null) {
@@ -406,7 +424,7 @@ public class TABUnit extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAddUnitActionPerformed
 
-    private void btnEditUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditUnitActionPerformed
+    private void btnEditUnitActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnEditUnitActionPerformed
         String name = txtNameUnitEdit.getText().trim();
         if (!name.equals("")) {
             Unit unit = unitBUS.getUnitById(unitIdEdit);
@@ -440,7 +458,7 @@ public class TABUnit extends javax.swing.JPanel {
         modalEditUnit.dispose();
     }//GEN-LAST:event_btnExitModalEditActionPerformed
 
-    private void btnOpenModalAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenModalAddUnitActionPerformed
+    private void btnOpenModalAddUnitActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnOpenModalAddUnitActionPerformed
         String name = txtSearchUnit.getText().trim();
         List<Unit> units = unitBUS.getUnitByNameSearch(name);
         fillContent(units);
@@ -470,7 +488,7 @@ public class TABUnit extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_modalAddUnitMouseClicked
 
-    private void txtSearchUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchUnitActionPerformed
+    private void txtSearchUnitActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_txtSearchUnitActionPerformed
         String name = txtSearchUnit.getText().trim();
         List<Unit> units = unitBUS.getUnitByNameSearch(name);
         fillContent(units);

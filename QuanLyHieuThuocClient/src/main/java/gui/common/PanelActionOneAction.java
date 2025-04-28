@@ -6,6 +6,7 @@ package gui.common;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 /**
  *
@@ -24,7 +25,11 @@ public class PanelActionOneAction extends javax.swing.JPanel {
         action.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                event.onAction(row);
+                try {
+                    event.onAction(row);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         

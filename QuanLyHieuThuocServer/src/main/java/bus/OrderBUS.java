@@ -19,7 +19,7 @@ import java.util.*;
 
 
 public interface OrderBUS extends Remote {
-    boolean createOrder(Employee employee, Customer customer, Promotion promotion, List<OrderDTO> orderDTOs) throws RemoteException;
+    Order createOrder(Employee employee, Customer customer, Promotion promotion, List<OrderDTO> orderDTOs) throws RemoteException;
 
     List<Order> getAllOrders() throws RemoteException;
 

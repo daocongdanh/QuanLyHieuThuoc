@@ -1,4 +1,5 @@
 package bus.impl;
+import bus.PDFBUS;
 import dal.BatchDAL;
 import dal.EmployeeDAL;
 import dal.ProductDAL;
@@ -16,7 +17,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import util.GeneratePDF;
 import bus.PurchaseOrderBUS;
 public class PurchaseOrderBUSImpl extends UnicastRemoteObject implements PurchaseOrderBUS {
 
@@ -27,7 +27,7 @@ public class PurchaseOrderBUSImpl extends UnicastRemoteObject implements Purchas
     private ProductDAL productDAL;
     private EmployeeDAL employeeDAL;
     private SupplierDAL supplierDAL;
-    private final GeneratePDF generatePDF = new GeneratePDF();
+    private final PDFBUS pdfBUS = new PDFBUSImpl();
 
     public PurchaseOrderBUSImpl(EntityManager entityManager) throws RemoteException {
         this.purchaseOrderDAL = new PurchaseOrderDAL(entityManager);
@@ -40,7 +40,7 @@ public class PurchaseOrderBUSImpl extends UnicastRemoteObject implements Purchas
     }
 
     @Override
-    public boolean createPurchaseOrder(Employee employee, Supplier supplier, List<PurchaseOrderDTO> purchaseOrderDTOs) throws RemoteException {
+    public PurchaseOrder createPurchaseOrder(Employee employee, Supplier supplier, List<PurchaseOrderDTO> purchaseOrderDTOs) throws RemoteException {
         try {
             transaction.begin();
 
@@ -81,14 +81,14 @@ public class PurchaseOrderBUSImpl extends UnicastRemoteObject implements Purchas
             PurchaseOrder purchaseOrder = new PurchaseOrder(null, LocalDateTime.now(), employee, supplier, purchaseOrderDetails);
             purchaseOrderDAL.insert(purchaseOrder);
 
-            generatePDF.GeneratePDFPurchase(purchaseOrder);
+//            pdfBUS.generatePDFPurchase(purchaseOrder);
             transaction.commit();
-            return true;
+            return purchaseOrder;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             transaction.rollback();
-            return false;
+            return null;
         }
     }
 

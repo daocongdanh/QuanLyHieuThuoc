@@ -19,6 +19,7 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Path2D;
+import java.rmi.RemoteException;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -101,13 +102,21 @@ public class MenuItem extends JPanel {
                             popup.show(MenuItem.this, (int) MenuItem.this.getWidth() + UIScale.scale(5), UIScale.scale(menuItemHeight) / 2);
                         }
                     } else {
-                        menu.runEvent(menuIndex, 0);
+                        try {
+                            menu.runEvent(menuIndex, 0);
+                        } catch (RemoteException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 });
             } else {
                 final int subIndex = i;
                 menuItem.addActionListener((ActionEvent e) -> {
-                    menu.runEvent(menuIndex, subIndex);
+                    try {
+                        menu.runEvent(menuIndex, subIndex);
+                    } catch (RemoteException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 });
             }
             add(menuItem);

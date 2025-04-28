@@ -11,6 +11,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import entity.Customer;
 import entity.Unit;
+
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -31,7 +33,7 @@ public class TABCustomer extends javax.swing.JPanel {
     private final CustomerBUS customerBUS;
     private TableDesign tableDesign;
 
-    public TABCustomer() {
+    public TABCustomer() throws RemoteException {
         customerBUS = LoadApplication.customerBUS;
         initComponents();
         setUIManager();
@@ -52,7 +54,7 @@ public class TABCustomer extends javax.swing.JPanel {
         UIManager.put("Button.arc", 10);
     }
 
-    private void fillTable() {
+    private void fillTable() throws RemoteException {
         String[] headers = {"Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Địa chỉ", "Email"};
         List<Integer> tableWidths = Arrays.asList(150, 350, 150, 350, 250);
         tableDesign = new TableDesign(headers, tableWidths);
@@ -163,7 +165,11 @@ public class TABCustomer extends javax.swing.JPanel {
         btnAddCustomer.setText("Xác nhận");
         btnAddCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddCustomerActionPerformed(evt);
+                try {
+                    btnAddCustomerActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -302,7 +308,11 @@ public class TABCustomer extends javax.swing.JPanel {
         btnEditCustomer.setText("Xác nhận");
         btnEditCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditCustomerActionPerformed(evt);
+                try {
+                    btnEditCustomerActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -439,7 +449,11 @@ public class TABCustomer extends javax.swing.JPanel {
         btnSearch.setPreferredSize(new java.awt.Dimension(150, 40));
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                try {
+                    btnSearchActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel6.add(btnSearch);
@@ -519,7 +533,7 @@ public class TABCustomer extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnSearchActionPerformed
         String keyword = txtSearchCus.getText().trim();
 
         List<Customer> customers = customerBUS.getCustomerByKeyword(keyword);
@@ -542,7 +556,7 @@ public class TABCustomer extends javax.swing.JPanel {
         modalAddCustomer.dispose();
     }//GEN-LAST:event_btnExitModalAddActionPerformed
 
-    private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
+    private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnAddCustomerActionPerformed
         if (checkValidData(txtCusNameAdd, txtCusPhoneAdd, txtCusEmailAdd, txtCusAddressAdd)) {
             String name = txtCusNameAdd.getText().trim();
             String phone = txtCusPhoneAdd.getText().trim();
@@ -565,7 +579,7 @@ public class TABCustomer extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
-    private void btnEditCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCustomerActionPerformed
+    private void btnEditCustomerActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnEditCustomerActionPerformed
         // TODO add your handling code here:
         if (checkValidData(txtCusNameEdit, txtCusPhoneEdit, txtCusEmailEdit, txtCusAddressEdit)) {
             String name = txtCusNameEdit.getText().trim();

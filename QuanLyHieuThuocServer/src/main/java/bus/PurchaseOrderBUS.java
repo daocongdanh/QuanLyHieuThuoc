@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PurchaseOrderBUS extends Remote {
-    boolean createPurchaseOrder(Employee employee, Supplier supplier, List<PurchaseOrderDTO> purchaseOrderDTOs) throws RemoteException;
+    PurchaseOrder createPurchaseOrder(Employee employee, Supplier supplier, List<PurchaseOrderDTO> purchaseOrderDTOs) throws RemoteException;
 
     List<PurchaseOrder> getAllPurchaseOrders() throws RemoteException;
 

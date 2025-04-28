@@ -10,6 +10,8 @@ import bus.PurchaseOrderDetailBUS;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
+
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -37,7 +39,7 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
     private final PurchaseOrderDetailBUS purchaseOrderDetailBUS;
     private TableDesign tableDesign;
 
-    public TABPurchaseOrder() {
+    public TABPurchaseOrder() throws RemoteException {
         purchaseOrderBUS = LoadApplication.purchaseOrderBUS;
         purchaseOrderDetailBUS = LoadApplication.purchaseOrderDetailBUS;
         initComponents();
@@ -53,7 +55,7 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
         btnView.setIcon(ResizeImage.resizeImage(new FlatSVGIcon(getClass().getResource("/img/View.svg")), 35, 35));
     }
 
-    private void fillTable() {
+    private void fillTable() throws RemoteException {
         String[] headers = {"Mã đơn nhập hàng", "Ngày tạo", "Tổng tiền", "Nhà cung cấp", "Nhân viên"};
         List<Integer> tableWidths = Arrays.asList(300, 200, 200, 300, 200);
         tableDesign = new TableDesign(headers, tableWidths);
@@ -145,7 +147,11 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
         btnSearch.setPreferredSize(new java.awt.Dimension(150, 40));
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                try {
+                    btnSearchActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -192,7 +198,11 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
         btnView.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
+                try {
+                    btnViewActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -253,7 +263,7 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
         add(pnAll);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         java.util.Date date1 = jDateFrom.getDate();
         java.util.Date date2 = jDateTo.getDate();
@@ -278,7 +288,7 @@ public class TABPurchaseOrder extends javax.swing.JPanel {
         JTableExporter.exportJTableToExcel(tableDesign.getTable());
     }//GEN-LAST:event_txtOrderActionPerformed
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnViewActionPerformed
         JTable table = tableDesign.getTable();
         int selectedRow = table.getSelectedRow();
         if(selectedRow < 0) {

@@ -5,6 +5,7 @@
 package bus.impl;
 
 import bus.OrderBUS;
+import bus.PDFBUS;
 import bus.PromotionBUS;
 import dal.BatchDAL;
 import dal.OrderDAL;
@@ -26,8 +27,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-import util.GeneratePDF;
+
 import util.StringUtils;
 
 public class OrderBUSImpl extends UnicastRemoteObject implements OrderBUS {
@@ -37,7 +37,7 @@ public class OrderBUSImpl extends UnicastRemoteObject implements OrderBUS {
     private final ProductDAL productDAL;
     private final PromotionBUS promotionBUS;
     private final EntityTransaction transaction;
-    private final GeneratePDF generatePDF = new GeneratePDF();
+    private final PDFBUS pdfBUS = new PDFBUSImpl();
 
     public OrderBUSImpl(EntityManager entityManager) throws RemoteException {
         this.orderDAL = new OrderDAL(entityManager);
@@ -48,7 +48,7 @@ public class OrderBUSImpl extends UnicastRemoteObject implements OrderBUS {
     }
 
     @Override
-    public boolean createOrder(Employee employee, Customer customer, Promotion promotion,
+    public synchronized  Order createOrder(Employee employee, Customer customer, Promotion promotion,
                                List<OrderDTO> orderDTOs) throws RemoteException {
         try {
             transaction.begin();
@@ -93,14 +93,12 @@ public class OrderBUSImpl extends UnicastRemoteObject implements OrderBUS {
             }
 
             orderDAL.insert(order);
-
-            generatePDF.GeneratePDF(order);
             transaction.commit();
-            return true;
+            return order;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             transaction.rollback();
-            return false;
+            return null;
         }
     }
     @Override

@@ -4,12 +4,15 @@
  */
 package gui.staff.damageItem;
 
+import java.rmi.RemoteException;
 import java.util.List;
 import entity.*;
 import java.awt.Container;
 import javax.swing.*;
 import util.ResizeImage;
 import util.FormatNumber;
+
+import static gui.login.LoadApplication.productBUS;
 
 /**
  *
@@ -29,7 +32,7 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
     }
 
     public PnDamageItemDetail(Product product, List<Batch> batchs, String reason, ReturnOrderDetail returnOrderDetail,
-            TabDamageItem tabDamageItem, int type) {
+            TabDamageItem tabDamageItem, int type) throws RemoteException {
         this.product = product;
         this.batchs = batchs;
         this.type = type;
@@ -45,13 +48,21 @@ public class PnDamageItemDetail extends javax.swing.JPanel {
         return (int) spinnerSoLuong.getValue();
     }
 
-    private void fillFirst() {
+    private void fillFirst() throws RemoteException {
         txtProductId.setText(product.getProductId());
         txtProductId.setVisible(false);
         if (type == 1) {
             txtTenSP.setText(product.getName());
-            pnHinh.setIcon(ResizeImage.resizeImage(new javax.swing.ImageIcon(getClass().getResource("/img/"
-                    + product.getImage())), 82, 82));
+            byte[] imageBytes = productBUS.getImageForProduct(product.getImage()); // <<< Byte ảnh đã lấy từ server
+
+            if (imageBytes != null) {
+                try {
+                    ImageIcon icon = new ImageIcon(imageBytes);
+                    pnHinh.setIcon(ResizeImage.resizeImage(icon, 82, 82));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             txtDVT.setText(product.getUnit().getName());
             txtLoai.setText(reason);
             spinnerSoLuong.setValue(0);

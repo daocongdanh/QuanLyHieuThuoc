@@ -4,10 +4,12 @@
  */
 package gui.common;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author Hoang
  */
 public interface TableActionEventOneAction {
-    public void onAction( int row);
+    public void onAction( int row) throws RemoteException;
 }

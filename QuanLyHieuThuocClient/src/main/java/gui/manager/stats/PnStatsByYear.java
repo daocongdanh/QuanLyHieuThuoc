@@ -8,6 +8,7 @@ import bus.OrderBUS;
 import dto.StatsOrderByYearDTO;
 import gui.barchart.ModelChart;
 import java.awt.Color;
+import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
@@ -104,7 +105,11 @@ public class PnStatsByYear extends javax.swing.JPanel {
         btnSearch.setPreferredSize(new java.awt.Dimension(150, 40));
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                try {
+                    btnSearchActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -358,7 +363,7 @@ public class PnStatsByYear extends javax.swing.JPanel {
         add(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnSearchActionPerformed
         int yearStart = Integer.parseInt((String) comboYearStart.getSelectedItem());
         int yearEnd = Integer.parseInt((String) comboYearEnd.getSelectedItem());
         

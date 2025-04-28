@@ -10,7 +10,10 @@ import dto.BatchDTO;
 import dto.PurchaseOrderDTO;
 import entity.Product;
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.*;
+
+import gui.utils.PDFImageViewer;
 import util.FormatNumber;
 import util.MessageDialog;
 import entity.*;
@@ -49,6 +52,7 @@ public class TABPurchase extends javax.swing.JPanel {
     private final ProductBUS productBUS;
     private final SupplierBUS supplierBUS;
     private final PurchaseOrderBUS purchaseOrderBUS;
+    private final PDFBUS pdfBUS;
 
     public TABPurchase() {
         initComponents();
@@ -56,6 +60,7 @@ public class TABPurchase extends javax.swing.JPanel {
         batchBUS = LoadApplication.batchBUS;
         supplierBUS = LoadApplication.supplierBUS;
         purchaseOrderBUS = LoadApplication.purchaseOrderBUS;
+        pdfBUS = LoadApplication.pdfBUS;
 
         lookAndFeelSet();
 
@@ -170,7 +175,11 @@ public class TABPurchase extends javax.swing.JPanel {
         txtSearchSupplier.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtSearchSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchSupplierActionPerformed(evt);
+                try {
+                    txtSearchSupplierActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -285,7 +294,11 @@ public class TABPurchase extends javax.swing.JPanel {
         });
         txtSearchProduct.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtSearchProductKeyPressed(evt);
+                try {
+                    txtSearchProductKeyPressed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -295,7 +308,11 @@ public class TABPurchase extends javax.swing.JPanel {
         btnMa.setText("Tìm");
         btnMa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMaActionPerformed(evt);
+                try {
+                    btnMaActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -338,7 +355,7 @@ public class TABPurchase extends javax.swing.JPanel {
         add(headerPanel, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void searchProduct(String sdk) {
+    private void searchProduct(String sdk) throws RemoteException {
         Product product = productBUS.getProductBySDK(sdk);
         if (product != null) {
             addSanPham(product);
@@ -348,7 +365,7 @@ public class TABPurchase extends javax.swing.JPanel {
         }
     }
 
-    private void addSanPham(Product product) {
+    private void addSanPham(Product product) throws RemoteException {
 
         List<PnPurchaseOrderDetail> pnPurchaseOrderDetails = getAllPnPurchaseOrderDetailThuoc();
         for (PnPurchaseOrderDetail pnPurchaseOrderDetail : pnPurchaseOrderDetails) {
@@ -407,7 +424,7 @@ public class TABPurchase extends javax.swing.JPanel {
 //        searchProduct(textTim);
     }//GEN-LAST:event_txtSearchProductActionPerformed
 
-    private void btnMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaActionPerformed
+    private void btnMaActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnMaActionPerformed
         // TODO add your handling code here:
         String textTim = txtSearchProduct.getText();
         searchProduct(textTim);
@@ -569,7 +586,10 @@ public class TABPurchase extends javax.swing.JPanel {
             return;
         }
         try {
-            if (purchaseOrderBUS.createPurchaseOrder(CurrentEmployee.getEmployee(), supplier, purchaseOrderDTOs)) {
+            PurchaseOrder purchaseOrder = purchaseOrderBUS.createPurchaseOrder(CurrentEmployee.getEmployee(), supplier, purchaseOrderDTOs);
+            if ( purchaseOrder != null ) {
+                byte[] pdf = pdfBUS.generatePDFPurchase(purchaseOrder);
+                new PDFImageViewer(pdf);
                 MessageDialog.info(null, "Nhập hàng thành công!");
                 clearPnOrderDetail();
             }
@@ -582,7 +602,7 @@ public class TABPurchase extends javax.swing.JPanel {
         createOrder();
     }//GEN-LAST:event_btnConfirmPurchaseActionPerformed
 
-    private void txtSearchSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchSupplierActionPerformed
+    private void txtSearchSupplierActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_txtSearchSupplierActionPerformed
         String txtTim = txtSearchSupplier.getText().trim();
         if (txtTim == null) {
             MessageDialog.warning(null, "Chưa nhập số điện thoại nhà cung cấp !!!");
@@ -600,7 +620,7 @@ public class TABPurchase extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtSearchSupplierActionPerformed
 
-    private void txtSearchProductKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchProductKeyPressed
+    private void txtSearchProductKeyPressed(java.awt.event.KeyEvent evt) throws RemoteException {//GEN-FIRST:event_txtSearchProductKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String sdk = txtSearchProduct.getText().trim();

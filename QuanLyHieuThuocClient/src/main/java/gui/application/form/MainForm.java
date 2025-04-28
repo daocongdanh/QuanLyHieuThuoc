@@ -24,6 +24,7 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
+import java.rmi.RemoteException;
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -182,7 +183,7 @@ public class MainForm extends JLayeredPane {
         panelBody.revalidate();
     }
 
-    public void setSelectedMenu(int index, int subIndex) {
+    public void setSelectedMenu(int index, int subIndex) throws RemoteException {
         menu.setSelectedMenu(index, subIndex);
     }
 

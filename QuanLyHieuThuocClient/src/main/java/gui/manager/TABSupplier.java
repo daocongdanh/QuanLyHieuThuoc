@@ -9,6 +9,8 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import connectDB.ConnectDB;
 import entity.Supplier;
+
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -30,7 +32,7 @@ public class TABSupplier extends javax.swing.JPanel {
     private TableDesign tableDesign;
     private String supplierEdit;
 
-    public TABSupplier() {
+    public TABSupplier() throws RemoteException {
         supplierBUS = LoadApplication.supplierBUS;
         initComponents();
         setUIManager();
@@ -48,7 +50,7 @@ public class TABSupplier extends javax.swing.JPanel {
         UIManager.put("Button.arc", 10);
     }
 
-    private void fillTable() {
+    private void fillTable() throws RemoteException {
         String[] headers = {"Mã nhân viên","Tên", "Địa Chỉ","SDT","Email" ,"Mã số Thuế"};
         List<Integer> tableWidths = Arrays.asList(40,130,130 , 40,80,40);
         tableDesign = new TableDesign(headers, tableWidths);
@@ -88,7 +90,7 @@ public class TABSupplier extends javax.swing.JPanel {
         }
     }
     
-    private void searchSuppliers() {
+    private void searchSuppliers() throws RemoteException {
        String searchText = txtSearchSupplier.getText().trim();
     
         List<Supplier> suppliers;
@@ -372,7 +374,11 @@ public class TABSupplier extends javax.swing.JPanel {
         btnSupplierEdit.setText("Sửa");
         btnSupplierEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSupplierEditActionPerformed(evt);
+                try {
+                    btnSupplierEditActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -486,7 +492,11 @@ public class TABSupplier extends javax.swing.JPanel {
         txtSearchSupplier.setPreferredSize(new java.awt.Dimension(300, 40));
         txtSearchSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchSupplierActionPerformed(evt);
+                try {
+                    txtSearchSupplierActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel6.add(txtSearchSupplier);
@@ -500,7 +510,11 @@ public class TABSupplier extends javax.swing.JPanel {
         btnOpenModalAddSup.setPreferredSize(new java.awt.Dimension(150, 40));
         btnOpenModalAddSup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpenModalAddSupActionPerformed(evt);
+                try {
+                    btnOpenModalAddSupActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jPanel6.add(btnOpenModalAddSup);
@@ -580,11 +594,11 @@ public class TABSupplier extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOpenModalAddSupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenModalAddSupActionPerformed
+    private void btnOpenModalAddSupActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnOpenModalAddSupActionPerformed
         searchSuppliers();
     }//GEN-LAST:event_btnOpenModalAddSupActionPerformed
 
-    private void txtSearchSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchSupplierActionPerformed
+    private void txtSearchSupplierActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_txtSearchSupplierActionPerformed
         searchSuppliers();
     }//GEN-LAST:event_txtSearchSupplierActionPerformed
 
@@ -647,7 +661,7 @@ public class TABSupplier extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupEmailEditActionPerformed
 
-    private void btnSupplierEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierEditActionPerformed
+    private void btnSupplierEditActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnSupplierEditActionPerformed
         // TODO add your handling code here:
         String name = txtSupNameEdit.getText().trim();
         String address = txtSupAddressEdit.getText().trim();
@@ -702,7 +716,7 @@ public class TABSupplier extends javax.swing.JPanel {
 
         try {
             Supplier sup = new Supplier(null, name, address, phone,email, taxCode);
-            supplierBUS.createrSupplier(sup);
+            supplierBUS.createSupplier(sup);
             MessageDialog.info(null, "Thêm nhà cung cấp mới thành công.");
             txtSupNameAdd.setText("");
             txtSupAddressAdd.setText("");

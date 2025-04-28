@@ -4,13 +4,15 @@
  */
 package gui.common;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author Hoang
  */
 public interface TableActionEventReturnManage {
 
-    public void onReturned(int row);
+    public void onReturned(int row) throws RemoteException;
 
-    public void onDamaged(int row);
+    public void onDamaged(int row) throws RemoteException;
 }
