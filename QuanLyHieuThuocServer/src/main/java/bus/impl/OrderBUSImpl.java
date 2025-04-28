@@ -48,7 +48,7 @@ public class OrderBUSImpl extends UnicastRemoteObject implements OrderBUS {
     }
 
     @Override
-    public synchronized  Order createOrder(Employee employee, Customer customer, Promotion promotion,
+    public synchronized Order createOrder(Employee employee, Customer customer, Promotion promotion,
                                List<OrderDTO> orderDTOs) throws RemoteException {
         try {
             transaction.begin();
@@ -71,7 +71,7 @@ public class OrderBUSImpl extends UnicastRemoteObject implements OrderBUS {
                 orderDetails.add(orderDetail);
                 int stock = batch.getStock() - orderDTO.getQuantity();
                 if (stock < 0) {
-                    throw new RuntimeException("Số lượng không đủ với lô hàng: " + batch.getName());
+                    throw new RuntimeException("Không đủ số lượng");
                 }
                 batch.setStock(stock);
                 batchDAL.update(batch);

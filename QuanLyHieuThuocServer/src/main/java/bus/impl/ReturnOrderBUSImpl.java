@@ -36,7 +36,7 @@ public class ReturnOrderBUSImpl extends UnicastRemoteObject implements ReturnOrd
     }
 
     @Override
-    public ReturnOrder createReturnOrder(Employee employee, Customer customer, Order order,
+    public synchronized ReturnOrder createReturnOrder(Employee employee, Customer customer, Order order,
                                      List<ReturnOrderDetailDTO> returnOrderDetailDTOs)  throws RemoteException {
         try {
             transaction.begin();

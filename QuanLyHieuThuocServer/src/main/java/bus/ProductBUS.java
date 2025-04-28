@@ -34,5 +34,9 @@ public interface ProductBUS extends Remote {
     Product searchBySDKAndUnitId(String sdk, String unitId) throws RemoteException;
 
     List<Product> searchProductsBy4Field(String name, String registrationNumber, ProductType productType, Boolean active) throws RemoteException;
+
     byte[] getImageForProduct(String imageLink) throws RemoteException;
+
+    void saveImageForProduct(String imageLink, byte[] imageData) throws RemoteException;
+
 }

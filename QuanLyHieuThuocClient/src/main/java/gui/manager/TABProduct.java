@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import gui.utils.ImageUtils;
 import util.MessageDialog;
 import util.ResizeImage;
 import gui.common.TableDesign;
@@ -1188,6 +1189,7 @@ public class TABProduct extends javax.swing.JPanel {
             String image = "default.jpg";
             if (imageProductAdd != null) {
                 image = getImageFileName(imageProductAdd);
+                productBUS.saveImageForProduct(removeExtension(image), ImageUtils.imageIconToByteArray(imageProductAdd));
             }
             Product product = new Product();
             product.setName(name);
@@ -1339,7 +1341,7 @@ public class TABProduct extends javax.swing.JPanel {
             if (productBUS.updateProduct(product)) {
                 MessageDialog.info(null, "Sửa thông tin sản phẩm thành công");
                 if (!checkImage) {
-                    ImageUtil.saveImageIcon(imageProductEdit, removeExtension(image));
+                    productBUS.saveImageForProduct(removeExtension(image), ImageUtils.imageIconToByteArray(imageProductEdit));
                 }
                 fillContent(productBUS.getAllProducts());
             } else {

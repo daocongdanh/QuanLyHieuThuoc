@@ -577,7 +577,7 @@ public class PnTabOrder extends javax.swing.JPanel {
                 lapHoaDonForm.removeAndAddNewTab(this);
                 MessageDialog.info(null, "Lập hóa đơn thành công");
             } else {
-                MessageDialog.info(null, "Lập hóa đơn thất bại");
+                MessageDialog.info(null, "Không đủ số lượng");
             }
         } catch (Exception e) {
             MessageDialog.error(null, e.getMessage());

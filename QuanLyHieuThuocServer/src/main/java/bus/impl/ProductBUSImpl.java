@@ -9,9 +9,9 @@ import entity.*;
 import enums.ProductType;
 import jakarta.persistence.EntityTransaction;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -138,4 +138,16 @@ public class ProductBUSImpl extends UnicastRemoteObject implements ProductBUS {
             return null;
         }
     }
+
+    @Override
+    public void saveImageForProduct(String imageLink, byte[] imageData) throws RemoteException {
+        String path = "src/main/resources/img/" + imageLink + ".jpg";
+
+        try (FileOutputStream fos = new FileOutputStream(path)) {
+            fos.write(imageData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
