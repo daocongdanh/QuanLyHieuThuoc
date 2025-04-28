@@ -5,6 +5,7 @@
 package util;
 
 import dal.ProductPromotionDetailDAL;
+import dal.impl.ProductPromotionDetailDALImpl;
 import entity.Account;
 import entity.ProductPromotionDetail;
 import entity.Promotion;
@@ -20,7 +21,7 @@ public class MailTemplate {
     private ProductPromotionDetailDAL productPromotionDetailDAL;
 
     public MailTemplate(EntityManager entityManager) {
-        productPromotionDetailDAL = new ProductPromotionDetailDAL(entityManager);
+        productPromotionDetailDAL = new ProductPromotionDetailDALImpl(entityManager);
     }
 
     public String mailOrder(Promotion promotion) {

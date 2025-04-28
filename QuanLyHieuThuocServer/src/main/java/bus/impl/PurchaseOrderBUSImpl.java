@@ -6,6 +6,7 @@ import dal.ProductDAL;
 import dal.PurchaseOrderDAL;
 import dal.SupplierDAL;
 import dal.UnitDAL;
+import dal.impl.*;
 import dto.PurchaseOrderDTO;
 import dto.StatsPriceAndQuantityDTO;
 import jakarta.persistence.EntityManager;
@@ -30,13 +31,13 @@ public class PurchaseOrderBUSImpl extends UnicastRemoteObject implements Purchas
     private final PDFBUS pdfBUS = new PDFBUSImpl();
 
     public PurchaseOrderBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.purchaseOrderDAL = new PurchaseOrderDAL(entityManager);
+        this.purchaseOrderDAL = new PurchaseOrderDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
-        this.batchDAL = new BatchDAL(entityManager);
-        this.unitDAL = new UnitDAL(entityManager);
-        this.productDAL = new ProductDAL(entityManager);
-        this.employeeDAL = new EmployeeDAL(entityManager);
-        this.supplierDAL = new SupplierDAL(entityManager);
+        this.batchDAL = new BatchDALImpl(entityManager);
+        this.unitDAL = new UnitDALImpl(entityManager);
+        this.productDAL = new ProductDALImpl(entityManager);
+        this.employeeDAL = new EmployeeDALImpl(entityManager);
+        this.supplierDAL = new SupplierDALImpl(entityManager);
     }
 
     @Override

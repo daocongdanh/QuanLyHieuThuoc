@@ -3,6 +3,7 @@ package bus.impl;
 import bus.PurchaseOrderDetailBUS;
 import connectDB.ConnectDB;
 import dal.PurchaseOrderDetailDAL;
+import dal.impl.PurchaseOrderDetailDALImpl;
 import entity.PurchaseOrder;
 import entity.PurchaseOrderDetail;
 import jakarta.persistence.EntityManager;
@@ -16,7 +17,7 @@ public class PurchaseOrderDetailBUSImpl extends UnicastRemoteObject implements P
     private final PurchaseOrderDetailDAL purchaseOrderDetailDAL;
 
     public PurchaseOrderDetailBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.purchaseOrderDetailDAL = new PurchaseOrderDetailDAL(ConnectDB.getEntityManager());
+        this.purchaseOrderDetailDAL = new PurchaseOrderDetailDALImpl(entityManager);
     }
 
     @Override

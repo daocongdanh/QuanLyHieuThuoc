@@ -5,6 +5,9 @@ import connectDB.ConnectDB;
 import dal.BatchDAL;
 import dal.ReturnOrderDAL;
 import dal.ReturnOrderDetailDAL;
+import dal.impl.BatchDALImpl;
+import dal.impl.ReturnOrderDALImpl;
+import dal.impl.ReturnOrderDetailDALImpl;
 import entity.Batch;
 import entity.ReturnOrder;
 import entity.ReturnOrderDetail;
@@ -27,9 +30,9 @@ public class ReturnOrderDetailBUSImpl extends UnicastRemoteObject implements Ret
     private final EntityTransaction transaction;
 
     public ReturnOrderDetailBUSImpl(EntityManager entityManager)  throws RemoteException {
-        this.returnOrderDetailDAL = new ReturnOrderDetailDAL(ConnectDB.getEntityManager());
-        this.returnOrderDAL = new ReturnOrderDAL(ConnectDB.getEntityManager());
-        this.batchDAL = new BatchDAL(ConnectDB.getEntityManager());
+        this.returnOrderDetailDAL = new ReturnOrderDetailDALImpl(entityManager);
+        this.returnOrderDAL = new ReturnOrderDALImpl(entityManager);
+        this.batchDAL = new BatchDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
     }
 

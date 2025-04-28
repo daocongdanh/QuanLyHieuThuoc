@@ -3,6 +3,7 @@ package bus.impl;
 import bus.DamageItemDetailBUS;
 import connectDB.ConnectDB;
 import dal.DamageItemDetailDAL;
+import dal.impl.DamageItemDetailDALImpl;
 import entity.DamageItem;
 import entity.DamageItemDetail;
 import jakarta.persistence.EntityManager;
@@ -16,7 +17,7 @@ public class DamageItemDetailBUSImpl extends UnicastRemoteObject implements Dama
     private final DamageItemDetailDAL damageItemDetailDAL;
 
     public DamageItemDetailBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.damageItemDetailDAL = new DamageItemDetailDAL(ConnectDB.getEntityManager());
+        this.damageItemDetailDAL = new DamageItemDetailDALImpl(entityManager);
     }
 
     @Override

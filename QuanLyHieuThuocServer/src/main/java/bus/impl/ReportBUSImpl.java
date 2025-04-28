@@ -5,6 +5,10 @@ import dal.DamageItemDAL;
 import dal.OrderDAL;
 import dal.PurchaseOrderDAL;
 import dal.ReturnOrderDAL;
+import dal.impl.DamageItemDALImpl;
+import dal.impl.OrderDALImpl;
+import dal.impl.PurchaseOrderDALImpl;
+import dal.impl.ReturnOrderDALImpl;
 import jakarta.persistence.EntityManager;
 import dto.Report;
 import entity.DamageItem;
@@ -29,10 +33,10 @@ public class ReportBUSImpl extends UnicastRemoteObject implements ReportBUS {
     private final DamageItemDAL damageItemDAL;
 
     public ReportBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.orderDAL = new OrderDAL(entityManager);
-        this.purchaseOrderDAL = new PurchaseOrderDAL(entityManager);
-        this.returnOrderDAL = new ReturnOrderDAL(entityManager);
-        this.damageItemDAL = new DamageItemDAL(entityManager);
+        this.orderDAL = new OrderDALImpl(entityManager);
+        this.purchaseOrderDAL = new PurchaseOrderDALImpl(entityManager);
+        this.returnOrderDAL = new ReturnOrderDALImpl(entityManager);
+        this.damageItemDAL = new DamageItemDALImpl(entityManager);
     }
 
     @Override

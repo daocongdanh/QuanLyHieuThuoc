@@ -2,6 +2,7 @@ package bus.impl;
 
 import bus.SupplierBUS;
 import dal.SupplierDAL;
+import dal.impl.SupplierDALImpl;
 import entity.Supplier;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -16,7 +17,7 @@ public class SupplierBUSImpl extends UnicastRemoteObject implements SupplierBUS 
 
     // Constructor
     public SupplierBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.supplierDAL = new SupplierDAL(entityManager);
+        this.supplierDAL = new SupplierDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
     }
 

@@ -3,6 +3,7 @@ package bus.impl;
 import bus.OrderDetailBUS;
 import connectDB.ConnectDB;
 import dal.OrderDetailDAL;
+import dal.impl.OrderDetailDALImpl;
 import entity.Order;
 import entity.OrderDetail;
 import jakarta.persistence.EntityManager;
@@ -16,7 +17,7 @@ public class OrderDetailBUSImpl extends UnicastRemoteObject implements OrderDeta
     private final OrderDetailDAL orderDetailDAL;
 
     public OrderDetailBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.orderDetailDAL = new OrderDetailDAL(ConnectDB.getEntityManager());
+        this.orderDetailDAL = new OrderDetailDALImpl(entityManager);
     }
 
     @Override

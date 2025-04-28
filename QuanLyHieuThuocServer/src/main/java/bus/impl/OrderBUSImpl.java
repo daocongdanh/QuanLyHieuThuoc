@@ -10,6 +10,9 @@ import bus.PromotionBUS;
 import dal.BatchDAL;
 import dal.OrderDAL;
 import dal.ProductDAL;
+import dal.impl.BatchDALImpl;
+import dal.impl.OrderDALImpl;
+import dal.impl.ProductDALImpl;
 import dto.OrderDTO;
 import dto.StatsPriceAndQuantityDTO;
 import dto.StatsOrderByDayDTO;
@@ -40,9 +43,9 @@ public class OrderBUSImpl extends UnicastRemoteObject implements OrderBUS {
     private final PDFBUS pdfBUS = new PDFBUSImpl();
 
     public OrderBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.orderDAL = new OrderDAL(entityManager);
-        this.batchDAL = new BatchDAL(entityManager);
-        this.productDAL = new ProductDAL(entityManager);
+        this.orderDAL = new OrderDALImpl(entityManager);
+        this.batchDAL = new BatchDALImpl(entityManager);
+        this.productDAL = new ProductDALImpl(entityManager);
         this.promotionBUS = new PromotionBUSImpl(entityManager);
         this.transaction = entityManager.getTransaction();
     }

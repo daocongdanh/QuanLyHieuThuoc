@@ -5,6 +5,8 @@ import bus.ReturnOrderBUS;
 import connectDB.ConnectDB;
 import dal.BatchDAL;
 import dal.ReturnOrderDAL;
+import dal.impl.BatchDALImpl;
+import dal.impl.ReturnOrderDALImpl;
 import dto.ReturnOrderDetailDTO;
 import dto.StatsPriceAndQuantityDTO;
 import entity.Customer;
@@ -30,8 +32,8 @@ public class ReturnOrderBUSImpl extends UnicastRemoteObject implements ReturnOrd
     private final PDFBUS pdfBUS = new PDFBUSImpl();
 
     public ReturnOrderBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.returnOrderDAL = new ReturnOrderDAL(ConnectDB.getEntityManager());
-        this.batchDAL = new BatchDAL(ConnectDB.getEntityManager());
+        this.returnOrderDAL = new ReturnOrderDALImpl(entityManager);
+        this.batchDAL = new BatchDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
     }
 

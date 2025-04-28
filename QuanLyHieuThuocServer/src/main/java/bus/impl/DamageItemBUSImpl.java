@@ -3,6 +3,8 @@ package bus.impl;
 import bus.DamageItemBUS;
 import dal.BatchDAL;
 import dal.DamageItemDAL;
+import dal.impl.BatchDALImpl;
+import dal.impl.DamageItemDALImpl;
 import entity.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -19,8 +21,8 @@ public class DamageItemBUSImpl extends UnicastRemoteObject implements DamageItem
     private final EntityTransaction transaction;
 
     public DamageItemBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.damageItemDAL = new DamageItemDAL(entityManager);
-        this.batchDAL = new BatchDAL(entityManager);
+        this.damageItemDAL = new DamageItemDALImpl(entityManager);
+        this.batchDAL = new BatchDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
     }
 

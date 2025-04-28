@@ -2,6 +2,7 @@ package bus.impl;
 
 import bus.CustomerBUS;
 import dal.CustomerDAL;
+import dal.impl.CustomerDALImpl;
 import entity.Customer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -16,7 +17,7 @@ public class CustomerBUSImpl extends UnicastRemoteObject implements CustomerBUS 
     private final EntityTransaction transaction;
 
     public CustomerBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.customerDAL = new CustomerDAL(entityManager);
+        this.customerDAL = new CustomerDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
     }
 

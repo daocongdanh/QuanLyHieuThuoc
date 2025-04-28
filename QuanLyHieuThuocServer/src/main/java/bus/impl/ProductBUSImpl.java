@@ -3,6 +3,8 @@ package bus.impl;
 import bus.ProductBUS;
 import dal.ProductDAL;
 import dal.UnitDAL;
+import dal.impl.ProductDALImpl;
+import dal.impl.UnitDALImpl;
 import dto.BatchDTO;
 import jakarta.persistence.EntityManager;
 import entity.*;
@@ -29,9 +31,9 @@ public class ProductBUSImpl extends UnicastRemoteObject implements ProductBUS {
     private final UnitDAL unitDAL;
 
     public ProductBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.productDAL = new ProductDAL(entityManager);
+        this.productDAL = new ProductDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
-        this.unitDAL = new UnitDAL(entityManager);
+        this.unitDAL = new UnitDALImpl(entityManager);
     }
 
     @Override

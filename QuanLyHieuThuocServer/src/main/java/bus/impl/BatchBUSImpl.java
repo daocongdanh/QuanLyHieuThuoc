@@ -2,6 +2,7 @@ package bus.impl;
 
 import bus.BatchBUS;
 import dal.BatchDAL;
+import dal.impl.BatchDALImpl;
 import entity.Batch;
 import entity.Product;
 import jakarta.persistence.EntityManager;
@@ -18,7 +19,7 @@ public class BatchBUSImpl extends UnicastRemoteObject implements BatchBUS {
     private final EntityTransaction transaction;
 
     public BatchBUSImpl(EntityManager entityManager) throws  RemoteException{
-        this.batchDAL = new BatchDAL(entityManager);
+        this.batchDAL = new BatchDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
     }
 

@@ -2,6 +2,7 @@ package bus.impl;
 
 import bus.AccountBUS;
 import dal.AccountDAL;
+import dal.impl.AccountDALImpl;
 import entity.Account;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -20,7 +21,7 @@ public class AccountBUSImpl extends UnicastRemoteObject implements AccountBUS {
     private final MailTemplate mailTemplate;
 
     public AccountBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.accountDAL = new AccountDAL(entityManager);
+        this.accountDAL = new AccountDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
         this.sendMail = new SendMail();
         this.mailTemplate = new MailTemplate(entityManager);

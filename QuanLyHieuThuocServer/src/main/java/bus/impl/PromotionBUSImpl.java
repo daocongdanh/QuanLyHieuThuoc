@@ -5,6 +5,10 @@ import dal.CustomerDAL;
 import dal.ProductDAL;
 import dal.ProductPromotionDetailDAL;
 import dal.PromotionDAL;
+import dal.impl.CustomerDALImpl;
+import dal.impl.ProductDALImpl;
+import dal.impl.ProductPromotionDetailDALImpl;
+import dal.impl.PromotionDALImpl;
 import jakarta.persistence.EntityManager;
 import entity.*;
 import enums.PromotionType;
@@ -29,12 +33,12 @@ public class PromotionBUSImpl extends UnicastRemoteObject implements PromotionBU
     private final EntityTransaction transaction;
 
     public PromotionBUSImpl(EntityManager entityManager) throws RemoteException {
-        this.promotionDAL = new PromotionDAL(entityManager);
-        this.productDAL = new ProductDAL(entityManager);
-        this.productPromotionDetailDAL = new ProductPromotionDetailDAL(entityManager);
+        this.promotionDAL = new PromotionDALImpl(entityManager);
+        this.productDAL = new ProductDALImpl(entityManager);
+        this.productPromotionDetailDAL = new ProductPromotionDetailDALImpl(entityManager);
         this.mailTemplate = new MailTemplate(entityManager);
         this.sendMail = new SendMail();
-        this.customerDAL = new CustomerDAL(entityManager);
+        this.customerDAL = new CustomerDALImpl(entityManager);
         this.transaction = entityManager.getTransaction();
     }
 
