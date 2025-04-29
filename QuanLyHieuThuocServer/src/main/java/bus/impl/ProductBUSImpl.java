@@ -130,16 +130,16 @@ public class ProductBUSImpl extends UnicastRemoteObject implements ProductBUS {
 
     @Override
     public byte[] getImageForProduct(String imageLink) throws RemoteException {
-        try (InputStream is = getClass().getResourceAsStream("/img/"+imageLink)) {
-            if (is == null) {
-                throw new FileNotFoundException("Không tìm thấy ảnh: " + imageLink);
-            }
-            return is.readAllBytes();
+        String path = "src/main/resources/img/" + imageLink;
+
+        try (FileInputStream fis = new FileInputStream(path)) {
+            return fis.readAllBytes();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
+
 
     @Override
     public void saveImageForProduct(String imageLink, byte[] imageData) throws RemoteException {

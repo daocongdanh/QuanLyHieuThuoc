@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
-    private static List<String> connectedClients = new ArrayList<>();
     public static void main(String[] args) throws NamingException, RemoteException {
         Context context = new InitialContext();
         ConnectDB.connect();
@@ -58,15 +57,7 @@ public class Server {
         context.bind("rmi://CYBER:9090/unitService", unitBUS);
         context.bind("rmi://CYBER:9090/pdfService", pdfBus);
 
-        trackClientConnection("CYBER");
         System.out.println("Server is ready !!");
     }
 
-    public static void trackClientConnection(String clientAddress) {
-        synchronized (connectedClients) {
-            connectedClients.add(clientAddress);
-            System.out.println("Client connected: " + clientAddress);
-            System.out.println("Currently connected clients: " + connectedClients);
-        }
-    }
 }
