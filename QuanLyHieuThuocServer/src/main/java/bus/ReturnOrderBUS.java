@@ -21,4 +21,5 @@ public interface ReturnOrderBUS extends Remote {
     List<ReturnOrder> getListReturnOrdersByStatus(boolean status) throws RemoteException;
     StatsPriceAndQuantityDTO getQuantityAndSumPriceByDate(LocalDateTime start, LocalDateTime end) throws RemoteException;
     List<ReturnOrder> getByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID) throws RemoteException;
+    ReturnOrder checkExistByOrderId(String orderId) throws RemoteException;
 }

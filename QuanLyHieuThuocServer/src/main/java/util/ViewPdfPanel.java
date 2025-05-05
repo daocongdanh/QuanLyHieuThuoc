@@ -52,7 +52,6 @@ public class ViewPdfPanel extends JPanel {
         try {
             pages = loadPDFPages(pdfFile);
 
-            // Xóa các trang cũ trong giao diện
             pagesPanel.removeAll();
 
             // Hiển thị các trang PDF
@@ -72,29 +71,27 @@ public class ViewPdfPanel extends JPanel {
 
     private List<BufferedImage> loadPDFPages(File pdfFile) throws Exception {
         List<BufferedImage> pageImages = new ArrayList<>();
-        ExecutorService executor = Executors.newFixedThreadPool(4); // Giảm số lượng luồng nếu có vấn đề về tài nguyên
+        ExecutorService executor = Executors.newFixedThreadPool(4);
         try (PDDocument document = PDDocument.load(pdfFile)) {
             PDFRenderer renderer = new PDFRenderer(document);
 
             int totalPages = document.getNumberOfPages();
             List<Future<BufferedImage>> futures = new ArrayList<>();
 
-            // Tạo các tác vụ render cho từng trang PDF
             for (int i = 0; i < totalPages; i++) {
                 final int pageIndex = i;
                 futures.add(executor.submit(() -> {
-                    BufferedImage originalImage = renderer.renderImage(pageIndex, 2.5f); // Giảm độ phân giải nếu cần
+                    BufferedImage originalImage = renderer.renderImage(pageIndex, 2.5f);
                     return originalImage;
                 }));
             }
 
-            // Thu thập kết quả sau khi tất cả các tác vụ hoàn thành
             for (Future<BufferedImage> future : futures) {
                 try {
-                    pageImages.add(future.get(10, TimeUnit.SECONDS)); // Đặt timeout để tránh treo lâu
+                    pageImages.add(future.get(10, TimeUnit.SECONDS));
                 } catch (TimeoutException e) {
                     System.err.println("Render timeout for page: " + future);
-                    future.cancel(true); // Hủy tác vụ nếu timeout
+                    future.cancel(true);
                 } catch (InterruptedException | ExecutionException e) {
                     System.err.println("Error when rendering page: " + e.getMessage());
                 }

@@ -14,4 +14,5 @@ public interface ReturnOrderDAL extends BaseDAL<ReturnOrder, String> {
     List<ReturnOrder> searchByDate(LocalDateTime start, LocalDateTime end);
     List<ReturnOrder> searchByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID);
     ReturnOrderDetail findByReturnOrderIdAndProductId(String returnOrderId, String productId);
+    ReturnOrder checkExistByOrderId(String orderId);
 }

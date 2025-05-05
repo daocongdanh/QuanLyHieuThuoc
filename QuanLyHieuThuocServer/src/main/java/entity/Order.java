@@ -56,7 +56,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "promotion_id")
     private Promotion promotion;
     
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<OrderDetail> orderDetails;
     
     public Order(){
@@ -157,7 +157,8 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "Order{" + "orderId=" + orderId + ", orderDate=" + orderDate + ", totalPrice=" + totalPrice + ", paymentMethod=" + paymentMethod + ", employee=" + employee + ", customer=" + customer + ", promotion=" + promotion + ", orderDetails=" + orderDetails + '}';
+//        return "Order{" + "orderId=" + orderId + ", orderDate=" + orderDate + ", totalPrice=" + totalPrice + ", paymentMethod=" + paymentMethod + ", employee=" + employee + ", customer=" + customer + ", promotion=" + promotion + ", orderDetails=" + orderDetails + '}';
+            return "";
     }
 
     

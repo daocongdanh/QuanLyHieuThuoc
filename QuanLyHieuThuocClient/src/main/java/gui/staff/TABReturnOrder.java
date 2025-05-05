@@ -438,7 +438,7 @@ public class TABReturnOrder extends javax.swing.JPanel {
                 MessageDialog.info(null, "Tạo phiếu trả hàng thành công.");
                 clearPnOrderDetail();
             } else {
-                MessageDialog.info(null, "Chưa nhập lý do!!!");
+                MessageDialog.info(null, "Hóa đơn đã từng được trả rồi!!!");
             };
         } catch (Exception e) {
             MessageDialog.error(null, "Chưa nhập lý do!!!");

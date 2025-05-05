@@ -106,4 +106,14 @@ public class ReturnOrderDALImpl extends BaseDALImpl<ReturnOrder, String> impleme
             return null;
         }
     }
+
+    @Override
+    public ReturnOrder checkExistByOrderId(String orderId) {
+        TypedQuery<ReturnOrder> query = entityManager.createQuery(
+                "SELECT r FROM ReturnOrder r WHERE r.order.orderId = :orderId", ReturnOrder.class);
+        query.setParameter("orderId", orderId);
+
+        List<ReturnOrder> results = query.getResultList();
+        return results.isEmpty() ? null : results.get(0);
+    }
 }

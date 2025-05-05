@@ -10,4 +10,5 @@ public interface OrderDAL extends BaseDAL<Order, String> {
     List<Order> searchByDate(LocalDateTime start, LocalDateTime end);
     List<Order> statisByDate(LocalDateTime start, LocalDateTime end);
     List<Order> findOrderByDateAndEmp(LocalDateTime start, LocalDateTime end, String employeeID);
+
 }

@@ -17,6 +17,7 @@ import entity.ReturnOrderDetail;
 import enums.ReturnOrderDetailStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -42,6 +43,10 @@ public class ReturnOrderBUSImpl extends UnicastRemoteObject implements ReturnOrd
                                      List<ReturnOrderDetailDTO> returnOrderDetailDTOs)  throws RemoteException {
         try {
             transaction.begin();
+
+            if ( checkExistByOrderId(order.getOrderId()) != null) {
+                throw new RuntimeException("Đơn hàng đã được trả");
+            }
 
             if (employee == null) {
                 throw new RuntimeException("Nhân viên không được rỗng");
@@ -122,5 +127,10 @@ public class ReturnOrderBUSImpl extends UnicastRemoteObject implements ReturnOrd
     @Override
     public List<ReturnOrder> getByDateAndEmp(LocalDateTime start, LocalDateTime end, String empID)  throws RemoteException{
         return returnOrderDAL.searchByDateAndEmp(start, end, empID);
+    }
+
+    @Override
+    public ReturnOrder checkExistByOrderId(String orderId) throws RemoteException {
+        return returnOrderDAL.checkExistByOrderId(orderId);
     }
 }
